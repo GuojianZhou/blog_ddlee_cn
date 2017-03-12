@@ -10,7 +10,7 @@
     
     <title>
         
-            个性化你的Ubuntu-2：GNOME安装与工具 | 
+            再次折腾我的WNDR4300：OpenWrt文件共享 | 
         
         萧爽楼|李东东的安静一隅
     </title>
@@ -27,7 +27,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="ddlee">
     <meta name="description" content="null">
-    <meta name="keywords" content="ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee,Linux,Gnome">
+    <meta name="keywords" content="ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee,OpenWrt,路由器">
 
     <!--iOS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -48,9 +48,9 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://blog.ddlee.cn">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="个性化你的Ubuntu-2：GNOME安装与工具 | 萧爽楼|李东东的安静一隅">
+    <meta property="og:title" content="再次折腾我的WNDR4300：OpenWrt文件共享 | 萧爽楼|李东东的安静一隅">
     <meta property="og:description" content="null">
-    <meta property="og:article:tag" content="Linux"> <meta property="og:article:tag" content="Gnome"> 
+    <meta property="og:article:tag" content="OpenWrt"> <meta property="og:article:tag" content="路由器"> 
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -243,7 +243,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#GNOME安装"><span class="post-toc-number">1.</span> <span class="post-toc-text">GNOME安装</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1-Ubuntu-GNOME（系统）"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">1.Ubuntu GNOME（系统）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#Install-from-DVD"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">Install from DVD</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#Install-with-current-system"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">Install with current system</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2-GNOME（仅桌面环境）"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">2.GNOME（仅桌面环境）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#The-“real”-GNOME"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">The “real” GNOME</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#The-minimux-GNOME"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">The minimux GNOME</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#GNOME-shell"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">GNOME shell</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#注意"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">注意</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#使用新的桌面环境"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">使用新的桌面环境</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#GNOME配置工具：gnome-tweak-tool"><span class="post-toc-number">2.</span> <span class="post-toc-text">GNOME配置工具：gnome-tweak-tool</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#扩展插件"><span class="post-toc-number">3.</span> <span class="post-toc-text">扩展插件</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Chrome用户"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">Chrome用户</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#利用PPA"><span class="post-toc-number">3.1.1.</span> <span class="post-toc-text">利用PPA</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#通过Chrome-Web-Store-GNOME-Shell-integration"><span class="post-toc-number">3.1.2.</span> <span class="post-toc-text">通过Chrome Web Store:GNOME Shell integration</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#FireFox用户"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">FireFox用户</span></a></li></ol></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#缘起"><span class="post-toc-number">1.</span> <span class="post-toc-text">缘起</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#重新安装OpenWrt"><span class="post-toc-number">2.</span> <span class="post-toc-text">重新安装OpenWrt</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#TFTP重装"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">TFTP重装</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#U盘挂载，文件共享"><span class="post-toc-number">3.</span> <span class="post-toc-text">U盘挂载，文件共享</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#U盘挂载"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">U盘挂载</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#文件共享"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">文件共享</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#SAMBA"><span class="post-toc-number">3.2.1.</span> <span class="post-toc-text">SAMBA</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#FTP"><span class="post-toc-number">3.2.2.</span> <span class="post-toc-text">FTP</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#访问Google"><span class="post-toc-number">4.</span> <span class="post-toc-text">访问Google</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#后记"><span class="post-toc-number">5.</span> <span class="post-toc-text">后记</span></a></li></ol>
 
         <!--
         <li class="mdl-menu__item">
@@ -279,7 +279,7 @@
         
     
             <p class="article-headline-p">
-                个性化你的Ubuntu-2：GNOME安装与工具
+                再次折腾我的WNDR4300：OpenWrt文件共享
             </p>
         </div>
 
@@ -298,7 +298,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>ddlee</strong>
-        <span>6月 02, 2016</span>
+        <span>3月 12, 2017</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -322,7 +322,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/Gnome/">Gnome</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Linux/">Linux</a>
+        <a class="post_tag-link" href="/tags/OpenWrt/">OpenWrt</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/路由器/">路由器</a>
     </ul>
     
 
@@ -336,7 +336,7 @@
     <!-- Leancloud Views -->
         <a class="post_share-link" href="#">
             <li class="mdl-menu__item">
-                <span id="/2016/06/02/个性化你的Ubuntu-2：GNOME安装与工具/" class="leancloud-views_num" data-flag-title="个性化你的Ubuntu-2：GNOME安装与工具">
+                <span id="/2017/03/12/再次折腾我的WNDR4300/" class="leancloud-views_num" data-flag-title="再次折腾我的WNDR4300：OpenWrt文件共享">
      &nbsp;浏览量
 </span>
 
@@ -348,7 +348,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=个性化你的Ubuntu-2：GNOME安装与工具&url=http://blog.ddlee.cn//2016/06/02/个性化你的Ubuntu-2：GNOME安装与工具/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=再次折腾我的WNDR4300：OpenWrt文件共享&url=http://blog.ddlee.cn//2017/03/12/再次折腾我的WNDR4300/index.html&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -369,7 +369,7 @@
 
     <!-- Share QQ -->
     
-        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=萧爽楼|李东东的安静一隅&title=个性化你的Ubuntu-2：GNOME安装与工具&summary=null&pics=http://blog.ddlee.cn/img/favicon.png&url=http://blog.ddlee.cn/2016/06/02/个性化你的Ubuntu-2：GNOME安装与工具/index.html" target="_blank">
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=萧爽楼|李东东的安静一隅&title=再次折腾我的WNDR4300：OpenWrt文件共享&summary=null&pics=http://blog.ddlee.cn/img/favicon.png&url=http://blog.ddlee.cn/2017/03/12/再次折腾我的WNDR4300/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 QQ
             </li>
@@ -387,35 +387,52 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h3 id="GNOME安装"><a href="#GNOME安装" class="headerlink" title="GNOME安装"></a>GNOME安装</h3><p>从上一篇文章，大家可以看到，GNOME是一系列软件的集合，安装时可以有不同的取舍。对于Ubuntu用户来说，可以有以下两类体验GNOME的方式。（参考：<a href="https://wiki.ubuntuusers.de/GNOME_Installation/" target="_blank" rel="external">GNOME installation</a>）</p>
-<h4 id="1-Ubuntu-GNOME（系统）"><a href="#1-Ubuntu-GNOME（系统）" class="headerlink" title="1.Ubuntu GNOME（系统）"></a>1.Ubuntu GNOME（系统）</h4><p>Ubuntu GNOME是Ubuntu的一个发行版本（也称Ubuntu variants），就像Ubuntu和Fedora等都是GNU/Linux的发行版那样。Ubuntu GNOME不仅包含了Ubuntu的核心部分、GNOME的核心部分，还有一系列的标准应用。</p>
-<h5 id="Install-from-DVD"><a href="#Install-from-DVD" class="headerlink" title="Install from DVD"></a>Install from DVD</h5><p>如果可以接受重新安装系统，请到这里<a href="http://ubuntugnome.org/download/" target="_blank" rel="external">下载</a>Ubuntu GNOME。</p>
-<h5 id="Install-with-current-system"><a href="#Install-with-current-system" class="headerlink" title="Install with current system"></a>Install with current system</h5><p>你也可以通过安装metapackage，这样在安装GNOME桌面环境时，你的系统中未安装的标准应用也会被同时安装。</p>
-<p><code>sudo apt-get install ubuntu-gnome-desktop</code></p>
-<h4 id="2-GNOME（仅桌面环境）"><a href="#2-GNOME（仅桌面环境）" class="headerlink" title="2.GNOME（仅桌面环境）"></a>2.GNOME（仅桌面环境）</h4><h5 id="The-“real”-GNOME"><a href="#The-“real”-GNOME" class="headerlink" title="The “real” GNOME"></a>The “real” GNOME</h5><p>标准的GNOME桌面环境，没有Ubuntu的特性（尽管我区分不出哪些是Ubuntu提供的），也不安装附加的标准应用：</p>
-<p><code>sudo apt-get install gnome</code></p>
-<h5 id="The-minimux-GNOME"><a href="#The-minimux-GNOME" class="headerlink" title="The minimux GNOME"></a>The minimux GNOME</h5><p>GNOME的核心部分，不安装附加的标准应用：</p>
-<p><code>sudo apt-get install gnome-core</code></p>
-<h5 id="GNOME-shell"><a href="#GNOME-shell" class="headerlink" title="GNOME shell"></a>GNOME shell</h5><p>仅安装GNOME的图形界面：<br><code>sudo apt-get install gnome-shell</code></p>
-<p>你还需要：<br><code>sudo apt-get install gnome-session</code></p>
-<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><p>在同一系统上安装不同的桌面环境可能会造成一些意料不到的问题（如锁屏界面丢失），最推荐的方案还是重新安装Ubuntu GNOME，其次，可以安装<code>ubuntu-gnome-desktop</code>。</p>
-<h4 id="使用新的桌面环境"><a href="#使用新的桌面环境" class="headerlink" title="使用新的桌面环境"></a>使用新的桌面环境</h4><p>安装完毕后，重启，可在登录界面选择桌面环境。</p>
-<p><img src="/img/Ubuntu-2/gnome-login1.png" alt="login1"></p>
-<p><img src="/img/Ubuntu-2/gnome-login2.png" alt="login2"></p>
-<h3 id="GNOME配置工具：gnome-tweak-tool"><a href="#GNOME配置工具：gnome-tweak-tool" class="headerlink" title="GNOME配置工具：gnome-tweak-tool"></a>GNOME配置工具：gnome-tweak-tool</h3><p>想要充分个性化GNOME桌面环境，扩展GNOME的功能，你还需要安装GNOME的配置工具：gnome tweak tool</p>
-<p><code>sudo apt-get install gnome-tweak-tool</code></p>
-<p><img src="/img/Ubuntu-2/gnome-tweak-tool_004.jpg" alt="图片：gnome tweak tool提供的功能"></p>
-<p>利用gnome tweak tool，你可以管理桌面主题、调整窗口特性、调整显示字体、加载GNOME扩展、管理开机自启程序等等。</p>
-<h3 id="扩展插件"><a href="#扩展插件" class="headerlink" title="扩展插件"></a>扩展插件</h3><p>在Ubuntu上，要调整桌面主题，可没有Windows上鼠标右击一下那么简单。<br>你要先安装上面的tweak tool，然后有人告诉你需要User theme扩展插件，而你跑到<code>extensions.gnome.org</code>，遇到的却是这个：<br><img src="/img/Ubuntu-2/Selection_019.jpg" alt="错误"></p>
-<p>我明明装了GNOME的啊！</p>
-<p>这是因为，<code>extensions.gnome.org</code>需要与浏览器通信，调用click-to-play的功能，我们需要安装GNOMNE shell intergration这个插件。</p>
-<h4 id="Chrome用户"><a href="#Chrome用户" class="headerlink" title="Chrome用户"></a>Chrome用户</h4><h5 id="利用PPA"><a href="#利用PPA" class="headerlink" title="利用PPA"></a>利用PPA</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo add-apt-repository ppa:ne0sight/chrome-gnome-shell</div><div class="line">sudo apt-get update</div><div class="line">sudo apt-get install chrome-gnome-shell</div></pre></td></tr></table></figure>
-<h5 id="通过Chrome-Web-Store-GNOME-Shell-integration"><a href="#通过Chrome-Web-Store-GNOME-Shell-integration" class="headerlink" title="通过Chrome Web Store:GNOME Shell integration"></a>通过Chrome Web Store:<a href="https://chrome.google.com/webstore/detail/gnome-shell-integration/gphhapmejobijbbhgpjhcjognlahblep" target="_blank" rel="external">GNOME Shell integration</a></h5><p>可能需要通过CMake安装native connector,请参考这一<a href="https://wiki.gnome.org/Projects/GnomeShellIntegrationForChrome/Installation" target="_blank" rel="external">页面</a>。</p>
-<h4 id="FireFox用户"><a href="#FireFox用户" class="headerlink" title="FireFox用户"></a>FireFox用户</h4><p>使用FireFox访问<code>extensions.gnome.org</code>时会有运行GNOME shell integration的通知，允许运行后刷新即可。</p>
-<p>更多信息，请参考这一<a href="https://extensions.gnome.org/about/#no-detection" target="_blank" rel="external">页面</a></p>
-<p>安装好<code>tweak-tool</code>后，祝贺你已经打开了新世界的大门。下篇文章是关于扩展插件的推荐，欢迎继续阅读。</p>
-<p><a href="http://ddlee.cn" target="_blank" rel="external">@ddlee</a></p>
-<p>2016年6月</p>
+        <blockquote>
+<p>生命不惜，折腾不止。</p>
+</blockquote>
+<h3 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h3><p>再次成为IOS用户后，访问Google和文件共享成了两大需求。问题出现了，就要解决，于是有此文记录的活动。</p>
+<h3 id="重新安装OpenWrt"><a href="#重新安装OpenWrt" class="headerlink" title="重新安装OpenWrt"></a>重新安装OpenWrt</h3><p>OpenWrt已经到了<code>15.05</code>版本，版本代号是<code>Chaos Calmer</code>。重装需要的<code>-factory.img</code>，可以在<a href="https://downloads.openwrt.org/chaos_calmer/15.05/" target="_blank" rel="external">这里</a>下载。</p>
+<p>我的WNDR4300平台是<code>ar71xx</code>，可以从OpenWrt对应的<a href="https://wiki.openwrt.org/toh/hwdata/netgear/netgear_wndr4300_v1" target="_blank" rel="external">硬件主页</a>找到固件镜像文件。</p>
+<h4 id="TFTP重装"><a href="#TFTP重装" class="headerlink" title="TFTP重装"></a>TFTP重装</h4><p>如果你的路由器还是出厂系统的话，可以通过登入后台在线上传镜像文件进行刷机，而我的已经是OpenWrt系统，只能通过网页端升级，故选用了TFTP方式刷机。</p>
+<p>刷机步骤摘自<a href="https://wiki.openwrt.org/toh/netgear/wndr4300" target="_blank" rel="external">OpenWrt wiki</a><br>&gt;</p>
+<ol>
+<li>set a static IP on your computer, i.e 192.168.1.35, and connect the ethernet cable to the router</li>
+<li>power on the router</li>
+<li>press and hold the RESET button as soon as the switch LEDs light up.</li>
+<li>keep holding RESET until the power LED begins to flash orange and then green.</li>
+<li>once the power LED is flashing green, release RESET</li>
+<li>start the TFTP transfer to router at 192.168.1.1. In your computer execute:<blockquote>
+<p><code>tftp 192.168.1.1 -m binary -c put factory.img</code></p>
+</blockquote>
+</li>
+</ol>
+<p>总体来说是分为三步：</p>
+<ol>
+<li>将电脑与路由器设置在同一内网中</li>
+<li>令路由器进入恢复模式</li>
+<li>利用TFTP将刷机包推入路由器</li>
+</ol>
+<h3 id="U盘挂载，文件共享"><a href="#U盘挂载，文件共享" class="headerlink" title="U盘挂载，文件共享"></a>U盘挂载，文件共享</h3><p>安装好OpenWrt后，就可以从网页端访问路由器，设置PPPoE拨号，设置WIFI等等。</p>
+<h4 id="U盘挂载"><a href="#U盘挂载" class="headerlink" title="U盘挂载"></a>U盘挂载</h4><p>U盘挂载部分主要参考了<a href="https://my.oschina.net/umu618/blog/282984" target="_blank" rel="external">跟 UMU 一起玩 OpenWRT（入门篇6）：挂接 U 盘</a>。</p>
+<p>首先是安装相应的包：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">opkg update</div><div class="line"></div><div class="line"># 核心包</div><div class="line">opkg install kmod-usb-storage</div><div class="line">opkg install kmod-scsi-generic</div><div class="line"></div><div class="line"># 文件系统</div><div class="line">opkg install kmod-fs-ext4</div><div class="line"></div><div class="line"># 辅助工具</div><div class="line">opkg install usbutils fdisk e2fsprogs</div></pre></td></tr></table></figure></p>
+<p>利用<code>lsusb</code>命令查看U盘是否已经被路由器识别。</p>
+<p>这时可以选择用fdisk进行重新分区，不需要分区的话，可以用命令<code>ls /dev | grep sd</code>查看/dev分区中是否已经出现U盘。</p>
+<p>在OpenWrt上使用U盘，建议用ext4格式，可以用下面的命令进行格式化：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># sda1为上一命令得到的结果</div><div class="line">mkfs.ext4 /dev/sda1</div></pre></td></tr></table></figure></p>
+<p>接下来就可以用<code>mount</code>命令进行挂载了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># 路径/mnt/usb/即为挂载目标点</div><div class="line">mkdir /mnt/usb</div><div class="line">touch /mnt/usb/USB_DISK_NOT_PRESENT</div><div class="line">chmod 555 /mnt/usb</div><div class="line">chmod 444 /mnt/usb/USB_DISK_NOT_PRESENT</div><div class="line">mount /dev/sda1 /mnt/usb</div></pre></td></tr></table></figure></p>
+<p>这时可以测试一下，如果U盘里面存储了文件，可以通过<code>/mnt/usb</code>访问的到。</p>
+<p>下面是开机自动挂载U盘的命令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># block-mount blkid用于查看U盘的UUID</div><div class="line">opkg install block-mount blkid</div><div class="line"></div><div class="line"># 实际上要操作的是fstab的配置文件/etc/config/fstab，要将enabled值改成1</div><div class="line">block detect &gt; /etc/config/fstab</div><div class="line">uci set fstab.@mount[-1].target=&apos;/mnt/usb&apos; u</div><div class="line">ci set fstab.@mount[-1].enabled=1</div><div class="line">uci commit fstab</div></pre></td></tr></table></figure></p>
+<p>更详细的信息可以参见<a href="http://wiki.openwrt.org/doc/uci/fstab" target="_blank" rel="external">这里</a></p>
+<h4 id="文件共享"><a href="#文件共享" class="headerlink" title="文件共享"></a>文件共享</h4><p>文件共享可以通过FTP和SAMBA，推荐的方式是SAMBA。</p>
+<h5 id="SAMBA"><a href="#SAMBA" class="headerlink" title="SAMBA"></a>SAMBA</h5><p>安转SAMBA：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">opkg update</div><div class="line">opkg install samba36-server</div><div class="line"></div><div class="line"># luci程序，可选</div><div class="line">opkg install luci-app-samba</div></pre></td></tr></table></figure></p>
+<p>安装好SAMBA后，主要配置两个参数，一是共享文件夹的路径，如<code>/mnt/usb/sambashare</code>，可以通过更改配置文件<code>/etc/samba/smb.conf</code>实现，也可以通过luci实现。</p>
+<p>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[sambashare]</div><div class="line">path = /mnt/usb/sambashare</div><div class="line">valid users = root</div><div class="line">read only = no</div><div class="line">guest ok = yes</div><div class="line">create mask = 0750</div><div class="line">directory mask = 0750</div></pre></td></tr></table></figure></p>
+<p>第二个参数是访问账户，可以通过命令<code>sambpasswd -a</code>将你的当前用户加入到SAMBA的组中，需要设置一个密码。另外，可能需要将配置文件<code>/etc/samba/smb.conf</code>的[global]中的<code>invalid users = root</code>注释掉。</p>
+<p>最后，设置SAMBA服务启动和开机自启<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/etc/init.d/samba start</div><div class="line">/etc/init.d/samba enable</div></pre></td></tr></table></figure></p>
+<h5 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h5><p>FTP可以用<code>vsftpd</code>包来设置，大致过程与SAMBA类似：设置路径、添加用户、设置自启。</p>
+<p>SAMBA服务可以在Windows文件资源管理器中自动检测的到，Linux下可以通过<code>smb://Host/sharepath</code>访问，在IOS系统中，类似Documents的应用也支持添加SAMBA的功能。</p>
+<p>这里强推一下Documents这个应用，结合PDF EXPERT，已经成为了我的文档中心。</p>
+<h3 id="访问Google"><a href="#访问Google" class="headerlink" title="访问Google"></a>访问Google</h3><p>这部分操作相当复杂，主要参考<a href="https://cokebar.info/archives/664" target="_blank" rel="external">这里</a>，感谢博主。</p>
+<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>这天的活动，本来只有我和上帝知道，再过一个月，就只有上帝知道了。遂作笔记。</p>
 
     
 
@@ -436,7 +453,7 @@
 <script>
     queue.offer(function() {
             var disqus_config = function () {
-                this.page.url = 'http://blog.ddlee.cn/2016/06/02/个性化你的Ubuntu-2：GNOME安装与工具/index.html';  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.url = 'http://blog.ddlee.cn/2017/03/12/再次折腾我的WNDR4300/index.html';  // Replace PAGE_URL with your page's canonical URL variable
                 this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
             };
 
@@ -467,21 +484,13 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2016/06/11/个性化你的Ubuntu-3：主题，插件以及桌面小工具/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2016/05/30/个性化你的Ubuntu-1：GNOME桌面环境/" id="post_nav-older" class="next-content">
+        <a href="/2017/03/03/谁会不厌其烦地安慰那无知的少年-3/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
