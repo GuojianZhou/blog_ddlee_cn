@@ -10,7 +10,7 @@
     
     <title>
         
-            About | 
+            DevOps侧记 | 
         
         萧爽楼|李东东的安静一隅
     </title>
@@ -27,7 +27,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="ddlee">
     <meta name="description" content="null">
-    <meta name="keywords" content="ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee">
+    <meta name="keywords" content="ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee,DevOps,技术">
 
     <!--iOS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -48,9 +48,9 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://blog.ddlee.cn">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="About | 萧爽楼|李东东的安静一隅">
+    <meta property="og:title" content="DevOps侧记 | 萧爽楼|李东东的安静一隅">
     <meta property="og:description" content="null">
-    
+    <meta property="og:article:tag" content="DevOps"> <meta property="og:article:tag" content="技术"> 
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -219,6 +219,41 @@
 
                     <!-- Post TOC -->
 
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CAMS-The-DevOps-Lifecycle"><span class="post-toc-number">1.</span> <span class="post-toc-text">CAMS: The DevOps Lifecycle</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Definition-from-wiki"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Definition(from wiki)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Means-of-CAMS"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Means of CAMS</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#The-DevOps-Environment"><span class="post-toc-number">2.</span> <span class="post-toc-text">The DevOps Environment</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Course-Project"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Course Project</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#Packer"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">Packer</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#Vagrant"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">Vagrant</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#Project-Workflow-Packer-gt-Vagrant-gt-Virtualbox-gt-Web-Application"><span class="post-toc-number">2.1.3.</span> <span class="post-toc-text">Project Workflow: Packer->Vagrant->Virtualbox->Web Application</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Part-I-Building-a-box-with-Packer"><span class="post-toc-number">2.1.3.1.</span> <span class="post-toc-text">Part I: Building a box with Packer</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#Part-II-Cloning-developing-and-running-the-web-application"><span class="post-toc-number">2.1.3.2.</span> <span class="post-toc-text">Part II: Cloning, developing, and running the web application</span></a></li><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#On-Cloud-platform"><span class="post-toc-number">2.1.3.3.</span> <span class="post-toc-text">On Cloud platform</span></a></li></ol></li></ol></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Continuous-Integration"><span class="post-toc-number">3.</span> <span class="post-toc-text">Continuous Integration</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Jenkins"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">Jenkins</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Testing"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">Testing</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Monitoring"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">Monitoring</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Additional-Resources"><span class="post-toc-number">4.</span> <span class="post-toc-text">Additional Resources</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#小结"><span class="post-toc-number">5.</span> <span class="post-toc-text">小结</span></a></li></ol>
+
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+
+
+
 
 <!-- Layouts -->
 
@@ -232,11 +267,19 @@
                 
     <!-- Paradox Post Header -->
     
-        <!-- Custom Thumbnail -->
-        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(/img/bg.jpg)">
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script>
+    var randomNum = Math.floor(Math.random() * 43 + 1);
+
+    $('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')');
+</script>
+
+        
     
             <p class="article-headline-p">
-                About
+                DevOps侧记
             </p>
         </div>
 
@@ -255,7 +298,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>ddlee</strong>
-        <span>7月 30, 2016</span>
+        <span>3月 22, 2017</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -279,7 +322,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        
+        <a class="post_tag-link" href="/tags/DevOps/">DevOps</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/技术/">技术</a>
     </ul>
     
 
@@ -293,7 +336,7 @@
     <!-- Leancloud Views -->
         <a class="post_share-link" href="#">
             <li class="mdl-menu__item">
-                <span id="/About/index.html" class="leancloud-views_num" data-flag-title="About">
+                <span id="/2017/03/22/DevOps侧记/" class="leancloud-views_num" data-flag-title="DevOps侧记">
      &nbsp;浏览量
 </span>
 
@@ -305,7 +348,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=About&url=http://blog.ddlee.cn//About/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=DevOps侧记&url=http://blog.ddlee.cn//2017/03/22/DevOps侧记/index.html&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -326,7 +369,7 @@
 
     <!-- Share QQ -->
     
-        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=萧爽楼|李东东的安静一隅&title=About&summary=null&pics=http://blog.ddlee.cn/img/favicon.png&url=http://blog.ddlee.cn/About/index.html" target="_blank">
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=萧爽楼|李东东的安静一隅&title=DevOps侧记&summary=null&pics=http://blog.ddlee.cn/img/favicon.png&url=http://blog.ddlee.cn/2017/03/22/DevOps侧记/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 QQ
             </li>
@@ -344,29 +387,82 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <blockquote>
-<p><em>呦呦鹿鸣，食野之苹。</em><br><em>我有嘉宾，鼓瑟吹笙。</em></p>
+        <p>文章主要内容来自Udacity的课程：<a href="">Intro to DevOps</a></p>
+<h3 id="CAMS-The-DevOps-Lifecycle"><a href="#CAMS-The-DevOps-Lifecycle" class="headerlink" title="CAMS: The DevOps Lifecycle"></a>CAMS: The DevOps Lifecycle</h3><p>The Purpose of DevOps： 产品、开发、运维之间的合作问题</p>
+<h4 id="Definition-from-wiki"><a href="#Definition-from-wiki" class="headerlink" title="Definition(from wiki)"></a>Definition(from wiki)</h4><blockquote>
+<p>a set of practices that emphasize the collaboration and communication of both software developers and information technology (IT) professionals while automating the process of software delivery and infrastructure changes.</p>
 </blockquote>
-<p>每个人都有隐藏的一隅。</p>
-<p>一个人，安静下来，想一些没那么重要又如此重要的一些人，做一些喜欢又没那么喜欢的事儿，在烦恼与忙碌终于远去的时光的罅隙里。</p>
-<p>有人说，照片是凝固了的时光。所以很多人着迷于摄影，用镜头记录想要回味和分享的瞬间。</p>
-<p>有人说，凝固了的时光不好，流动的时光才有趣。所以每天拍一段几秒的视频，过个三年五载，再将它们串联起来，像串珍珠那样。</p>
-<p>而我觉得，文字记录的时光，却是每时每刻都与现在流淌着的日子融合了的。</p>
-<p>每次重读一行行文字，便是一趟联接着当下、过去，还有未来的心灵旅程。</p>
-<p>文字太模糊了，不足以让你记起全部的细节，你只好亲自走回去，回到青葱的岁月，像看故事里的人物那样看看那时的自己；</p>
-<p>文字又太准确了，这些陌生又熟悉的字眼，这些亲切又早已忘却的句子，就像当年的自己把故事亲口哼唱给你听，此时此刻，恰如彼时彼刻。</p>
-<p>文字脆弱，却又力量无穷。</p>
-<h3 id="关于博客"><a href="#关于博客" class="headerlink" title="关于博客"></a>关于博客</h3><p>博客叫萧爽楼，从《浮生六记》中借来的名字。身边，很难寻找古人春游、结社、集会之乐趣。只愿文字在这个小小的空间里仍然能够发挥古老的力量。</p>
-<p>博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、科学计算等方面的学习侧记。</p>
-<h3 id="关于我"><a href="#关于我" class="headerlink" title="关于我"></a>关于我</h3><p>我现在在同济念书，学的是数学。对统计学习、数据分析、传播学、个人管理等感兴趣。摄影控，喜欢游泳和长跑。</p>
-<p>我非常崇敬古代文人的这一人生理想：</p>
-<blockquote>
-<p>为天地立心</p>
-<p>为生民立命</p>
-<p>为往圣续绝学</p>
-<p>为万世开太平</p>
-</blockquote>
-<p>更多关于我的情况请访问<a href="http://ddlee.cn" target="_blank" rel="external">我的主页</a></p>
+<p><img src="/img/DevOps/Devops_venn.png" alt="DevOps_Venn"><br>(<a href="https://commons.wikimedia.org/wiki/File:Devops.png" target="_blank" rel="external">Source</a>)</p>
+<p>Agile Development:</p>
+<p>Plan-&gt;Code-&gt;Test-&gt;Release-&gt;Deploy-&gt;Operate</p>
+<h4 id="Means-of-CAMS"><a href="#Means-of-CAMS" class="headerlink" title="Means of CAMS"></a>Means of CAMS</h4><ul>
+<li>C: Culture</li>
+<li>A: Automation</li>
+<li>M: Measurement</li>
+<li>S: Sharing</li>
+</ul>
+<h3 id="The-DevOps-Environment"><a href="#The-DevOps-Environment" class="headerlink" title="The DevOps Environment"></a>The DevOps Environment</h3><p>Solving the Environment Problem:</p>
+<ul>
+<li>Golden Image: apps-libs-OS</li>
+<li>Configuration Management</li>
+</ul>
+<h4 id="Course-Project"><a href="#Course-Project" class="headerlink" title="Course Project"></a>Course Project</h4><p>dependencies-&gt;build scripts-&gt;tests-&gt;web apps</p>
+<h5 id="Packer"><a href="#Packer" class="headerlink" title="Packer"></a>Packer</h5><p>Packer is an open source tool for creating identical machine images for multiple platforms from a single source configuration.</p>
+<ul>
+<li><code>Artifacts</code> are the results of a single build, and are usually a set of IDs or files to represent a machine image.</li>
+<li><code>Builds</code> are a single task that eventually produces an image for a single platform.</li>
+<li><code>Builders</code> are components of Packer that are able to create a machine image for a single platform.</li>
+<li><code>Commands</code> are sub-commands for the packer program that perform some job.</li>
+<li><code>Post-processors</code> are components of Packer that take the result of a builder or another post-processor and process that to create a new artifact.</li>
+<li><code>Provisioners</code> are components of Packer that install and configure software within a running machine prior to that machine being turned into a static image.</li>
+<li><code>Templates</code> are JSON files which define one or more builds by configuring the various components of Packer.</li>
+</ul>
+<p><a href="https://github.com/ddlee96/devops-intro-project/blob/master/packer-templates/application-server.json" target="_blank" rel="external">Example JSON File</a></p>
+<h5 id="Vagrant"><a href="#Vagrant" class="headerlink" title="Vagrant"></a>Vagrant</h5><p>Vagrant is a tool for building complete development environments. With an easy-to-use workflow and focus on automation, Vagrant lowers development environment setup time, increases development/production parity, and makes the “works on my machine” excuse a relic of the past.</p>
+<h5 id="Project-Workflow-Packer-gt-Vagrant-gt-Virtualbox-gt-Web-Application"><a href="#Project-Workflow-Packer-gt-Vagrant-gt-Virtualbox-gt-Web-Application" class="headerlink" title="Project Workflow: Packer-&gt;Vagrant-&gt;Virtualbox-&gt;Web Application"></a>Project Workflow: Packer-&gt;Vagrant-&gt;Virtualbox-&gt;Web Application</h5><h6 id="Part-I-Building-a-box-with-Packer"><a href="#Part-I-Building-a-box-with-Packer" class="headerlink" title="Part I: Building a box with Packer"></a>Part I: Building a box with Packer</h6><p>From the packer-templates directory on your local machine:</p>
+<ul>
+<li><p>Run <code>packer build -only=virtualbox-iso application-server.json</code></p>
+<p>Troubleshooting: <em>Find the newest version number and checksum from the <a href="http://releases.ubuntu.com/trusty/" target="_blank" rel="external">Ubuntu website for this release</a></em><br><em>Edit <code>PACKER_BOX_NAME</code> and <code>iso_checksum</code> in the template files to match that version number and checksum.</em></p>
+</li>
+<li>Run <code>cd virtualbox</code></li>
+<li>Run <code>vagrant box add ubuntu-14.04.4-server-amd64-appserver_virtualbox.box --name devops-appserver</code></li>
+<li>Run <code>vagrant up</code></li>
+<li>Run <code>vagrant ssh</code> to connect to the server</li>
+</ul>
+<h6 id="Part-II-Cloning-developing-and-running-the-web-application"><a href="#Part-II-Cloning-developing-and-running-the-web-application" class="headerlink" title="Part II: Cloning, developing, and running the web application"></a>Part II: Cloning, developing, and running the web application</h6><ul>
+<li>On your local machine go to the root directory of the cloned repository</li>
+<li>Run <code>git clone https://github.com/chef/devops-kungfu.git devops-kungfu</code></li>
+<li>Open <a href="http://localhost:8080" target="_blank" rel="external">http://localhost:8080</a> from your local machine to see the app running.</li>
+<li>In the VM, run <code>cd devops-kungfu</code></li>
+<li>To install app specific node packages, run <code>sudo npm install</code>. You may see several errors; they can be ignored for now.</li>
+<li>Now you can run tests with the command <code>grunt -v</code>. The tests will run, then quit with an error.</li>
+</ul>
+<h6 id="On-Cloud-platform"><a href="#On-Cloud-platform" class="headerlink" title="On Cloud platform"></a>On Cloud platform</h6><p>Similar commands using packer:</p>
+<ul>
+<li><code>packer build -only=amazon-ebs &lt;server-name&gt;.json</code></li>
+<li><code>packer build -only=googlecompute application-server.json</code></li>
+</ul>
+<h3 id="Continuous-Integration"><a href="#Continuous-Integration" class="headerlink" title="Continuous Integration"></a>Continuous Integration</h3><p>CI System:</p>
+<p><img src="/img/DevOps/CI.png" alt="CI"></p>
+<h4 id="Jenkins"><a href="#Jenkins" class="headerlink" title="Jenkins"></a>Jenkins</h4><p>Jenkins is a self-contained, open source automation server which can be used to automate all sorts of tasks such as building, testing, and deploying software.</p>
+<p>Using command:<br><code>packer build -only=&lt;cloud service target&gt; control-server.json</code></p>
+<p><a href="https://github.com/ddlee96/devops-intro-project/blob/master/packer-templates/control-server.json" target="_blank" rel="external">Example control-server.json file</a></p>
+<p>Jenkins was configured to be installed according to <code>Provisioners</code>.</p>
+<p>After building and launching, access Jenkins via URL <code>/jenkins</code>.</p>
+<h4 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h4><ul>
+<li>Unit Testing</li>
+<li>Regression testing</li>
+<li>Smoke testing</li>
+<li>System Integration testing</li>
+<li>Automate acceptance testing</li>
+<li>Manual QA testing</li>
+</ul>
+<p>Adding Manual QA step in Pipeline</p>
+<p><img src="/img/DevOps/pipline.png" alt="Pipeline"></p>
+<h4 id="Monitoring"><a href="#Monitoring" class="headerlink" title="Monitoring"></a>Monitoring</h4><p>Monitoring process:</p>
+<p><img src="/img/DevOps/Monitoring.png" alt="Monitoring"></p>
+<h3 id="Additional-Resources"><a href="#Additional-Resources" class="headerlink" title="Additional Resources"></a>Additional Resources</h3><p><a href="https://www.udacity.com/wiki/ud611#!#additional-resources" target="_blank" rel="external">Course Wiki</a></p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>DevOps从开发和运维合作的角度审视软件开发过程，并提供了一套方法论，涉及开发、测试、部署、维护、监测各个方面。</p>
 
     
 
@@ -387,7 +483,7 @@
 <script>
     queue.offer(function() {
             var disqus_config = function () {
-                this.page.url = 'http://blog.ddlee.cn/About/index.html';  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.url = 'http://blog.ddlee.cn/2017/03/22/DevOps侧记/index.html';  // Replace PAGE_URL with your page's canonical URL variable
                 this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
             };
 
@@ -423,6 +519,14 @@
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
+    
+        <a href="/2017/03/12/再次折腾我的WNDR4300/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
     
 </nav>
 
@@ -610,6 +714,14 @@ It will not impact the appearance and can give developers a lot of support :)
 </aside>
 
                     
+
+                    
+                        <!-- Footer Top Button -->
+                        <div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
 
                     
 

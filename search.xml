@@ -4,6 +4,104 @@
   
     
     <entry>
+      <title><![CDATA[DevOps侧记]]></title>
+      <url>http://blog.ddlee.cn/2017/03/22/DevOps%E4%BE%A7%E8%AE%B0/</url>
+      <content type="html"><![CDATA[<p>文章主要内容来自Udacity的课程：<a href="">Intro to DevOps</a></p>
+<h3 id="CAMS-The-DevOps-Lifecycle"><a href="#CAMS-The-DevOps-Lifecycle" class="headerlink" title="CAMS: The DevOps Lifecycle"></a>CAMS: The DevOps Lifecycle</h3><p>The Purpose of DevOps： 产品、开发、运维之间的合作问题</p>
+<h4 id="Definition-from-wiki"><a href="#Definition-from-wiki" class="headerlink" title="Definition(from wiki)"></a>Definition(from wiki)</h4><blockquote>
+<p>a set of practices that emphasize the collaboration and communication of both software developers and information technology (IT) professionals while automating the process of software delivery and infrastructure changes.</p>
+</blockquote>
+<p><img src="/img/DevOps/Devops_venn.png" alt="DevOps_Venn"><br>(<a href="https://commons.wikimedia.org/wiki/File:Devops.png" target="_blank" rel="external">Source</a>)</p>
+<p>Agile Development:</p>
+<p>Plan-&gt;Code-&gt;Test-&gt;Release-&gt;Deploy-&gt;Operate</p>
+<h4 id="Means-of-CAMS"><a href="#Means-of-CAMS" class="headerlink" title="Means of CAMS"></a>Means of CAMS</h4><ul>
+<li>C: Culture</li>
+<li>A: Automation</li>
+<li>M: Measurement</li>
+<li>S: Sharing</li>
+</ul>
+<h3 id="The-DevOps-Environment"><a href="#The-DevOps-Environment" class="headerlink" title="The DevOps Environment"></a>The DevOps Environment</h3><p>Solving the Environment Problem:</p>
+<ul>
+<li>Golden Image: apps-libs-OS</li>
+<li>Configuration Management</li>
+</ul>
+<h4 id="Course-Project"><a href="#Course-Project" class="headerlink" title="Course Project"></a>Course Project</h4><p>dependencies-&gt;build scripts-&gt;tests-&gt;web apps</p>
+<h5 id="Packer"><a href="#Packer" class="headerlink" title="Packer"></a>Packer</h5><p>Packer is an open source tool for creating identical machine images for multiple platforms from a single source configuration.</p>
+<ul>
+<li><code>Artifacts</code> are the results of a single build, and are usually a set of IDs or files to represent a machine image.</li>
+<li><code>Builds</code> are a single task that eventually produces an image for a single platform.</li>
+<li><code>Builders</code> are components of Packer that are able to create a machine image for a single platform.</li>
+<li><code>Commands</code> are sub-commands for the packer program that perform some job.</li>
+<li><code>Post-processors</code> are components of Packer that take the result of a builder or another post-processor and process that to create a new artifact.</li>
+<li><code>Provisioners</code> are components of Packer that install and configure software within a running machine prior to that machine being turned into a static image.</li>
+<li><code>Templates</code> are JSON files which define one or more builds by configuring the various components of Packer.</li>
+</ul>
+<p><a href="https://github.com/ddlee96/devops-intro-project/blob/master/packer-templates/application-server.json" target="_blank" rel="external">Example JSON File</a></p>
+<h5 id="Vagrant"><a href="#Vagrant" class="headerlink" title="Vagrant"></a>Vagrant</h5><p>Vagrant is a tool for building complete development environments. With an easy-to-use workflow and focus on automation, Vagrant lowers development environment setup time, increases development/production parity, and makes the “works on my machine” excuse a relic of the past.</p>
+<h5 id="Project-Workflow-Packer-gt-Vagrant-gt-Virtualbox-gt-Web-Application"><a href="#Project-Workflow-Packer-gt-Vagrant-gt-Virtualbox-gt-Web-Application" class="headerlink" title="Project Workflow: Packer-&gt;Vagrant-&gt;Virtualbox-&gt;Web Application"></a>Project Workflow: Packer-&gt;Vagrant-&gt;Virtualbox-&gt;Web Application</h5><h6 id="Part-I-Building-a-box-with-Packer"><a href="#Part-I-Building-a-box-with-Packer" class="headerlink" title="Part I: Building a box with Packer"></a>Part I: Building a box with Packer</h6><p>From the packer-templates directory on your local machine:</p>
+<ul>
+<li><p>Run <code>packer build -only=virtualbox-iso application-server.json</code></p>
+<p>Troubleshooting: <em>Find the newest version number and checksum from the <a href="http://releases.ubuntu.com/trusty/" target="_blank" rel="external">Ubuntu website for this release</a></em><br><em>Edit <code>PACKER_BOX_NAME</code> and <code>iso_checksum</code> in the template files to match that version number and checksum.</em></p>
+</li>
+<li>Run <code>cd virtualbox</code></li>
+<li>Run <code>vagrant box add ubuntu-14.04.4-server-amd64-appserver_virtualbox.box --name devops-appserver</code></li>
+<li>Run <code>vagrant up</code></li>
+<li>Run <code>vagrant ssh</code> to connect to the server</li>
+</ul>
+<h6 id="Part-II-Cloning-developing-and-running-the-web-application"><a href="#Part-II-Cloning-developing-and-running-the-web-application" class="headerlink" title="Part II: Cloning, developing, and running the web application"></a>Part II: Cloning, developing, and running the web application</h6><ul>
+<li>On your local machine go to the root directory of the cloned repository</li>
+<li>Run <code>git clone https://github.com/chef/devops-kungfu.git devops-kungfu</code></li>
+<li>Open <a href="http://localhost:8080" target="_blank" rel="external">http://localhost:8080</a> from your local machine to see the app running.</li>
+<li>In the VM, run <code>cd devops-kungfu</code></li>
+<li>To install app specific node packages, run <code>sudo npm install</code>. You may see several errors; they can be ignored for now.</li>
+<li>Now you can run tests with the command <code>grunt -v</code>. The tests will run, then quit with an error.</li>
+</ul>
+<h6 id="On-Cloud-platform"><a href="#On-Cloud-platform" class="headerlink" title="On Cloud platform"></a>On Cloud platform</h6><p>Similar commands using packer:</p>
+<ul>
+<li><code>packer build -only=amazon-ebs &lt;server-name&gt;.json</code></li>
+<li><code>packer build -only=googlecompute application-server.json</code></li>
+</ul>
+<h3 id="Continuous-Integration"><a href="#Continuous-Integration" class="headerlink" title="Continuous Integration"></a>Continuous Integration</h3><p>CI System:</p>
+<p><img src="/img/DevOps/CI.png" alt="CI"></p>
+<h4 id="Jenkins"><a href="#Jenkins" class="headerlink" title="Jenkins"></a>Jenkins</h4><p>Jenkins is a self-contained, open source automation server which can be used to automate all sorts of tasks such as building, testing, and deploying software.</p>
+<p>Using command:<br><code>packer build -only=&lt;cloud service target&gt; control-server.json</code></p>
+<p><a href="https://github.com/ddlee96/devops-intro-project/blob/master/packer-templates/control-server.json" target="_blank" rel="external">Example control-server.json file</a></p>
+<p>Jenkins was configured to be installed according to <code>Provisioners</code>.</p>
+<p>After building and launching, access Jenkins via URL <code>/jenkins</code>.</p>
+<h4 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h4><ul>
+<li>Unit Testing</li>
+<li>Regression testing</li>
+<li>Smoke testing</li>
+<li>System Integration testing</li>
+<li>Automate acceptance testing</li>
+<li>Manual QA testing</li>
+</ul>
+<p>Adding Manual QA step in Pipeline</p>
+<p><img src="/img/DevOps/pipline.png" alt="Pipeline"></p>
+<h4 id="Monitoring"><a href="#Monitoring" class="headerlink" title="Monitoring"></a>Monitoring</h4><p>Monitoring process:</p>
+<p><img src="/img/DevOps/Monitoring.png" alt="Monitoring"></p>
+<h3 id="Additional-Resources"><a href="#Additional-Resources" class="headerlink" title="Additional Resources"></a>Additional Resources</h3><p><a href="https://www.udacity.com/wiki/ud611#!#additional-resources" target="_blank" rel="external">Course Wiki</a></p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>DevOps从开发和运维合作的角度审视软件开发过程，并提供了一套方法论，涉及开发、测试、部署、维护、监测各个方面。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Internet </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> DevOps </tag>
+            
+            <tag> 技术 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[再次折腾我的WNDR4300：OpenWrt文件共享]]></title>
       <url>http://blog.ddlee.cn/2017/03/12/%E5%86%8D%E6%AC%A1%E6%8A%98%E8%85%BE%E6%88%91%E7%9A%84WNDR4300/</url>
       <content type="html"><![CDATA[<blockquote>
