@@ -4,6 +4,77 @@
   
     
     <entry>
+      <title><![CDATA[Feedly+Reeder3+FeedMe:信息获取与处理]]></title>
+      <url>http://blog.ddlee.cn/2017/04/03/Feedly-Reeder3-%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96%E4%B8%8E%E5%A4%84%E7%90%86/</url>
+      <content type="html"><![CDATA[<p>我蛮早就意识到自己被信息淹没了。于是关了票圈，屏蔽了空间，不装任何新闻APP，失去效力的微信群一概不留，知乎上的关注也缩减了很多很多。</p>
+<blockquote>
+<p>世界终于清静了。</p>
+</blockquote>
+<p>但仍然需要有关注的动向。我又捡起了RSS这个老朋友，建立起的信息获取跟处理流如下图：</p>
+<p><img src="/img/Feedly_Reeder/Feedly+Reeder.png" alt="Feedly+Reeder3"></p>
+<h3 id="服务与APP"><a href="#服务与APP" class="headerlink" title="服务与APP"></a>服务与APP</h3><p>主要涉及的服务：Feedly（免费，有高级版）</p>
+<p>IOS APP：</p>
+<ul>
+<li>Reeder3（￥30）</li>
+<li>Pocket（免费）</li>
+<li>Pushbullet（免费）</li>
+<li>Evernote（免费版限制客户端个数）</li>
+</ul>
+<p>Android APP:</p>
+<ul>
+<li>FeedMe（免费）</li>
+<li>Pocket</li>
+<li>Inbox</li>
+<li>Evernote</li>
+<li>Google Keep</li>
+</ul>
+<h3 id="获取：Feedly整合"><a href="#获取：Feedly整合" class="headerlink" title="获取：Feedly整合"></a>获取：Feedly整合</h3><p><a href="https://feedly.com/i/welcome" target="_blank" rel="external">Feedly</a>是著名的信息聚合服务，能从媒体RSS、博客、YouTube Chanel等拉取文章/动态，还提供Google关键词动态提醒服务。</p>
+<p>这里先推荐两个Chrome插件，可以更方便地将网页端想要订阅的信息整合到Feedly中。</p>
+<ul>
+<li><a href="https://chrome.google.com/webstore/detail/save-to-feedly-board/hdhblphcdjcicefneapkhmleapfaocih?hl=en-US" target="_blank" rel="external">Follow Feed</a>: 识别跟当前网页内容相关的信息源，添加到Feedly订阅中。</li>
+<li><a href="https://chrome.google.com/webstore/detail/save-to-feedly-board/hdhblphcdjcicefneapkhmleapfaocih?hl=en-US" target="_blank" rel="external">Save to Feedly Board</a>: 将当前网页添加到Feedly Board中，可以标记后分享给团队，实时更新。</li>
+</ul>
+<h4 id="信息源"><a href="#信息源" class="headerlink" title="信息源"></a>信息源</h4><h5 id="微信公众号"><a href="#微信公众号" class="headerlink" title="微信公众号"></a>微信公众号</h5><p>先直接在Feedly中搜索公众号，若找不到订阅源，则可通过<a href="http://www.iwgc.cn/" target="_blank" rel="external">微广场</a>等服务转成RSS。</p>
+<h5 id="媒体-博客RSS源"><a href="#媒体-博客RSS源" class="headerlink" title="媒体/博客RSS源"></a>媒体/博客RSS源</h5><p>很多在线媒体会在主页提供RSS地址，也可直接在Feedly中搜索媒体名。</p>
+<h5 id="知乎专栏"><a href="#知乎专栏" class="headerlink" title="知乎专栏"></a>知乎专栏</h5><p>有些<a href="https://rss.lilydjwg.me/" target="_blank" rel="external">工具</a>可以将知乎专栏转成RSS订阅源。</p>
+<h5 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h5><p>Feedly支持设置关键词动态提醒。</p>
+<h3 id="处理：Reeder3-FeedMe"><a href="#处理：Reeder3-FeedMe" class="headerlink" title="处理：Reeder3 + FeedMe"></a>处理：Reeder3 + FeedMe</h3><p>支持Feedly的APP实在太多，<a href="https://feedly.com/apps.html" target="_blank" rel="external">这里</a>是官方给出的列表，可看脸挑选。</p>
+<p>我平常同时用Android和IOS处理订阅的信息，大屏精读，小屏浏览。</p>
+<h4 id="IOS-Reeder3"><a href="#IOS-Reeder3" class="headerlink" title="IOS: Reeder3"></a>IOS: Reeder3</h4><p>不幸的是Reeder3是要付费的， 30块，几乎没有降过价。</p>
+<p>替代品可以考虑自家的Feedly，Ziner等，可以参考<a href="http://www.makeuseof.com/tag/5-best-ipad-rss-readers/" target="_blank" rel="external">这篇文章</a>对比的结果选择。</p>
+<h4 id="Android-FeedMe"><a href="#Android-FeedMe" class="headerlink" title="Android: FeedMe"></a>Android: FeedMe</h4><p>这里强推FeedMe(<a href="https://play.google.com/store/apps/details?id=com.seazon.feedme&amp;hl=en" target="_blank" rel="external">Google Play</a>)，抓取、缓存迅速，界面简洁，还有“中国大陆”模式。</p>
+<h3 id="消化：Pocket-Inbox-Evernote-Keep"><a href="#消化：Pocket-Inbox-Evernote-Keep" class="headerlink" title="消化：Pocket, Inbox, Evernote/Keep"></a>消化：Pocket, Inbox, Evernote/Keep</h3><p>我个人将信息处理的结果分为三类：</p>
+<ul>
+<li>Read Later: 没消化</li>
+<li>Links to save: 还想接着吃</li>
+<li>Favorite:　想学着做</li>
+</ul>
+<p>稍后再读用Pocket，接口丰富，功能专一（尽管也有了“发现”模块）。</p>
+<p>文章中挂的一些外链，移动端不好处理，要发往PC，手机端存在Inbox中，当临时的标签栏，iPad端用Pushbullet发给Chrome，下次打开Chrome时浏览处理。</p>
+<p>收藏的文章存到Evernote，打好tags，长篇干货/可反复参考的转到OneNote。</p>
+<h3 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h3><p>其他情境下遇到的好文章、信息等尽量文字存到Google Keep，链接存到Inbox，或者给自己写封邮件。</p>
+<p>微信的Favorite尽量不用，收藏的目的就在于情景分离，在不同的上下文中，我门信息获取的效率和质量区别实在太大了。详情参考拉微信群异地参加美赛的战友们。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Individual Management </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Individual Management </tag>
+            
+            <tag> RSS </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[网站迁移小记：腾讯云+Debian+Vestacp]]></title>
       <url>http://blog.ddlee.cn/2017/04/02/%E7%BD%91%E7%AB%99%E8%BF%81%E7%A7%BB%E5%B0%8F%E8%AE%A1%EF%BC%9A%E8%85%BE%E8%AE%AF%E4%BA%91-Debian-Vestacp/</url>
       <content type="html"><![CDATA[<p>先贴一张文章大纲。</p>
@@ -50,13 +121,13 @@
 <p>之后在Package配置里，将proxy template配置为force-https，这样，身份由相应Package定义的用户建站时，proxy template就是用的强制HTTPS版本了。</p>
 <h6 id="取消管理端口的SSL"><a href="#取消管理端口的SSL" class="headerlink" title="取消管理端口的SSL"></a>取消管理端口的SSL</h6><p>用chrome访问管理页面时，会有Unsecure的警告，这里的SSL在<code>/usr/local/vesta/nginx/conf/nginx.conf</code>中配置。找到<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># Vhost</div><div class="line">server &#123;</div><div class="line">    listen          8083;</div><div class="line">    server_name     _;</div><div class="line">    root            /usr/local/vesta/web;</div><div class="line">    charset         utf-8;</div><div class="line"></div><div class="line">    # Fix error &quot;The plain HTTP request was sent to HTTPS port&quot;</div><div class="line">    error_page      497 https://$host:$server_port$request_uri;</div><div class="line"></div><div class="line">    # ssl                  on;</div><div class="line">    # ssl_certificate      /usr/local/vesta/ssl/certificate.crt;</div><div class="line">    # ssl_certificate_key  /usr/local/vesta/ssl/certificate.key;</div><div class="line">    # ssl_session_cache    shared:SSL:10m;</div><div class="line">    # ssl_session_timeout  10m;</div></pre></td></tr></table></figure></p>
 <p>将配置SSL的几行注释掉即可。顺便，管理页面的端口也可以在这里更改。之后运行<code>service vesta restart</code>重启服务。</p>
-<h4 id="域名与DNS"><a href="#域名与DNS" class="headerlink" title="域名与DNS"></a>域名与DNS</h4><p>最后简单提一下域名注册跟DNS。要注意的几个点：</p>
+<h3 id="域名与DNS"><a href="#域名与DNS" class="headerlink" title="域名与DNS"></a>域名与DNS</h3><p>最后简单提一下域名注册跟DNS。要注意的几个点：</p>
 <ul>
 <li>国内域名注册要备案，很烦，但cn域名好便宜。</li>
 <li>在域名注册商那里配置DNS解析服务器（万网、DNSPod都好，不一定用自建网站的DNS）</li>
 <li>在DNS服务商那里添加解析记录，顺便开启监控</li>
 </ul>
-<h4 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h4><p>域名备案的时候，需要签一张备案单。方案是在纸上签字后调背景为透明，用Adobe PDF Reader的签字功能签好PDF，再转成JPG。</p>
+<h3 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h3><p>域名备案的时候，需要签一张备案单。方案是在纸上签字后调背景为透明，用Adobe PDF Reader的签字功能签好PDF，再转成JPG。</p>
 <p>几项操作都可以通过在线工具完成，低碳生活，人人有责。</p>
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
 <li><p>建站过程本身就其乐无穷，教程一抓一大把，难的在TROUBLE SHOOTING，所以Google是最好的伴侣。</p>
@@ -64,6 +135,7 @@
 <li><p>命令行、vi编辑、必要的WEB知识等是基础，在此感谢我们的墙两年前就教给我这些东西。</p>
 </li>
 </ul>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
       
         
@@ -88,7 +160,8 @@
 <p>NameNode: High Availability<br>solution 1: backup using NFS<br>solution 2: Two NameNodes(Active and Standby)</p>
 <h4 id="MapReduce-计算框架"><a href="#MapReduce-计算框架" class="headerlink" title="MapReduce: 计算框架"></a>MapReduce: 计算框架</h4><p>split -&gt; Process -&gt; aggregate</p>
 <p>Deamon: Job Tracker &amp; Task Tracker</p>
-<h4 id="Design-Pattern"><a href="#Design-Pattern" class="headerlink" title="Design Pattern"></a>Design Pattern</h4><h3 id="Course-Project"><a href="#Course-Project" class="headerlink" title="Course Project"></a>Course Project</h3>]]></content>
+<h4 id="Design-Pattern"><a href="#Design-Pattern" class="headerlink" title="Design Pattern"></a>Design Pattern</h4><h3 id="Course-Project"><a href="#Course-Project" class="headerlink" title="Course Project"></a>Course Project</h3><p>（未完待续）<br>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
       
         <categories>
             
@@ -131,6 +204,7 @@
 <li>词云</li>
 </ul>
 <h4 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h4><p>本来文章是从几个经典的EDA notebook开始，试图总结出其共性之处，但写来写去，总觉得随便一本跟数据分析相关的书中，探索性数据分析的章节也大概都会涉及到这些内容，但在读书的情景之下又难留下深刻的印象，做分析的真正见地与经验，还是要从实践中来啊。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
       
         <categories>
@@ -232,7 +306,8 @@
 <h4 id="Monitoring"><a href="#Monitoring" class="headerlink" title="Monitoring"></a>Monitoring</h4><p>Monitoring process:</p>
 <p><img src="/img/DevOps/Monitoring.png" alt="Monitoring"></p>
 <h3 id="Additional-Resources"><a href="#Additional-Resources" class="headerlink" title="Additional Resources"></a>Additional Resources</h3><p><a href="https://www.udacity.com/wiki/ud611#!#additional-resources" target="_blank" rel="external">Course Wiki</a></p>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>DevOps从开发和运维合作的角度审视软件开发过程，并提供了一套方法论，涉及开发、测试、部署、维护、监测各个方面。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>DevOps从开发和运维合作的角度审视软件开发过程，并提供了一套方法论，涉及开发、测试、部署、维护、监测各个方面。软件行业，不仅仅是写代码而已。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
       
         <categories>
@@ -301,6 +376,7 @@
 <p>这里强推一下Documents这个应用，结合PDF EXPERT，已经成为了我的文档中心。</p>
 <h3 id="访问Google"><a href="#访问Google" class="headerlink" title="访问Google"></a>访问Google</h3><p>这部分操作相当复杂，主要参考<a href="https://cokebar.info/archives/664" target="_blank" rel="external">这里</a>，感谢博主。</p>
 <h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>这天的活动，本来只有我和上帝知道，再过一个月，就只有上帝知道了。遂作笔记。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
       
         <categories>
@@ -409,7 +485,7 @@
 <blockquote>
 <p>在你眼睛里我找到了童年的梦，<br>如在秋天的园子里找到了迟暮的花……</p>
 </blockquote>
-<p><a href="http://ddlee.cn" target="_blank" rel="external">@ddlee</a></p>
+<p>@<a href="http://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 <p>2017年3月</p>
 ]]></content>
       
@@ -479,7 +555,7 @@
 <p>夜幕已全然降临。猎户座的三星嵌在南面的而天空，月亮瘦成眉毛，挑在树枝上，除此之外，一片看不透的灰色将视野罩的密不透风。</p>
 <p>我瞪着窗外，正出神，二嫂那边却哼了起来，摇起我的手。</p>
 <p>呜呜声。奶奶又回到了回不去的小时候。</p>
-<p><a href="http://ddlee.cn" target="_blank" rel="external">@ddlee</a></p>
+<p>@<a href="http://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 <p>2017年2月</p>
 ]]></content>
       
@@ -558,7 +634,7 @@
 <p>让男孩成为男人的，不是事业，是家业啊。</p>
 <p>大叔突然不说了。他翻了个身，晚安。</p>
 <p>丁丁也回过头，抹了眼睛，退了返程。</p>
-<p><a href="http://ddlee.cn" target="_blank" rel="external">@ddlee</a></p>
+<p>@<a href="http://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 <p>2017年1月</p>
 ]]></content>
       
@@ -638,6 +714,7 @@
 <li><a href="https://developer.android.com/studio/command-line/adb.html" target="_blank" rel="external">ADB Guide</a></li>
 <li><a href="http://www.supersu.com/download" target="_blank" rel="external">SuperSU，用于手机Root</a></li>
 </ul>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
       
         <categories>
@@ -716,13 +793,12 @@
 <li>A collection of Data Science Learning materials in the form of <a href="https://github.com/nborwankar/LearnDataScience" target="_blank" rel="external">IPython Notebooks</a></li>
 <li><a href="http://ufldl.stanford.edu/wiki/index.php/UFLDL_Tutorial" target="_blank" rel="external">Unsupervised Feature Learing and Deep Learning</a></li>
 </ul>
-<p><a href="http://ddlee.cn" target="_blank" rel="external">@ddlee</a></p>
-<p>2016年8月</p>
+<p>@<a href="http://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
       
         <categories>
             
-            <category> Data </category>
+            <category> Data Science </category>
             
         </categories>
         
@@ -780,7 +856,7 @@
 <h4 id="CONKY：桌面监测工具"><a href="#CONKY：桌面监测工具" class="headerlink" title="CONKY：桌面监测工具"></a>CONKY：桌面监测工具</h4><p>推荐<code>Conky</code>，皮肤也有很多，效果如图。</p>
 <p><img src="/img/Ubuntu-3/Conky1.jpg" alt="Conky"></p>
 <p>本系列至此完结。欢迎入坑。</p>
-<p><a href="http://ddlee.cn" target="_blank" rel="external">@ddlee</a></p>
+<p>@<a href="http://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 <p>2016年6月</p>
 ]]></content>
       
@@ -831,8 +907,7 @@
 <h4 id="FireFox用户"><a href="#FireFox用户" class="headerlink" title="FireFox用户"></a>FireFox用户</h4><p>使用FireFox访问<code>extensions.gnome.org</code>时会有运行GNOME shell integration的通知，允许运行后刷新即可。</p>
 <p>更多信息，请参考这一<a href="https://extensions.gnome.org/about/#no-detection" target="_blank" rel="external">页面</a></p>
 <p>安装好<code>tweak-tool</code>后，祝贺你已经打开了新世界的大门。下篇文章是关于扩展插件的推荐，欢迎继续阅读。</p>
-<p><a href="http://ddlee.cn" target="_blank" rel="external">@ddlee</a></p>
-<p>2016年6月</p>
+<p>@<a href="http://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
       
         <categories>
@@ -889,8 +964,7 @@
 <p>桌面的壁纸是电影 <em>飞屋环游记</em> 的海报，使用了Numix系列的主题和图标。</p>
 <p>下方Dock使用的程序是Cairo-Dock，桌面右方运行的程序是Conky，用来监测系统运行情况和提供天气信息，上方的Topbar里添加了许多GNOME的扩展应用。</p>
 <p>接下来的两篇文章将介绍Gnome的安装与扩展推荐，欢迎继续阅读，撒花。</p>
-<p><a href="http://ddlee.cn" target="_blank" rel="external">@ddlee</a></p>
-<p>2016年5月</p>
+<p>@<a href="http://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
       
         <categories>
