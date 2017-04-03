@@ -4,8 +4,256 @@
   
     
     <entry>
+      <title><![CDATA[Coroutine,Generator,Async与Await]]></title>
+      <url>http://blog.ddlee.cn/2017/04/03/Coroutine-Generator-Async%E4%B8%8EAwait/</url>
+      <content type="html"><![CDATA[<h4 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h4><p>Generator能保存自己的状态，进入一种“Paused”状态，再次调用时会继续执行。</p>
+<p>Generator的好处之一是节省了存储空间开销，带一些”流处理”的思想。</p>
+<p>其实，我们也可以对Generator进行传入数据的操作：</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">coro</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    hello <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token string">"Hello"</span>
+    <span class="token keyword">yield</span> hello
+
+c <span class="token operator">=</span> coro<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>next<span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>c<span class="token punctuation">.</span>send<span class="token punctuation">(</span><span class="token string">"World"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre>
+<h4 id="Coroutine"><a href="#Coroutine" class="headerlink" title="Coroutine"></a>Coroutine</h4><p>coroutine可以认为是generator思想的泛化：</p>
+<ul>
+<li>generator一个一个地吐出数据（返回值）</li>
+<li>coroutine一个一个地吃掉数据（传入参数）并返回结果，即可控地执行函数</li>
+</ul>
+<p>关键点在于，generator与coroutine都能保存自己的状态，而这种特点正可以用于任务切换。yield可以看做是操作系统在进行进程管理时的traps:</p>
+<p><img src="/img/coroutine/os.png" alt="traps"></p>
+<p>实际上，coroutine可以看做”用户自定义”的进程，状态、启用和暂停都可控，David Beazley就利用这一点用coroutine实现了Python上的操作系统（参见Reference)。</p>
+<h4 id="Conroutine与Concurrent-Programming"><a href="#Conroutine与Concurrent-Programming" class="headerlink" title="Conroutine与Concurrent Programming"></a>Conroutine与Concurrent Programming</h4><p>Concurrent Programming中有Task的概念，有如下特点：</p>
+<ul>
+<li>独立的控制流</li>
+<li>内部状态变量</li>
+<li>支持计划任务（暂停、恢复执行）</li>
+<li>与其他Task通信</li>
+</ul>
+<pre class=" language-python"><code class="language-python">@coroutine
+<span class="token keyword">def</span> <span class="token function">grep</span><span class="token punctuation">(</span>pattern<span class="token punctuation">)</span><span class="token punctuation">:</span>  <span class="token comment" spellcheck="true">#正则匹配</span>
+    <span class="token keyword">print</span> <span class="token string">"Looking for %s"</span> <span class="token operator">%</span> pattern    
+    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+        line <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">yield</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> pattern <span class="token keyword">in</span> line<span class="token punctuation">:</span>
+            <span class="token keyword">print</span> line<span class="token punctuation">,</span>
+</code></pre>
+<p>conroutine有自己的控制流（while/if），有局部变量（pattern, line），能暂停和恢复（yield()/send()），能相互通信（send()）</p>
+<p>====》coroutine就是一种Task！</p>
+<p>Python Docs中提供了一个例子：</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> asyncio
+
+<span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">compute</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Compute %s + %s ..."</span> <span class="token operator">%</span> <span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">await</span> asyncio<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> x <span class="token operator">+</span> y
+
+<span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">print_sum</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    result <span class="token operator">=</span> <span class="token keyword">await</span> compute<span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"%s + %s = %s"</span> <span class="token operator">%</span> <span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> result<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+loop <span class="token operator">=</span> asyncio<span class="token punctuation">.</span>get_event_loop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+loop<span class="token punctuation">.</span>run_until_complete<span class="token punctuation">(</span>print_sum<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+loop<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<p>执行方式如下图：</p>
+<p><img src="/img/coroutine/tulip_coro.png" alt="Chaining coroutines"></p>
+<p>利用coroutine，可以在一个线程(Task)上实现异步。</p>
+<h4 id="Impletation"><a href="#Impletation" class="headerlink" title="Impletation"></a>Impletation</h4><p>coroutine有两种实现方式，基于generator和原生async, awati关键字。</p>
+<h5 id="generator-based-coroutine"><a href="#generator-based-coroutine" class="headerlink" title="generator based coroutine"></a>generator based coroutine</h5><pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> asyncio
+<span class="token keyword">import</span> datetime
+<span class="token keyword">import</span> random
+
+@asyncio<span class="token punctuation">.</span>coroutine
+<span class="token keyword">def</span> <span class="token function">display_date</span><span class="token punctuation">(</span>num<span class="token punctuation">,</span> loop<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    end_time <span class="token operator">=</span> loop<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">50.0</span>
+    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Loop: {} Time: {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>num<span class="token punctuation">,</span> datetime<span class="token punctuation">.</span>datetime<span class="token punctuation">.</span>now<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>loop<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1.0</span><span class="token punctuation">)</span> <span class="token operator">>=</span> end_time<span class="token punctuation">:</span>
+            <span class="token keyword">break</span>
+        <span class="token keyword">yield</span> <span class="token keyword">from</span> asyncio<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+loop <span class="token operator">=</span> asyncio<span class="token punctuation">.</span>get_event_loop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+asyncio<span class="token punctuation">.</span>ensure_future<span class="token punctuation">(</span>display_date<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> loop<span class="token punctuation">)</span><span class="token punctuation">)</span>
+asyncio<span class="token punctuation">.</span>ensure_future<span class="token punctuation">(</span>display_date<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> loop<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+loop<span class="token punctuation">.</span>run_forever<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<p>上面的程序实现了在同一个线程里交互执行两个函数（sleep），而又能保持各自的状态</p>
+<h5 id="Native-support-python-3-5"><a href="#Native-support-python-3-5" class="headerlink" title="Native support(python 3.5+)"></a>Native support(python 3.5+)</h5><p>只需要修改函数定义头和<code>yield from</code>为关键字<code>await</code>即可。</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">display_date</span><span class="token punctuation">(</span>num<span class="token punctuation">,</span> loop<span class="token punctuation">,</span> <span class="token punctuation">)</span><span class="token punctuation">:</span>
+    end_time <span class="token operator">=</span> loop<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">50.0</span>
+    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Loop: {} Time: {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>num<span class="token punctuation">,</span> datetime<span class="token punctuation">.</span>datetime<span class="token punctuation">.</span>now<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>loop<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1.0</span><span class="token punctuation">)</span> <span class="token operator">>=</span> end_time<span class="token punctuation">:</span>
+            <span class="token keyword">break</span>
+        <span class="token keyword">await</span> asyncio<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre>
+<h4 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h4><p>Coroutine常翻译成“协程”。</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h4><ul>
+<li><a href="http://www.dabeaz.com/coroutines/Coroutines.pdf" target="_blank" rel="external">David Beazley @ PyCon2009 Slides</a></li>
+<li><a href="http://masnun.com/2015/11/13/python-generators-coroutines-native-coroutines-and-async-await.html" target="_blank" rel="external">PYTHON: GENERATORS, COROUTINES, NATIVE COROUTINES AND ASYNC/AWAIT</a></li>
+<li><a href="https://docs.python.org/3/library/asyncio-task.html" target="_blank" rel="external">Python 3.6 Docs: Taks and coroutines</a></li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> Programming </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Python </tag>
+            
+            <tag> 异步 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[500lines项目Crawler源码阅读笔记]]></title>
+      <url>http://blog.ddlee.cn/2017/04/03/500lines%E9%A1%B9%E7%9B%AECrawler%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</url>
+      <content type="html"><![CDATA[<p>源码来自GitHub上著名的Repo: <a href="https://github.com/aosabook/500lines" target="_blank" rel="external">500lines or less</a>。</p>
+<h3 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h3><p><img src="/img/500lines_crawler/500lines_crawler.png" alt="structure"></p>
+<p>代码结构由crawling, crawl, reporting三大部分组成。</p>
+<ul>
+<li>crawl: 驱动，解析传入的参数，管理loop，调用crawler，生成report</li>
+<li>Crawling: 实现crawler类及一系列辅助函数</li>
+<li>reporting： 生成记录</li>
+</ul>
+<h3 id="Crawler类"><a href="#Crawler类" class="headerlink" title="Crawler类"></a>Crawler类</h3><p>Crawler类实现了解析网址，抓取内容等基本功能，利用<code>asyncio</code>库构建<code>coroutine</code>（parse_lings(), fetch(), work()）。</p>
+<p><img src="/img/500lines_crawler/500lines_crawler_class.png" alt="Class Crawler"></p>
+<p>核心之处是组织管理异步的抓取任务，代码块结构如下：</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Crawler</span><span class="token punctuation">:</span>
+  <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> roots<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span> loop<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    self<span class="token punctuation">.</span>q <span class="token operator">=</span> Queue<span class="token punctuation">(</span>loop<span class="token operator">=</span>self<span class="token punctuation">.</span>loop<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 建立队列</span>
+
+  @asyncio<span class="token punctuation">.</span>coroutine
+  <span class="token keyword">def</span> <span class="token function">parse_links</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> response<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">'''从返回内容中解析出要抓取的链接'''</span>
+    body <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token keyword">from</span> response<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> response<span class="token punctuation">.</span>status <span class="token operator">==</span> <span class="token number">200</span><span class="token punctuation">:</span>
+      <span class="token keyword">if</span> content_type<span class="token punctuation">:</span>
+        text <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token keyword">from</span> response<span class="token punctuation">.</span>text<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        urls <span class="token operator">=</span> set<span class="token punctuation">(</span>re<span class="token punctuation">.</span>findall<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span> url <span class="token keyword">in</span> urls<span class="token punctuation">:</span>
+          <span class="token keyword">if</span> self<span class="token punctuation">.</span>url_allowed<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            links<span class="token punctuation">.</span>add<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  @asynico<span class="token punctuation">.</span>coroutine
+  <span class="token keyword">def</span> <span class="token function">fetch</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> url<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">'''访问链接，抓取返回结果'''</span>
+    <span class="token keyword">while</span> tries<span class="token punctuation">:</span>
+      <span class="token keyword">try</span><span class="token punctuation">:</span>
+        response <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token keyword">from</span> self<span class="token punctuation">.</span>session<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+      <span class="token keyword">if</span> is_redirect<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+      <span class="token keyword">else</span><span class="token punctuation">:</span>
+        links <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token keyword">from</span> self<span class="token punctuation">.</span>parse_links<span class="token punctuation">(</span>response<span class="token punctuation">)</span>
+    <span class="token keyword">finally</span><span class="token punctuation">:</span>
+      <span class="token keyword">yield</span> <span class="token keyword">from</span> response<span class="token punctuation">.</span>releas<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  @asyncio<span class="token punctuation">.</span>coroutine
+  <span class="token keyword">def</span> <span class="token function">work</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">'''封装抓取过程，与队列交互'''</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+      <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+        url <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token keyword">from</span> self<span class="token punctuation">.</span>q<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">assert</span> url <span class="token keyword">in</span> self<span class="token punctuation">.</span>seen_urls
+        <span class="token keyword">yield</span> <span class="token keyword">from</span> self<span class="token punctuation">.</span>fetch<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>q<span class="token punctuation">.</span>task_done<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  @asyncio<span class="token punctuation">.</span>coroutine
+  <span class="token keyword">def</span> <span class="token function">crawl</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">'''建立Tasks，启动Task'''</span>
+    workers <span class="token operator">=</span> <span class="token punctuation">[</span>asyncio<span class="token punctuation">.</span>Task<span class="token punctuation">(</span>self<span class="token punctuation">.</span>work<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> loop<span class="token operator">=</span>self<span class="token punctuation">.</span>loop<span class="token punctuation">)</span>
+                <span class="token keyword">for</span> _ <span class="token keyword">in</span> range<span class="token punctuation">(</span>self<span class="token punctuation">.</span>max_tasks<span class="token punctuation">)</span><span class="token punctuation">]</span>
+    <span class="token keyword">yield</span> <span class="token keyword">from</span> self<span class="token punctuation">.</span>q<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<p>下图是我对上述代码结构的理解：</p>
+<p><img src="/img/500lines_crawler/coroutines.png" alt="coroutines"></p>
+<p>对coroutine的进一步介绍，参见<a href="/2017/04/03/Coroutine-Generator-Async与Await/">Coroutine-Generator-Async与Await</a>。</p>
+<h3 id="A-Web-Crawler-With-asyncio-Coroutines导读"><a href="#A-Web-Crawler-With-asyncio-Coroutines导读" class="headerlink" title="A Web Crawler With asyncio Coroutines导读"></a><a href="http://aosabook.org/en/500L/a-web-crawler-with-asyncio-coroutines.html" target="_blank" rel="external">A Web Crawler With asyncio Coroutines</a>导读</h3><p>文章整体结构：</p>
+<ul>
+<li>分析爬虫任务</li>
+<li><ul>
+<li>传统方式：抢锁</li>
+</ul>
+</li>
+<li><ul>
+<li>异步方式的特点：无锁；单线程上同时运行多操作</li>
+</ul>
+</li>
+<li>回调函数：fetch(),connecte(),read_response()的实现</li>
+<li>Coroutine</li>
+<li><ul>
+<li>Generator的工作原理</li>
+</ul>
+</li>
+<li><ul>
+<li>用Generator实现Coroutine</li>
+</ul>
+</li>
+<li>Asyncio库中的Coroutine</li>
+<li><ul>
+<li>crawl()</li>
+</ul>
+</li>
+<li><ul>
+<li>work()</li>
+</ul>
+</li>
+<li><ul>
+<li>fetch(), handle redirections</li>
+</ul>
+</li>
+<li><ul>
+<li>Queue()</li>
+</ul>
+</li>
+<li><ul>
+<li>EventLoop()</li>
+</ul>
+</li>
+<li><ul>
+<li>Task()</li>
+</ul>
+</li>
+<li>Conclusion</li>
+</ul>
+<p>文章最后，作者点明了主题思想：</p>
+<blockquote>
+<p>Increasingly often, modern programs are I/O-bound instead of CPU-bound. For such programs, Python threads are the worst of both worlds: the global interpreter lock prevents them from actually executing computations in parallel, and preemptive switching makes them prone to races. Async is often the right pattern. But as callback-based async code grows, it tends to become a dishevelled mess. Coroutines are a tidy alternative. They factor naturally into subroutines, with sane exception handling and stack traces.</p>
+</blockquote>
+<p>大意是说，对I/O密集型的程序，Python多线程在两方面令人失望：全局锁的设定使之不能真正并行；抢占式多任务处理机制又让多个线程间形成竞争关系。异步通常是正确的选择。但持续增长的回调函数会使代码丧失可读性，Coroutine便是一种保持整洁性的替代方案。</p>
+<h4 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h4><p>这样说，Python的多线程效率带来的提高只是Python程序抢占了系统中非Python进程的资源（参考召集一波狐朋狗友帮你抢选修课），多个线程提高了Python作为一个整体在系统资源调配中的竞争力。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Programming </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Python </tag>
+            
+            <tag> 爬虫 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Feedly+Reeder3+FeedMe:信息获取与处理]]></title>
-      <url>http://blog.ddlee.cn/2017/04/03/Feedly-Reeder3-%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96%E4%B8%8E%E5%A4%84%E7%90%86/</url>
+      <url>http://blog.ddlee.cn/2017/04/03/Feedly-Reeder3-FeedMe-%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96%E4%B8%8E%E5%A4%84%E7%90%86/</url>
       <content type="html"><![CDATA[<p>我蛮早就意识到自己被信息淹没了。于是关了票圈，屏蔽了空间，不装任何新闻APP，失去效力的微信群一概不留，知乎上的关注也缩减了很多很多。</p>
 <blockquote>
 <p>世界终于清静了。</p>
@@ -54,6 +302,14 @@
 <p>收藏的文章存到Evernote，打好tags，长篇干货/可反复参考的转到OneNote。</p>
 <h3 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h3><p>其他情境下遇到的好文章、信息等尽量文字存到Google Keep，链接存到Inbox，或者给自己写封邮件。</p>
 <p>微信的Favorite尽量不用，收藏的目的就在于情景分离，在不同的上下文中，我门信息获取的效率和质量区别实在太大了。详情参考拉微信群异地参加美赛的战友们。</p>
+<p>最后推荐几个不错的订阅源(右击复制链接)：</p>
+<ul>
+<li><a href="http://www.sbnation.com/authors/mike-prada/rss" target="_blank" rel="external">SBNation上Mike Prada的文章</a>: 对NBA比赛、球队战术的分析</li>
+<li><a href="http://rsarxiv.github.io/atom.xml" target="_blank" rel="external">Paper Weekly</a>: 机器学习方面的论文解读</li>
+<li><a href="http://cos.name/feed/" target="_blank" rel="external">统计之都</a>: 统计学及应用、R语言方面的优秀内容</li>
+<li><a href="http://github-trends.ryotarai.info/rss/github_trends_all_weekly.rss" target="_blank" rel="external">GitHub Trends</a></li>
+<li><a href="https://blog.ddlee.cn/atom.xml">blog.ddlee.cn</a>: 大言不惭 -_-！</li>
+</ul>
 <p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
       
@@ -76,7 +332,7 @@
     
     <entry>
       <title><![CDATA[网站迁移小记：腾讯云+Debian+Vestacp]]></title>
-      <url>http://blog.ddlee.cn/2017/04/02/%E7%BD%91%E7%AB%99%E8%BF%81%E7%A7%BB%E5%B0%8F%E8%AE%A1%EF%BC%9A%E8%85%BE%E8%AE%AF%E4%BA%91-Debian-Vestacp/</url>
+      <url>http://blog.ddlee.cn/2017/04/02/%E7%BD%91%E7%AB%99%E8%BF%81%E7%A7%BB%E5%B0%8F%E8%AE%B0%EF%BC%9A%E8%85%BE%E8%AE%AF%E4%BA%91-Debian-Vestacp/</url>
       <content type="html"><![CDATA[<p>先贴一张文章大纲。</p>
 <p><img src="/img/Website-Migeration/structure.png" alt="structure"></p>
 <p>这是一个樱花开得正好但我很蛋疼的下午。</p>
@@ -90,8 +346,11 @@
 <p>腾讯的主机1核CPU，2G内存，20G系统盘（Linux），挂个网站还算够用。</p>
 <h4 id="SSH-Key-配置"><a href="#SSH-Key-配置" class="headerlink" title="SSH Key 配置"></a>SSH Key 配置</h4><p>建议在配置主机前创建一个SSH Key，这样访问起来安全又省心。</p>
 <p>Linux系统下，在<code>~/.ssh/</code>下新建<code>config</code>，写入如下类似内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Host Name</div><div class="line">  HostName Host_IP</div><div class="line">  User root</div><div class="line">  IdentityFile path/to/ssh_private_key</div></pre></td></tr></table></figure>
-<p>这样就可以通过命令<code>ssh Name</code>直接访问主机。</p>
+<pre><code>Host Name
+  HostName Host_IP
+  User root
+  IdentityFile path/to/ssh_private_key
+</code></pre><p>这样就可以通过命令<code>ssh Name</code>直接访问主机。</p>
 <h4 id="系统选择"><a href="#系统选择" class="headerlink" title="系统选择"></a>系统选择</h4><p>建议选择Linux主机。具体哪一系可自行选择，我的选择是Debian，CentOS也是个不错的选择。</p>
 <h4 id="安全组设置"><a href="#安全组设置" class="headerlink" title="安全组设置"></a>安全组设置</h4><p>建议先只开启用于SSH的22端口，之后再开HTTP访问的80端口，FTP的20,21端口和主机面板所用端口。</p>
 <p>如果个人有代理服务器的话，也可以限制一下来源IP，这样可以通过登入代理服务器，在代理服务器上通过SSH登入WEB主机，需要迁移下SSH Private Key，可以通过命令<code>scp usr1@host1:/path1 usr2@host2:/path2</code>实现。</p>
@@ -117,10 +376,29 @@
 <p>在Cerbot主页可以选择自己的操作系统，会有详细的步骤，在此不表。</p>
 <p>下面谈两个问题，一是强制重定向至HTTPS，二是取消管理端口的HTTPS。</p>
 <h6 id="强制HTTPS"><a href="#强制HTTPS" class="headerlink" title="强制HTTPS"></a>强制HTTPS</h6><p>Vestacp的架构是用nginx做proxy，Apache2做HTTP Server，首先下载nginx template（proxy template）：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/vesta/data/templates/web</div><div class="line">wget http://c.vestacp.com/0.9.8/rhel/force-https/nginx.tar.gz</div><div class="line">tar -xzvf nginx.tar.gz</div><div class="line">rm -f nginx.tar.gz</div></pre></td></tr></table></figure>
+<pre class=" language-bash"><code class="language-bash"><span class="token function">cd</span> /usr/local/vesta/data/templates/web
+<span class="token function">wget</span> http://c.vestacp.com/0.9.8/rhel/force-https/nginx.tar.gz
+<span class="token function">tar</span> -xzvf nginx.tar.gz
+<span class="token function">rm</span> -f nginx.tar.gz
+</code></pre>
 <p>之后在Package配置里，将proxy template配置为force-https，这样，身份由相应Package定义的用户建站时，proxy template就是用的强制HTTPS版本了。</p>
-<h6 id="取消管理端口的SSL"><a href="#取消管理端口的SSL" class="headerlink" title="取消管理端口的SSL"></a>取消管理端口的SSL</h6><p>用chrome访问管理页面时，会有Unsecure的警告，这里的SSL在<code>/usr/local/vesta/nginx/conf/nginx.conf</code>中配置。找到<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># Vhost</div><div class="line">server &#123;</div><div class="line">    listen          8083;</div><div class="line">    server_name     _;</div><div class="line">    root            /usr/local/vesta/web;</div><div class="line">    charset         utf-8;</div><div class="line"></div><div class="line">    # Fix error &quot;The plain HTTP request was sent to HTTPS port&quot;</div><div class="line">    error_page      497 https://$host:$server_port$request_uri;</div><div class="line"></div><div class="line">    # ssl                  on;</div><div class="line">    # ssl_certificate      /usr/local/vesta/ssl/certificate.crt;</div><div class="line">    # ssl_certificate_key  /usr/local/vesta/ssl/certificate.key;</div><div class="line">    # ssl_session_cache    shared:SSL:10m;</div><div class="line">    # ssl_session_timeout  10m;</div></pre></td></tr></table></figure></p>
-<p>将配置SSL的几行注释掉即可。顺便，管理页面的端口也可以在这里更改。之后运行<code>service vesta restart</code>重启服务。</p>
+<h6 id="取消管理端口的SSL"><a href="#取消管理端口的SSL" class="headerlink" title="取消管理端口的SSL"></a>取消管理端口的SSL</h6><p>用chrome访问管理页面时，会有Unsecure的警告，这里的SSL在<code>/usr/local/vesta/nginx/conf/nginx.conf</code>中配置。找到</p>
+<pre><code># Vhost
+server {
+    listen          8083;
+    server_name     _;
+    root            /usr/local/vesta/web;
+    charset         utf-8;
+
+    # Fix error &quot;The plain HTTP request was sent to HTTPS port&quot;
+    error_page      497 https://$host:$server_port$request_uri;
+
+    # ssl                  on;
+    # ssl_certificate      /usr/local/vesta/ssl/certificate.crt;
+    # ssl_certificate_key  /usr/local/vesta/ssl/certificate.key;
+    # ssl_session_cache    shared:SSL:10m;
+    # ssl_session_timeout  10m;
+</code></pre><p>将配置SSL的几行注释掉即可。顺便，管理页面的端口也可以在这里更改。之后运行<code>service vesta restart</code>重启服务。</p>
 <h3 id="域名与DNS"><a href="#域名与DNS" class="headerlink" title="域名与DNS"></a>域名与DNS</h3><p>最后简单提一下域名注册跟DNS。要注意的几个点：</p>
 <ul>
 <li>国内域名注册要备案，很烦，但cn域名好便宜。</li>
@@ -154,8 +432,8 @@
     </entry>
     
     <entry>
-      <title><![CDATA[hadoop学习速记]]></title>
-      <url>http://blog.ddlee.cn/2017/03/30/hadoop%E5%AD%A6%E4%B9%A0%E9%80%9F%E8%AE%B0/</url>
+      <title><![CDATA[HADOOP学习速记]]></title>
+      <url>http://blog.ddlee.cn/2017/03/30/HADOOP%E5%AD%A6%E4%B9%A0%E9%80%9F%E8%AE%B0/</url>
       <content type="html"><![CDATA[<h4 id="HDFS-分布式文件系统"><a href="#HDFS-分布式文件系统" class="headerlink" title="HDFS: 分布式文件系统"></a>HDFS: 分布式文件系统</h4><p>NameNode, DataNode: a MetaData-Data Model<br>Strategy: Block split, multi-copy, distribution</p>
 <p>NameNode: High Availability<br>solution 1: backup using NFS<br>solution 2: Two NameNodes(Active and Standby)</p>
 <h4 id="MapReduce-计算框架"><a href="#MapReduce-计算框架" class="headerlink" title="MapReduce: 计算框架"></a>MapReduce: 计算框架</h4><p>split -&gt; Process -&gt; aggregate</p>
@@ -328,6 +606,126 @@
     </entry>
     
     <entry>
+      <title><![CDATA[Python与SQL_Server的交互：pyODBC, pymssql, SQLAlchemy]]></title>
+      <url>http://blog.ddlee.cn/2017/03/16/Python%E4%B8%8ESQL_Server%E7%9A%84%E4%BA%A4%E4%BA%92%EF%BC%9ApyODBC,%20pymssql,%20SQLAlchemy/</url>
+      <content type="html"><![CDATA[<p>Windows平台下Python读取、写入SQL Server相关的函数库，文章结构如下：</p>
+<p><img src="/img/Python+SQLserver/Python+SQL_Server.png" alt="Python+SQLserver"></p>
+<h3 id="Python-Drivers"><a href="#Python-Drivers" class="headerlink" title="Python Drivers"></a>Python Drivers</h3><h4 id="PyODBC"><a href="#PyODBC" class="headerlink" title="PyODBC"></a>PyODBC</h4><p>Annaconda下可以用<code>pip install pyodbc</code>安装，也可以到<a href="https://www.microsoft.com/en-us/download/details.aspx?id=50420" target="_blank" rel="external">这里</a>下载。</p>
+<p>首先建立<code>connection</code>对象：</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> pyodbc
+conn <span class="token operator">=</span> pyodbc<span class="token punctuation">.</span>connect<span class="token punctuation">(</span>
+    r<span class="token string">'DRIVER={ODBC Driver 11 for SQL Server};'</span>  <span class="token comment" spellcheck="true">#or {ODBC Driver 13 for SQL Server}</span>
+    r<span class="token string">'SERVER=ServerHostName;'</span>
+    r<span class="token string">'DATABASE=DBName;'</span>
+    r<span class="token string">'UID=user;'</span>
+    r<span class="token string">'PWD=password'</span>
+    <span class="token punctuation">)</span>
+</code></pre>
+<p>添加游标（Cursor）对象并执行SQL查询语句：</p>
+<pre class=" language-python"><code class="language-python">cursor <span class="token operator">=</span> conn<span class="token punctuation">.</span>cursor<span class="token punctuation">(</span><span class="token punctuation">)</span>
+cursor<span class="token punctuation">.</span>execute<span class="token punctuation">(</span><span class="token string">'SQL Query Goes Here'</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> row <span class="token keyword">in</span> cursor<span class="token punctuation">.</span>fetchall<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+  <span class="token keyword">print</span><span class="token punctuation">(</span>rows<span class="token punctuation">.</span><span class="token punctuation">[</span>column name<span class="token punctuation">]</span><span class="token punctuation">)</span>
+</code></pre>
+<p>更多信息参见<a href="https://docs.microsoft.com/en-us/sql/connect/python/pyodbc/python-sql-driver-pyodbc" target="_blank" rel="external">MSDN DOCs</a>。</p>
+<h4 id="pymssql"><a href="#pymssql" class="headerlink" title="pymssql"></a>pymssql</h4><p>同样可以用<code>pip install pymssql</code>安装，也可以到<a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#pymssql" target="_blank" rel="external">这里</a>，然后用<code>pip</code>安装<code>wheel</code>文件。</p>
+<p>pymssql目前还不支持Python3.6，这点要注意下。</p>
+<p>pymssql的用法跟pyODBC很像，下面是官网给出的例子：</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> os <span class="token keyword">import</span> getenv
+<span class="token keyword">import</span> pymssql
+
+server <span class="token operator">=</span> getenv<span class="token punctuation">(</span><span class="token string">"PYMSSQL_TEST_SERVER"</span><span class="token punctuation">)</span>
+user <span class="token operator">=</span> getenv<span class="token punctuation">(</span><span class="token string">"PYMSSQL_TEST_USERNAME"</span><span class="token punctuation">)</span>
+password <span class="token operator">=</span> getenv<span class="token punctuation">(</span><span class="token string">"PYMSSQL_TEST_PASSWORD"</span><span class="token punctuation">)</span>
+
+conn <span class="token operator">=</span> pymssql<span class="token punctuation">.</span>connect<span class="token punctuation">(</span>server<span class="token punctuation">,</span> user<span class="token punctuation">,</span> password<span class="token punctuation">,</span> <span class="token string">"tempdb"</span><span class="token punctuation">)</span>
+cursor <span class="token operator">=</span> conn<span class="token punctuation">.</span>cursor<span class="token punctuation">(</span><span class="token punctuation">)</span>
+cursor<span class="token punctuation">.</span>execute<span class="token punctuation">(</span><span class="token triple-quoted-string string">"""
+IF OBJECT_ID('persons', 'U') IS NOT NULL
+    DROP TABLE persons
+CREATE TABLE persons (
+    id INT NOT NULL,
+    name VARCHAR(100),
+    salesrep VARCHAR(100),
+    PRIMARY KEY(id)
+)
+"""</span><span class="token punctuation">)</span>
+cursor<span class="token punctuation">.</span>executemany<span class="token punctuation">(</span>
+    <span class="token string">"INSERT INTO persons VALUES (%d, %s, %s)"</span><span class="token punctuation">,</span>
+    <span class="token punctuation">[</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">'John Smith'</span><span class="token punctuation">,</span> <span class="token string">'John Doe'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+     <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">'Jane Doe'</span><span class="token punctuation">,</span> <span class="token string">'Joe Dog'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+     <span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">'Mike T.'</span><span class="token punctuation">,</span> <span class="token string">'Sarah H.'</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true"># you must call commit() to persist your data if you don't set autocommit to True</span>
+conn<span class="token punctuation">.</span>commit<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+cursor<span class="token punctuation">.</span>execute<span class="token punctuation">(</span><span class="token string">'SELECT * FROM persons WHERE salesrep=%s'</span><span class="token punctuation">,</span> <span class="token string">'John Doe'</span><span class="token punctuation">)</span>
+row <span class="token operator">=</span> cursor<span class="token punctuation">.</span>fetchone<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">while</span> row<span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"ID=%d, Name=%s"</span> <span class="token operator">%</span> <span class="token punctuation">(</span>row<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> row<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    row <span class="token operator">=</span> cursor<span class="token punctuation">.</span>fetchone<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+conn<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<p>详细用法参见<a href="http://www.pymssql.org/en/stable/index.html" target="_blank" rel="external">pymssql docs</a>和<a href="https://docs.microsoft.com/en-us/sql/connect/python/pymssql/python-sql-driver-pymssql" target="_blank" rel="external">MSDN DOCs</a></p>
+<h4 id="SQLAlchemy-Python-SQL-Toolkit"><a href="#SQLAlchemy-Python-SQL-Toolkit" class="headerlink" title="SQLAlchemy(Python SQL Toolkit)"></a><a href="https://www.sqlalchemy.org/" target="_blank" rel="external">SQLAlchemy</a>(Python SQL Toolkit)</h4><p>SQLAlchemy提供了一系列丰富、完整、（我看不懂）的API用于数据库操作。这里只谈其<code>create_engine</code>方法。</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> sqlalchemy <span class="token keyword">import</span> create_engine
+<span class="token comment" spellcheck="true"># pyodbc</span>
+engine <span class="token operator">=</span> create_engine<span class="token punctuation">(</span><span class="token string">'mssql+pyodbc://user:password@DSNname'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#需要配置DSN，参见最后一节</span>
+
+<span class="token comment" spellcheck="true"># pymssql</span>
+engine <span class="token operator">=</span> create_engine<span class="token punctuation">(</span><span class="token string">'mssql+pymssql://user:password@Hostname:port/DBname'</span><span class="token punctuation">)</span>
+</code></pre>
+<p>利用创建好的<code>engine</code>，可以结合pandas库进行批量的读取、写入操作。</p>
+<p>用SQLAlchemy与其他类型的数据库建立链接的方法参见<a href="http://docs.sqlalchemy.org/en/latest/core/engines.html" target="_blank" rel="external">这里</a>。</p>
+<h4 id="Pandas"><a href="#Pandas" class="headerlink" title="Pandas"></a>Pandas</h4><p>利用pyODBC和pymssql拉取的对象需要进一步处理才能进行常见的数据清洗等工作，而Pandas也提供了SQL相关的方法，在SQLAlchemy的辅助下，可以将<code>DataFrame</code>对象直接写入table。</p>
+<h5 id="读取：pd-read-sql"><a href="#读取：pd-read-sql" class="headerlink" title="读取：pd.read_sql()"></a>读取：pd.read_sql()</h5><p><a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_sql.html" target="_blank" rel="external">API</a>：</p>
+<pre class=" language-python"><code class="language-python">pandas<span class="token punctuation">.</span>read_sql<span class="token punctuation">(</span>sql<span class="token punctuation">,</span> con<span class="token punctuation">,</span> index_col<span class="token operator">=</span>None<span class="token punctuation">,</span> coerce_float<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> params<span class="token operator">=</span>None<span class="token punctuation">,</span> parse_dates<span class="token operator">=</span>None<span class="token punctuation">,</span> columns<span class="token operator">=</span>None<span class="token punctuation">,</span> chunksize<span class="token operator">=</span>None<span class="token punctuation">)</span>
+</code></pre>
+<p>其中的<code>con</code>参数，可以传入SQLAlchemy建立的<code>engine</code>对象，也可以是pyODBC或者pymssql建立的<code>DBAPI2 connection</code>对象。</p>
+<h5 id="写入-pd-DataFrame-to-sql"><a href="#写入-pd-DataFrame-to-sql" class="headerlink" title="写入:pd.DataFrame.to_sql()"></a>写入:pd.DataFrame.to_sql()</h5><p><a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.to_sql.html" target="_blank" rel="external">API</a>:</p>
+<pre class=" language-python"><code class="language-python">DataFrame<span class="token punctuation">.</span>to_sql<span class="token punctuation">(</span>name<span class="token punctuation">,</span> con<span class="token punctuation">,</span> flavor<span class="token operator">=</span>None<span class="token punctuation">,</span> schema<span class="token operator">=</span>None<span class="token punctuation">,</span> if_exists<span class="token operator">=</span><span class="token string">'fail'</span><span class="token punctuation">,</span> index<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> index_label<span class="token operator">=</span>None<span class="token punctuation">,</span> chunksize<span class="token operator">=</span>None<span class="token punctuation">,</span> dtype<span class="token operator">=</span>None<span class="token punctuation">)</span>
+</code></pre>
+<p>这里的<code>con</code>参数，只支持sqlite3的<code>DBAPI2 connection</code>对象，支持所有的<code>SQLAlchemy engine</code>对象。<br><code>name</code>参数传入表名，用<code>if_exists</code>参数控制表存在时的动作：</p>
+<ul>
+<li><code>‘fail’</code>: 啥也不干。</li>
+<li><code>’replace‘</code>: 将原有表删除，新建表，插入数据。</li>
+<li><code>’append&#39;</code>: 在表中插入数据。表不存在时新建表。</li>
+</ul>
+<h3 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h3><p>利用<code>Sqlcmd</code>命令，也可以在命令行下执行SQL文件，用法如下：</p>
+<pre class=" language-bash"><code class="language-bash">sqlcmd -U user -P password -S server -d DBName -i /path/to/myScript.sql
+</code></pre>
+<p>这样可以有如下思路，将数据写入.SQL文件，再生成.bat文件（批量）写入上述命令，之后完成执行。</p>
+<h3 id="DSN"><a href="#DSN" class="headerlink" title="DSN"></a>DSN</h3><p>Windows下可以配置DSN(Data Source Names)预先存储数据库连接的信息，在<em>Control Panel</em> -&gt; <em>Administrative Tools</em> -&gt; <em>ODBC Data Source</em> 下添加即可。</p>
+<p>配置好DSN后，pyODBC的连接过程可以简化为：</p>
+<pre class=" language-python"><code class="language-python">conn <span class="token operator">=</span> pyodbc<span class="token punctuation">.</span>connect<span class="token punctuation">(</span>r<span class="token string">'DSN=DSNname;UID=user;PWD=password'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#UID和PWD也可以在DSN中配置</span>
+</code></pre>
+<h3 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h3><p>Python与文件的IO、SQL数据库的读写时有中文字符可能会有编码问题。一种方案是在中文字符串前添加N，如<code>N&#39;python大法好&#39;</code>；另一种方案是传入<code>encoding</code>参数，常用的中文编码有<code>GB2123</code>，<code>GB18030</code>，推荐的还是统一用<code>UTF-8</code>编码、解码。</p>
+<p>利用如下命令，可以在SQLAlchemy中指定编码：</p>
+<pre class=" language-python"><code class="language-python">engine <span class="token operator">=</span> create_engine<span class="token punctuation">(</span><span class="token string">'mssql+pymssql://user:password@HostName\DBname'</span><span class="token punctuation">,</span> connect_args <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">'charset'</span><span class="token punctuation">:</span><span class="token string">'utf-8'</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<p>其他自定义<code>DBAPI connect()</code>参数的方法参见<a href="http://docs.sqlalchemy.org/en/latest/core/engines.html#custom-dbapi-connect-arguments" target="_blank" rel="external">这里</a>。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Data Science </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Python </tag>
+            
+            <tag> SQL </tag>
+            
+            <tag> 数据库 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[再次折腾我的WNDR4300：OpenWrt文件共享]]></title>
       <url>http://blog.ddlee.cn/2017/03/12/%E5%86%8D%E6%AC%A1%E6%8A%98%E8%85%BE%E6%88%91%E7%9A%84WNDR4300/</url>
       <content type="html"><![CDATA[<blockquote>
@@ -337,18 +735,18 @@
 <h3 id="重新安装OpenWrt"><a href="#重新安装OpenWrt" class="headerlink" title="重新安装OpenWrt"></a>重新安装OpenWrt</h3><p>OpenWrt已经到了<code>15.05</code>版本，版本代号是<code>Chaos Calmer</code>。重装需要的<code>-factory.img</code>，可以在<a href="https://downloads.openwrt.org/chaos_calmer/15.05/" target="_blank" rel="external">这里</a>下载。</p>
 <p>我的WNDR4300平台是<code>ar71xx</code>，可以从OpenWrt对应的<a href="https://wiki.openwrt.org/toh/hwdata/netgear/netgear_wndr4300_v1" target="_blank" rel="external">硬件主页</a>找到固件镜像文件。</p>
 <h4 id="TFTP重装"><a href="#TFTP重装" class="headerlink" title="TFTP重装"></a>TFTP重装</h4><p>如果你的路由器还是出厂系统的话，可以通过登入后台在线上传镜像文件进行刷机，而我的已经是OpenWrt系统，只能通过网页端升级，故选用了TFTP方式刷机。</p>
-<p>刷机步骤摘自<a href="https://wiki.openwrt.org/toh/netgear/wndr4300" target="_blank" rel="external">OpenWrt wiki</a><br>&gt;</p>
+<p>刷机步骤摘自<a href="https://wiki.openwrt.org/toh/netgear/wndr4300" target="_blank" rel="external">OpenWrt wiki</a></p>
+<p>&gt;</p>
+<blockquote>
 <ol>
 <li>set a static IP on your computer, i.e 192.168.1.35, and connect the ethernet cable to the router</li>
 <li>power on the router</li>
 <li>press and hold the RESET button as soon as the switch LEDs light up.</li>
 <li>keep holding RESET until the power LED begins to flash orange and then green.</li>
 <li>once the power LED is flashing green, release RESET</li>
-<li>start the TFTP transfer to router at 192.168.1.1. In your computer execute:<blockquote>
-<p><code>tftp 192.168.1.1 -m binary -c put factory.img</code></p>
-</blockquote>
-</li>
+<li>start the TFTP transfer to router at 192.168.1.1. In your computer execute:<br><code>tftp 192.168.1.1 -m binary -c put factory.img</code></li>
 </ol>
+</blockquote>
 <p>总体来说是分为三步：</p>
 <ol>
 <li>将电脑与路由器设置在同一内网中</li>
@@ -357,20 +755,65 @@
 </ol>
 <h3 id="U盘挂载，文件共享"><a href="#U盘挂载，文件共享" class="headerlink" title="U盘挂载，文件共享"></a>U盘挂载，文件共享</h3><p>安装好OpenWrt后，就可以从网页端访问路由器，设置PPPoE拨号，设置WIFI等等。</p>
 <h4 id="U盘挂载"><a href="#U盘挂载" class="headerlink" title="U盘挂载"></a>U盘挂载</h4><p>U盘挂载部分主要参考了<a href="https://my.oschina.net/umu618/blog/282984" target="_blank" rel="external">跟 UMU 一起玩 OpenWRT（入门篇6）：挂接 U 盘</a>。</p>
-<p>首先是安装相应的包：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">opkg update</div><div class="line"></div><div class="line"># 核心包</div><div class="line">opkg install kmod-usb-storage</div><div class="line">opkg install kmod-scsi-generic</div><div class="line"></div><div class="line"># 文件系统</div><div class="line">opkg install kmod-fs-ext4</div><div class="line"></div><div class="line"># 辅助工具</div><div class="line">opkg install usbutils fdisk e2fsprogs</div></pre></td></tr></table></figure></p>
+<p>首先是安装相应的包：</p>
+<pre class=" language-bash"><code class="language-bash">opkg update
+
+<span class="token comment" spellcheck="true"># 核心包</span>
+opkg <span class="token function">install</span> kmod-usb-storage
+opkg <span class="token function">install</span> kmod-scsi-generic
+
+<span class="token comment" spellcheck="true"># 文件系统</span>
+opkg <span class="token function">install</span> kmod-fs-ext4
+
+<span class="token comment" spellcheck="true"># 辅助工具</span>
+opkg <span class="token function">install</span> usbutils <span class="token function">fdisk</span> e2fsprogs
+</code></pre>
 <p>利用<code>lsusb</code>命令查看U盘是否已经被路由器识别。</p>
 <p>这时可以选择用fdisk进行重新分区，不需要分区的话，可以用命令<code>ls /dev | grep sd</code>查看/dev分区中是否已经出现U盘。</p>
-<p>在OpenWrt上使用U盘，建议用ext4格式，可以用下面的命令进行格式化：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># sda1为上一命令得到的结果</div><div class="line">mkfs.ext4 /dev/sda1</div></pre></td></tr></table></figure></p>
-<p>接下来就可以用<code>mount</code>命令进行挂载了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># 路径/mnt/usb/即为挂载目标点</div><div class="line">mkdir /mnt/usb</div><div class="line">touch /mnt/usb/USB_DISK_NOT_PRESENT</div><div class="line">chmod 555 /mnt/usb</div><div class="line">chmod 444 /mnt/usb/USB_DISK_NOT_PRESENT</div><div class="line">mount /dev/sda1 /mnt/usb</div></pre></td></tr></table></figure></p>
-<p>这时可以测试一下，如果U盘里面存储了文件，可以通过<code>/mnt/usb</code>访问的到。</p>
-<p>下面是开机自动挂载U盘的命令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># block-mount blkid用于查看U盘的UUID</div><div class="line">opkg install block-mount blkid</div><div class="line"></div><div class="line"># 实际上要操作的是fstab的配置文件/etc/config/fstab，要将enabled值改成1</div><div class="line">block detect &gt; /etc/config/fstab</div><div class="line">uci set fstab.@mount[-1].target=&apos;/mnt/usb&apos; u</div><div class="line">ci set fstab.@mount[-1].enabled=1</div><div class="line">uci commit fstab</div></pre></td></tr></table></figure></p>
+<p>在OpenWrt上使用U盘，建议用ext4格式，可以用下面的命令进行格式化：</p>
+<pre><code># sda1为上一命令得到的结果
+mkfs.ext4 /dev/sda1
+</code></pre><p>接下来就可以用<code>mount</code>命令进行挂载了：</p>
+<pre><code># 路径/mnt/usb/即为挂载目标点
+mkdir /mnt/usb
+touch /mnt/usb/USB_DISK_NOT_PRESENT
+chmod 555 /mnt/usb
+chmod 444 /mnt/usb/USB_DISK_NOT_PRESENT
+mount /dev/sda1 /mnt/usb
+</code></pre><p>这时可以测试一下，如果U盘里面存储了文件，可以通过<code>/mnt/usb</code>访问的到。</p>
+<p>下面是开机自动挂载U盘的命令。</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># block-mount blkid用于查看U盘的UUID</span>
+opkg <span class="token function">install</span> block-mount blkid
+
+<span class="token comment" spellcheck="true"># 实际上要操作的是fstab的配置文件/etc/config/fstab，要将enabled值改成1</span>
+block detect <span class="token operator">></span> /etc/config/fstab
+uci <span class="token keyword">set</span> fstab.@mount<span class="token punctuation">[</span>-1<span class="token punctuation">]</span>.target<span class="token operator">=</span><span class="token string">'/mnt/usb'</span> u
+ci <span class="token keyword">set</span> fstab.@mount<span class="token punctuation">[</span>-1<span class="token punctuation">]</span>.enabled<span class="token operator">=</span>1
+uci commit fstab
+</code></pre>
 <p>更详细的信息可以参见<a href="http://wiki.openwrt.org/doc/uci/fstab" target="_blank" rel="external">这里</a></p>
 <h4 id="文件共享"><a href="#文件共享" class="headerlink" title="文件共享"></a>文件共享</h4><p>文件共享可以通过FTP和SAMBA，推荐的方式是SAMBA。</p>
-<h5 id="SAMBA"><a href="#SAMBA" class="headerlink" title="SAMBA"></a>SAMBA</h5><p>安转SAMBA：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">opkg update</div><div class="line">opkg install samba36-server</div><div class="line"></div><div class="line"># luci程序，可选</div><div class="line">opkg install luci-app-samba</div></pre></td></tr></table></figure></p>
+<h5 id="SAMBA"><a href="#SAMBA" class="headerlink" title="SAMBA"></a>SAMBA</h5><p>安转SAMBA：</p>
+<pre class=" language-bash"><code class="language-bash">opkg update
+opkg <span class="token function">install</span> samba36-server
+
+<span class="token comment" spellcheck="true"># luci程序，可选</span>
+opkg <span class="token function">install</span> luci-app-samba
+</code></pre>
 <p>安装好SAMBA后，主要配置两个参数，一是共享文件夹的路径，如<code>/mnt/usb/sambashare</code>，可以通过更改配置文件<code>/etc/samba/smb.conf</code>实现，也可以通过luci实现。</p>
-<p>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[sambashare]</div><div class="line">path = /mnt/usb/sambashare</div><div class="line">valid users = root</div><div class="line">read only = no</div><div class="line">guest ok = yes</div><div class="line">create mask = 0750</div><div class="line">directory mask = 0750</div></pre></td></tr></table></figure></p>
-<p>第二个参数是访问账户，可以通过命令<code>sambpasswd -a</code>将你的当前用户加入到SAMBA的组中，需要设置一个密码。另外，可能需要将配置文件<code>/etc/samba/smb.conf</code>的[global]中的<code>invalid users = root</code>注释掉。</p>
-<p>最后，设置SAMBA服务启动和开机自启<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/etc/init.d/samba start</div><div class="line">/etc/init.d/samba enable</div></pre></td></tr></table></figure></p>
+<p>示例：</p>
+<pre><code>[sambashare]
+path = /mnt/usb/sambashare
+valid users = root
+read only = no
+guest ok = yes
+create mask = 0750
+directory mask = 0750
+</code></pre><p>第二个参数是访问账户，可以通过命令<code>sambpasswd -a</code>将你的当前用户加入到SAMBA的组中，需要设置一个密码。另外，可能需要将配置文件<code>/etc/samba/smb.conf</code>的[global]中的<code>invalid users = root</code>注释掉。</p>
+<p>最后，设置SAMBA服务启动和开机自启</p>
+<pre class=" language-bash"><code class="language-bash">/etc/init.d/samba start
+/etc/init.d/samba <span class="token function">enable</span>
+</code></pre>
 <h5 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h5><p>FTP可以用<code>vsftpd</code>包来设置，大致过程与SAMBA类似：设置路径、添加用户、设置自启。</p>
 <p>SAMBA服务可以在Windows文件资源管理器中自动检测的到，Linux下可以通过<code>smb://Host/sharepath</code>访问，在IOS系统中，类似Documents的应用也支持添加SAMBA的功能。</p>
 <p>这里强推一下Documents这个应用，结合PDF EXPERT，已经成为了我的文档中心。</p>
@@ -819,10 +1262,12 @@
 <li><p>从<a href="https://www.gnome-look.org/browse/cat/134/ord/latest/" target="_blank" rel="external">gnome-look.org</a>下载喜欢的主题（压缩文件）。</p>
 </li>
 <li><p>将下载的主题文件复制到用户文件夹</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd ~</div><div class="line">mkdir .themes</div><div class="line">cp file_path_to_download_file ~/.themes</div></pre></td></tr></table></figure>
-<p> 并使用<code>unzip</code>或<code>tar xvzf</code>命令解压，或者：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo cp file_path_to_download_file /usr/local/themes/</div></pre></td></tr></table></figure>
-</li>
+<pre><code> cd ~
+ mkdir .themes
+ cp file_path_to_download_file ~/.themes
+</code></pre><p> 并使用<code>unzip</code>或<code>tar xvzf</code>命令解压，或者：</p>
+<pre><code> sudo cp file_path_to_download_file /usr/local/themes/
+</code></pre></li>
 <li><p>在<code>gnome-tweak-tool</code>的扩展<code>User themes</code>中选择主题。</p>
 </li>
 </ol>
@@ -833,9 +1278,14 @@
 <li><a href="http://me4oslav.deviantart.com/art/Numix-Circle-Linux-Desktop-Icon-Theme-414741466" target="_blank" rel="external">Numix-Circle Icons</a></li>
 </ul>
 <p>Numix开发者之一Satyajit Sahoo发布的GNOME shell theme:<br><a href="http://satya164.deviantart.com/art/Gnome-Shell-Elegance-Colors-305966388" target="_blank" rel="external">Gnome Shell - Elegance Colors</a></p>
-<p>通过PPA安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sudo apt-add-repository ppa:numix/ppa</div><div class="line">sudo apt-get update</div><div class="line">sudo apt-get install numix-gtk-theme</div><div class="line">sudo apt-get install numix-icon-theme-circle</div></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo add-apt-repository ppa:satyajit-happy/themes</div><div class="line">sudo apt-get update &amp;&amp; sudo apt-get install gnome-shell-theme-elegance-colors</div></pre></td></tr></table></figure>
-<h2 id="扩展插件"><a href="#扩展插件" class="headerlink" title="扩展插件"></a>扩展插件</h2><p>我当前使用的插件：</p>
+<p>通过PPA安装</p>
+<pre><code>sudo apt-add-repository ppa:numix/ppa
+sudo apt-get update
+sudo apt-get install numix-gtk-theme
+sudo apt-get install numix-icon-theme-circle
+</code></pre><pre><code>sudo add-apt-repository ppa:satyajit-happy/themes
+sudo apt-get update &amp;&amp; sudo apt-get install gnome-shell-theme-elegance-colors
+</code></pre><h2 id="扩展插件"><a href="#扩展插件" class="headerlink" title="扩展插件"></a>扩展插件</h2><p>我当前使用的插件：</p>
 <ol>
 <li>hide dash：隐藏侧边的favorite栏</li>
 <li>Pomotodo：番茄时钟<br><img src="/img/Ubuntu-3/Pomodoro1.jpg" alt="Pomotodo1"><br><img src="/img/Ubuntu-3/Pomodoro2.jpg" alt="Pomotodo2"></li>
@@ -902,8 +1352,10 @@
 <h3 id="扩展插件"><a href="#扩展插件" class="headerlink" title="扩展插件"></a>扩展插件</h3><p>在Ubuntu上，要调整桌面主题，可没有Windows上鼠标右击一下那么简单。<br>你要先安装上面的tweak tool，然后有人告诉你需要User theme扩展插件，而你跑到<code>extensions.gnome.org</code>，遇到的却是这个：<br><img src="/img/Ubuntu-2/Selection_019.jpg" alt="错误"></p>
 <p>我明明装了GNOME的啊！</p>
 <p>这是因为，<code>extensions.gnome.org</code>需要与浏览器通信，调用click-to-play的功能，我们需要安装GNOMNE shell intergration这个插件。</p>
-<h4 id="Chrome用户"><a href="#Chrome用户" class="headerlink" title="Chrome用户"></a>Chrome用户</h4><h5 id="利用PPA"><a href="#利用PPA" class="headerlink" title="利用PPA"></a>利用PPA</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo add-apt-repository ppa:ne0sight/chrome-gnome-shell</div><div class="line">sudo apt-get update</div><div class="line">sudo apt-get install chrome-gnome-shell</div></pre></td></tr></table></figure>
-<h5 id="通过Chrome-Web-Store-GNOME-Shell-integration"><a href="#通过Chrome-Web-Store-GNOME-Shell-integration" class="headerlink" title="通过Chrome Web Store:GNOME Shell integration"></a>通过Chrome Web Store:<a href="https://chrome.google.com/webstore/detail/gnome-shell-integration/gphhapmejobijbbhgpjhcjognlahblep" target="_blank" rel="external">GNOME Shell integration</a></h5><p>可能需要通过CMake安装native connector,请参考这一<a href="https://wiki.gnome.org/Projects/GnomeShellIntegrationForChrome/Installation" target="_blank" rel="external">页面</a>。</p>
+<h4 id="Chrome用户"><a href="#Chrome用户" class="headerlink" title="Chrome用户"></a>Chrome用户</h4><h5 id="利用PPA"><a href="#利用PPA" class="headerlink" title="利用PPA"></a>利用PPA</h5><pre><code>sudo add-apt-repository ppa:ne0sight/chrome-gnome-shell
+sudo apt-get update
+sudo apt-get install chrome-gnome-shell
+</code></pre><h5 id="通过Chrome-Web-Store-GNOME-Shell-integration"><a href="#通过Chrome-Web-Store-GNOME-Shell-integration" class="headerlink" title="通过Chrome Web Store:GNOME Shell integration"></a>通过Chrome Web Store:<a href="https://chrome.google.com/webstore/detail/gnome-shell-integration/gphhapmejobijbbhgpjhcjognlahblep" target="_blank" rel="external">GNOME Shell integration</a></h5><p>可能需要通过CMake安装native connector,请参考这一<a href="https://wiki.gnome.org/Projects/GnomeShellIntegrationForChrome/Installation" target="_blank" rel="external">页面</a>。</p>
 <h4 id="FireFox用户"><a href="#FireFox用户" class="headerlink" title="FireFox用户"></a>FireFox用户</h4><p>使用FireFox访问<code>extensions.gnome.org</code>时会有运行GNOME shell integration的通知，允许运行后刷新即可。</p>
 <p>更多信息，请参考这一<a href="https://extensions.gnome.org/about/#no-detection" target="_blank" rel="external">页面</a></p>
 <p>安装好<code>tweak-tool</code>后，祝贺你已经打开了新世界的大门。下篇文章是关于扩展插件的推荐，欢迎继续阅读。</p>

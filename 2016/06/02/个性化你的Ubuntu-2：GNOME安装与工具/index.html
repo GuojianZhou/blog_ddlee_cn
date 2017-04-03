@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
     <head>
-    <!-- 
+    <!--
         © Material Theme
         https://github.com/viosey/hexo-theme-material
         Version: 1.3.0 -->
@@ -50,6 +50,7 @@
     <meta property="og:type" content="blog">
     <meta property="og:title" content="个性化你的Ubuntu-2：GNOME安装与工具 | 萧爽楼|李东东的安静一隅">
     <meta property="og:description" content="null">
+
     <meta property="og:article:tag" content="Linux"> <meta property="og:article:tag" content="Gnome"> 
 
     <!--[if lte IE 9]>
@@ -196,7 +197,7 @@
 
     <!-- Custom Head -->
     
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 
     
@@ -409,8 +410,10 @@
 <h3 id="扩展插件"><a href="#扩展插件" class="headerlink" title="扩展插件"></a>扩展插件</h3><p>在Ubuntu上，要调整桌面主题，可没有Windows上鼠标右击一下那么简单。<br>你要先安装上面的tweak tool，然后有人告诉你需要User theme扩展插件，而你跑到<code>extensions.gnome.org</code>，遇到的却是这个：<br><img src="/img/Ubuntu-2/Selection_019.jpg" alt="错误"></p>
 <p>我明明装了GNOME的啊！</p>
 <p>这是因为，<code>extensions.gnome.org</code>需要与浏览器通信，调用click-to-play的功能，我们需要安装GNOMNE shell intergration这个插件。</p>
-<h4 id="Chrome用户"><a href="#Chrome用户" class="headerlink" title="Chrome用户"></a>Chrome用户</h4><h5 id="利用PPA"><a href="#利用PPA" class="headerlink" title="利用PPA"></a>利用PPA</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo add-apt-repository ppa:ne0sight/chrome-gnome-shell</div><div class="line">sudo apt-get update</div><div class="line">sudo apt-get install chrome-gnome-shell</div></pre></td></tr></table></figure>
-<h5 id="通过Chrome-Web-Store-GNOME-Shell-integration"><a href="#通过Chrome-Web-Store-GNOME-Shell-integration" class="headerlink" title="通过Chrome Web Store:GNOME Shell integration"></a>通过Chrome Web Store:<a href="https://chrome.google.com/webstore/detail/gnome-shell-integration/gphhapmejobijbbhgpjhcjognlahblep" target="_blank" rel="external">GNOME Shell integration</a></h5><p>可能需要通过CMake安装native connector,请参考这一<a href="https://wiki.gnome.org/Projects/GnomeShellIntegrationForChrome/Installation" target="_blank" rel="external">页面</a>。</p>
+<h4 id="Chrome用户"><a href="#Chrome用户" class="headerlink" title="Chrome用户"></a>Chrome用户</h4><h5 id="利用PPA"><a href="#利用PPA" class="headerlink" title="利用PPA"></a>利用PPA</h5><pre><code>sudo add-apt-repository ppa:ne0sight/chrome-gnome-shell
+sudo apt-get update
+sudo apt-get install chrome-gnome-shell
+</code></pre><h5 id="通过Chrome-Web-Store-GNOME-Shell-integration"><a href="#通过Chrome-Web-Store-GNOME-Shell-integration" class="headerlink" title="通过Chrome Web Store:GNOME Shell integration"></a>通过Chrome Web Store:<a href="https://chrome.google.com/webstore/detail/gnome-shell-integration/gphhapmejobijbbhgpjhcjognlahblep" target="_blank" rel="external">GNOME Shell integration</a></h5><p>可能需要通过CMake安装native connector,请参考这一<a href="https://wiki.gnome.org/Projects/GnomeShellIntegrationForChrome/Installation" target="_blank" rel="external">页面</a>。</p>
 <h4 id="FireFox用户"><a href="#FireFox用户" class="headerlink" title="FireFox用户"></a>FireFox用户</h4><p>使用FireFox访问<code>extensions.gnome.org</code>时会有运行GNOME shell integration的通知，允许运行后刷新即可。</p>
 <p>更多信息，请参考这一<a href="https://extensions.gnome.org/about/#no-detection" target="_blank" rel="external">页面</a></p>
 <p>安装好<code>tweak-tool</code>后，祝贺你已经打开了新世界的大门。下篇文章是关于扩展插件的推荐，欢迎继续阅读。</p>
@@ -503,7 +506,7 @@
 <aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
     <div id="sidebar-main">
         <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.jpg);">
     <!-- Top bar -->
     <div class="top-bar"></div>
 
@@ -582,7 +585,7 @@
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -600,7 +603,7 @@
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Management/">Individual Management<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
+                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Management/">Individual Management<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
             </ul>
         </li>
         

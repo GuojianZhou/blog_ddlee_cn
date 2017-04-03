@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
     <head>
-    <!-- 
+    <!--
         © Material Theme
         https://github.com/viosey/hexo-theme-material
         Version: 1.3.0 -->
@@ -50,6 +50,7 @@
     <meta property="og:type" content="blog">
     <meta property="og:title" content="再次折腾我的WNDR4300：OpenWrt文件共享 | 萧爽楼|李东东的安静一隅">
     <meta property="og:description" content="null">
+
     <meta property="og:article:tag" content="OpenWrt"> <meta property="og:article:tag" content="路由器"> 
 
     <!--[if lte IE 9]>
@@ -196,7 +197,7 @@
 
     <!-- Custom Head -->
     
-</head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
 
 
     
@@ -394,18 +395,18 @@
 <h3 id="重新安装OpenWrt"><a href="#重新安装OpenWrt" class="headerlink" title="重新安装OpenWrt"></a>重新安装OpenWrt</h3><p>OpenWrt已经到了<code>15.05</code>版本，版本代号是<code>Chaos Calmer</code>。重装需要的<code>-factory.img</code>，可以在<a href="https://downloads.openwrt.org/chaos_calmer/15.05/" target="_blank" rel="external">这里</a>下载。</p>
 <p>我的WNDR4300平台是<code>ar71xx</code>，可以从OpenWrt对应的<a href="https://wiki.openwrt.org/toh/hwdata/netgear/netgear_wndr4300_v1" target="_blank" rel="external">硬件主页</a>找到固件镜像文件。</p>
 <h4 id="TFTP重装"><a href="#TFTP重装" class="headerlink" title="TFTP重装"></a>TFTP重装</h4><p>如果你的路由器还是出厂系统的话，可以通过登入后台在线上传镜像文件进行刷机，而我的已经是OpenWrt系统，只能通过网页端升级，故选用了TFTP方式刷机。</p>
-<p>刷机步骤摘自<a href="https://wiki.openwrt.org/toh/netgear/wndr4300" target="_blank" rel="external">OpenWrt wiki</a><br>&gt;</p>
+<p>刷机步骤摘自<a href="https://wiki.openwrt.org/toh/netgear/wndr4300" target="_blank" rel="external">OpenWrt wiki</a></p>
+<p>&gt;</p>
+<blockquote>
 <ol>
 <li>set a static IP on your computer, i.e 192.168.1.35, and connect the ethernet cable to the router</li>
 <li>power on the router</li>
 <li>press and hold the RESET button as soon as the switch LEDs light up.</li>
 <li>keep holding RESET until the power LED begins to flash orange and then green.</li>
 <li>once the power LED is flashing green, release RESET</li>
-<li>start the TFTP transfer to router at 192.168.1.1. In your computer execute:<blockquote>
-<p><code>tftp 192.168.1.1 -m binary -c put factory.img</code></p>
-</blockquote>
-</li>
+<li>start the TFTP transfer to router at 192.168.1.1. In your computer execute:<br><code>tftp 192.168.1.1 -m binary -c put factory.img</code></li>
 </ol>
+</blockquote>
 <p>总体来说是分为三步：</p>
 <ol>
 <li>将电脑与路由器设置在同一内网中</li>
@@ -414,20 +415,65 @@
 </ol>
 <h3 id="U盘挂载，文件共享"><a href="#U盘挂载，文件共享" class="headerlink" title="U盘挂载，文件共享"></a>U盘挂载，文件共享</h3><p>安装好OpenWrt后，就可以从网页端访问路由器，设置PPPoE拨号，设置WIFI等等。</p>
 <h4 id="U盘挂载"><a href="#U盘挂载" class="headerlink" title="U盘挂载"></a>U盘挂载</h4><p>U盘挂载部分主要参考了<a href="https://my.oschina.net/umu618/blog/282984" target="_blank" rel="external">跟 UMU 一起玩 OpenWRT（入门篇6）：挂接 U 盘</a>。</p>
-<p>首先是安装相应的包：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">opkg update</div><div class="line"></div><div class="line"># 核心包</div><div class="line">opkg install kmod-usb-storage</div><div class="line">opkg install kmod-scsi-generic</div><div class="line"></div><div class="line"># 文件系统</div><div class="line">opkg install kmod-fs-ext4</div><div class="line"></div><div class="line"># 辅助工具</div><div class="line">opkg install usbutils fdisk e2fsprogs</div></pre></td></tr></table></figure></p>
+<p>首先是安装相应的包：</p>
+<pre class=" language-bash"><code class="language-bash">opkg update
+
+<span class="token comment" spellcheck="true"># 核心包</span>
+opkg <span class="token function">install</span> kmod-usb-storage
+opkg <span class="token function">install</span> kmod-scsi-generic
+
+<span class="token comment" spellcheck="true"># 文件系统</span>
+opkg <span class="token function">install</span> kmod-fs-ext4
+
+<span class="token comment" spellcheck="true"># 辅助工具</span>
+opkg <span class="token function">install</span> usbutils <span class="token function">fdisk</span> e2fsprogs
+</code></pre>
 <p>利用<code>lsusb</code>命令查看U盘是否已经被路由器识别。</p>
 <p>这时可以选择用fdisk进行重新分区，不需要分区的话，可以用命令<code>ls /dev | grep sd</code>查看/dev分区中是否已经出现U盘。</p>
-<p>在OpenWrt上使用U盘，建议用ext4格式，可以用下面的命令进行格式化：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># sda1为上一命令得到的结果</div><div class="line">mkfs.ext4 /dev/sda1</div></pre></td></tr></table></figure></p>
-<p>接下来就可以用<code>mount</code>命令进行挂载了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># 路径/mnt/usb/即为挂载目标点</div><div class="line">mkdir /mnt/usb</div><div class="line">touch /mnt/usb/USB_DISK_NOT_PRESENT</div><div class="line">chmod 555 /mnt/usb</div><div class="line">chmod 444 /mnt/usb/USB_DISK_NOT_PRESENT</div><div class="line">mount /dev/sda1 /mnt/usb</div></pre></td></tr></table></figure></p>
-<p>这时可以测试一下，如果U盘里面存储了文件，可以通过<code>/mnt/usb</code>访问的到。</p>
-<p>下面是开机自动挂载U盘的命令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># block-mount blkid用于查看U盘的UUID</div><div class="line">opkg install block-mount blkid</div><div class="line"></div><div class="line"># 实际上要操作的是fstab的配置文件/etc/config/fstab，要将enabled值改成1</div><div class="line">block detect &gt; /etc/config/fstab</div><div class="line">uci set fstab.@mount[-1].target=&apos;/mnt/usb&apos; u</div><div class="line">ci set fstab.@mount[-1].enabled=1</div><div class="line">uci commit fstab</div></pre></td></tr></table></figure></p>
+<p>在OpenWrt上使用U盘，建议用ext4格式，可以用下面的命令进行格式化：</p>
+<pre><code># sda1为上一命令得到的结果
+mkfs.ext4 /dev/sda1
+</code></pre><p>接下来就可以用<code>mount</code>命令进行挂载了：</p>
+<pre><code># 路径/mnt/usb/即为挂载目标点
+mkdir /mnt/usb
+touch /mnt/usb/USB_DISK_NOT_PRESENT
+chmod 555 /mnt/usb
+chmod 444 /mnt/usb/USB_DISK_NOT_PRESENT
+mount /dev/sda1 /mnt/usb
+</code></pre><p>这时可以测试一下，如果U盘里面存储了文件，可以通过<code>/mnt/usb</code>访问的到。</p>
+<p>下面是开机自动挂载U盘的命令。</p>
+<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># block-mount blkid用于查看U盘的UUID</span>
+opkg <span class="token function">install</span> block-mount blkid
+
+<span class="token comment" spellcheck="true"># 实际上要操作的是fstab的配置文件/etc/config/fstab，要将enabled值改成1</span>
+block detect <span class="token operator">></span> /etc/config/fstab
+uci <span class="token keyword">set</span> fstab.@mount<span class="token punctuation">[</span>-1<span class="token punctuation">]</span>.target<span class="token operator">=</span><span class="token string">'/mnt/usb'</span> u
+ci <span class="token keyword">set</span> fstab.@mount<span class="token punctuation">[</span>-1<span class="token punctuation">]</span>.enabled<span class="token operator">=</span>1
+uci commit fstab
+</code></pre>
 <p>更详细的信息可以参见<a href="http://wiki.openwrt.org/doc/uci/fstab" target="_blank" rel="external">这里</a></p>
 <h4 id="文件共享"><a href="#文件共享" class="headerlink" title="文件共享"></a>文件共享</h4><p>文件共享可以通过FTP和SAMBA，推荐的方式是SAMBA。</p>
-<h5 id="SAMBA"><a href="#SAMBA" class="headerlink" title="SAMBA"></a>SAMBA</h5><p>安转SAMBA：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">opkg update</div><div class="line">opkg install samba36-server</div><div class="line"></div><div class="line"># luci程序，可选</div><div class="line">opkg install luci-app-samba</div></pre></td></tr></table></figure></p>
+<h5 id="SAMBA"><a href="#SAMBA" class="headerlink" title="SAMBA"></a>SAMBA</h5><p>安转SAMBA：</p>
+<pre class=" language-bash"><code class="language-bash">opkg update
+opkg <span class="token function">install</span> samba36-server
+
+<span class="token comment" spellcheck="true"># luci程序，可选</span>
+opkg <span class="token function">install</span> luci-app-samba
+</code></pre>
 <p>安装好SAMBA后，主要配置两个参数，一是共享文件夹的路径，如<code>/mnt/usb/sambashare</code>，可以通过更改配置文件<code>/etc/samba/smb.conf</code>实现，也可以通过luci实现。</p>
-<p>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[sambashare]</div><div class="line">path = /mnt/usb/sambashare</div><div class="line">valid users = root</div><div class="line">read only = no</div><div class="line">guest ok = yes</div><div class="line">create mask = 0750</div><div class="line">directory mask = 0750</div></pre></td></tr></table></figure></p>
-<p>第二个参数是访问账户，可以通过命令<code>sambpasswd -a</code>将你的当前用户加入到SAMBA的组中，需要设置一个密码。另外，可能需要将配置文件<code>/etc/samba/smb.conf</code>的[global]中的<code>invalid users = root</code>注释掉。</p>
-<p>最后，设置SAMBA服务启动和开机自启<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/etc/init.d/samba start</div><div class="line">/etc/init.d/samba enable</div></pre></td></tr></table></figure></p>
+<p>示例：</p>
+<pre><code>[sambashare]
+path = /mnt/usb/sambashare
+valid users = root
+read only = no
+guest ok = yes
+create mask = 0750
+directory mask = 0750
+</code></pre><p>第二个参数是访问账户，可以通过命令<code>sambpasswd -a</code>将你的当前用户加入到SAMBA的组中，需要设置一个密码。另外，可能需要将配置文件<code>/etc/samba/smb.conf</code>的[global]中的<code>invalid users = root</code>注释掉。</p>
+<p>最后，设置SAMBA服务启动和开机自启</p>
+<pre class=" language-bash"><code class="language-bash">/etc/init.d/samba start
+/etc/init.d/samba <span class="token function">enable</span>
+</code></pre>
 <h5 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h5><p>FTP可以用<code>vsftpd</code>包来设置，大致过程与SAMBA类似：设置路径、添加用户、设置自启。</p>
 <p>SAMBA服务可以在Windows文件资源管理器中自动检测的到，Linux下可以通过<code>smb://Host/sharepath</code>访问，在IOS系统中，类似Documents的应用也支持添加SAMBA的功能。</p>
 <p>这里强推一下Documents这个应用，结合PDF EXPERT，已经成为了我的文档中心。</p>
@@ -485,7 +531,7 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2017/03/22/DevOps侧记/" id="post_nav-newer" class="prev-content">
+        <a href="/2017/03/16/Python与SQL_Server的交互：pyODBC, pymssql, SQLAlchemy/" id="post_nav-newer" class="prev-content">
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
                 <i class="material-icons">arrow_back</i>
             </button>
@@ -522,7 +568,7 @@
 <aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
     <div id="sidebar-main">
         <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.jpg);">
     <!-- Top bar -->
     <div class="top-bar"></div>
 
@@ -601,7 +647,7 @@
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -619,7 +665,7 @@
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Management/">Individual Management<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
+                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Management/">Individual Management<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
             </ul>
         </li>
         
