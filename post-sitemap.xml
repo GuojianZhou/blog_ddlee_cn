@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://blog.ddlee.cn/2017/04/03/500lines%E9%A1%B9%E7%9B%AECrawler%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</loc>
+        <lastmod>2017-04-03T15:29:41.681Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://blog.ddlee.cn/2017/03/30/HADOOP%E5%AD%A6%E4%B9%A0%E9%80%9F%E8%AE%B0/</loc>
         <lastmod>2017-04-03T15:16:21.324Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -17,14 +25,6 @@
     <url>
         <loc>http://blog.ddlee.cn/2017/04/03/Coroutine-Generator-Async%E4%B8%8EAwait/</loc>
         <lastmod>2017-04-03T15:02:04.472Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://blog.ddlee.cn/2017/04/03/500lines%E9%A1%B9%E7%9B%AECrawler%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</loc>
-        <lastmod>2017-04-03T15:01:13.831Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

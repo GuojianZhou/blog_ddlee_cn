@@ -136,7 +136,7 @@ loop<span class="token punctuation">.</span>run_forever<span class="token punctu
     <link href="http://blog.ddlee.cn/2017/04/03/500lines%E9%A1%B9%E7%9B%AECrawler%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/"/>
     <id>http://blog.ddlee.cn/2017/04/03/500lines项目Crawler阅读笔记/</id>
     <published>2017-04-03T14:57:20.000Z</published>
-    <updated>2017-04-03T15:01:13.831Z</updated>
+    <updated>2017-04-03T15:29:41.681Z</updated>
     
     <content type="html"><![CDATA[<p>源码来自GitHub上著名的Repo: <a href="https://github.com/aosabook/500lines" target="_blank" rel="external">500lines or less</a>。</p>
 <h3 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h3><p><img src="/img/500lines_crawler/500lines_crawler.png" alt="structure"></p>
@@ -194,7 +194,7 @@ loop<span class="token punctuation">.</span>run_forever<span class="token punctu
     <span class="token keyword">yield</span> <span class="token keyword">from</span> self<span class="token punctuation">.</span>q<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
 <p>下图是我对上述代码结构的理解：</p>
-<p><img src="/img/500lines_crawler/coroutines.png" alt="coroutines"></p>
+<p><img src="/img/500lines_crawler/coroutine.JPG" alt="coroutines"></p>
 <p>对coroutine的进一步介绍，参见<a href="/2017/04/03/Coroutine-Generator-Async与Await/">Coroutine-Generator-Async与Await</a>。</p>
 <h3 id="A-Web-Crawler-With-asyncio-Coroutines导读"><a href="#A-Web-Crawler-With-asyncio-Coroutines导读" class="headerlink" title="A Web Crawler With asyncio Coroutines导读"></a><a href="http://aosabook.org/en/500L/a-web-crawler-with-asyncio-coroutines.html" target="_blank" rel="external">A Web Crawler With asyncio Coroutines</a>导读</h3><p>文章整体结构：</p>
 <ul>

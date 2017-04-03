@@ -176,7 +176,7 @@ loop<span class="token punctuation">.</span>run_forever<span class="token punctu
     <span class="token keyword">yield</span> <span class="token keyword">from</span> self<span class="token punctuation">.</span>q<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
 <p>下图是我对上述代码结构的理解：</p>
-<p><img src="/img/500lines_crawler/coroutines.png" alt="coroutines"></p>
+<p><img src="/img/500lines_crawler/coroutine.JPG" alt="coroutines"></p>
 <p>对coroutine的进一步介绍，参见<a href="/2017/04/03/Coroutine-Generator-Async与Await/">Coroutine-Generator-Async与Await</a>。</p>
 <h3 id="A-Web-Crawler-With-asyncio-Coroutines导读"><a href="#A-Web-Crawler-With-asyncio-Coroutines导读" class="headerlink" title="A Web Crawler With asyncio Coroutines导读"></a><a href="http://aosabook.org/en/500L/a-web-crawler-with-asyncio-coroutines.html" target="_blank" rel="external">A Web Crawler With asyncio Coroutines</a>导读</h3><p>文章整体结构：</p>
 <ul>

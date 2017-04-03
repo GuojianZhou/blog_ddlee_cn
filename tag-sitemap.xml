@@ -135,20 +135,6 @@
     </url>
 
     <url>
-        <loc>http://blog.ddlee.cn/tags/%E7%88%AC%E8%99%AB/</loc>
-        <lastmod>2017-04-03T15:01:13.831Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://blog.ddlee.cn/tags/Python/</loc>
-        <lastmod>2017-04-03T15:02:04.472Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://blog.ddlee.cn/tags/%E5%BC%82%E6%AD%A5/</loc>
         <lastmod>2017-04-03T15:02:04.472Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -165,6 +151,20 @@
     <url>
         <loc>http://blog.ddlee.cn/tags/Hadoop/</loc>
         <lastmod>2017-04-03T15:16:21.324Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/tags/Python/</loc>
+        <lastmod>2017-04-03T15:29:41.681Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/tags/%E7%88%AC%E8%99%AB/</loc>
+        <lastmod>2017-04-03T15:29:41.681Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
