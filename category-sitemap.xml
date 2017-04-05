@@ -56,15 +56,15 @@
     </url>
 
     <url>
-        <loc>http://blog.ddlee.cn/categories/Programming/</loc>
-        <lastmod>2017-04-03T15:31:23.971Z</lastmod>
+        <loc>http://blog.ddlee.cn/categories/Reading/</loc>
+        <lastmod>2017-04-04T16:45:28.175Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://blog.ddlee.cn/categories/Reading/</loc>
-        <lastmod>2017-04-04T16:45:28.175Z</lastmod>
+        <loc>http://blog.ddlee.cn/categories/Programming/</loc>
+        <lastmod>2017-04-05T12:35:48.286Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

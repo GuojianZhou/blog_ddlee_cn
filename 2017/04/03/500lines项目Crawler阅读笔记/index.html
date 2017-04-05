@@ -16,9 +16,9 @@
     </title>
 
     <!-- Favicons -->
-    <link rel="icon shortcut" type="image/ico" href="/img/favicon.png">
-    <link rel="icon" sizes="192x192" href="/img/favicon.png">
-    <link rel="apple-touch-icon" href="/img/favicon.png">
+    <link rel="icon shortcut" type="image/ico" href="http://static.ddlee.cn/static/img/material-theme-img/favicon.png">
+    <link rel="icon" sizes="192x192" href="http://static.ddlee.cn/static/img/material-theme-img/favicon.png">
+    <link rel="apple-touch-icon" href="http://static.ddlee.cn/static/img/material-theme-img/favicon.png">
 
     <!-- Meta & Info -->
     <meta charset="utf-8">
@@ -274,7 +274,7 @@
             <script>
     var randomNum = Math.floor(Math.random() * 43 + 1);
 
-    $('.post_thumbnail-random').css('background-image', 'url(' + '/img/random/material-' + randomNum + '.png' + ')');
+    $('.post_thumbnail-random').css('background-image', 'url(' + 'http://static.ddlee.cn/static/img/material-theme-img/random/material-' + randomNum + '.png' + ')');
 </script>
 
         
@@ -294,7 +294,7 @@
 
     <!-- Author Avatar -->
     <div id="author-avatar">
-        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+        <img src="http://static.ddlee.cn/static/img/material-theme-img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
     </div>
     <!-- Author Name & Date -->
     <div>
@@ -371,7 +371,7 @@
 
     <!-- Share QQ -->
     
-        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=萧爽楼|李东东的安静一隅&title=500lines项目Crawler源码阅读笔记&summary=博客叫萧爽楼，从《浮生六记》中借来的名字。身边，很难寻找古人春游、结社、集会之乐趣。只愿文字在这个小小的空间里仍然能够发挥古老的力量。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、科学计算等方面的学习侧记。&pics=http://blog.ddlee.cn/img/favicon.png&url=http://blog.ddlee.cn/2017/04/03/500lines项目Crawler阅读笔记/index.html" target="_blank">
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=萧爽楼|李东东的安静一隅&title=500lines项目Crawler源码阅读笔记&summary=博客叫萧爽楼，从《浮生六记》中借来的名字。身边，很难寻找古人春游、结社、集会之乐趣。只愿文字在这个小小的空间里仍然能够发挥古老的力量。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、科学计算等方面的学习侧记。&pics=http://blog.ddlee.cnhttp://static.ddlee.cn/static/img/material-theme-img/favicon.png&url=http://blog.ddlee.cn/2017/04/03/500lines项目Crawler阅读笔记/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 QQ
             </li>
@@ -390,7 +390,7 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <p>源码来自GitHub上著名的Repo: <a href="https://github.com/aosabook/500lines" target="_blank" rel="external">500lines or less</a>。</p>
-<h3 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h3><p><img src="/img/500lines_crawler/500lines_crawler.png" alt="structure"></p>
+<h3 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h3><p><img src="http://static.ddlee.cn/static/img/500lines_crawler.png" alt="structure"></p>
 <p>代码结构由crawling, crawl, reporting三大部分组成。</p>
 <ul>
 <li>crawl: 驱动，解析传入的参数，管理loop，调用crawler，生成report</li>
@@ -398,7 +398,7 @@
 <li>reporting： 生成记录</li>
 </ul>
 <h3 id="Crawler类"><a href="#Crawler类" class="headerlink" title="Crawler类"></a>Crawler类</h3><p>Crawler类实现了解析网址，抓取内容等基本功能，利用<code>asyncio</code>库构建<code>coroutine</code>（parse_lings(), fetch(), work()）。</p>
-<p><img src="/img/500lines_crawler/500lines_crawler_class.png" alt="Class Crawler"></p>
+<p><img src="http://static.ddlee.cn/static/img/500lines_crawler/500lines_crawler_class.png" alt="Class Crawler"></p>
 <p>核心之处是组织管理异步的抓取任务，代码块结构如下：</p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Crawler</span><span class="token punctuation">:</span>
   <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> roots<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span> loop<span class="token punctuation">)</span><span class="token punctuation">:</span>
@@ -445,7 +445,7 @@
     <span class="token keyword">yield</span> <span class="token keyword">from</span> self<span class="token punctuation">.</span>q<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
 <p>下图是我对上述代码结构的理解：</p>
-<p><img src="/img/500lines_crawler/coroutine.JPG" alt="coroutines"></p>
+<p><img src="http://static.ddlee.cn/static/img//img/500lines_crawler/coroutine.JPG" alt="coroutines"></p>
 <p>对coroutine的进一步介绍，参见<a href="/2017/04/03/Coroutine-Generator-Async与Await/">Coroutine-Generator-Async与Await</a>。</p>
 <h3 id="A-Web-Crawler-With-asyncio-Coroutines导读"><a href="#A-Web-Crawler-With-asyncio-Coroutines导读" class="headerlink" title="A Web Crawler With asyncio Coroutines导读"></a><a href="http://aosabook.org/en/500L/a-web-crawler-with-asyncio-coroutines.html" target="_blank" rel="external">A Web Crawler With asyncio Coroutines</a>导读</h3><p>文章整体结构：</p>
 <ul>
@@ -589,7 +589,7 @@
 <aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
     <div id="sidebar-main">
         <!-- Sidebar Header -->
-        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.jpg);">
+        <div class="sidebar-header header-cover" style="background-image: url(http://static.ddlee.cn/static/img/material-theme-img/sidebar_header.jpg);">
     <!-- Top bar -->
     <div class="top-bar"></div>
 
@@ -604,7 +604,7 @@
 
     <!-- Sidebar Avatar -->
     <div class="sidebar-image">
-        <img src="/img/avatar.png" alt="ddlee's avatar">
+        <img src="http://static.ddlee.cn/static/img/material-theme-img/avatar.png" alt="ddlee's avatar">
 
     </div>
 
@@ -782,7 +782,7 @@ It will not impact the appearance and can give developers a lot of support :)
     <!-- Facebook -->
     
         <a href="https://www.facebook.com/ddlee96" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-facebook.png);">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(http://static.ddlee.cn/static/img/material-theme-img/footer/footer_ico-facebook.png);">
                 <span class="visuallyhidden">Facebook</span>
             </button><!--
      --></a>
@@ -803,7 +803,7 @@ It will not impact the appearance and can give developers a lot of support :)
     <!-- Github -->
     
         <a href="https://github.com/ddlee96" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-github.png);">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(http://static.ddlee.cn/static/img/material-theme-img/footer/footer_ico-github.png);">
                 <span class="visuallyhidden">Github</span>
             </button><!--
      --></a>
@@ -812,7 +812,7 @@ It will not impact the appearance and can give developers a lot of support :)
     <!-- LinkedIn -->
     
         <a href="https://www.linkedin.com/in/jiacheng-li-157a07116/" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-linkedin.png);">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(http://static.ddlee.cn/static/img/material-theme-img/footer/footer_ico-linkedin.png);">
                 <span class="visuallyhidden">LinkedIn</span>
             </button><!--
      --></a>
@@ -821,7 +821,7 @@ It will not impact the appearance and can give developers a lot of support :)
     <!-- Zhihu -->
     
         <a href="https://www.zhihu.com/people/li-jia-cheng-37-33/" target="_blank">
-            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(/img/footer/footer_ico-zhihu.png);">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(http://static.ddlee.cn/static/img/material-theme-img/footer/footer_ico-zhihu.png);">
                 <span class="visuallyhidden">Zhihu</span>
             </button><!--
      --></a>

@@ -104,7 +104,7 @@ c <span class="token operator">=</span> coro<span class="token punctuation">(</s
 <li>coroutine一个一个地吃掉数据（传入参数）并返回结果，即可控地执行函数</li>
 </ul>
 <p>关键点在于，generator与coroutine都能保存自己的状态，而这种特点正可以用于任务切换。yield可以看做是操作系统在进行进程管理时的traps:</p>
-<p><img src="/img/coroutine/os.png" alt="traps"></p>
+<p><img src="http://static.ddlee.cn/static/img//img/coroutine/os.png" alt="traps"></p>
 <p>实际上，coroutine可以看做”用户自定义”的进程，状态、启用和暂停都可控，David Beazley就利用这一点用coroutine实现了Python上的操作系统（参见Reference)。</p>
 <h4 id="Conroutine与Concurrent-Programming"><a href="#Conroutine与Concurrent-Programming" class="headerlink" title="Conroutine与Concurrent Programming"></a>Conroutine与Concurrent Programming</h4><p>Concurrent Programming中有Task的概念，有如下特点：</p>
 <ul>
@@ -140,7 +140,7 @@ loop<span class="token punctuation">.</span>run_until_complete<span class="token
 loop<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
 <p>执行方式如下图：</p>
-<p><img src="/img/coroutine/tulip_coro.png" alt="Chaining coroutines"></p>
+<p><img src="http://static.ddlee.cn/static/img//img/coroutine/tulip_coro.png" alt="Chaining coroutines"></p>
 <p>利用coroutine，可以在一个线程(Task)上实现异步。</p>
 <h4 id="Impletation"><a href="#Impletation" class="headerlink" title="Impletation"></a>Impletation</h4><p>coroutine有两种实现方式，基于generator和原生async, awati关键字。</p>
 <h5 id="generator-based-coroutine"><a href="#generator-based-coroutine" class="headerlink" title="generator based coroutine"></a>generator based coroutine</h5><pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> asyncio
@@ -201,10 +201,10 @@ loop<span class="token punctuation">.</span>run_forever<span class="token punctu
     <link href="http://blog.ddlee.cn/2017/04/03/500lines%E9%A1%B9%E7%9B%AECrawler%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/"/>
     <id>http://blog.ddlee.cn/2017/04/03/500lines项目Crawler阅读笔记/</id>
     <published>2017-04-03T14:57:20.000Z</published>
-    <updated>2017-04-03T15:31:23.971Z</updated>
+    <updated>2017-04-05T12:35:48.286Z</updated>
     
     <content type="html"><![CDATA[<p>源码来自GitHub上著名的Repo: <a href="https://github.com/aosabook/500lines" target="_blank" rel="external">500lines or less</a>。</p>
-<h3 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h3><p><img src="/img/500lines_crawler/500lines_crawler.png" alt="structure"></p>
+<h3 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h3><p><img src="http://static.ddlee.cn/static/img/500lines_crawler.png" alt="structure"></p>
 <p>代码结构由crawling, crawl, reporting三大部分组成。</p>
 <ul>
 <li>crawl: 驱动，解析传入的参数，管理loop，调用crawler，生成report</li>
@@ -212,7 +212,7 @@ loop<span class="token punctuation">.</span>run_forever<span class="token punctu
 <li>reporting： 生成记录</li>
 </ul>
 <h3 id="Crawler类"><a href="#Crawler类" class="headerlink" title="Crawler类"></a>Crawler类</h3><p>Crawler类实现了解析网址，抓取内容等基本功能，利用<code>asyncio</code>库构建<code>coroutine</code>（parse_lings(), fetch(), work()）。</p>
-<p><img src="/img/500lines_crawler/500lines_crawler_class.png" alt="Class Crawler"></p>
+<p><img src="http://static.ddlee.cn/static/img/500lines_crawler/500lines_crawler_class.png" alt="Class Crawler"></p>
 <p>核心之处是组织管理异步的抓取任务，代码块结构如下：</p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Crawler</span><span class="token punctuation">:</span>
   <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> roots<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span> loop<span class="token punctuation">)</span><span class="token punctuation">:</span>
@@ -259,7 +259,7 @@ loop<span class="token punctuation">.</span>run_forever<span class="token punctu
     <span class="token keyword">yield</span> <span class="token keyword">from</span> self<span class="token punctuation">.</span>q<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
 <p>下图是我对上述代码结构的理解：</p>
-<p><img src="/img/500lines_crawler/coroutine.JPG" alt="coroutines"></p>
+<p><img src="http://static.ddlee.cn/static/img//img/500lines_crawler/coroutine.JPG" alt="coroutines"></p>
 <p>对coroutine的进一步介绍，参见<a href="/2017/04/03/Coroutine-Generator-Async与Await/">Coroutine-Generator-Async与Await</a>。</p>
 <h3 id="A-Web-Crawler-With-asyncio-Coroutines导读"><a href="#A-Web-Crawler-With-asyncio-Coroutines导读" class="headerlink" title="A Web Crawler With asyncio Coroutines导读"></a><a href="http://aosabook.org/en/500L/a-web-crawler-with-asyncio-coroutines.html" target="_blank" rel="external">A Web Crawler With asyncio Coroutines</a>导读</h3><p>文章整体结构：</p>
 <ul>
@@ -345,7 +345,7 @@ loop<span class="token punctuation">.</span>run_forever<span class="token punctu
 <p>世界终于清静了。</p>
 </blockquote>
 <p>但仍然需要有关注的动向。我又捡起了RSS这个老朋友，建立起的信息获取跟处理流如下图：</p>
-<p><img src="/img/Feedly_Reeder/Feedly+Reeder.png" alt="Feedly+Reeder3"></p>
+<p><img src="http://static.ddlee.cn/static/img//img/Feedly_Reeder/Feedly+Reeder.png" alt="Feedly+Reeder3"></p>
 <h3 id="服务与APP"><a href="#服务与APP" class="headerlink" title="服务与APP"></a>服务与APP</h3><p>主要涉及的服务：Feedly（免费，有高级版）</p>
 <p>IOS APP：</p>
 <ul>
@@ -426,7 +426,7 @@ loop<span class="token punctuation">.</span>run_forever<span class="token punctu
     <updated>2017-04-03T04:31:27.024Z</updated>
     
     <content type="html"><![CDATA[<p>先贴一张文章大纲。</p>
-<p><img src="/img/Website-Migeration/structure.png" alt="structure"></p>
+<p><img src="http://static.ddlee.cn/static/img//img/Website-Migeration/structure.png" alt="structure"></p>
 <p>这是一个樱花开得正好但我很蛋疼的下午。</p>
 <p>中午抢到了腾讯的校园优惠，便打算把网站<code>ddlee.cn</code>迁到国内的服务器上来。</p>
 <h3 id="密码管理"><a href="#密码管理" class="headerlink" title="密码管理"></a>密码管理</h3><p>先谈密码管理。</p>
@@ -456,7 +456,7 @@ loop<span class="token punctuation">.</span>run_forever<span class="token punctu
 <p>安装时注意Hostname填写IP或者已经配置好DNS解析的域名（如<code>admin.ddlee.cn</code>）。8083是管理面板的端口，记得在主机提供商的安全组里开放一下。</p>
 <h5 id="建站"><a href="#建站" class="headerlink" title="建站"></a>建站</h5><p>Vestacp支持多人管理，User身份由Package定义，安装过程会自动新建admin，拥有最高权限。</p>
 <p>在User的设置里，可以配置用户的Package，而Package的设置里，可以配置每一用户身份的建站模板，资源上限等。如图。</p>
-<p><img src="/img/Website-Migeration/Package.png" alt="Package"></p>
+<p><img src="http://static.ddlee.cn/static/img//img/Website-Migeration/Package.png" alt="Package"></p>
 <p>建站相当容易，注意在高级选项里添加FTP账户，用于之后上传HTML文件。</p>
 <h5 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h5><p>建站完成后，记得配置好DNS解析，开放20和21端口，就可以用FileZilla测试链接。</p>
 <p>注意，在高级选项里配置好Default local directory，设置Default remote directory为<code>/public_html</code>，并启用synchronized browsing和directory comparison，以后的FTP生活会很幸福。</p>
@@ -511,9 +511,8 @@ server {
     <summary type="html">
     
       &lt;p&gt;先贴一张文章大纲。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/img/Website-Migeration/structure.png&quot; alt=&quot;structure&quot;&gt;&lt;/p&gt;
-&lt;p&gt;这是一个樱花开得正好但我很蛋疼的下午。&lt;/p&gt;
-&lt;p&gt;中午抢到了腾讯的校园优惠，便打算把网站&lt;
+&lt;p&gt;&lt;img src=&quot;http://static.ddlee.cn/static/img//img/Website-Migeration/structure.png&quot; alt=&quot;structure&quot;&gt;&lt;/p&gt;
+&lt;p&gt;这是一个樱花开得正好但我很
     
     </summary>
     
@@ -620,7 +619,7 @@ server {
 <h4 id="Definition-from-wiki"><a href="#Definition-from-wiki" class="headerlink" title="Definition(from wiki)"></a>Definition(from wiki)</h4><blockquote>
 <p>a set of practices that emphasize the collaboration and communication of both software developers and information technology (IT) professionals while automating the process of software delivery and infrastructure changes.</p>
 </blockquote>
-<p><img src="/img/DevOps/Devops_venn.png" alt="DevOps_Venn"><br>(<a href="https://commons.wikimedia.org/wiki/File:Devops.png" target="_blank" rel="external">Source</a>)</p>
+<p><img src="http://static.ddlee.cn/static/img//img/DevOps/Devops_venn.png" alt="DevOps_Venn"><br>(<a href="https://commons.wikimedia.org/wiki/File:Devops.png" target="_blank" rel="external">Source</a>)</p>
 <p>对比： Agile Development（敏捷软件开发）</p>
 <p>Plan-&gt;Code-&gt;Test-&gt;Release-&gt;Deploy-&gt;Operate</p>
 <h4 id="Means-of-CAMS"><a href="#Means-of-CAMS" class="headerlink" title="Means of CAMS"></a>Means of CAMS</h4><ul>
@@ -671,7 +670,7 @@ server {
 <li><code>packer build -only=googlecompute application-server.json</code></li>
 </ul>
 <h3 id="Continuous-Integration（持续集成）"><a href="#Continuous-Integration（持续集成）" class="headerlink" title="Continuous Integration（持续集成）"></a>Continuous Integration（持续集成）</h3><p>CI System:</p>
-<p><img src="/img/DevOps/CI.png" alt="CI"></p>
+<p><img src="http://static.ddlee.cn/static/img//img/DevOps/CI.png" alt="CI"></p>
 <h4 id="Jenkins"><a href="#Jenkins" class="headerlink" title="Jenkins"></a>Jenkins</h4><p>Jenkins is a self-contained, open source automation server which can be used to automate all sorts of tasks such as building, testing, and deploying software.</p>
 <p>Using command:<br><code>packer build -only=&lt;cloud service target&gt; control-server.json</code></p>
 <p><a href="https://github.com/ddlee96/devops-intro-project/blob/master/packer-templates/control-server.json" target="_blank" rel="external">Example control-server.json file</a></p>
@@ -686,9 +685,9 @@ server {
 <li>Manual QA testing</li>
 </ul>
 <p>Adding Manual QA step in Pipeline</p>
-<p><img src="/img/DevOps/pipline.png" alt="Pipeline"></p>
+<p><img src="http://static.ddlee.cn/static/img//img/DevOps/pipline.png" alt="Pipeline"></p>
 <h4 id="Monitoring"><a href="#Monitoring" class="headerlink" title="Monitoring"></a>Monitoring</h4><p>Monitoring process:</p>
-<p><img src="/img/DevOps/Monitoring.png" alt="Monitoring"></p>
+<p><img src="http://static.ddlee.cn/static/img//img/DevOps/Monitoring.png" alt="Monitoring"></p>
 <h3 id="Additional-Resources"><a href="#Additional-Resources" class="headerlink" title="Additional Resources"></a>Additional Resources</h3><p><a href="https://www.udacity.com/wiki/ud611#!#additional-resources" target="_blank" rel="external">Course Wiki</a></p>
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>DevOps从开发和运维合作的角度审视软件开发过程，并提供了一套方法论，涉及开发、测试、部署、维护、监测各个方面。软件行业，不仅仅是写代码而已。</p>
 <p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
@@ -717,7 +716,7 @@ server {
     <updated>2017-04-03T14:58:47.203Z</updated>
     
     <content type="html"><![CDATA[<p>Windows平台下Python读取、写入SQL Server相关的函数库，文章结构如下：</p>
-<p><img src="/img/Python+SQLserver/Python+SQL_Server.png" alt="Python+SQLserver"></p>
+<p><img src="http://static.ddlee.cn/static/img//img/Python+SQLserver/Python+SQL_Server.png" alt="Python+SQLserver"></p>
 <h3 id="Python-Drivers"><a href="#Python-Drivers" class="headerlink" title="Python Drivers"></a>Python Drivers</h3><h4 id="PyODBC"><a href="#PyODBC" class="headerlink" title="PyODBC"></a>PyODBC</h4><p>Annaconda下可以用<code>pip install pyodbc</code>安装，也可以到<a href="https://www.microsoft.com/en-us/download/details.aspx?id=50420" target="_blank" rel="external">这里</a>下载。</p>
 <p>首先建立<code>connection</code>对象：</p>
 <pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> pyodbc
@@ -817,8 +816,7 @@ engine <span class="token operator">=</span> create_engine<span class="token pun
     <summary type="html">
     
       &lt;p&gt;Windows平台下Python读取、写入SQL Server相关的函数库，文章结构如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/img/Python+SQLserver/Python+SQL_Server.png&quot; alt=&quot;Python+SQLserver&quot;&gt;&lt;/p&gt;
-&lt;
+&lt;p&gt;&lt;img src=&quot;http://static.ddlee.cn/static/img//img/Python+SQLserver/Python+SQL_Server.
     
     </summary>
     
@@ -1251,7 +1249,7 @@ directory mask = 0750
 <h2 id="为什么"><a href="#为什么" class="headerlink" title="为什么"></a>为什么</h2><p>因为无聊，因为好奇，因为喜欢，因为不满足，因为我们可以。</p>
 <h2 id="怎么办"><a href="#怎么办" class="headerlink" title="怎么办"></a>怎么办</h2><p>如果把刷机比作建造楼房，你所需要准备的就是知识（图纸）、刷机包（水泥、混凝土）、调试环境（吊塔）。</p>
 <h3 id="知识"><a href="#知识" class="headerlink" title="知识"></a>知识</h3><p>真正重要的知识，是关于知识的知识。拿到图纸不重要，重要的是学会如何看懂图纸。以我的经历，最耗费精力的部分不是学习教程，而是TROUBLE SHOOTING, 是如何解决出现的问题。</p>
-<p>因此，绝对不要使用某些工具的“一键刷机功能”，它们不会告诉你问题出在哪。<br><img src="/img/Mi3/something-happened.jpg" alt="Something Happened"></p>
+<p>因此，绝对不要使用某些工具的“一键刷机功能”，它们不会告诉你问题出在哪。<br><img src="http://static.ddlee.cn/static/img//img/Mi3/something-happened.jpg" alt="Something Happened"></p>
 <p>请保证你对整个过程的绝对控制，保证你清楚到底在哪一步无法继续进行。</p>
 <p>而为了看懂图纸，你需要准备好你的Google.它会是你最可靠的伙伴。</p>
 <p>下面是图纸中可能涉及的内容，请搜索并结合某些通用刷机教程理解它们发挥的作用。</p>
@@ -1429,23 +1427,23 @@ sudo apt-get update &amp;&amp; sudo apt-get install gnome-shell-theme-elegance-c
 </code></pre><h2 id="扩展插件"><a href="#扩展插件" class="headerlink" title="扩展插件"></a>扩展插件</h2><p>我当前使用的插件：</p>
 <ol>
 <li>hide dash：隐藏侧边的favorite栏</li>
-<li>Pomotodo：番茄时钟<br><img src="/img/Ubuntu-3/Pomodoro1.jpg" alt="Pomotodo1"><br><img src="/img/Ubuntu-3/Pomodoro2.jpg" alt="Pomotodo2"></li>
-<li>（荐）Clipboard indicator：剪贴板切换<br><img src="/img/Ubuntu-3/Selection_018.jpg" alt="Clipboard indicator"></li>
-<li>ToDo.txt：待办事项整理<br><img src="/img/Ubuntu-3/ToDo_txt.jpg" alt="ToDo"></li>
+<li>Pomotodo：番茄时钟<br><img src="http://static.ddlee.cn/static/img//img/Ubuntu-3/Pomodoro1.jpg" alt="Pomotodo1"><br><img src="http://static.ddlee.cn/static/img//img/Ubuntu-3/Pomodoro2.jpg" alt="Pomotodo2"></li>
+<li>（荐）Clipboard indicator：剪贴板切换<br><img src="http://static.ddlee.cn/static/img//img/Ubuntu-3/Selection_018.jpg" alt="Clipboard indicator"></li>
+<li>ToDo.txt：待办事项整理<br><img src="http://static.ddlee.cn/static/img//img/Ubuntu-3/ToDo_txt.jpg" alt="ToDo"></li>
 <li>Places indicator：文件浏览器的快捷方式</li>
 <li>Activities configurator: 当前活动程序管理</li>
 <li>Alternatetab: alt-tab桌面切换</li>
-<li>Applications menu：类似Windows下开始菜单<br><img src="/img/Ubuntu-3/app.png" alt="Applications"></li>
-<li>（荐）Drop down terminal：快捷启动终端<br><img src="/img/Ubuntu-3/drop.png" alt="Drop"></li>
+<li>Applications menu：类似Windows下开始菜单<br><img src="http://static.ddlee.cn/static/img//img/Ubuntu-3/app.png" alt="Applications"></li>
+<li>（荐）Drop down terminal：快捷启动终端<br><img src="http://static.ddlee.cn/static/img//img/Ubuntu-3/drop.png" alt="Drop"></li>
 <li>Netspeed：网速监控</li>
 <li>Openweather：状态栏天气预报</li>
 <li>Removable drive menu：弹出U盘等可移除硬件</li>
 <li>（荐）Dynamic top bar：根据窗口颜色变换顶栏颜色</li>
 </ol>
 <h2 id="其他桌面工具"><a href="#其他桌面工具" class="headerlink" title="其他桌面工具"></a>其他桌面工具</h2><h4 id="DOCK"><a href="#DOCK" class="headerlink" title="DOCK"></a>DOCK</h4><p>推荐<code>Cairo-Dock</code>，效果如图，扩展性很高，自定义程度也很好。</p>
-<p><img src="/img/Ubuntu-3/Dock1.jpg" alt="Cairo-Dock"></p>
+<p><img src="http://static.ddlee.cn/static/img//img/Ubuntu-3/Dock1.jpg" alt="Cairo-Dock"></p>
 <h4 id="CONKY：桌面监测工具"><a href="#CONKY：桌面监测工具" class="headerlink" title="CONKY：桌面监测工具"></a>CONKY：桌面监测工具</h4><p>推荐<code>Conky</code>，皮肤也有很多，效果如图。</p>
-<p><img src="/img/Ubuntu-3/Conky1.jpg" alt="Conky"></p>
+<p><img src="http://static.ddlee.cn/static/img//img/Ubuntu-3/Conky1.jpg" alt="Conky"></p>
 <p>本系列至此完结。欢迎入坑。</p>
 <p>@<a href="http://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 <p>2016年6月</p>
@@ -1487,13 +1485,13 @@ sudo apt-get update &amp;&amp; sudo apt-get install gnome-shell-theme-elegance-c
 <p>你还需要：<br><code>sudo apt-get install gnome-session</code></p>
 <h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><p>在同一系统上安装不同的桌面环境可能会造成一些意料不到的问题（如锁屏界面丢失），最推荐的方案还是重新安装Ubuntu GNOME，其次，可以安装<code>ubuntu-gnome-desktop</code>。</p>
 <h4 id="使用新的桌面环境"><a href="#使用新的桌面环境" class="headerlink" title="使用新的桌面环境"></a>使用新的桌面环境</h4><p>安装完毕后，重启，可在登录界面选择桌面环境。</p>
-<p><img src="/img/Ubuntu-2/gnome-login1.png" alt="login1"></p>
-<p><img src="/img/Ubuntu-2/gnome-login2.png" alt="login2"></p>
+<p><img src="http://static.ddlee.cn/static/img//img/Ubuntu-2/gnome-login1.png" alt="login1"></p>
+<p><img src="http://static.ddlee.cn/static/img//img/Ubuntu-2/gnome-login2.png" alt="login2"></p>
 <h3 id="GNOME配置工具：gnome-tweak-tool"><a href="#GNOME配置工具：gnome-tweak-tool" class="headerlink" title="GNOME配置工具：gnome-tweak-tool"></a>GNOME配置工具：gnome-tweak-tool</h3><p>想要充分个性化GNOME桌面环境，扩展GNOME的功能，你还需要安装GNOME的配置工具：gnome tweak tool</p>
 <p><code>sudo apt-get install gnome-tweak-tool</code></p>
-<p><img src="/img/Ubuntu-2/gnome-tweak-tool_004.jpg" alt="图片：gnome tweak tool提供的功能"></p>
+<p><img src="http://static.ddlee.cn/static/img//img/Ubuntu-2/gnome-tweak-tool_004.jpg" alt="图片：gnome tweak tool提供的功能"></p>
 <p>利用gnome tweak tool，你可以管理桌面主题、调整窗口特性、调整显示字体、加载GNOME扩展、管理开机自启程序等等。</p>
-<h3 id="扩展插件"><a href="#扩展插件" class="headerlink" title="扩展插件"></a>扩展插件</h3><p>在Ubuntu上，要调整桌面主题，可没有Windows上鼠标右击一下那么简单。<br>你要先安装上面的tweak tool，然后有人告诉你需要User theme扩展插件，而你跑到<code>extensions.gnome.org</code>，遇到的却是这个：<br><img src="/img/Ubuntu-2/Selection_019.jpg" alt="错误"></p>
+<h3 id="扩展插件"><a href="#扩展插件" class="headerlink" title="扩展插件"></a>扩展插件</h3><p>在Ubuntu上，要调整桌面主题，可没有Windows上鼠标右击一下那么简单。<br>你要先安装上面的tweak tool，然后有人告诉你需要User theme扩展插件，而你跑到<code>extensions.gnome.org</code>，遇到的却是这个：<br><img src="http://static.ddlee.cn/static/img//img/Ubuntu-2/Selection_019.jpg" alt="错误"></p>
 <p>我明明装了GNOME的啊！</p>
 <p>这是因为，<code>extensions.gnome.org</code>需要与浏览器通信，调用click-to-play的功能，我们需要安装GNOMNE shell intergration这个插件。</p>
 <h4 id="Chrome用户"><a href="#Chrome用户" class="headerlink" title="Chrome用户"></a>Chrome用户</h4><h5 id="利用PPA"><a href="#利用PPA" class="headerlink" title="利用PPA"></a>利用PPA</h5><pre><code>sudo add-apt-repository ppa:ne0sight/chrome-gnome-shell
@@ -1531,11 +1529,11 @@ sudo apt-get install chrome-gnome-shell
     <content type="html"><![CDATA[<h2 id="我与Ubuntu"><a href="#我与Ubuntu" class="headerlink" title="我与Ubuntu"></a>我与Ubuntu</h2><p>我最初是Windows98用户，再到Windows2003,Windows XP,Windows 7,上了大学后用Windows 8.1,Windows 10（想不到竟然能列这么长；我从没用过Windows Vista,不知道那是什么东西），我很喜欢8.1和10的开始屏幕和动态磁贴。非常偶然的机会，我在CS50的课程中接触了GNU/Linux，才知道，原来在MS　Windows和Mac OSＸ之外，还有一个GNU/Linux。换完SSD，学会了装操作系统，我便踏上了折腾GNU/Linux的不归路。</p>
 <p>曾经被一个软院的同学安利Red Hat系的Fedora（尽管他现在已经投入了MacBook的怀抱）,普及各种内核之类的知识。然而，我只想安静的用它上上网，进行科学计算，并没有深入到考虑系统底层的需求层次。我还是安心地用Ubuntu吧。我也推荐第一次尝试GNU/Linux系统的小白从Ubuntu开始，相信我,askubuntu.com和stackoverflow.com会解决你的大部分问题的。</p>
 <h2 id="个性化你的Ubuntu（一）：GNOME桌面环境"><a href="#个性化你的Ubuntu（一）：GNOME桌面环境" class="headerlink" title="个性化你的Ubuntu（一）：GNOME桌面环境"></a>个性化你的Ubuntu（一）：GNOME桌面环境</h2><p>相信不少读者都是从Microsoft Windows转到GNU/Linux阵营的,早就习惯了用户图形界面。但是，配合桌面环境、主题和一些插件和软件，Ubuntu照样可以很酷炫。</p>
-<h3 id="什么是GNOME"><a href="#什么是GNOME" class="headerlink" title="什么是GNOME"></a>什么是GNOME</h3><p><img src="/img/Ubuntu-1/Gnomelogo.png" alt="GNOME Logo"><br>（大脚丫为什么这么大。。。）</p>
+<h3 id="什么是GNOME"><a href="#什么是GNOME" class="headerlink" title="什么是GNOME"></a>什么是GNOME</h3><p><img src="http://static.ddlee.cn/static/img//img/Ubuntu-1/Gnomelogo.png" alt="GNOME Logo"><br>（大脚丫为什么这么大。。。）</p>
 <p>GNOME(pronounced /ɡˈnoʊm/ or /ˈnoʊm/) 最初是GNU Network Object Model Environment的缩写，但这一缩写已不再沿用（更多历史情况请参见<a href="https://mail.gnome.org/archives/marketing-list/2010-April/msg00050.html" target="_blank" rel="external">这里</a>）。</p>
 <p>我们所说的GNOME，通常指的是由<a href="https://www.gnome.org/about/" target="_blank" rel="external">The GNOME Project</a>开发的运行于Linux之上的桌面环境。</p>
 <p>我们每天面对的，并不是全部的Microft Windows/OS X/Linux系统，而是系统提供给我们的人机接口，而桌面环境，则是统一在同一图形用户接口（GUI）之下的一揽子软件（X Window Manager, File manager, Terminal emulator, Text editor, Image viewer, E-mail client等）。</p>
-<p><img src="/img/Ubuntu-1/OS&amp;GUI.jpg" alt="操作系统提供用户图形界面给用户作为人机接口"><br><a href="http://www.slideshare.net/sherif_mosa/operating-systems-basics-26277922" target="_blank" rel="external">来源</a></p>
+<p><img src="http://static.ddlee.cn/static/img//img/Ubuntu-1/OS&amp;GUI.jpg" alt="操作系统提供用户图形界面给用户作为人机接口"><br><a href="http://www.slideshare.net/sherif_mosa/operating-systems-basics-26277922" target="_blank" rel="external">来源</a></p>
 <p>Ubuntu自带的桌面环境是<a href="https://unity.ubuntu.com/" target="_blank" rel="external">Unity</a>（图形外壳）,其他流行的桌面环境还有<a href="http://www.kde.org/" target="_blank" rel="external">KDE</a>,<a href="http://www.xfce.org/" target="_blank" rel="external">Xfce</a>。但我们要谈的是GNOME。</p>
 <h3 id="什么是X-window-system"><a href="#什么是X-window-system" class="headerlink" title="什么是X window system"></a>什么是X window system</h3><p>要谈Unix-like系统上的图形界面，就不得不提X Window System。那么，什么是X?</p>
 <blockquote>
@@ -1547,8 +1545,8 @@ sudo apt-get install chrome-gnome-shell
 <p>X是一组规则、一套方法。它提供了从硬件（键鼠）接受用户输入、创建图形窗口、画出直线、位图等基本的图形功能（图形引擎）。</p>
 <p>X实现了客户端-服务器的机制。通过划分Server和Client，X既能在本地计算机上运行，也能在计算计算机网络中运行。</p>
 <p>X与操作系统独立。X可以理解为运行在操作系统之上的一套软件。如果不需要GUI，完全可以不用安装X。而在Microsoft Windows和OS X中，图形引擎是操作系统的一部分。</p>
-<p>X Window System的结构如图。<br><img src="/img/Ubuntu-1/X-window-system.png" alt="X Window System"></p>
-<h3 id="GNOME-amp-X"><a href="#GNOME-amp-X" class="headerlink" title="GNOME &amp; X"></a>GNOME &amp; X</h3><p>GNOME和X Window System是什么关系？<br>桌面环境可以理解为一系列X client的集合，其中最重要的组件是X Window Manager。由于X Window System的client-server机制，各client之间是相对独立的，这时，需要一个特殊的client管理其他client，将他们统一在一个框架之下，这就是X Window Manager。<br><img src="/img/Ubuntu-1/Window_Manager.png" alt="Window Manager"><br><a href="http://www.slideshare.net/RBandes/x-window-system" target="_blank" rel="external">来源</a></p>
+<p>X Window System的结构如图。<br><img src="http://static.ddlee.cn/static/img//img/Ubuntu-1/X-window-system.png" alt="X Window System"></p>
+<h3 id="GNOME-amp-X"><a href="#GNOME-amp-X" class="headerlink" title="GNOME &amp; X"></a>GNOME &amp; X</h3><p>GNOME和X Window System是什么关系？<br>桌面环境可以理解为一系列X client的集合，其中最重要的组件是X Window Manager。由于X Window System的client-server机制，各client之间是相对独立的，这时，需要一个特殊的client管理其他client，将他们统一在一个框架之下，这就是X Window Manager。<br><img src="http://static.ddlee.cn/static/img//img/Ubuntu-1/Window_Manager.png" alt="Window Manager"><br><a href="http://www.slideshare.net/RBandes/x-window-system" target="_blank" rel="external">来源</a></p>
 <p>而GNOME另一个重要的组成部分是GNOME shell，它是一个图形外壳程序，也就是我们要面对的接口。</p>
 <p>跟GNOME相关的其他组件、库、概念</p>
 <ul>
@@ -1557,7 +1555,7 @@ sudo apt-get install chrome-gnome-shell
 <li>Metacity：GNOME 2使用的window manager，GNOME 3使用的是Mutter。KDE使用的是KWin。</li>
 <li>Wayland:与X Window System对应，也是一种窗口系统</li>
 </ul>
-<h3 id="我现在的桌面"><a href="#我现在的桌面" class="headerlink" title="我现在的桌面"></a>我现在的桌面</h3><p><img src="/img/Ubuntu-1/Gnome1.jpg" alt="我的桌面"></p>
+<h3 id="我现在的桌面"><a href="#我现在的桌面" class="headerlink" title="我现在的桌面"></a>我现在的桌面</h3><p><img src="http://static.ddlee.cn/static/img//img/Ubuntu-1/Gnome1.jpg" alt="我的桌面"></p>
 <p>我不喜欢双击桌面图标来启动程序，更多用的是Dock和全局搜索，所以，桌面上“什么都没有”。</p>
 <p>桌面的壁纸是电影 <em>飞屋环游记</em> 的海报，使用了Numix系列的主题和图标。</p>
 <p>下方Dock使用的程序是Cairo-Dock，桌面右方运行的程序是Conky，用来监测系统运行情况和提供天气信息，上方的Topbar里添加了许多GNOME的扩展应用。</p>
