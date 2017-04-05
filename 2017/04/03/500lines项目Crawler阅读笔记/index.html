@@ -390,7 +390,7 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <p>源码来自GitHub上著名的Repo: <a href="https://github.com/aosabook/500lines" target="_blank" rel="external">500lines or less</a>。</p>
-<h3 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h3><p><img src="http://static.ddlee.cn/static/img/500lines_crawler.png" alt="structure"></p>
+<h3 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h3><p><img src="http://static.ddlee.cn/static/img/500lines_crawler/500lines_crawler.png" alt="structure"></p>
 <p>代码结构由crawling, crawl, reporting三大部分组成。</p>
 <ul>
 <li>crawl: 驱动，解析传入的参数，管理loop，调用crawler，生成report</li>
@@ -445,7 +445,7 @@
     <span class="token keyword">yield</span> <span class="token keyword">from</span> self<span class="token punctuation">.</span>q<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
 <p>下图是我对上述代码结构的理解：</p>
-<p><img src="http://static.ddlee.cn/static/img//img/500lines_crawler/coroutine.JPG" alt="coroutines"></p>
+<p><img src="http://static.ddlee.cn/static/img/500lines_crawler/coroutine.JPG" alt="coroutines"></p>
 <p>对coroutine的进一步介绍，参见<a href="/2017/04/03/Coroutine-Generator-Async与Await/">Coroutine-Generator-Async与Await</a>。</p>
 <h3 id="A-Web-Crawler-With-asyncio-Coroutines导读"><a href="#A-Web-Crawler-With-asyncio-Coroutines导读" class="headerlink" title="A Web Crawler With asyncio Coroutines导读"></a><a href="http://aosabook.org/en/500L/a-web-crawler-with-asyncio-coroutines.html" target="_blank" rel="external">A Web Crawler With asyncio Coroutines</a>导读</h3><p>文章整体结构：</p>
 <ul>

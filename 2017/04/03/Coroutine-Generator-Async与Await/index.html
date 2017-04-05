@@ -406,7 +406,7 @@ c <span class="token operator">=</span> coro<span class="token punctuation">(</s
 <li>coroutine一个一个地吃掉数据（传入参数）并返回结果，即可控地执行函数</li>
 </ul>
 <p>关键点在于，generator与coroutine都能保存自己的状态，而这种特点正可以用于任务切换。yield可以看做是操作系统在进行进程管理时的traps:</p>
-<p><img src="http://static.ddlee.cn/static/img//img/coroutine/os.png" alt="traps"></p>
+<p><img src="http://static.ddlee.cn/static/img/coroutine/os.png" alt="traps"></p>
 <p>实际上，coroutine可以看做”用户自定义”的进程，状态、启用和暂停都可控，David Beazley就利用这一点用coroutine实现了Python上的操作系统（参见Reference)。</p>
 <h4 id="Conroutine与Concurrent-Programming"><a href="#Conroutine与Concurrent-Programming" class="headerlink" title="Conroutine与Concurrent Programming"></a>Conroutine与Concurrent Programming</h4><p>Concurrent Programming中有Task的概念，有如下特点：</p>
 <ul>
@@ -442,7 +442,7 @@ loop<span class="token punctuation">.</span>run_until_complete<span class="token
 loop<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
 <p>执行方式如下图：</p>
-<p><img src="http://static.ddlee.cn/static/img//img/coroutine/tulip_coro.png" alt="Chaining coroutines"></p>
+<p><img src="http://static.ddlee.cn/static/img/coroutine/tulip_coro.png" alt="Chaining coroutines"></p>
 <p>利用coroutine，可以在一个线程(Task)上实现异步。</p>
 <h4 id="Impletation"><a href="#Impletation" class="headerlink" title="Impletation"></a>Impletation</h4><p>coroutine有两种实现方式，基于generator和原生async, awati关键字。</p>
 <h5 id="generator-based-coroutine"><a href="#generator-based-coroutine" class="headerlink" title="generator based coroutine"></a>generator based coroutine</h5><pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> asyncio
