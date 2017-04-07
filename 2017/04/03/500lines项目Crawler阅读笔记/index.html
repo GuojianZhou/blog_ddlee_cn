@@ -501,6 +501,7 @@
 </blockquote>
 <p>大意是说，对I/O密集型的程序，Python多线程在两方面令人失望：全局锁的设定使之不能真正并行；抢占式多任务处理机制又让多个线程间形成竞争关系。异步通常是正确的选择。但持续增长的回调函数会使代码丧失可读性，Coroutine便是一种保持整洁性的替代方案。</p>
 <h4 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h4><p>这样说，Python的多线程效率带来的提高只是Python程序抢占了系统中非Python进程的资源（参考召集一波狐朋狗友帮你抢选修课），多个线程提高了Python作为一个整体在系统资源调配中的竞争力。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 
     
 

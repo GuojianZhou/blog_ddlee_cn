@@ -131,6 +131,7 @@
 <h3 id="高阶重构（大坑，大坑）"><a href="#高阶重构（大坑，大坑）" class="headerlink" title="高阶重构（大坑，大坑）"></a>高阶重构（大坑，大坑）</h3><h4 id="Convert-procedural-design-to-objects"><a href="#Convert-procedural-design-to-objects" class="headerlink" title="Convert procedural design to objects"></a><em>Convert procedural design to objects</em></h4><p>化函数式变成为面向对象，祝好运。</p>
 <h3 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h3><p>写代码和改代码是一个不断被自己坑和被别人坑的旅程。且行且珍惜。</p>
 <p>Cheers, have a good one.</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
       
         <categories>
@@ -194,6 +195,7 @@
 <li>这种计划似乎跟熟人约过一次，没成，向我骚扰过的人抱歉。</li>
 <li>如果你感兴趣，私信/微信/邮箱联系我。</li>
 </ol>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
       
         <categories>
@@ -306,6 +308,7 @@ loop<span class="token punctuation">.</span>run_forever<span class="token punctu
 <li><a href="http://masnun.com/2015/11/13/python-generators-coroutines-native-coroutines-and-async-await.html" target="_blank" rel="external">PYTHON: GENERATORS, COROUTINES, NATIVE COROUTINES AND ASYNC/AWAIT</a></li>
 <li><a href="https://docs.python.org/3/library/asyncio-task.html" target="_blank" rel="external">Python 3.6 Docs: Taks and coroutines</a></li>
 </ul>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
       
         <categories>
@@ -440,6 +443,7 @@ loop<span class="token punctuation">.</span>run_forever<span class="token punctu
 </blockquote>
 <p>大意是说，对I/O密集型的程序，Python多线程在两方面令人失望：全局锁的设定使之不能真正并行；抢占式多任务处理机制又让多个线程间形成竞争关系。异步通常是正确的选择。但持续增长的回调函数会使代码丧失可读性，Coroutine便是一种保持整洁性的替代方案。</p>
 <h4 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h4><p>这样说，Python的多线程效率带来的提高只是Python程序抢占了系统中非Python进程的资源（参考召集一波狐朋狗友帮你抢选修课），多个线程提高了Python作为一个整体在系统资源调配中的竞争力。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
       
         <categories>

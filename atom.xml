@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.ddlee.cn/"/>
-  <updated>2017-04-07T18:21:19.434Z</updated>
+  <updated>2017-04-07T18:27:07.768Z</updated>
   <id>http://blog.ddlee.cn/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://blog.ddlee.cn/2017/04/08/%E7%BC%96%E7%A8%8B%E6%96%B9%E6%B3%95%E8%AE%BA-%E9%87%8D%E6%9E%84/"/>
     <id>http://blog.ddlee.cn/2017/04/08/编程方法论-重构/</id>
     <published>2017-04-07T18:21:19.000Z</published>
-    <updated>2017-04-07T18:21:19.434Z</updated>
+    <updated>2017-04-07T18:27:07.768Z</updated>
     
     <content type="html"><![CDATA[<p>本文内容主要整理自lynda.com课程<a href="https://www.lynda.com/Developer-Programming-Foundations-tutorials/Foundations-Programming-Refactoring-Code/122457-2.html" target="_blank" rel="external">Programming Foudations: Refactoring Code</a>和<em>Martin Fowler</em>的<a href="https://martinfowler.com/books/refactoring.html" target="_blank" rel="external">重构</a>。全部例子来源于<a href="https://refactoring.com" target="_blank" rel="external">refactoring.com</a>。</p>
 <p>内容大纲：<br><img src="http://static.ddlee.cn/static/img/编程方法论-重构/Refactoring.png" alt="structure"></p>
@@ -147,6 +147,7 @@
 <h3 id="高阶重构（大坑，大坑）"><a href="#高阶重构（大坑，大坑）" class="headerlink" title="高阶重构（大坑，大坑）"></a>高阶重构（大坑，大坑）</h3><h4 id="Convert-procedural-design-to-objects"><a href="#Convert-procedural-design-to-objects" class="headerlink" title="Convert procedural design to objects"></a><em>Convert procedural design to objects</em></h4><p>化函数式变成为面向对象，祝好运。</p>
 <h3 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h3><p>写代码和改代码是一个不断被自己坑和被别人坑的旅程。且行且珍惜。</p>
 <p>Cheers, have a good one.</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
     
     <summary type="html">
@@ -169,7 +170,7 @@
     <link href="http://blog.ddlee.cn/2017/04/05/ddlee%E7%BA%A6%E4%B9%A6%E8%AE%A1%E5%88%92%EF%BC%88%E7%AC%AC%E4%BA%8C%E5%BC%B9%EF%BC%89/"/>
     <id>http://blog.ddlee.cn/2017/04/05/ddlee约书计划（第二弹）/</id>
     <published>2017-04-04T16:45:28.000Z</published>
-    <updated>2017-04-04T16:45:28.175Z</updated>
+    <updated>2017-04-07T18:26:39.880Z</updated>
     
     <content type="html"><![CDATA[<h4 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h4><p>读书这种事情，每几个月都会有那么几天。</p>
 <p>浑身难受。不干点什么，眼睛闲得团团转，双手也不知道往哪搁。</p>
@@ -212,6 +213,7 @@
 <li>这种计划似乎跟熟人约过一次，没成，向我骚扰过的人抱歉。</li>
 <li>如果你感兴趣，私信/微信/邮箱联系我。</li>
 </ol>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
     
     <summary type="html">
@@ -234,7 +236,7 @@
     <link href="http://blog.ddlee.cn/2017/04/03/Coroutine-Generator-Async%E4%B8%8EAwait/"/>
     <id>http://blog.ddlee.cn/2017/04/03/Coroutine-Generator-Async与Await/</id>
     <published>2017-04-03T14:57:54.000Z</published>
-    <updated>2017-04-05T13:11:25.775Z</updated>
+    <updated>2017-04-07T18:27:24.796Z</updated>
     
     <content type="html"><![CDATA[<h4 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h4><p>Generator能保存自己的状态，进入一种“Paused”状态，再次调用时会继续执行。</p>
 <p>Generator的好处之一是节省了存储空间开销，带一些”流处理”的思想。</p>
@@ -328,6 +330,7 @@ loop<span class="token punctuation">.</span>run_forever<span class="token punctu
 <li><a href="http://masnun.com/2015/11/13/python-generators-coroutines-native-coroutines-and-async-await.html" target="_blank" rel="external">PYTHON: GENERATORS, COROUTINES, NATIVE COROUTINES AND ASYNC/AWAIT</a></li>
 <li><a href="https://docs.python.org/3/library/asyncio-task.html" target="_blank" rel="external">Python 3.6 Docs: Taks and coroutines</a></li>
 </ul>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
     
     <summary type="html">
@@ -350,7 +353,7 @@ loop<span class="token punctuation">.</span>run_forever<span class="token punctu
     <link href="http://blog.ddlee.cn/2017/04/03/500lines%E9%A1%B9%E7%9B%AECrawler%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/"/>
     <id>http://blog.ddlee.cn/2017/04/03/500lines项目Crawler阅读笔记/</id>
     <published>2017-04-03T14:57:20.000Z</published>
-    <updated>2017-04-05T13:11:52.180Z</updated>
+    <updated>2017-04-07T18:27:34.968Z</updated>
     
     <content type="html"><![CDATA[<p>源码来自GitHub上著名的Repo: <a href="https://github.com/aosabook/500lines" target="_blank" rel="external">500lines or less</a>。</p>
 <h3 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h3><p><img src="http://static.ddlee.cn/static/img/500lines_crawler/500lines_crawler.png" alt="structure"></p>
@@ -464,6 +467,7 @@ loop<span class="token punctuation">.</span>run_forever<span class="token punctu
 </blockquote>
 <p>大意是说，对I/O密集型的程序，Python多线程在两方面令人失望：全局锁的设定使之不能真正并行；抢占式多任务处理机制又让多个线程间形成竞争关系。异步通常是正确的选择。但持续增长的回调函数会使代码丧失可读性，Coroutine便是一种保持整洁性的替代方案。</p>
 <h4 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h4><p>这样说，Python的多线程效率带来的提高只是Python程序抢占了系统中非Python进程的资源（参考召集一波狐朋狗友帮你抢选修课），多个线程提高了Python作为一个整体在系统资源调配中的竞争力。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
     
     <summary type="html">
