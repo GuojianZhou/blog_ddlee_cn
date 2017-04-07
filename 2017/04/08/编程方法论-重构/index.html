@@ -10,7 +10,7 @@
     
     <title>
         
-            谁会不厌其烦地安慰那无知的少年（二） | 
+            编程方法论(一):重构 | 
         
         萧爽楼|李东东的安静一隅
     </title>
@@ -27,7 +27,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="ddlee">
     <meta name="description" content="博客叫萧爽楼，从《浮生六记》中借来的名字。身边，很难寻找古人春游、结社、集会之乐趣。只愿文字在这个小小的空间里仍然能够发挥古老的力量。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、科学计算等方面的学习侧记。">
-    <meta name="keywords" content="ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee,随笔">
+    <meta name="keywords" content="ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee,Programming,RefactoringT">
 
     <!--iOS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -48,10 +48,10 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://blog.ddlee.cn">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="谁会不厌其烦地安慰那无知的少年（二） | 萧爽楼|李东东的安静一隅">
+    <meta property="og:title" content="编程方法论(一):重构 | 萧爽楼|李东东的安静一隅">
     <meta property="og:description" content="博客叫萧爽楼，从《浮生六记》中借来的名字。身边，很难寻找古人春游、结社、集会之乐趣。只愿文字在这个小小的空间里仍然能够发挥古老的力量。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、科学计算等方面的学习侧记。">
 
-    <meta property="og:article:tag" content="随笔"> 
+    <meta property="og:article:tag" content="Programming"> <meta property="og:article:tag" content="RefactoringT"> 
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -244,7 +244,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
-        
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Introduction"><span class="post-toc-number">1.</span> <span class="post-toc-text">Introduction</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#定义"><span class="post-toc-number">1.0.1.</span> <span class="post-toc-text">定义</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#重构不是什么"><span class="post-toc-number">1.0.2.</span> <span class="post-toc-text">重构不是什么</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#玄学：Code-Smells"><span class="post-toc-number">1.0.3.</span> <span class="post-toc-text">玄学：Code Smells</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#准备工作：自动化测试"><span class="post-toc-number">1.0.4.</span> <span class="post-toc-text">准备工作：自动化测试</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#重构范例：方法层面"><span class="post-toc-number">2.</span> <span class="post-toc-text">重构范例：方法层面</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#可以用于重构的工具"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">可以用于重构的工具</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#几个例子"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">几个例子</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#Extract-Method"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">Extract Method</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#Remove-temps"><span class="post-toc-number">2.2.2.</span> <span class="post-toc-text">Remove temps</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#Add-temps"><span class="post-toc-number">2.2.3.</span> <span class="post-toc-text">Add temps</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#重构范例：类与方法"><span class="post-toc-number">3.</span> <span class="post-toc-text">重构范例：类与方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Move-Method"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">Move Method</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Extract-Class"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">Extract Class</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Inline-Class"><span class="post-toc-number">3.3.</span> <span class="post-toc-text">Inline Class</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Condition-Focused（条件语句相关）"><span class="post-toc-number">3.4.</span> <span class="post-toc-text">Condition Focused（条件语句相关）</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#重构范例：数据相关"><span class="post-toc-number">4.</span> <span class="post-toc-text">重构范例：数据相关</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Move-field"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">Move field</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Data-Clumps（数据团）"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">Data Clumps（数据团）</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Similifying"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">Similifying</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Pulling-and-pushing-升级与降级"><span class="post-toc-number">4.4.</span> <span class="post-toc-text">Pulling and pushing(升级与降级)</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#高阶重构（大坑，大坑）"><span class="post-toc-number">5.</span> <span class="post-toc-text">高阶重构（大坑，大坑）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Convert-procedural-design-to-objects"><span class="post-toc-number">5.1.</span> <span class="post-toc-text">Convert procedural design to objects</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#拾遗"><span class="post-toc-number">6.</span> <span class="post-toc-text">拾遗</span></a></li></ol>
 
         <!--
         <li class="mdl-menu__item">
@@ -280,7 +280,7 @@
         
     
             <p class="article-headline-p">
-                谁会不厌其烦地安慰那无知的少年（二）
+                编程方法论(一):重构
             </p>
         </div>
 
@@ -299,7 +299,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>ddlee</strong>
-        <span>2月 15, 2017</span>
+        <span>4月 08, 2017</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -323,7 +323,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/随笔/">随笔</a>
+        <a class="post_tag-link" href="/tags/Programming/">Programming</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/RefactoringT/">RefactoringT</a>
     </ul>
     
 
@@ -350,7 +350,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=谁会不厌其烦地安慰那无知的少年（二）&url=http://blog.ddlee.cn//2017/02/15/谁会不厌其烦地安慰那无知的少年-2/index.html&pic=&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=编程方法论(一):重构&url=http://blog.ddlee.cn//2017/04/08/编程方法论-重构/index.html&pic=&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -371,7 +371,7 @@
 
     <!-- Share QQ -->
     
-        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=萧爽楼|李东东的安静一隅&title=谁会不厌其烦地安慰那无知的少年（二）&summary=博客叫萧爽楼，从《浮生六记》中借来的名字。身边，很难寻找古人春游、结社、集会之乐趣。只愿文字在这个小小的空间里仍然能够发挥古老的力量。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、科学计算等方面的学习侧记。&pics=http://blog.ddlee.cnhttp://static.ddlee.cn/static/img/material-theme-img/favicon.png&url=http://blog.ddlee.cn/2017/02/15/谁会不厌其烦地安慰那无知的少年-2/index.html" target="_blank">
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=萧爽楼|李东东的安静一隅&title=编程方法论(一):重构&summary=博客叫萧爽楼，从《浮生六记》中借来的名字。身边，很难寻找古人春游、结社、集会之乐趣。只愿文字在这个小小的空间里仍然能够发挥古老的力量。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、科学计算等方面的学习侧记。&pics=http://blog.ddlee.cnhttp://static.ddlee.cn/static/img/material-theme-img/favicon.png&url=http://blog.ddlee.cn/2017/04/08/编程方法论-重构/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 QQ
             </li>
@@ -389,56 +389,131 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <blockquote>
-<p><em>不要做父母手中的烤鸭，要做一只自由的小小种马。——刘星，《（假的）家有儿女》</em></p>
-</blockquote>
-<p>丁丁再回到这条老街时，又是一年的光景。</p>
-<p>这一年，家乡添了几处新房和俏媳妇，添了几家麻将交流中心，添了几座坟头。</p>
-<p>村后的河今年却冻住了——往年不上冻的，因为里面东西太多。</p>
-<p>村前公路两旁的树全砍掉了。主人缺钱，不缺树。</p>
-<p>目力所及，坑洼的油漆路向北延伸到省道上，两旁田地里丛丛的麦子依偎而息，灰蒙蒙的天，树林间掩映着冬日里小姑娘红扑扑的脸蛋，那是北方的夕阳。哎呦，还蒙了层雾气。</p>
-<p>这次回老家，丁丁照例去拜访过道尽头被奶奶称为”二嫂“的老太太。</p>
-<p>二嫂是帝都过来的知青，这些年没入我们的乡音，跟谁也是一口侉侉的北京话。</p>
-<p>她最著名的话是，“我主的了疼，也主的了管”。</p>
-<p>这是跟人家解释为什么老打孙子。一时成为村里溺爱孙子老传统中的一股清流。</p>
-<p>可老人家现在状态不好：去年初四，脑出血，救回来之后半边失去了控制，歪了嘴，动不了腿。</p>
-<p>我进了门，走到轮椅边。老人眼睛亮了起来，一只手撑着扶手，要站起来。</p>
-<p>我大声说奶奶您不用起来，多累啊。</p>
-<p>二嫂摇着头坐下，攥着我的手，晃来晃去。又赶紧把暖手袋扯过来，叫我捧着。</p>
-<p>就像小时候那样。</p>
-<p>二嫂是看着我长大的。奶奶经常带着我到二嫂家里串门，二嫂家里有糖吃，有奶喝。</p>
-<p>那时候我最喜欢翻彻二嫂厚厚的影集，上面有好多我没见过的东西。</p>
-<p>奶奶你耳朵边别着的是什么花呀，那时候你几岁。</p>
-<p>二嫂说那年她十六，别着的花叫白玉兰。</p>
-<p>今年她七十六。照片上的小姑娘带一点自信，含一丝羞赧，就像每个十六七岁的女孩子那样。</p>
-<p>这让我想起妈妈。妈妈年轻的时候追邓丽君、小虎队，最喜欢的是粉红色的回忆。家里有一张她结婚时的照片，大红毛衣，傻傻的杵在那里，另一头爸爸给二叔骑在背上，向妈妈鞠躬，胸前歪着一朵大红花。</p>
-<p>我没见过作为年轻姑娘的二嫂和妈妈是什么样子的，跟我相关的，只有她们逐渐老去的岁月。</p>
-<p>二嫂晃动着身子，她打算站起身来。</p>
-<p>我扶着她，走一步，拖一步，不违背，不阻挡。</p>
-<p>五六米的距离，老人已经气喘吁吁。我也不说话，我单单陪着她。</p>
-<p>院里的枣树上落了一只麻雀，不知为何她没回南方的家。隔壁的二层小楼开始掌起灯火，夜色也正吞下了半边天。</p>
-<p>二嫂接着往外拖着步子，这时媳妇却迎着面从小卖部回来。</p>
-<p>哎呀，涛你怎么让你奶奶出屋里来了？外面冷，娘咱回屋里吧。</p>
-<p>二嫂不肯，但她做不了主。</p>
-<p>这已不是她做主的日子了。</p>
-<p>爷爷大二嫂好多岁，早就没了精神。多少年大大小小，一直是二嫂操持着。</p>
-<p>去年的时候，我坐在炕头边，绕着问她年轻时候的故事。</p>
-<p>她说她的一生就分为两部分，给大伙种地和给自己种地。前半段三十年，后半段三十年。</p>
-<p>明明从北京赶过来，她却说这里更冷一些。村支书被打得藏在柜子底下，三千斤麦子换来的推车充了公，大雨下到把房子冲塌，夜不闭户，好冷。</p>
-<p>二嫂说后来却是倒春寒。家乡的新媳妇，都凑不出一件体面衣裳。地里什么东西也不长。饿死的人排着队。</p>
-<p>我问再后来呢？自己种总好些了吧？</p>
-<p>二嫂说自己种也要上交粮食给国家的。那年她推着小车，走了二十几里的土路，把麦子送到乡上。三十年了。</p>
-<p>二嫂说这么多年看上去一直是我在做主支撑着这个家，但实际上我从来都没做过主，我对自己也做不了主，我对谁也做不了主。</p>
-<p>我说还是我们这一代人幸福啊，赶上了好的时候。</p>
-<p>二嫂说那只是看起来，长大了你就明白了。</p>
-<p>然而我从来都长不大，二嫂却变老了。</p>
-<p>二嫂老了，但从没老糊涂，也没装过糊涂，直到突然的疾病将糊涂的能力赐予给她。</p>
-<p>回到屋里，二嫂就又安静地坐下来。电视里恰巧是场晚会，在希望的田野上。</p>
-<p>夜幕已全然降临。猎户座的三星嵌在南面的而天空，月亮瘦成眉毛，挑在树枝上，除此之外，一片看不透的灰色将视野罩的密不透风。</p>
-<p>我瞪着窗外，正出神，二嫂那边却哼了起来，摇起我的手。</p>
-<p>呜呜声。奶奶又回到了回不去的小时候。</p>
-<p>@<a href="http://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
-<p>2017年2月</p>
+        <p>本文内容主要整理自lynda.com课程<a href="https://www.lynda.com/Developer-Programming-Foundations-tutorials/Foundations-Programming-Refactoring-Code/122457-2.html" target="_blank" rel="external">Programming Foudations: Refactoring Code</a>和<em>Martin Fowler</em>的<a href="https://martinfowler.com/books/refactoring.html" target="_blank" rel="external">重构</a>。全部例子来源于<a href="https://refactoring.com" target="_blank" rel="external">refactoring.com</a>。</p>
+<p>内容大纲：<br><img src="http://static.ddlee.cn/static/img/编程方法论-重构/Refactoring.png" alt="structure"></p>
+<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p><img src="http://static.ddlee.cn/static/img/编程方法论-重构/Refactoring-1.png" alt="intro-method"></p>
+<h5 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h5><p>重构是在不影响软件功能的情况下，重新组织代码，使之更清晰、更容易理解的过程。</p>
+<ul>
+<li>前提：功能不变</li>
+<li>行为：改写代码</li>
+<li>目的：提高可理解性</li>
+</ul>
+<p>大白话讲，重构就是改写，造福以后需要理解这段代码的人们。</p>
+<h5 id="重构不是什么"><a href="#重构不是什么" class="headerlink" title="重构不是什么"></a>重构不是什么</h5><p>给一件事物下定义，有时候从反方面更好讲些。比如你难给正义下一个定义，但很容易举出什么是非正义的例子。</p>
+<ul>
+<li>重构不是Debug，代码已经运行良好</li>
+<li>重构不是优化</li>
+<li>重构不是添加新功能</li>
+</ul>
+<p>也就是说，重构对使用代码的人没有任何好处，对使用者来讲，代码是黑箱。重构是准备给要打开黑箱的人，而那个人常常是你自己。</p>
+<h5 id="玄学：Code-Smells"><a href="#玄学：Code-Smells" class="headerlink" title="玄学：Code Smells"></a>玄学：Code Smells</h5><p>玄学二字是我自己加的。Martin Fowler当然没有这样说。我只是表达一下对无法精确描述的定义的敬意。</p>
+<p>我的理解是Code Smells是best practice和code style的总和，直接和根本来源是自己的代码经验。所谓语感、文笔、血淋淋的人生道理。</p>
+<h5 id="准备工作：自动化测试"><a href="#准备工作：自动化测试" class="headerlink" title="准备工作：自动化测试"></a>准备工作：自动化测试</h5><p>重构当然不是breaking the code，写好测试，保证代码仍能正常运行。</p>
+<h3 id="重构范例：方法层面"><a href="#重构范例：方法层面" class="headerlink" title="重构范例：方法层面"></a>重构范例：方法层面</h3><p>首先是一句良言：哪里加了注视，哪里可能就需要重构。</p>
+<p>这一点的潜在信念是，好的代码是self-explained的，通过合理的命名、清晰的组织，代码应该像皇帝的新装那样一目了然。</p>
+<h4 id="可以用于重构的工具"><a href="#可以用于重构的工具" class="headerlink" title="可以用于重构的工具"></a>可以用于重构的工具</h4><p>常见的IDE会有重构的功能，如重命名变量。另外，一个严厉的Linter加上像我这样的强迫癌患者会将风格问题扼杀在摇篮之中。</p>
+<h4 id="几个例子"><a href="#几个例子" class="headerlink" title="几个例子"></a>几个例子</h4><p>举例均以Code smell和重构建议两部分构成，较抽象(wo kan bu dong)的给出代码。</p>
+<h5 id="Extract-Method"><a href="#Extract-Method" class="headerlink" title="Extract Method"></a><em>Extract Method</em></h5><p>Code smell: 太长的方法，带注释的代码块</p>
+<p>重构： 提取，新建，用评论命名</p>
+<h5 id="Remove-temps"><a href="#Remove-temps" class="headerlink" title="Remove temps"></a>Remove temps</h5><p>Code smell: 冗余的临时变量（本地）</p>
+<p>重构：</p>
+<ul>
+<li><em>Replace with Query</em>: 把表达式提取为方法（规模较大）</li>
+<li><em>Inline temps</em>: 直接用表达式代替这个变量（规模较小）</li>
+</ul>
+<h5 id="Add-temps"><a href="#Add-temps" class="headerlink" title="Add temps"></a>Add temps</h5><p>Code smell: 同样的变量有多重含义</p>
+<p>重构：</p>
+<ul>
+<li><em>Split temporary variable</em>: 同一个临时变量在上下文赋予了不同含义（复用），拆</li>
+<li><em>Remove assignment to parameters</em>: 对参数默认值的设定，在函数内新建变量，初始化这个新变量</li>
+</ul>
+<p>Remove assignment to parameters的例子：</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//Before</span>
+<span class="token keyword">int</span> <span class="token function">discount</span> <span class="token punctuation">(</span><span class="token keyword">int</span> inputVal<span class="token punctuation">,</span> <span class="token keyword">int</span> quantity<span class="token punctuation">,</span> <span class="token keyword">int</span> yearToDate<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>inputVal <span class="token operator">></span> <span class="token number">50</span><span class="token punctuation">)</span> inputVal <span class="token operator">-=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">//After Refactoring</span>
+<span class="token keyword">int</span> <span class="token function">discount</span> <span class="token punctuation">(</span><span class="token keyword">int</span> inputVal<span class="token punctuation">,</span> <span class="token keyword">int</span> quantity<span class="token punctuation">,</span> <span class="token keyword">int</span> yearToDate<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">int</span> result <span class="token operator">=</span> inputVal<span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>inputVal <span class="token operator">></span> <span class="token number">50</span><span class="token punctuation">)</span> result <span class="token operator">-=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+</code></pre>
+<p>这一点基于的信念是，参数只能代表被传进来的变量，不应该在本地再赋予别的含义。</p>
+<h3 id="重构范例：类与方法"><a href="#重构范例：类与方法" class="headerlink" title="重构范例：类与方法"></a>重构范例：类与方法</h3><p><img src="http://static.ddlee.cn/static/img/编程方法论-重构/Refactoring-2.png" alt="class and method"></p>
+<h4 id="Move-Method"><a href="#Move-Method" class="headerlink" title="Move Method"></a><em>Move Method</em></h4><p>Code smell: feature envy（依恋情结）</p>
+<p>用中文来说，是指某个方法操作/使用（依恋）某一个类多过自己所处的类，我们用“出轨”这个词来表示这种现象。但这是违反婚姻法的，因而，我们的重构手段就是，把这个方法移动到它依恋的类中，圆满一段木石良缘。*</p>
+<p>重构： 圆满木石良缘。</p>
+<h4 id="Extract-Class"><a href="#Extract-Class" class="headerlink" title="Extract Class"></a><em>Extract Class</em></h4><p>Code smell: 规模太大的类</p>
+<p>重构： 把部分移出，自立门户</p>
+<h4 id="Inline-Class"><a href="#Inline-Class" class="headerlink" title="Inline Class"></a><em>Inline Class</em></h4><p>Code smell: 冗余的类</p>
+<p>重构： 像我这中请天假组内运转几乎不受影响的人，应该清除掉（这是瞎话）</p>
+<h4 id="Condition-Focused（条件语句相关）"><a href="#Condition-Focused（条件语句相关）" class="headerlink" title="Condition Focused（条件语句相关）"></a>Condition Focused（条件语句相关）</h4><p>Code smell: 写完判断条件自己都看不懂/看着难受</p>
+<p>重构：</p>
+<ul>
+<li><em>Decompose conditional</em>: 分解</li>
+<li><em>Consolidate conditional expression</em>: 多项条件指向同一段后续操作，提取这些条件为方法</li>
+<li><em>Consolidate duplicate conditional fragments</em>: 不同条件的后续操作中含有共同的部分，将共有部分提取出来（不管哪个条件总要执行）</li>
+<li><em>Replace condition with polymorphism</em>: 针对有判断分支的方法，替换成多态方法</li>
+<li><em>Replace type code with subclass*</em>: 针对有判断分支的类，替换为子类</li>
+</ul>
+<p>Consolidate conditional expression的例子：</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//Before</span>
+<span class="token keyword">double</span> <span class="token function">disabilityAmount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>_seniority <span class="token operator">&lt;</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>_monthsDisabled <span class="token operator">></span> <span class="token number">12</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>_isPartTime<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">// compute the disability amount</span>
+<span class="token comment" spellcheck="true">//After Refactoring</span>
+<span class="token keyword">double</span> <span class="token function">disabilityAmount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isNotEligableForDisability</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token comment" spellcheck="true">// compute the disability amount</span>
+</code></pre>
+<h3 id="重构范例：数据相关"><a href="#重构范例：数据相关" class="headerlink" title="重构范例：数据相关"></a>重构范例：数据相关</h3><p><img src="http://static.ddlee.cn/static/img/编程方法论-重构/Refactoring-3.png" alt="class and method"></p>
+<h4 id="Move-field"><a href="#Move-field" class="headerlink" title="Move field"></a><em>Move field</em></h4><p>code smell: inverse feature envy（自造）</p>
+<p>某一个类使用某一数据比该数据所属的类还多。</p>
+<p>重构：送给你了还不行吗！？</p>
+<h4 id="Data-Clumps（数据团）"><a href="#Data-Clumps（数据团）" class="headerlink" title="Data Clumps（数据团）"></a>Data Clumps（数据团）</h4><p>code smell: 某些数据总是抱团出现</p>
+<p>重构：</p>
+<ul>
+<li><em>Preserve whole object</em>: 在一个方法中反复提取某个类的一些属性，将整个对象传入</li>
+<li><em>Introducing parameter object</em>: 把这些参数合并为一个类，把新建的类传入</li>
+</ul>
+<h4 id="Similifying"><a href="#Similifying" class="headerlink" title="Similifying"></a>Similifying</h4><p>重构：</p>
+<ul>
+<li><em>Renaming</em>: 顾名思义</li>
+<li><em>Add or remove parameters</em>: 顾名思义</li>
+<li><em>Replace parameter with explicit Method</em>: 根据不同参数值新建专属的方法</li>
+<li><em>Parameterize Method</em>: 与上者相反，把不同方法合并，传入参数</li>
+<li><em>Separate queries form modifiers</em>: 将找到数据和更该数据两个操作拆成两个方法</li>
+</ul>
+<p>Replace parameter with explicit Method的例子：</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//Before</span>
+<span class="token keyword">void</span> <span class="token function">setValue</span> <span class="token punctuation">(</span>String name<span class="token punctuation">,</span> <span class="token keyword">int</span> value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>name<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"height"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    _height <span class="token operator">=</span> value<span class="token punctuation">;</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>name<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"width"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    _width <span class="token operator">=</span> value<span class="token punctuation">;</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  Assert<span class="token punctuation">.</span><span class="token function">shouldNeverReachHere</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">//After Refactoring</span>
+<span class="token keyword">void</span> <span class="token function">setHeight</span><span class="token punctuation">(</span><span class="token keyword">int</span> arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  _height <span class="token operator">=</span> arg<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">void</span> <span class="token function">setWidth</span> <span class="token punctuation">(</span><span class="token keyword">int</span> arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  _width <span class="token operator">=</span> arg<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="Pulling-and-pushing-升级与降级"><a href="#Pulling-and-pushing-升级与降级" class="headerlink" title="Pulling and pushing(升级与降级)"></a>Pulling and pushing(升级与降级)</h4><ul>
+<li><em>Pull up method</em> and <em>pull up field</em></li>
+<li><em>Push down method</em> and <em>push down field</em></li>
+</ul>
+<p>解决方法、数据归属不合理的问题。</p>
+<h3 id="高阶重构（大坑，大坑）"><a href="#高阶重构（大坑，大坑）" class="headerlink" title="高阶重构（大坑，大坑）"></a>高阶重构（大坑，大坑）</h3><h4 id="Convert-procedural-design-to-objects"><a href="#Convert-procedural-design-to-objects" class="headerlink" title="Convert procedural design to objects"></a><em>Convert procedural design to objects</em></h4><p>化函数式变成为面向对象，祝好运。</p>
+<h3 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h3><p>写代码和改代码是一个不断被自己坑和被别人坑的旅程。且行且珍惜。</p>
+<p>Cheers, have a good one.</p>
 
     
 
@@ -459,7 +534,7 @@
 <script>
     queue.offer(function() {
             var disqus_config = function () {
-                this.page.url = 'http://blog.ddlee.cn/2017/02/15/谁会不厌其烦地安慰那无知的少年-2/index.html';  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.url = 'http://blog.ddlee.cn/2017/04/08/编程方法论-重构/index.html';  // Replace PAGE_URL with your page's canonical URL variable
                 this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
             };
 
@@ -490,21 +565,13 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2017/03/03/谁会不厌其烦地安慰那无知的少年-3/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2017/01/27/谁会不厌其烦地安慰那无知的少年-1/" id="post_nav-older" class="next-content">
+        <a href="/2017/04/05/ddlee约书计划（第二弹）/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
