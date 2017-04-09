@@ -662,9 +662,11 @@ server {
         
         <tags>
             
-            <tag> Data </tag>
-            
             <tag> Hadoop </tag>
+            
+            <tag> 分布式计算 </tag>
+            
+            <tag> Data Sicence </tag>
             
         </tags>
         
@@ -1461,6 +1463,8 @@ directory mask = 0750
         <tags>
             
             <tag> Data </tag>
+            
+            <tag> Data Science </tag>
             
         </tags>
         

@@ -7,6 +7,22 @@
     </url>
 
     <url>
+        <loc>http://blog.ddlee.cn/2016/08/07/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E8%B5%84%E6%BA%90/</loc>
+        <lastmod>2017-04-09T15:44:33.604Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/2017/03/30/HADOOP%E5%AD%A6%E4%B9%A0%E9%80%9F%E8%AE%B0/</loc>
+        <lastmod>2017-04-09T15:44:09.699Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://blog.ddlee.cn/2017/04/03/500lines%E9%A1%B9%E7%9B%AECrawler%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</loc>
         <lastmod>2017-04-07T18:27:34.968Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -103,24 +119,8 @@
     </url>
 
     <url>
-        <loc>http://blog.ddlee.cn/2017/03/30/HADOOP%E5%AD%A6%E4%B9%A0%E9%80%9F%E8%AE%B0/</loc>
-        <lastmod>2017-04-03T15:16:21.324Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://blog.ddlee.cn/2017/03/12/%E5%86%8D%E6%AC%A1%E6%8A%98%E8%85%BE%E6%88%91%E7%9A%84WNDR4300/</loc>
         <lastmod>2017-04-03T04:31:29.756Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://blog.ddlee.cn/2016/08/07/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E8%B5%84%E6%BA%90/</loc>
-        <lastmod>2017-04-02T17:50:12.418Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
