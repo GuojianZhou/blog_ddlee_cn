@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.3.0 -->
+
+    <!-- Title -->
+    
+    <title>
+        
+            LSTM:Pytorch实现 | 
+        
+        萧爽楼|李东东的安静一隅
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="http://static.ddlee.cn/static/img/material-theme-img/favicon.png">
+    <link rel="icon" sizes="192x192" href="http://static.ddlee.cn/static/img/material-theme-img/favicon.png">
+    <link rel="apple-touch-icon" href="http://static.ddlee.cn/static/img/material-theme-img/favicon.png">
+
+    <!-- Meta & Info -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="ddlee">
+    <meta name="description" content="博客叫萧爽楼，从《浮生六记》中借来的名字。身边，很难寻找古人春游、结社、集会之乐趣。只愿文字在这个小小的空间里仍然能够发挥古老的力量。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、科学计算等方面的学习侧记。">
+    <meta name="keywords" content="ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee,Python,Deep Learning,AI,Pytorch">
+
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="萧爽楼|李东东的安静一隅">
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://blog.ddlee.cn">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="LSTM:Pytorch实现 | 萧爽楼|李东东的安静一隅">
+    <meta property="og:description" content="博客叫萧爽楼，从《浮生六记》中借来的名字。身边，很难寻找古人春游、结社、集会之乐趣。只愿文字在这个小小的空间里仍然能够发挥古老的力量。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、科学计算等方面的学习侧记。">
+
+    <meta property="og:article:tag" content="Python"> <meta property="og:article:tag" content="Deep Learning"> <meta property="og:article:tag" content="AI"> <meta property="og:article:tag" content="Pytorch"> 
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import CSS -->
+    <link rel="stylesheet" href="/css/material.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+    <!-- Config CSS -->
+
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+
+  a {
+    color: #0092ED;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #00cfbd !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #00cfbd !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #00cfbd !important;
+  }
+
+  .toTop {
+    background: #404040 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #404040;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #404040;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #404040;
+  }
+
+  .post-toc a:hover {
+    color: #0092ED;
+    text-decoration: underline;
+  }
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #cdecd9;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/queue.js"></script>
+
+    <!-- UC Browser Compatible -->
+    <script>
+        var agent = navigator.userAgent.toLowerCase();
+        if(agent.indexOf('ucbrowser')>0) {
+            document.write("<link rel=\"stylesheet\" href=\"/css/uc.css\">");
+            alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+        }
+    </script>
+
+    
+
+    
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-93514996-1', 'auto');ga('send', 'pageview');
+    </script>
+    
+
+    <!-- Bing Background -->
+    
+
+    <!-- Custom Head -->
+    
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#LSTM"><span class="post-toc-number">1.</span> <span class="post-toc-text">LSTM</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#两个想法"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">两个想法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Gate：信息流动的闸门"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">Gate：信息流动的闸门</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Cell：记忆池"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">Cell：记忆池</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#与普通RNN的对比"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">与普通RNN的对比</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#From-Scratch"><span class="post-toc-number">2.</span> <span class="post-toc-text">From Scratch</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Pytorch-Module"><span class="post-toc-number">3.</span> <span class="post-toc-text">Pytorch Module</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#LSTM类"><span class="post-toc-number">3.0.1.</span> <span class="post-toc-text">LSTM类</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#AutogradRNN函数"><span class="post-toc-number">3.0.2.</span> <span class="post-toc-text">AutogradRNN函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#StackedRNN-函数"><span class="post-toc-number">3.0.3.</span> <span class="post-toc-text">StackedRNN()函数</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#LSTMCell-函数"><span class="post-toc-number">3.0.4.</span> <span class="post-toc-text">LSTMCell()函数</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#小结"><span class="post-toc-number">4.</span> <span class="post-toc-text">小结</span></a></li></ol>
+
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script>
+    var randomNum = Math.floor(Math.random() * 43 + 1);
+
+    $('.post_thumbnail-random').css('background-image', 'url(' + 'http://static.ddlee.cn/static/img/material-theme-img/random/material-' + randomNum + '.png' + ')');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                LSTM:Pytorch实现
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="http://static.ddlee.cn/static/img/material-theme-img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>ddlee</strong>
+        <span>5月 29, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/AI/">AI</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Deep-Learning/">Deep Learning</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Python/">Python</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Pytorch/">Pytorch</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+        
+            <!-- Busuanzi Views -->
+            <a class="post_share-link" href="#">
+                <li class="mdl-menu__item">
+                    <span id="busuanzi_container_page_pv">
+                        <span id="busuanzi_value_page_pv"></span>&nbsp;浏览量
+                    </span>
+                </li>
+            </a>
+        
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=LSTM:Pytorch实现&url=http://blog.ddlee.cn//2017/05/29/LSTM-Pytorch实现/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=萧爽楼|李东东的安静一隅&title=LSTM:Pytorch实现&summary=博客叫萧爽楼，从《浮生六记》中借来的名字。身边，很难寻找古人春游、结社、集会之乐趣。只愿文字在这个小小的空间里仍然能够发挥古老的力量。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、科学计算等方面的学习侧记。&pics=http://blog.ddlee.cnhttp://static.ddlee.cn/static/img/material-theme-img/favicon.png&url=http://blog.ddlee.cn/2017/05/29/LSTM-Pytorch实现/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 QQ
+            </li>
+        </a>
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>本文讨论LSTM网络的Pytorch实现，兼论Pytorch库的代码组织方式和架构设计。</p>
+<h2 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a>LSTM</h2><p>LSTM是一种循环神经网络，适用于对序列化的输入建模。Chris Olah的这篇<a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="external">文章</a>细致地解释了一个LSTM单元的运作方式，建议阅读。</p>
+<h3 id="两个想法"><a href="#两个想法" class="headerlink" title="两个想法"></a>两个想法</h3><h4 id="Gate：信息流动的闸门"><a href="#Gate：信息流动的闸门" class="headerlink" title="Gate：信息流动的闸门"></a>Gate：信息流动的闸门</h4><script type="math/tex; mode=display">i_t = sigmoid(W_{xi} x_t  +  W_{hi}h_{t-1} + b_i)</script><script type="math/tex; mode=display">f_t = sigmoid(W_{xf} x_t  +  W_{hf}h_{t-1} + b_f)</script><script type="math/tex; mode=display">o_t = sigmoid(W_{xo} x_t  +  W_{ho}h_{t-1} + b_o)</script><p>$x$ 表示输入，$h$表示隐藏状态，用$sigmoid$函数将输入二者的传递结果映射到$（0,1)$上，分别赋予输入门、遗忘门、输出门的含义，来控制不同神经单元（同一神经元不同时间点的状态）之间信息流动。</p>
+<h4 id="Cell：记忆池"><a href="#Cell：记忆池" class="headerlink" title="Cell：记忆池"></a>Cell：记忆池</h4><script type="math/tex; mode=display">c_t = f_t \odot c_{t - 1} + i_t \odot tanh(W_{xc} x_t  +  W_{hc}h_{t-1} + b_c)\\
+h_t = o_t \odot tanh(c_t)</script><p>$h$表示隐藏状态，$C$表示记忆池，通过Gate，上一单元（状态）的信息有控制地遗忘，当前的输入有控制地流入，记忆池中的信息有控制地流入隐藏状态。</p>
+<h3 id="与普通RNN的对比"><a href="#与普通RNN的对比" class="headerlink" title="与普通RNN的对比"></a>与普通RNN的对比</h3><p><img src="http://static.ddlee.cn/static/img/./LSTM-Pytorch实现/LSTM3-SimpleRNN.png" alt="RNN"><br>普通RNN只有一个自更新的隐藏状态单元。</p>
+<p><img src="http://static.ddlee.cn/static/img/./LSTM-Pytorch实现/LSTM.jpg" alt="LSTM"><br>LSTM增加了记忆池Cell，并通过几个Gate将信息有控制地更新在记忆池中，并通过记忆池中的信息来决定隐藏状态。</p>
+<h2 id="From-Scratch"><a href="#From-Scratch" class="headerlink" title="From Scratch"></a>From Scratch</h2><p>下面是手动实现LSTM的代码，继承了基类<code>nn.Module</code>。</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">import torch.nn as nn
+import torch
+from torch.autograd import Variable
+
+class LSTM(nn.Module):
+    def __init__(self, input_size, hidden_size, cell_size, output_size):
+        super(LSTM, self).__init__()
+        self.hidden_size = hidden_size
+        self.cell_size = cell_size
+        self.gate = nn.Linear(input_size + hidden_size, cell_size)
+        self.output = nn.Linear(hidden_size, output_size)
+        self.sigmoid = nn.Sigmoid()
+        self.tanh = nn.Tanh()
+        self.softmax = nn.LogSoftmax()
+
+    def forward(self, input, hidden, cell):
+        combined = torch.cat((input, hidden), 1)
+        f_gate = self.gate(combined)
+        i_gate = self.gate(combined)
+        o_gate = self.gate(combined)
+        f_gate = self.sigmoid(f_gate)
+        i_gate = self.sigmoid(i_gate)
+        o_gate = self.sigmoid(o_gate)
+        cell_helper = self.gate(combined)
+        cell_helper = self.tanh(cell_helper)
+        cell = torch.add(torch.mul(cell, f_gate), torch.mul(cell_helper, i_gate))
+        hidden = torch.mul(self.tanh(cell), o_gate)
+        output = self.output(hidden)
+        output = self.softmax(output)
+        return output, hidden, cell
+
+    def initHidden(self):
+        return Variable(torch.zeros(1, self.hidden_size))
+
+    def initCell(self):
+        return Variable(torch.zeros(1, self.cell_size))
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>几个关键点：</p>
+<ol>
+<li>Tensor的大小</li>
+<li>信息的传递顺序</li>
+</ol>
+<h2 id="Pytorch-Module"><a href="#Pytorch-Module" class="headerlink" title="Pytorch Module"></a>Pytorch Module</h2><p>Pytorch库本身对LSTM的实现封装了更多功能，类和函数的组织也非常有借鉴意义。我对其实现的理解基于以下两点展开：</p>
+<ol>
+<li>胞(cell)、层(layer)、栈(stacked layer)的层次化解耦，每一层抽象处理一部分参数（结构）</li>
+<li>函数句柄的传递：处理好参数后返回函数句柄<code>forward</code></li>
+</ol>
+<p>下面开始按图索骥，源码见<a href="https://github.com/pytorch/pytorch/tree/master/torch" target="_blank" rel="external">GitHub</a>。</p>
+<h4 id="LSTM类"><a href="#LSTM类" class="headerlink" title="LSTM类"></a>LSTM类</h4><p>文件：<a href="https://github.com/pytorch/pytorch/blob/master/torch/nn/modules/rnn.py" target="_blank" rel="external">nn/modules/rnn.py</a></p>
+<pre class="line-numbers language-lang-Python"><code class="language-lang-Python"># nn/modules/rnn.py
+class RNNBase(Module):
+  def __init__(self, mode, input_size, output_size):
+      pass
+  def forward(self, input, hx=None):
+      if hx is None:
+          hx = torch.autograd.Variable()
+      if self.mode == 'LSTM':
+          hx = (hx, hx)
+      func = self._backend.RNN() #!!!
+      output, hidden = func(input, self.all_weights, hx) #!!!
+      return output, hidden
+
+class LSTM(RNNBase):
+    def __init__(self, *args, **kwargs):
+        super(LSTM, self).__init__('LSTM', *args, **kwargs)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol>
+<li><code>LSTM</code>类只是<code>RNNBase</code>类的一个装饰器。</li>
+<li>在基类<code>nn.Module</code>中，把<code>__call__()</code>定义为调用<code>forward()</code>方法，因而真正的功能实现在<code>_backend.RNN()</code>中</li>
+</ol>
+<h4 id="AutogradRNN函数"><a href="#AutogradRNN函数" class="headerlink" title="AutogradRNN函数"></a>AutogradRNN函数</h4><p>下面寻找<code>_backend.RNN</code>。<br>文件：<a href="https://github.com/pytorch/pytorch/blob/master/torch/nn/backends/thnn.py" target="_blank" rel="external">nn/backends/thnn.py</a></p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python"># nn/backends/thnn.py
+def _initialize_backend():
+    from .._functions.rnn import RNN, LSTMCell
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>原来，<code>_backend</code>也是索引。</p>
+<p>终于找到<code>RNN()</code>函数。<br>文件：<a href="https://github.com/pytorch/pytorch/blob/master/torch/nn/_functions/rnn.py" target="_blank" rel="external">nn/_functions/rnn.py</a></p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python"># nn/_functions/rnn.py
+def RNN(*args, **kwargs):
+    def forward(input, *fargs, **fkwargs):
+        func = AutogradRNN(*args, **kwargs)
+        return func(input, *fargs, **fkwargs)
+    return forward
+
+def AutogradRNN(mode, input_size, hidden_size):
+    cell = LSTMCell
+    rec_factory = Recurrent
+    layer = (rec_factory(cell),)
+    func = StackedRNN(layer, num_layers)
+    def forward(input, weight, hidden):
+        nexth, output = func(input, hidden, weight)
+        return output, nexth
+    return forward
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol>
+<li><code>RNN()</code>是一个装饰器，根据是否有<code>cudnn</code>库决定调用<code>AutogradRNN()</code>还是<code>CudnnRNN()</code>，这里仅观察<code>AutogradRNN()</code></li>
+<li><code>AutogradRNN()</code>选用了<code>LSTMCell</code>，用<code>Recurrent()</code>函数处理了<code>Cell</code>构成<code>Layer</code>，再将<code>Layer</code>传入<code>StackedRNN()</code>函数</li>
+<li><code>RNN()</code>和<code>AutogradRNN()</code>返回的都是其<code>forward()</code>函数句柄</li>
+</ol>
+<p>下面是<code>Recurrent()</code>函数：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">def Recurrent(inner):
+    def forward(input, hidden, weight):
+        output = []
+        steps = range(input.size(0) - 1, -1, -1)
+        for i in steps:
+            hidden = inner(input[i], hidden, *weight)
+            output.append(hidden[0])
+        return hidden, output
+    return forward
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol>
+<li><code>Recurrent()</code>函数实现了“递归”的结构，根据输入的大小组合<code>Cell</code>，完成了隐藏状态和参数的迭代。</li>
+<li><code>Recurrent()</code>函数将<code>Cell(inner)</code>组合为<code>Layer</code>。</li>
+</ol>
+<h4 id="StackedRNN-函数"><a href="#StackedRNN-函数" class="headerlink" title="StackedRNN()函数"></a>StackedRNN()函数</h4><pre class="line-numbers language-lang-python"><code class="language-lang-python">def StackedRNN(inners, num_layers):
+    num_directions = len(inners)
+    total_layers = num_layers * num_directions
+    def forward(input, hidden, weight):
+        next_hidden = []
+        hidden = list(zip(*hidden))
+        for i in range(num_layers):
+          all_output = []
+          for j, inner in enumerate(inners):
+              hy, output = inner(input, hidden[l], weight[l])
+              next_hidden.append(hy)
+              all_output.append(output)
+          input = torch.cat(all_output, input.dim() - 1)
+        next_h, next_c = zip(*next_hidden)
+        next_hidden = (torch.cat(next_h, 0).view(total_layers, *next_h[0].size()),
+                  torch.cat(next_c, 0).view(total_layers, *next_c[0].size()))
+        return next_hidden, input
+    return forward
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol>
+<li><code>StackedRNN()</code>函数将<code>Layer(inner)</code>组合为栈</li>
+</ol>
+<p>最后的最后，一个基本的LSTM单元内的计算由<code>LSTMCell()</code>函数实现。</p>
+<h4 id="LSTMCell-函数"><a href="#LSTMCell-函数" class="headerlink" title="LSTMCell()函数"></a>LSTMCell()函数</h4><pre class="line-numbers language-lang-python"><code class="language-lang-python">def LSTMCell(input, hidden, w_ih, w_hh, b_ih=None, b_hh=None):
+    if input.is_cuda:
+        igates = F.linear(input, w_ih)
+        hgates = F.linear(hidden[0], w_hh)
+        state = fusedBackend.LSTMFused()
+        return state(igates, hgates, hidden[1]) if b_ih is None else state(igates, hgates, hidden[1], b_ih, b_hh)
+
+    hx, cx = hidden
+    gates = F.linear(input, w_ih, b_ih) + F.linear(hx, w_hh, b_hh)
+
+    ingate, forgetgate, cellgate, outgate = gates.chunk(4, 1)
+
+    ingate = F.sigmoid(ingate)
+    forgetgate = F.sigmoid(forgetgate)
+    cellgate = F.tanh(cellgate)
+    outgate = F.sigmoid(outgate)
+
+    cy = (forgetgate * cx) + (ingate * cellgate)
+    hy = outgate * F.tanh(cy)
+
+    return hy, cy
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>观察上面的代码，即是LSTM的基本信息传递公式。至此，我们的旅程完成。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><blockquote>
+<p>没有什么是增加一层抽象不能解决的，如果不能，那就再加一层。</p>
+</blockquote>
+<p>重复一下我对上述代码的理解：</p>
+<ol>
+<li>胞(cell)、层(layer)、栈(stacked layer)的层次化解耦，每一层抽象处理一部分参数（结构）</li>
+<li>函数句柄的传递：处理好参数后返回函数句柄<code>forward</code></li>
+</ol>
+<p><img src="http://static.ddlee.cn/static/img/LSTM-Pytorch实现/str.jpg" alt="str"></p>
+<p>如洋葱一般，我们剥到最后，发现处理的信息正是输入、隐藏状态和LSTM单元几个控制门的参数。在一层一层的抽象之中，Pytorch在不同的层面处理了不同的参数，保证了扩展性和抽象层之间的解耦。</p>
+
+    
+
+    
+</div>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+
+
+    <!-- 使用 DISQUS -->
+    <div id="disqus-comment">
+        <div id="disqus_thread"></div>
+<script>
+    queue.offer(function() {
+            var disqus_config = function () {
+                this.page.url = 'http://blog.ddlee.cn/2017/05/29/LSTM-Pytorch实现/index.html';  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+
+            (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document;
+                var s = d.createElement('script');
+                s.src = '//ddlee.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        });
+</script>
+
+    </div>
+    <style>
+        #disqus-comment{
+            background-color: #eee;
+            padding: 2pc;
+        }
+    </style>
+
+
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/05/28/Pandas速度优化/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(http://static.ddlee.cn/static/img/material-theme-img/sidebar_header.jpg);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="http://static.ddlee.cn/static/img/material-theme-img/avatar.png" alt="ddlee's avatar">
+
+    </div>
+
+
+
+        <div>
+            <strong style="font-size:1.3em; color:#FFFFFF; margin-left: 20px;">萧爽楼|李东东的安静一隅</strong>
+        </div>
+
+    <!-- Sidebar Email -->
+
+ <!--
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        cnlijiacheng96 at gmail.com
+        <b class="caret"></b>
+    </a>
+    -->
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto:cnlijiacheng96@gmail.com" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/" target="_self">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Management/">Individual Management<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/About" title="About">
+                
+                    <i class="material-icons sidebar-material-icons">person</i>
+                
+                About
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+<!--
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+-->
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+        <a href="https://www.facebook.com/ddlee96" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(http://static.ddlee.cn/static/img/material-theme-img/footer/footer_ico-facebook.png);">
+                <span class="visuallyhidden">Facebook</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/ddlee96" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(http://static.ddlee.cn/static/img/material-theme-img/footer/footer_ico-github.png);">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+        <a href="https://www.linkedin.com/in/jiacheng-li-157a07116/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(http://static.ddlee.cn/static/img/material-theme-img/footer/footer_ico-linkedin.png);">
+                <span class="visuallyhidden">LinkedIn</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Zhihu -->
+    
+        <a href="https://www.zhihu.com/people/li-jia-cheng-37-33/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(http://static.ddlee.cn/static/img/material-theme-img/footer/footer_ico-zhihu.png);">
+                <span class="visuallyhidden">Zhihu</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;
+            <script type="text/javascript">
+                var fd = new Date();
+                document.write(fd.getFullYear());
+            </script>
+            &nbsp;萧爽楼|李东东的安静一隅
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import File -->
+<script src="/js/lazyload.min.js"></script>
+<script src="/js/js.min.js"></script>
+<script src="/js/nprogress.js"></script>
+
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#0092ED'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #0092ED, 0 0 15px #0092ED'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#0092ED',
+        'border-left-color': '#0092ED'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+    <script src="/js/smoothscroll.js"></script>
+
+
+
+
+
+    <!-- Busuanzi -->
+    <script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+    <!-- 使用 DISQUS js 代码 -->
+    <script id="dsq-count-scr" src="//ddlee.disqus.com/count.js" async></script>
+
+
+
+<!-- Swiftye -->
+
+
+<!-- Local Search-->
+
+    <script>
+    var searchFunc = function(path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: 'xml',
+            success: function( xmlResponse ) {
+                // get the contents from search data
+                var datas = $( 'entry', xmlResponse ).map(function() {
+                    return {
+                        title: $( 'title', this ).text(),
+                        content: $('content',this).text(),
+                        url: $( 'url' , this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function() {
+                    var str='<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = '';
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function(data) {
+                        var isMatch = true;
+                        var content_index = [];
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g,'').toLowerCase();
+                        var data_url = data.url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if(data_title !== '' && data_content !== '') {
+                            keywords.forEach(function(keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if( index_title < 0 && index_content < 0 ) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += '<li><a href="'+ data_url +'" class="search-result-title" target="_blank">'+ data_title;
+                            var content = data.content.trim().replace(/<[^>]+>/g, '');
+                            if (first_occur >= 0) {
+                                // cut out characters
+                                var start = first_occur - 6;
+                                var end = first_occur + 6;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 10;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, 'gi');
+                                    match_content = match_content.replace(regS, '<em class="search-keyword">'+keyword+'</em>');
+                                })
+                                str += '<p class="search-result">' + match_content + '...</p>' +'</a>';
+                            }
+                        }
+                    });
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    }
+</script>
+
+
+    <script>
+        var inputArea = document.querySelector('#search');
+        var getSearchFile = function() {
+            var path = 'search.xml';
+            searchFunc(path, 'search', 'local-search-result');
+        }
+
+        if(inputArea) {
+            inputArea.onfocus = function() {
+                getSearchFile();
+            }
+        }
+    </script>
+
+
+<!-- Window Load-->
+<script>
+    $(window).load(function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- MathJax Load-->
+
+
+                </main>
+            </div>
+        </body>
+    
+</html>

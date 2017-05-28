@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.3.0 -->
+
+    <!-- Title -->
+    
+    <title>
+        
+            Pandas速度优化 | 
+        
+        萧爽楼|李东东的安静一隅
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="http://static.ddlee.cn/static/img/material-theme-img/favicon.png">
+    <link rel="icon" sizes="192x192" href="http://static.ddlee.cn/static/img/material-theme-img/favicon.png">
+    <link rel="apple-touch-icon" href="http://static.ddlee.cn/static/img/material-theme-img/favicon.png">
+
+    <!-- Meta & Info -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="ddlee">
+    <meta name="description" content="博客叫萧爽楼，从《浮生六记》中借来的名字。身边，很难寻找古人春游、结社、集会之乐趣。只愿文字在这个小小的空间里仍然能够发挥古老的力量。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、科学计算等方面的学习侧记。">
+    <meta name="keywords" content="ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee,Python,Data Science,Programming">
+
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="萧爽楼|李东东的安静一隅">
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://blog.ddlee.cn">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Pandas速度优化 | 萧爽楼|李东东的安静一隅">
+    <meta property="og:description" content="博客叫萧爽楼，从《浮生六记》中借来的名字。身边，很难寻找古人春游、结社、集会之乐趣。只愿文字在这个小小的空间里仍然能够发挥古老的力量。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、科学计算等方面的学习侧记。">
+
+    <meta property="og:article:tag" content="Python"> <meta property="og:article:tag" content="Data Science"> <meta property="og:article:tag" content="Programming"> 
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import CSS -->
+    <link rel="stylesheet" href="/css/material.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+    <!-- Config CSS -->
+
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+
+  a {
+    color: #0092ED;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #00cfbd !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #00cfbd !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #00cfbd !important;
+  }
+
+  .toTop {
+    background: #404040 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #404040;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #404040;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #404040;
+  }
+
+  .post-toc a:hover {
+    color: #0092ED;
+    text-decoration: underline;
+  }
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #cdecd9;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/queue.js"></script>
+
+    <!-- UC Browser Compatible -->
+    <script>
+        var agent = navigator.userAgent.toLowerCase();
+        if(agent.indexOf('ucbrowser')>0) {
+            document.write("<link rel=\"stylesheet\" href=\"/css/uc.css\">");
+            alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+        }
+    </script>
+
+    
+
+    
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-93514996-1', 'auto');ga('send', 'pageview');
+    </script>
+    
+
+    <!-- Bing Background -->
+    
+
+    <!-- Custom Head -->
+    
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Set-Up"><span class="post-toc-number">1.</span> <span class="post-toc-text">Set Up</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#示例数据"><span class="post-toc-number">1.0.1.</span> <span class="post-toc-text">示例数据</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#示例函数：Haversine-Distance"><span class="post-toc-number">1.0.2.</span> <span class="post-toc-text">示例函数：Haversine Distance</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#优化它之前，先测量它"><span class="post-toc-number">2.</span> <span class="post-toc-text">优化它之前，先测量它</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#IPython-Notebook的Magic-Command-timeit"><span class="post-toc-number">2.0.1.</span> <span class="post-toc-text">IPython Notebook的Magic Command: %timeit</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Package-line-profiler"><span class="post-toc-number">2.0.2.</span> <span class="post-toc-text">Package: line_profiler</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实验"><span class="post-toc-number">3.</span> <span class="post-toc-text">实验</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#对行做循环-Baseline"><span class="post-toc-number">3.0.1.</span> <span class="post-toc-text">对行做循环(Baseline)</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#pd-DataFrame-apply-方法"><span class="post-toc-number">3.0.2.</span> <span class="post-toc-text">pd.DataFrame.apply()方法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#向量化：将pd-Series传入函数"><span class="post-toc-number">3.0.3.</span> <span class="post-toc-text">向量化：将pd.Series传入函数</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#向量化：将np-array传入函数"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">向量化：将np.array传入函数</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#小结"><span class="post-toc-number">4.</span> <span class="post-toc-text">小结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#用Cython优化"><span class="post-toc-number">5.</span> <span class="post-toc-text">用Cython优化</span></a></li></ol>
+
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script>
+    var randomNum = Math.floor(Math.random() * 43 + 1);
+
+    $('.post_thumbnail-random').css('background-image', 'url(' + 'http://static.ddlee.cn/static/img/material-theme-img/random/material-' + randomNum + '.png' + ')');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                Pandas速度优化
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="http://static.ddlee.cn/static/img/material-theme-img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>ddlee</strong>
+        <span>5月 28, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/Data-Science/">Data Science</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Programming/">Programming</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Python/">Python</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+        
+            <!-- Busuanzi Views -->
+            <a class="post_share-link" href="#">
+                <li class="mdl-menu__item">
+                    <span id="busuanzi_container_page_pv">
+                        <span id="busuanzi_value_page_pv"></span>&nbsp;浏览量
+                    </span>
+                </li>
+            </a>
+        
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Pandas速度优化&url=http://blog.ddlee.cn//2017/05/28/Pandas速度优化/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=萧爽楼|李东东的安静一隅&title=Pandas速度优化&summary=博客叫萧爽楼，从《浮生六记》中借来的名字。身边，很难寻找古人春游、结社、集会之乐趣。只愿文字在这个小小的空间里仍然能够发挥古老的力量。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、科学计算等方面的学习侧记。&pics=http://blog.ddlee.cnhttp://static.ddlee.cn/static/img/material-theme-img/favicon.png&url=http://blog.ddlee.cn/2017/05/28/Pandas速度优化/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 QQ
+            </li>
+        </a>
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>本文主要内容取自Sofia Heisler在PyCon 2017上的演讲<a href="https://www.youtube.com/watch?v=HN5d490_KKk" target="_blank" rel="external">No More Sad Pandas Optimizing Pandas Code for Speed and Efficiency</a>，讲稿代码和幻灯片见<a href="https://github.com/sversh/pycon2017-optimizing-pandas" target="_blank" rel="external">GitHub</a>。</p>
+<h2 id="Set-Up"><a href="#Set-Up" class="headerlink" title="Set Up"></a>Set Up</h2><h4 id="示例数据"><a href="#示例数据" class="headerlink" title="示例数据"></a>示例数据</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ean_hotel_id</th>
+<th>name</th>
+<th>address1</th>
+<th>city</th>
+<th>state_province</th>
+<th>postal_code</th>
+<th>latitude</th>
+<th>longitude</th>
+<th>star_rating</th>
+<th>high_rate</th>
+<th>low_rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>269955</td>
+<td>Hilton Garden Inn Albany/SUNY Area</td>
+<td>1389 Washington Ave</td>
+<td>Albany</td>
+<td>NY</td>
+<td>12206</td>
+<td>42.68751</td>
+<td>-73.81643</td>
+<td>3.0</td>
+<td>154.0272</td>
+<td>124.0216</td>
+</tr>
+<tr>
+<td>1</td>
+<td>113431</td>
+<td>Courtyard by Marriott Albany Thruway</td>
+<td>1455 Washington Avenue</td>
+<td>Albany</td>
+<td>NY</td>
+<td>12206</td>
+<td>42.68971</td>
+<td>-73.82021</td>
+<td>3.0</td>
+<td>179.0100</td>
+<td>134.0000</td>
+</tr>
+<tr>
+<td>2</td>
+<td>108151</td>
+<td>Radisson Hotel Albany</td>
+<td>205 Wolf Rd</td>
+<td>Albany</td>
+<td>NY</td>
+<td>12205</td>
+<td>42.72410</td>
+<td>-73.79822</td>
+<td>3.0</td>
+<td>134.1700</td>
+<td>84.1600</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="示例函数：Haversine-Distance"><a href="#示例函数：Haversine-Distance" class="headerlink" title="示例函数：Haversine Distance"></a>示例函数：Haversine Distance</h4><pre class="line-numbers language-lang-Python"><code class="language-lang-Python">def haversine(lat1, lon1, lat2, lon2):
+    miles_constant = 3959
+    lat1, lon1, lat2, lon2 = map(np.deg2rad, [lat1, lon1, lat2, lon2])
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+    a = np.sin(dlat/2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon/2)**2
+    c = 2 * np.arcsin(np.sqrt(a))
+    mi = miles_constant * c
+    return mi
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="优化它之前，先测量它"><a href="#优化它之前，先测量它" class="headerlink" title="优化它之前，先测量它"></a>优化它之前，先测量它</h2><h4 id="IPython-Notebook的Magic-Command-timeit"><a href="#IPython-Notebook的Magic-Command-timeit" class="headerlink" title="IPython Notebook的Magic Command: %timeit"></a>IPython Notebook的Magic Command: <code>%timeit</code></h4><p>既可以测量某一行代码的执行时间，又可以测量整个单元格里代码快的执行时间。</p>
+<h4 id="Package-line-profiler"><a href="#Package-line-profiler" class="headerlink" title="Package: line_profiler"></a>Package: line_profiler</h4><p>记录每行代码的执行次数和执行时间。</p>
+<p>在IPython Notebook中使用时，先运行<code>%load_ext line_profiler</code>， 之后可以用<code>%lprun -f [function name]</code>命令记录指定函数的执行情况。</p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><h4 id="对行做循环-Baseline"><a href="#对行做循环-Baseline" class="headerlink" title="对行做循环(Baseline)"></a>对行做循环(Baseline)</h4><pre class="line-numbers language-lang-python"><code class="language-lang-python">%%timeit
+haversine_series = []
+for index, row in df.iterrows():
+    haversine_series.append(haversine(40.671, -73.985,\
+                                      row['latitude'], row['longitude']))
+df['distance'] = haversine_series
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>Output:</p>
+<pre><code>197 ms ± 6.65 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+</code></pre><h4 id="pd-DataFrame-apply-方法"><a href="#pd-DataFrame-apply-方法" class="headerlink" title="pd.DataFrame.apply()方法"></a>pd.DataFrame.apply()方法</h4><pre class="line-numbers language-lang-python"><code class="language-lang-python">%lprun -f haversine \
+df.apply(lambda row: haversine(40.671, -73.985,\
+                               row['latitude'], row['longitude']), axis=1)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>Output:</p>
+<pre><code>90.6 ms ± 7.55 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
+</code></pre><pre><code>Timer unit: 1e-06 s
+
+Total time: 0.049982 s
+File: &lt;ipython-input-3-19c704a927b7&gt;
+Function: haversine at line 1
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+     1                                           def haversine(lat1, lon1, lat2, lon2):
+     2      1631         1535      0.9      3.1      miles_constant = 3959
+     3      1631        16602     10.2     33.2      lat1, lon1, lat2, lon2 = map(np.deg2rad, [lat1, lon1, lat2, lon2])
+     4      1631         2019      1.2      4.0      dlat = lat2 - lat1
+     5      1631         1143      0.7      2.3      dlon = lon2 - lon1
+     6      1631        18128     11.1     36.3      a = np.sin(dlat/2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon/2)**2
+     7      1631         7857      4.8     15.7      c = 2 * np.arcsin(np.sqrt(a))
+     8      1631         1708      1.0      3.4      mi = miles_constant * c
+     9      1631          990      0.6      2.0      return mi
+</code></pre><p>观察Hits这一列可以看到，<code>apply()</code>方法还是将函数一行行地应用于每行。</p>
+<h4 id="向量化：将pd-Series传入函数"><a href="#向量化：将pd-Series传入函数" class="headerlink" title="向量化：将pd.Series传入函数"></a>向量化：将pd.Series传入函数</h4><pre><code>%lprun -f haversine haversine(40.671, -73.985,\
+                              df[&#39;latitude&#39;], df[&#39;longitude&#39;])
+</code></pre><p>Output:</p>
+<pre><code>2.21 ms ± 230 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+</code></pre><pre><code>Timer unit: 1e-06 s
+
+Total time: 0.008601 s
+File: &lt;ipython-input-3-19c704a927b7&gt;
+Function: haversine at line 1
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+     1                                           def haversine(lat1, lon1, lat2, lon2):
+     2         1            3      3.0      0.0      miles_constant = 3959
+     3         1          838    838.0      9.7      lat1, lon1, lat2, lon2 = map(np.deg2rad, [lat1, lon1, lat2, lon2])
+     4         1          597    597.0      6.9      dlat = lat2 - lat1
+     5         1          572    572.0      6.7      dlon = lon2 - lon1
+     6         1         5033   5033.0     58.5      a = np.sin(dlat/2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon/2)**2
+     7         1         1060   1060.0     12.3      c = 2 * np.arcsin(np.sqrt(a))
+     8         1          496    496.0      5.8      mi = miles_constant * c
+     9         1            2      2.0      0.0      return mi
+</code></pre><p>向量化之后，函数内的每行操作只被访问一次，达到了行结构上的并行。</p>
+<h3 id="向量化：将np-array传入函数"><a href="#向量化：将np-array传入函数" class="headerlink" title="向量化：将np.array传入函数"></a>向量化：将np.array传入函数</h3><pre class="line-numbers language-lang-python"><code class="language-lang-python">%lprun -f haversine df['distance'] = haversine(40.671, -73.985,\
+                        df['latitude'].values, df['longitude'].values)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>Output：</p>
+<pre><code>370 µs ± 18 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+</code></pre><pre><code>Timer unit: 1e-06 s
+
+Total time: 0.001382 s
+File: &lt;ipython-input-3-19c704a927b7&gt;
+Function: haversine at line 1
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+     1                                           def haversine(lat1, lon1, lat2, lon2):
+     2         1            3      3.0      0.2      miles_constant = 3959
+     3         1          292    292.0     21.1      lat1, lon1, lat2, lon2 = map(np.deg2rad, [lat1, lon1, lat2, lon2])
+     4         1           40     40.0      2.9      dlat = lat2 - lat1
+     5         1           29     29.0      2.1      dlon = lon2 - lon1
+     6         1          815    815.0     59.0      a = np.sin(dlat/2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon/2)**2
+     7         1          183    183.0     13.2      c = 2 * np.arcsin(np.sqrt(a))
+     8         1           18     18.0      1.3      mi = miles_constant * c
+     9         1            2      2.0      0.1      return mi
+</code></pre><p>相比<code>pd.Series</code>，<code>np.array</code>不含索引等额外信息，因而更加高效。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Methodology</th>
+<th>Avg.    single    run    time</th>
+<th>Marginal    performance    improvement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Looping    with    iterrows</td>
+<td>184.00</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>Looping    with    apply</td>
+<td>78.10</td>
+<td>2.4x</td>
+</tr>
+<tr>
+<td>Vectorization    with    Pandas    series</td>
+<td>1.79</td>
+<td>43.6x</td>
+</tr>
+<tr>
+<td>Vectorization    with    NumPy    arrays</td>
+<td>0.37</td>
+<td>4.8x</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>通过上面的对比，我们比最初的baseline快了近500倍。最大的提升来自于向量化。因而，实现的函数能够很方便地向量化是高效处理的关键。</p>
+<h2 id="用Cython优化"><a href="#用Cython优化" class="headerlink" title="用Cython优化"></a>用<code>Cython</code>优化</h2><p><code>Cython</code>可以将<code>python</code>代码转化为<code>C</code>代码来执行，可以进行如下优化（静态化变量类型，调用C函数库）</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">%load_ext cython
+
+%%cython -a
+# Haversine cythonized
+from libc.math cimport sin, cos, acos, asin, sqrt
+
+cdef deg2rad_cy(float deg):
+    cdef float rad
+    rad = 0.01745329252*deg
+    return rad
+
+cpdef haversine_cy_dtyped(float lat1, float lon1, float lat2, float lon2):
+    cdef:
+        float dlon
+        float dlat
+        float a
+        float c
+        float mi
+
+    lat1, lon1, lat2, lon2 = map(deg2rad_cy, [lat1, lon1, lat2, lon2])
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * asin(sqrt(a))
+    mi = 3959 * c
+    return mi
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>嵌套于循坏中：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">%timeit df['distance'] =\
+df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
+                              row['latitude'], row['longitude']), axis=1)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>Output:</p>
+<pre><code>10 loops, best of 3: 68.4 ms per loop
+</code></pre><p>可以看到，<code>Cython</code>确实带来速度上的提升，但效果不及向量化（并行化）。</p>
+
+    
+
+    
+</div>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+
+
+    <!-- 使用 DISQUS -->
+    <div id="disqus-comment">
+        <div id="disqus_thread"></div>
+<script>
+    queue.offer(function() {
+            var disqus_config = function () {
+                this.page.url = 'http://blog.ddlee.cn/2017/05/28/Pandas速度优化/index.html';  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+
+            (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document;
+                var s = d.createElement('script');
+                s.src = '//ddlee.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        });
+</script>
+
+    </div>
+    <style>
+        #disqus-comment{
+            background-color: #eee;
+            padding: 2pc;
+        }
+    </style>
+
+
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2017/05/29/LSTM-Pytorch实现/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/04/08/编程方法论-重构/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(http://static.ddlee.cn/static/img/material-theme-img/sidebar_header.jpg);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="http://static.ddlee.cn/static/img/material-theme-img/avatar.png" alt="ddlee's avatar">
+
+    </div>
+
+
+
+        <div>
+            <strong style="font-size:1.3em; color:#FFFFFF; margin-left: 20px;">萧爽楼|李东东的安静一隅</strong>
+        </div>
+
+    <!-- Sidebar Email -->
+
+ <!--
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        cnlijiacheng96 at gmail.com
+        <b class="caret"></b>
+    </a>
+    -->
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto:cnlijiacheng96@gmail.com" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/" target="_self">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Management/">Individual Management<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/About" title="About">
+                
+                    <i class="material-icons sidebar-material-icons">person</i>
+                
+                About
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+<!--
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+-->
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+        <a href="https://www.facebook.com/ddlee96" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(http://static.ddlee.cn/static/img/material-theme-img/footer/footer_ico-facebook.png);">
+                <span class="visuallyhidden">Facebook</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/ddlee96" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(http://static.ddlee.cn/static/img/material-theme-img/footer/footer_ico-github.png);">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+        <a href="https://www.linkedin.com/in/jiacheng-li-157a07116/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(http://static.ddlee.cn/static/img/material-theme-img/footer/footer_ico-linkedin.png);">
+                <span class="visuallyhidden">LinkedIn</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Zhihu -->
+    
+        <a href="https://www.zhihu.com/people/li-jia-cheng-37-33/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(http://static.ddlee.cn/static/img/material-theme-img/footer/footer_ico-zhihu.png);">
+                <span class="visuallyhidden">Zhihu</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;
+            <script type="text/javascript">
+                var fd = new Date();
+                document.write(fd.getFullYear());
+            </script>
+            &nbsp;萧爽楼|李东东的安静一隅
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import File -->
+<script src="/js/lazyload.min.js"></script>
+<script src="/js/js.min.js"></script>
+<script src="/js/nprogress.js"></script>
+
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#0092ED'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #0092ED, 0 0 15px #0092ED'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#0092ED',
+        'border-left-color': '#0092ED'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+    <script src="/js/smoothscroll.js"></script>
+
+
+
+
+
+    <!-- Busuanzi -->
+    <script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+    <!-- 使用 DISQUS js 代码 -->
+    <script id="dsq-count-scr" src="//ddlee.disqus.com/count.js" async></script>
+
+
+
+<!-- Swiftye -->
+
+
+<!-- Local Search-->
+
+    <script>
+    var searchFunc = function(path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: 'xml',
+            success: function( xmlResponse ) {
+                // get the contents from search data
+                var datas = $( 'entry', xmlResponse ).map(function() {
+                    return {
+                        title: $( 'title', this ).text(),
+                        content: $('content',this).text(),
+                        url: $( 'url' , this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function() {
+                    var str='<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = '';
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function(data) {
+                        var isMatch = true;
+                        var content_index = [];
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g,'').toLowerCase();
+                        var data_url = data.url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if(data_title !== '' && data_content !== '') {
+                            keywords.forEach(function(keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if( index_title < 0 && index_content < 0 ) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += '<li><a href="'+ data_url +'" class="search-result-title" target="_blank">'+ data_title;
+                            var content = data.content.trim().replace(/<[^>]+>/g, '');
+                            if (first_occur >= 0) {
+                                // cut out characters
+                                var start = first_occur - 6;
+                                var end = first_occur + 6;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 10;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, 'gi');
+                                    match_content = match_content.replace(regS, '<em class="search-keyword">'+keyword+'</em>');
+                                })
+                                str += '<p class="search-result">' + match_content + '...</p>' +'</a>';
+                            }
+                        }
+                    });
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    }
+</script>
+
+
+    <script>
+        var inputArea = document.querySelector('#search');
+        var getSearchFile = function() {
+            var path = 'search.xml';
+            searchFunc(path, 'search', 'local-search-result');
+        }
+
+        if(inputArea) {
+            inputArea.onfocus = function() {
+                getSearchFile();
+            }
+        }
+    </script>
+
+
+<!-- Window Load-->
+<script>
+    $(window).load(function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- MathJax Load-->
+
+
+                </main>
+            </div>
+        </body>
+    
+</html>

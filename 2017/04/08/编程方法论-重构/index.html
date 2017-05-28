@@ -27,7 +27,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="ddlee">
     <meta name="description" content="博客叫萧爽楼，从《浮生六记》中借来的名字。身边，很难寻找古人春游、结社、集会之乐趣。只愿文字在这个小小的空间里仍然能够发挥古老的力量。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、科学计算等方面的学习侧记。">
-    <meta name="keywords" content="ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee,Programming,RefactoringT">
+    <meta name="keywords" content="ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee,Programming,Refactoring">
 
     <!--iOS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -51,7 +51,7 @@
     <meta property="og:title" content="编程方法论(一):重构 | 萧爽楼|李东东的安静一隅">
     <meta property="og:description" content="博客叫萧爽楼，从《浮生六记》中借来的名字。身边，很难寻找古人春游、结社、集会之乐趣。只愿文字在这个小小的空间里仍然能够发挥古老的力量。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、科学计算等方面的学习侧记。">
 
-    <meta property="og:article:tag" content="Programming"> <meta property="og:article:tag" content="RefactoringT"> 
+    <meta property="og:article:tag" content="Programming"> <meta property="og:article:tag" content="Refactoring"> 
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -197,7 +197,8 @@
 
     <!-- Custom Head -->
     
-<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
     
@@ -323,7 +324,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/Programming/">Programming</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/RefactoringT/">RefactoringT</a>
+        <a class="post_tag-link" href="/tags/Programming/">Programming</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Refactoring/">Refactoring</a>
     </ul>
     
 
@@ -428,15 +429,15 @@
 <li><em>Remove assignment to parameters</em>: 对参数默认值的设定，在函数内新建变量，初始化这个新变量</li>
 </ul>
 <p>Remove assignment to parameters的例子：</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//Before</span>
-<span class="token keyword">int</span> <span class="token function">discount</span> <span class="token punctuation">(</span><span class="token keyword">int</span> inputVal<span class="token punctuation">,</span> <span class="token keyword">int</span> quantity<span class="token punctuation">,</span> <span class="token keyword">int</span> yearToDate<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>inputVal <span class="token operator">></span> <span class="token number">50</span><span class="token punctuation">)</span> inputVal <span class="token operator">-=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-lang-java"><code class="language-lang-java">//Before
+int discount (int inputVal, int quantity, int yearToDate) {
+  if (inputVal > 50) inputVal -= 2;
 
-<span class="token comment" spellcheck="true">//After Refactoring</span>
-<span class="token keyword">int</span> <span class="token function">discount</span> <span class="token punctuation">(</span><span class="token keyword">int</span> inputVal<span class="token punctuation">,</span> <span class="token keyword">int</span> quantity<span class="token punctuation">,</span> <span class="token keyword">int</span> yearToDate<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">int</span> result <span class="token operator">=</span> inputVal<span class="token punctuation">;</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>inputVal <span class="token operator">></span> <span class="token number">50</span><span class="token punctuation">)</span> result <span class="token operator">-=</span> <span class="token number">2</span><span class="token punctuation">;</span>
-</code></pre>
+//After Refactoring
+int discount (int inputVal, int quantity, int yearToDate) {
+  int result = inputVal;
+  if (inputVal > 50) result -= 2;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这一点基于的信念是，参数只能代表被传进来的变量，不应该在本地再赋予别的含义。</p>
 <h3 id="重构范例：类与方法"><a href="#重构范例：类与方法" class="headerlink" title="重构范例：类与方法"></a>重构范例：类与方法</h3><p><img src="http://static.ddlee.cn/static/img/编程方法论-重构/Refactoring-2.png" alt="class and method"></p>
 <h4 id="Move-Method"><a href="#Move-Method" class="headerlink" title="Move Method"></a><em>Move Method</em></h4><p>Code smell: feature envy（依恋情结）</p>
@@ -456,17 +457,17 @@
 <li><em>Replace type code with subclass*</em>: 针对有判断分支的类，替换为子类</li>
 </ul>
 <p>Consolidate conditional expression的例子：</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//Before</span>
-<span class="token keyword">double</span> <span class="token function">disabilityAmount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>_seniority <span class="token operator">&lt;</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>_monthsDisabled <span class="token operator">></span> <span class="token number">12</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>_isPartTime<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-  <span class="token comment" spellcheck="true">// compute the disability amount</span>
-<span class="token comment" spellcheck="true">//After Refactoring</span>
-<span class="token keyword">double</span> <span class="token function">disabilityAmount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isNotEligableForDisability</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-  <span class="token comment" spellcheck="true">// compute the disability amount</span>
-</code></pre>
+<pre class="line-numbers language-lang-java"><code class="language-lang-java">//Before
+double disabilityAmount() {
+  if (_seniority < 2) return 0;
+  if (_monthsDisabled > 12) return 0;
+  if (_isPartTime) return 0;
+  // compute the disability amount
+//After Refactoring
+double disabilityAmount() {
+  if (isNotEligableForDisability()) return 0;
+  // compute the disability amount
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="重构范例：数据相关"><a href="#重构范例：数据相关" class="headerlink" title="重构范例：数据相关"></a>重构范例：数据相关</h3><p><img src="http://static.ddlee.cn/static/img/编程方法论-重构/Refactoring-3.png" alt="class and method"></p>
 <h4 id="Move-field"><a href="#Move-field" class="headerlink" title="Move field"></a><em>Move field</em></h4><p>code smell: inverse feature envy（自造）</p>
 <p>某一个类使用某一数据比该数据所属的类还多。</p>
@@ -486,26 +487,26 @@
 <li><em>Separate queries form modifiers</em>: 将找到数据和更该数据两个操作拆成两个方法</li>
 </ul>
 <p>Replace parameter with explicit Method的例子：</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//Before</span>
-<span class="token keyword">void</span> <span class="token function">setValue</span> <span class="token punctuation">(</span>String name<span class="token punctuation">,</span> <span class="token keyword">int</span> value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>name<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"height"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    _height <span class="token operator">=</span> value<span class="token punctuation">;</span>
-    <span class="token keyword">return</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>name<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"width"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    _width <span class="token operator">=</span> value<span class="token punctuation">;</span>
-    <span class="token keyword">return</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-  Assert<span class="token punctuation">.</span><span class="token function">shouldNeverReachHere</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">//After Refactoring</span>
-<span class="token keyword">void</span> <span class="token function">setHeight</span><span class="token punctuation">(</span><span class="token keyword">int</span> arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  _height <span class="token operator">=</span> arg<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token keyword">void</span> <span class="token function">setWidth</span> <span class="token punctuation">(</span><span class="token keyword">int</span> arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  _width <span class="token operator">=</span> arg<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
+<pre class="line-numbers language-lang-java"><code class="language-lang-java">//Before
+void setValue (String name, int value) {
+  if (name.equals("height")) {
+    _height = value;
+    return;
+  }
+  if (name.equals("width")) {
+    _width = value;
+    return;
+  }
+  Assert.shouldNeverReachHere();
+}
+//After Refactoring
+void setHeight(int arg) {
+  _height = arg;
+}
+void setWidth (int arg) {
+  _width = arg;
+}
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="Pulling-and-pushing-升级与降级"><a href="#Pulling-and-pushing-升级与降级" class="headerlink" title="Pulling and pushing(升级与降级)"></a>Pulling and pushing(升级与降级)</h4><ul>
 <li><em>Pull up method</em> and <em>pull up field</em></li>
 <li><em>Push down method</em> and <em>push down field</em></li>
@@ -520,6 +521,37 @@
 
     
 </div>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
 
 
                 
@@ -565,6 +597,14 @@
             <!-- Post Prev & Next Nav -->
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
+    
+        <a href="/2017/05/28/Pandas速度优化/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
     
 
     <!-- Section Spacer -->
@@ -674,7 +714,7 @@
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -692,7 +732,7 @@
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Management/">Individual Management<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
+                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Management/">Individual Management<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
             </ul>
         </li>
         

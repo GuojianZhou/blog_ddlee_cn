@@ -142,20 +142,6 @@
     </url>
 
     <url>
-        <loc>http://blog.ddlee.cn/tags/Programming/</loc>
-        <lastmod>2017-04-07T18:27:07.768Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://blog.ddlee.cn/tags/RefactoringT/</loc>
-        <lastmod>2017-04-07T18:27:07.768Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://blog.ddlee.cn/tags/%E5%BC%82%E6%AD%A5/</loc>
         <lastmod>2017-04-07T18:27:24.796Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -163,22 +149,8 @@
     </url>
 
     <url>
-        <loc>http://blog.ddlee.cn/tags/Python/</loc>
-        <lastmod>2017-04-07T18:27:34.968Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://blog.ddlee.cn/tags/%E7%88%AC%E8%99%AB/</loc>
         <lastmod>2017-04-07T18:27:34.968Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://blog.ddlee.cn/tags/Hadoop/</loc>
-        <lastmod>2017-04-09T15:44:09.699Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -198,6 +170,13 @@
     </url>
 
     <url>
+        <loc>http://blog.ddlee.cn/tags/Hadoop/</loc>
+        <lastmod>2017-04-09T15:44:09.699Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://blog.ddlee.cn/tags/Data/</loc>
         <lastmod>2017-04-09T15:44:33.604Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -205,8 +184,50 @@
     </url>
 
     <url>
+        <loc>http://blog.ddlee.cn/tags/Refactoring/</loc>
+        <lastmod>2017-04-09T16:38:15.126Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>http://blog.ddlee.cn/tags/Data-Science/</loc>
-        <lastmod>2017-04-09T15:44:33.604Z</lastmod>
+        <lastmod>2017-05-28T12:17:21.127Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/tags/Programming/</loc>
+        <lastmod>2017-05-28T12:17:21.127Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/tags/Python/</loc>
+        <lastmod>2017-05-28T17:16:51.094Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/tags/Deep-Learning/</loc>
+        <lastmod>2017-05-28T17:16:51.094Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/tags/AI/</loc>
+        <lastmod>2017-05-28T17:16:51.094Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/tags/Pytorch/</loc>
+        <lastmod>2017-05-28T17:16:51.094Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

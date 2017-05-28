@@ -4,6 +4,461 @@
   
     
     <entry>
+      <title><![CDATA[LSTM:Pytorch实现]]></title>
+      <url>http://blog.ddlee.cn/2017/05/29/LSTM-Pytorch%E5%AE%9E%E7%8E%B0/</url>
+      <content type="html"><![CDATA[<p>本文讨论LSTM网络的Pytorch实现，兼论Pytorch库的代码组织方式和架构设计。</p>
+<h2 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a>LSTM</h2><p>LSTM是一种循环神经网络，适用于对序列化的输入建模。Chris Olah的这篇<a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="external">文章</a>细致地解释了一个LSTM单元的运作方式，建议阅读。</p>
+<h3 id="两个想法"><a href="#两个想法" class="headerlink" title="两个想法"></a>两个想法</h3><h4 id="Gate：信息流动的闸门"><a href="#Gate：信息流动的闸门" class="headerlink" title="Gate：信息流动的闸门"></a>Gate：信息流动的闸门</h4><script type="math/tex; mode=display">i_t = sigmoid(W_{xi} x_t  +  W_{hi}h_{t-1} + b_i)</script><script type="math/tex; mode=display">f_t = sigmoid(W_{xf} x_t  +  W_{hf}h_{t-1} + b_f)</script><script type="math/tex; mode=display">o_t = sigmoid(W_{xo} x_t  +  W_{ho}h_{t-1} + b_o)</script><p>$x$ 表示输入，$h$表示隐藏状态，用$sigmoid$函数将输入二者的传递结果映射到$（0,1)$上，分别赋予输入门、遗忘门、输出门的含义，来控制不同神经单元（同一神经元不同时间点的状态）之间信息流动。</p>
+<h4 id="Cell：记忆池"><a href="#Cell：记忆池" class="headerlink" title="Cell：记忆池"></a>Cell：记忆池</h4><script type="math/tex; mode=display">c_t = f_t \odot c_{t - 1} + i_t \odot tanh(W_{xc} x_t  +  W_{hc}h_{t-1} + b_c)\\
+h_t = o_t \odot tanh(c_t)</script><p>$h$表示隐藏状态，$C$表示记忆池，通过Gate，上一单元（状态）的信息有控制地遗忘，当前的输入有控制地流入，记忆池中的信息有控制地流入隐藏状态。</p>
+<h3 id="与普通RNN的对比"><a href="#与普通RNN的对比" class="headerlink" title="与普通RNN的对比"></a>与普通RNN的对比</h3><p><img src="http://static.ddlee.cn/static/img/./LSTM-Pytorch实现/LSTM3-SimpleRNN.png" alt="RNN"><br>普通RNN只有一个自更新的隐藏状态单元。</p>
+<p><img src="http://static.ddlee.cn/static/img/./LSTM-Pytorch实现/LSTM.jpg" alt="LSTM"><br>LSTM增加了记忆池Cell，并通过几个Gate将信息有控制地更新在记忆池中，并通过记忆池中的信息来决定隐藏状态。</p>
+<h2 id="From-Scratch"><a href="#From-Scratch" class="headerlink" title="From Scratch"></a>From Scratch</h2><p>下面是手动实现LSTM的代码，继承了基类<code>nn.Module</code>。</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">import torch.nn as nn
+import torch
+from torch.autograd import Variable
+
+class LSTM(nn.Module):
+    def __init__(self, input_size, hidden_size, cell_size, output_size):
+        super(LSTM, self).__init__()
+        self.hidden_size = hidden_size
+        self.cell_size = cell_size
+        self.gate = nn.Linear(input_size + hidden_size, cell_size)
+        self.output = nn.Linear(hidden_size, output_size)
+        self.sigmoid = nn.Sigmoid()
+        self.tanh = nn.Tanh()
+        self.softmax = nn.LogSoftmax()
+
+    def forward(self, input, hidden, cell):
+        combined = torch.cat((input, hidden), 1)
+        f_gate = self.gate(combined)
+        i_gate = self.gate(combined)
+        o_gate = self.gate(combined)
+        f_gate = self.sigmoid(f_gate)
+        i_gate = self.sigmoid(i_gate)
+        o_gate = self.sigmoid(o_gate)
+        cell_helper = self.gate(combined)
+        cell_helper = self.tanh(cell_helper)
+        cell = torch.add(torch.mul(cell, f_gate), torch.mul(cell_helper, i_gate))
+        hidden = torch.mul(self.tanh(cell), o_gate)
+        output = self.output(hidden)
+        output = self.softmax(output)
+        return output, hidden, cell
+
+    def initHidden(self):
+        return Variable(torch.zeros(1, self.hidden_size))
+
+    def initCell(self):
+        return Variable(torch.zeros(1, self.cell_size))
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>几个关键点：</p>
+<ol>
+<li>Tensor的大小</li>
+<li>信息的传递顺序</li>
+</ol>
+<h2 id="Pytorch-Module"><a href="#Pytorch-Module" class="headerlink" title="Pytorch Module"></a>Pytorch Module</h2><p>Pytorch库本身对LSTM的实现封装了更多功能，类和函数的组织也非常有借鉴意义。我对其实现的理解基于以下两点展开：</p>
+<ol>
+<li>胞(cell)、层(layer)、栈(stacked layer)的层次化解耦，每一层抽象处理一部分参数（结构）</li>
+<li>函数句柄的传递：处理好参数后返回函数句柄<code>forward</code></li>
+</ol>
+<p>下面开始按图索骥，源码见<a href="https://github.com/pytorch/pytorch/tree/master/torch" target="_blank" rel="external">GitHub</a>。</p>
+<h4 id="LSTM类"><a href="#LSTM类" class="headerlink" title="LSTM类"></a>LSTM类</h4><p>文件：<a href="https://github.com/pytorch/pytorch/blob/master/torch/nn/modules/rnn.py" target="_blank" rel="external">nn/modules/rnn.py</a></p>
+<pre class="line-numbers language-lang-Python"><code class="language-lang-Python"># nn/modules/rnn.py
+class RNNBase(Module):
+  def __init__(self, mode, input_size, output_size):
+      pass
+  def forward(self, input, hx=None):
+      if hx is None:
+          hx = torch.autograd.Variable()
+      if self.mode == 'LSTM':
+          hx = (hx, hx)
+      func = self._backend.RNN() #!!!
+      output, hidden = func(input, self.all_weights, hx) #!!!
+      return output, hidden
+
+class LSTM(RNNBase):
+    def __init__(self, *args, **kwargs):
+        super(LSTM, self).__init__('LSTM', *args, **kwargs)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol>
+<li><code>LSTM</code>类只是<code>RNNBase</code>类的一个装饰器。</li>
+<li>在基类<code>nn.Module</code>中，把<code>__call__()</code>定义为调用<code>forward()</code>方法，因而真正的功能实现在<code>_backend.RNN()</code>中</li>
+</ol>
+<h4 id="AutogradRNN函数"><a href="#AutogradRNN函数" class="headerlink" title="AutogradRNN函数"></a>AutogradRNN函数</h4><p>下面寻找<code>_backend.RNN</code>。<br>文件：<a href="https://github.com/pytorch/pytorch/blob/master/torch/nn/backends/thnn.py" target="_blank" rel="external">nn/backends/thnn.py</a></p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python"># nn/backends/thnn.py
+def _initialize_backend():
+    from .._functions.rnn import RNN, LSTMCell
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>原来，<code>_backend</code>也是索引。</p>
+<p>终于找到<code>RNN()</code>函数。<br>文件：<a href="https://github.com/pytorch/pytorch/blob/master/torch/nn/_functions/rnn.py" target="_blank" rel="external">nn/_functions/rnn.py</a></p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python"># nn/_functions/rnn.py
+def RNN(*args, **kwargs):
+    def forward(input, *fargs, **fkwargs):
+        func = AutogradRNN(*args, **kwargs)
+        return func(input, *fargs, **fkwargs)
+    return forward
+
+def AutogradRNN(mode, input_size, hidden_size):
+    cell = LSTMCell
+    rec_factory = Recurrent
+    layer = (rec_factory(cell),)
+    func = StackedRNN(layer, num_layers)
+    def forward(input, weight, hidden):
+        nexth, output = func(input, hidden, weight)
+        return output, nexth
+    return forward
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol>
+<li><code>RNN()</code>是一个装饰器，根据是否有<code>cudnn</code>库决定调用<code>AutogradRNN()</code>还是<code>CudnnRNN()</code>，这里仅观察<code>AutogradRNN()</code></li>
+<li><code>AutogradRNN()</code>选用了<code>LSTMCell</code>，用<code>Recurrent()</code>函数处理了<code>Cell</code>构成<code>Layer</code>，再将<code>Layer</code>传入<code>StackedRNN()</code>函数</li>
+<li><code>RNN()</code>和<code>AutogradRNN()</code>返回的都是其<code>forward()</code>函数句柄</li>
+</ol>
+<p>下面是<code>Recurrent()</code>函数：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">def Recurrent(inner):
+    def forward(input, hidden, weight):
+        output = []
+        steps = range(input.size(0) - 1, -1, -1)
+        for i in steps:
+            hidden = inner(input[i], hidden, *weight)
+            output.append(hidden[0])
+        return hidden, output
+    return forward
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol>
+<li><code>Recurrent()</code>函数实现了“递归”的结构，根据输入的大小组合<code>Cell</code>，完成了隐藏状态和参数的迭代。</li>
+<li><code>Recurrent()</code>函数将<code>Cell(inner)</code>组合为<code>Layer</code>。</li>
+</ol>
+<h4 id="StackedRNN-函数"><a href="#StackedRNN-函数" class="headerlink" title="StackedRNN()函数"></a>StackedRNN()函数</h4><pre class="line-numbers language-lang-python"><code class="language-lang-python">def StackedRNN(inners, num_layers):
+    num_directions = len(inners)
+    total_layers = num_layers * num_directions
+    def forward(input, hidden, weight):
+        next_hidden = []
+        hidden = list(zip(*hidden))
+        for i in range(num_layers):
+          all_output = []
+          for j, inner in enumerate(inners):
+              hy, output = inner(input, hidden[l], weight[l])
+              next_hidden.append(hy)
+              all_output.append(output)
+          input = torch.cat(all_output, input.dim() - 1)
+        next_h, next_c = zip(*next_hidden)
+        next_hidden = (torch.cat(next_h, 0).view(total_layers, *next_h[0].size()),
+                  torch.cat(next_c, 0).view(total_layers, *next_c[0].size()))
+        return next_hidden, input
+    return forward
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ol>
+<li><code>StackedRNN()</code>函数将<code>Layer(inner)</code>组合为栈</li>
+</ol>
+<p>最后的最后，一个基本的LSTM单元内的计算由<code>LSTMCell()</code>函数实现。</p>
+<h4 id="LSTMCell-函数"><a href="#LSTMCell-函数" class="headerlink" title="LSTMCell()函数"></a>LSTMCell()函数</h4><pre class="line-numbers language-lang-python"><code class="language-lang-python">def LSTMCell(input, hidden, w_ih, w_hh, b_ih=None, b_hh=None):
+    if input.is_cuda:
+        igates = F.linear(input, w_ih)
+        hgates = F.linear(hidden[0], w_hh)
+        state = fusedBackend.LSTMFused()
+        return state(igates, hgates, hidden[1]) if b_ih is None else state(igates, hgates, hidden[1], b_ih, b_hh)
+
+    hx, cx = hidden
+    gates = F.linear(input, w_ih, b_ih) + F.linear(hx, w_hh, b_hh)
+
+    ingate, forgetgate, cellgate, outgate = gates.chunk(4, 1)
+
+    ingate = F.sigmoid(ingate)
+    forgetgate = F.sigmoid(forgetgate)
+    cellgate = F.tanh(cellgate)
+    outgate = F.sigmoid(outgate)
+
+    cy = (forgetgate * cx) + (ingate * cellgate)
+    hy = outgate * F.tanh(cy)
+
+    return hy, cy
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>观察上面的代码，即是LSTM的基本信息传递公式。至此，我们的旅程完成。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><blockquote>
+<p>没有什么是增加一层抽象不能解决的，如果不能，那就再加一层。</p>
+</blockquote>
+<p>重复一下我对上述代码的理解：</p>
+<ol>
+<li>胞(cell)、层(layer)、栈(stacked layer)的层次化解耦，每一层抽象处理一部分参数（结构）</li>
+<li>函数句柄的传递：处理好参数后返回函数句柄<code>forward</code></li>
+</ol>
+<p><img src="http://static.ddlee.cn/static/img/LSTM-Pytorch实现/str.jpg" alt="str"></p>
+<p>如洋葱一般，我们剥到最后，发现处理的信息正是输入、隐藏状态和LSTM单元几个控制门的参数。在一层一层的抽象之中，Pytorch在不同的层面处理了不同的参数，保证了扩展性和抽象层之间的解耦。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> AI </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Python </tag>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> AI </tag>
+            
+            <tag> Pytorch </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Pandas速度优化]]></title>
+      <url>http://blog.ddlee.cn/2017/05/28/Pandas%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96/</url>
+      <content type="html"><![CDATA[<p>本文主要内容取自Sofia Heisler在PyCon 2017上的演讲<a href="https://www.youtube.com/watch?v=HN5d490_KKk" target="_blank" rel="external">No More Sad Pandas Optimizing Pandas Code for Speed and Efficiency</a>，讲稿代码和幻灯片见<a href="https://github.com/sversh/pycon2017-optimizing-pandas" target="_blank" rel="external">GitHub</a>。</p>
+<h2 id="Set-Up"><a href="#Set-Up" class="headerlink" title="Set Up"></a>Set Up</h2><h4 id="示例数据"><a href="#示例数据" class="headerlink" title="示例数据"></a>示例数据</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ean_hotel_id</th>
+<th>name</th>
+<th>address1</th>
+<th>city</th>
+<th>state_province</th>
+<th>postal_code</th>
+<th>latitude</th>
+<th>longitude</th>
+<th>star_rating</th>
+<th>high_rate</th>
+<th>low_rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>269955</td>
+<td>Hilton Garden Inn Albany/SUNY Area</td>
+<td>1389 Washington Ave</td>
+<td>Albany</td>
+<td>NY</td>
+<td>12206</td>
+<td>42.68751</td>
+<td>-73.81643</td>
+<td>3.0</td>
+<td>154.0272</td>
+<td>124.0216</td>
+</tr>
+<tr>
+<td>1</td>
+<td>113431</td>
+<td>Courtyard by Marriott Albany Thruway</td>
+<td>1455 Washington Avenue</td>
+<td>Albany</td>
+<td>NY</td>
+<td>12206</td>
+<td>42.68971</td>
+<td>-73.82021</td>
+<td>3.0</td>
+<td>179.0100</td>
+<td>134.0000</td>
+</tr>
+<tr>
+<td>2</td>
+<td>108151</td>
+<td>Radisson Hotel Albany</td>
+<td>205 Wolf Rd</td>
+<td>Albany</td>
+<td>NY</td>
+<td>12205</td>
+<td>42.72410</td>
+<td>-73.79822</td>
+<td>3.0</td>
+<td>134.1700</td>
+<td>84.1600</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="示例函数：Haversine-Distance"><a href="#示例函数：Haversine-Distance" class="headerlink" title="示例函数：Haversine Distance"></a>示例函数：Haversine Distance</h4><pre class="line-numbers language-lang-Python"><code class="language-lang-Python">def haversine(lat1, lon1, lat2, lon2):
+    miles_constant = 3959
+    lat1, lon1, lat2, lon2 = map(np.deg2rad, [lat1, lon1, lat2, lon2])
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+    a = np.sin(dlat/2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon/2)**2
+    c = 2 * np.arcsin(np.sqrt(a))
+    mi = miles_constant * c
+    return mi
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="优化它之前，先测量它"><a href="#优化它之前，先测量它" class="headerlink" title="优化它之前，先测量它"></a>优化它之前，先测量它</h2><h4 id="IPython-Notebook的Magic-Command-timeit"><a href="#IPython-Notebook的Magic-Command-timeit" class="headerlink" title="IPython Notebook的Magic Command: %timeit"></a>IPython Notebook的Magic Command: <code>%timeit</code></h4><p>既可以测量某一行代码的执行时间，又可以测量整个单元格里代码快的执行时间。</p>
+<h4 id="Package-line-profiler"><a href="#Package-line-profiler" class="headerlink" title="Package: line_profiler"></a>Package: line_profiler</h4><p>记录每行代码的执行次数和执行时间。</p>
+<p>在IPython Notebook中使用时，先运行<code>%load_ext line_profiler</code>， 之后可以用<code>%lprun -f [function name]</code>命令记录指定函数的执行情况。</p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><h4 id="对行做循环-Baseline"><a href="#对行做循环-Baseline" class="headerlink" title="对行做循环(Baseline)"></a>对行做循环(Baseline)</h4><pre class="line-numbers language-lang-python"><code class="language-lang-python">%%timeit
+haversine_series = []
+for index, row in df.iterrows():
+    haversine_series.append(haversine(40.671, -73.985,\
+                                      row['latitude'], row['longitude']))
+df['distance'] = haversine_series
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>Output:</p>
+<pre><code>197 ms ± 6.65 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+</code></pre><h4 id="pd-DataFrame-apply-方法"><a href="#pd-DataFrame-apply-方法" class="headerlink" title="pd.DataFrame.apply()方法"></a>pd.DataFrame.apply()方法</h4><pre class="line-numbers language-lang-python"><code class="language-lang-python">%lprun -f haversine \
+df.apply(lambda row: haversine(40.671, -73.985,\
+                               row['latitude'], row['longitude']), axis=1)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>Output:</p>
+<pre><code>90.6 ms ± 7.55 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
+</code></pre><pre><code>Timer unit: 1e-06 s
+
+Total time: 0.049982 s
+File: &lt;ipython-input-3-19c704a927b7&gt;
+Function: haversine at line 1
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+     1                                           def haversine(lat1, lon1, lat2, lon2):
+     2      1631         1535      0.9      3.1      miles_constant = 3959
+     3      1631        16602     10.2     33.2      lat1, lon1, lat2, lon2 = map(np.deg2rad, [lat1, lon1, lat2, lon2])
+     4      1631         2019      1.2      4.0      dlat = lat2 - lat1
+     5      1631         1143      0.7      2.3      dlon = lon2 - lon1
+     6      1631        18128     11.1     36.3      a = np.sin(dlat/2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon/2)**2
+     7      1631         7857      4.8     15.7      c = 2 * np.arcsin(np.sqrt(a))
+     8      1631         1708      1.0      3.4      mi = miles_constant * c
+     9      1631          990      0.6      2.0      return mi
+</code></pre><p>观察Hits这一列可以看到，<code>apply()</code>方法还是将函数一行行地应用于每行。</p>
+<h4 id="向量化：将pd-Series传入函数"><a href="#向量化：将pd-Series传入函数" class="headerlink" title="向量化：将pd.Series传入函数"></a>向量化：将pd.Series传入函数</h4><pre><code>%lprun -f haversine haversine(40.671, -73.985,\
+                              df[&#39;latitude&#39;], df[&#39;longitude&#39;])
+</code></pre><p>Output:</p>
+<pre><code>2.21 ms ± 230 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+</code></pre><pre><code>Timer unit: 1e-06 s
+
+Total time: 0.008601 s
+File: &lt;ipython-input-3-19c704a927b7&gt;
+Function: haversine at line 1
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+     1                                           def haversine(lat1, lon1, lat2, lon2):
+     2         1            3      3.0      0.0      miles_constant = 3959
+     3         1          838    838.0      9.7      lat1, lon1, lat2, lon2 = map(np.deg2rad, [lat1, lon1, lat2, lon2])
+     4         1          597    597.0      6.9      dlat = lat2 - lat1
+     5         1          572    572.0      6.7      dlon = lon2 - lon1
+     6         1         5033   5033.0     58.5      a = np.sin(dlat/2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon/2)**2
+     7         1         1060   1060.0     12.3      c = 2 * np.arcsin(np.sqrt(a))
+     8         1          496    496.0      5.8      mi = miles_constant * c
+     9         1            2      2.0      0.0      return mi
+</code></pre><p>向量化之后，函数内的每行操作只被访问一次，达到了行结构上的并行。</p>
+<h3 id="向量化：将np-array传入函数"><a href="#向量化：将np-array传入函数" class="headerlink" title="向量化：将np.array传入函数"></a>向量化：将np.array传入函数</h3><pre class="line-numbers language-lang-python"><code class="language-lang-python">%lprun -f haversine df['distance'] = haversine(40.671, -73.985,\
+                        df['latitude'].values, df['longitude'].values)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>Output：</p>
+<pre><code>370 µs ± 18 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+</code></pre><pre><code>Timer unit: 1e-06 s
+
+Total time: 0.001382 s
+File: &lt;ipython-input-3-19c704a927b7&gt;
+Function: haversine at line 1
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+     1                                           def haversine(lat1, lon1, lat2, lon2):
+     2         1            3      3.0      0.2      miles_constant = 3959
+     3         1          292    292.0     21.1      lat1, lon1, lat2, lon2 = map(np.deg2rad, [lat1, lon1, lat2, lon2])
+     4         1           40     40.0      2.9      dlat = lat2 - lat1
+     5         1           29     29.0      2.1      dlon = lon2 - lon1
+     6         1          815    815.0     59.0      a = np.sin(dlat/2)**2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon/2)**2
+     7         1          183    183.0     13.2      c = 2 * np.arcsin(np.sqrt(a))
+     8         1           18     18.0      1.3      mi = miles_constant * c
+     9         1            2      2.0      0.1      return mi
+</code></pre><p>相比<code>pd.Series</code>，<code>np.array</code>不含索引等额外信息，因而更加高效。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Methodology</th>
+<th>Avg.    single    run    time</th>
+<th>Marginal    performance    improvement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Looping    with    iterrows</td>
+<td>184.00</td>
+<td>-</td>
+<td></td>
+</tr>
+<tr>
+<td>Looping    with    apply</td>
+<td>78.10</td>
+<td>2.4x</td>
+</tr>
+<tr>
+<td>Vectorization    with    Pandas    series</td>
+<td>1.79</td>
+<td>43.6x</td>
+</tr>
+<tr>
+<td>Vectorization    with    NumPy    arrays</td>
+<td>0.37</td>
+<td>4.8x</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>通过上面的对比，我们比最初的baseline快了近500倍。最大的提升来自于向量化。因而，实现的函数能够很方便地向量化是高效处理的关键。</p>
+<h2 id="用Cython优化"><a href="#用Cython优化" class="headerlink" title="用Cython优化"></a>用<code>Cython</code>优化</h2><p><code>Cython</code>可以将<code>python</code>代码转化为<code>C</code>代码来执行，可以进行如下优化（静态化变量类型，调用C函数库）</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">%load_ext cython
+
+%%cython -a
+# Haversine cythonized
+from libc.math cimport sin, cos, acos, asin, sqrt
+
+cdef deg2rad_cy(float deg):
+    cdef float rad
+    rad = 0.01745329252*deg
+    return rad
+
+cpdef haversine_cy_dtyped(float lat1, float lon1, float lat2, float lon2):
+    cdef:
+        float dlon
+        float dlat
+        float a
+        float c
+        float mi
+
+    lat1, lon1, lat2, lon2 = map(deg2rad_cy, [lat1, lon1, lat2, lon2])
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * asin(sqrt(a))
+    mi = 3959 * c
+    return mi
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>嵌套于循坏中：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">%timeit df['distance'] =\
+df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
+                              row['latitude'], row['longitude']), axis=1)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>Output:</p>
+<pre><code>10 loops, best of 3: 68.4 ms per loop
+</code></pre><p>可以看到，<code>Cython</code>确实带来速度上的提升，但效果不及向量化（并行化）。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Data Science </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Python </tag>
+            
+            <tag> Data Science </tag>
+            
+            <tag> Programming </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[编程方法论(一):重构]]></title>
       <url>http://blog.ddlee.cn/2017/04/08/%E7%BC%96%E7%A8%8B%E6%96%B9%E6%B3%95%E8%AE%BA-%E9%87%8D%E6%9E%84/</url>
       <content type="html"><![CDATA[<p>本文内容主要整理自lynda.com课程<a href="https://www.lynda.com/Developer-Programming-Foundations-tutorials/Foundations-Programming-Refactoring-Code/122457-2.html" target="_blank" rel="external">Programming Foudations: Refactoring Code</a>和<em>Martin Fowler</em>的<a href="https://martinfowler.com/books/refactoring.html" target="_blank" rel="external">重构</a>。全部例子来源于<a href="https://refactoring.com" target="_blank" rel="external">refactoring.com</a>。</p>
@@ -45,15 +500,15 @@
 <li><em>Remove assignment to parameters</em>: 对参数默认值的设定，在函数内新建变量，初始化这个新变量</li>
 </ul>
 <p>Remove assignment to parameters的例子：</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//Before</span>
-<span class="token keyword">int</span> <span class="token function">discount</span> <span class="token punctuation">(</span><span class="token keyword">int</span> inputVal<span class="token punctuation">,</span> <span class="token keyword">int</span> quantity<span class="token punctuation">,</span> <span class="token keyword">int</span> yearToDate<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>inputVal <span class="token operator">></span> <span class="token number">50</span><span class="token punctuation">)</span> inputVal <span class="token operator">-=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-lang-java"><code class="language-lang-java">//Before
+int discount (int inputVal, int quantity, int yearToDate) {
+  if (inputVal > 50) inputVal -= 2;
 
-<span class="token comment" spellcheck="true">//After Refactoring</span>
-<span class="token keyword">int</span> <span class="token function">discount</span> <span class="token punctuation">(</span><span class="token keyword">int</span> inputVal<span class="token punctuation">,</span> <span class="token keyword">int</span> quantity<span class="token punctuation">,</span> <span class="token keyword">int</span> yearToDate<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">int</span> result <span class="token operator">=</span> inputVal<span class="token punctuation">;</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>inputVal <span class="token operator">></span> <span class="token number">50</span><span class="token punctuation">)</span> result <span class="token operator">-=</span> <span class="token number">2</span><span class="token punctuation">;</span>
-</code></pre>
+//After Refactoring
+int discount (int inputVal, int quantity, int yearToDate) {
+  int result = inputVal;
+  if (inputVal > 50) result -= 2;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这一点基于的信念是，参数只能代表被传进来的变量，不应该在本地再赋予别的含义。</p>
 <h3 id="重构范例：类与方法"><a href="#重构范例：类与方法" class="headerlink" title="重构范例：类与方法"></a>重构范例：类与方法</h3><p><img src="http://static.ddlee.cn/static/img/编程方法论-重构/Refactoring-2.png" alt="class and method"></p>
 <h4 id="Move-Method"><a href="#Move-Method" class="headerlink" title="Move Method"></a><em>Move Method</em></h4><p>Code smell: feature envy（依恋情结）</p>
@@ -73,17 +528,17 @@
 <li><em>Replace type code with subclass*</em>: 针对有判断分支的类，替换为子类</li>
 </ul>
 <p>Consolidate conditional expression的例子：</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//Before</span>
-<span class="token keyword">double</span> <span class="token function">disabilityAmount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>_seniority <span class="token operator">&lt;</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>_monthsDisabled <span class="token operator">></span> <span class="token number">12</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>_isPartTime<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-  <span class="token comment" spellcheck="true">// compute the disability amount</span>
-<span class="token comment" spellcheck="true">//After Refactoring</span>
-<span class="token keyword">double</span> <span class="token function">disabilityAmount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isNotEligableForDisability</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-  <span class="token comment" spellcheck="true">// compute the disability amount</span>
-</code></pre>
+<pre class="line-numbers language-lang-java"><code class="language-lang-java">//Before
+double disabilityAmount() {
+  if (_seniority < 2) return 0;
+  if (_monthsDisabled > 12) return 0;
+  if (_isPartTime) return 0;
+  // compute the disability amount
+//After Refactoring
+double disabilityAmount() {
+  if (isNotEligableForDisability()) return 0;
+  // compute the disability amount
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="重构范例：数据相关"><a href="#重构范例：数据相关" class="headerlink" title="重构范例：数据相关"></a>重构范例：数据相关</h3><p><img src="http://static.ddlee.cn/static/img/编程方法论-重构/Refactoring-3.png" alt="class and method"></p>
 <h4 id="Move-field"><a href="#Move-field" class="headerlink" title="Move field"></a><em>Move field</em></h4><p>code smell: inverse feature envy（自造）</p>
 <p>某一个类使用某一数据比该数据所属的类还多。</p>
@@ -103,26 +558,26 @@
 <li><em>Separate queries form modifiers</em>: 将找到数据和更该数据两个操作拆成两个方法</li>
 </ul>
 <p>Replace parameter with explicit Method的例子：</p>
-<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">//Before</span>
-<span class="token keyword">void</span> <span class="token function">setValue</span> <span class="token punctuation">(</span>String name<span class="token punctuation">,</span> <span class="token keyword">int</span> value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>name<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"height"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    _height <span class="token operator">=</span> value<span class="token punctuation">;</span>
-    <span class="token keyword">return</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>name<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"width"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    _width <span class="token operator">=</span> value<span class="token punctuation">;</span>
-    <span class="token keyword">return</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-  Assert<span class="token punctuation">.</span><span class="token function">shouldNeverReachHere</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">//After Refactoring</span>
-<span class="token keyword">void</span> <span class="token function">setHeight</span><span class="token punctuation">(</span><span class="token keyword">int</span> arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  _height <span class="token operator">=</span> arg<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token keyword">void</span> <span class="token function">setWidth</span> <span class="token punctuation">(</span><span class="token keyword">int</span> arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  _width <span class="token operator">=</span> arg<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
+<pre class="line-numbers language-lang-java"><code class="language-lang-java">//Before
+void setValue (String name, int value) {
+  if (name.equals("height")) {
+    _height = value;
+    return;
+  }
+  if (name.equals("width")) {
+    _width = value;
+    return;
+  }
+  Assert.shouldNeverReachHere();
+}
+//After Refactoring
+void setHeight(int arg) {
+  _height = arg;
+}
+void setWidth (int arg) {
+  _width = arg;
+}
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="Pulling-and-pushing-升级与降级"><a href="#Pulling-and-pushing-升级与降级" class="headerlink" title="Pulling and pushing(升级与降级)"></a>Pulling and pushing(升级与降级)</h4><ul>
 <li><em>Pull up method</em> and <em>pull up field</em></li>
 <li><em>Push down method</em> and <em>push down field</em></li>
@@ -145,7 +600,7 @@
             
             <tag> Programming </tag>
             
-            <tag> RefactoringT </tag>
+            <tag> Refactoring </tag>
             
         </tags>
         
@@ -219,14 +674,14 @@
       <content type="html"><![CDATA[<h4 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h4><p>Generator能保存自己的状态，进入一种“Paused”状态，再次调用时会继续执行。</p>
 <p>Generator的好处之一是节省了存储空间开销，带一些”流处理”的思想。</p>
 <p>其实，我们也可以对Generator进行传入数据的操作：</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">coro</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    hello <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token string">"Hello"</span>
-    <span class="token keyword">yield</span> hello
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">def coro():
+    hello = yield "Hello"
+    yield hello
 
-c <span class="token operator">=</span> coro<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>next<span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>c<span class="token punctuation">.</span>send<span class="token punctuation">(</span><span class="token string">"World"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-</code></pre>
+c = coro()
+print(next(c))
+print(c.send("World"))
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="Coroutine"><a href="#Coroutine" class="headerlink" title="Coroutine"></a>Coroutine</h4><p>coroutine可以认为是generator思想的泛化：</p>
 <ul>
 <li>generator一个一个地吐出数据（返回值）</li>
@@ -242,66 +697,66 @@ c <span class="token operator">=</span> coro<span class="token punctuation">(</s
 <li>支持计划任务（暂停、恢复执行）</li>
 <li>与其他Task通信</li>
 </ul>
-<pre class=" language-python"><code class="language-python">@coroutine
-<span class="token keyword">def</span> <span class="token function">grep</span><span class="token punctuation">(</span>pattern<span class="token punctuation">)</span><span class="token punctuation">:</span>  <span class="token comment" spellcheck="true">#正则匹配</span>
-    <span class="token keyword">print</span> <span class="token string">"Looking for %s"</span> <span class="token operator">%</span> pattern    
-    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
-        line <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">yield</span><span class="token punctuation">)</span>
-        <span class="token keyword">if</span> pattern <span class="token keyword">in</span> line<span class="token punctuation">:</span>
-            <span class="token keyword">print</span> line<span class="token punctuation">,</span>
-</code></pre>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">@coroutine
+def grep(pattern):  #正则匹配
+    print "Looking for %s" % pattern    
+    while True:
+        line = (yield)
+        if pattern in line:
+            print line,
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>conroutine有自己的控制流（while/if），有局部变量（pattern, line），能暂停和恢复（yield()/send()），能相互通信（send()）</p>
 <p>====》coroutine就是一种Task！</p>
 <p>Python Docs中提供了一个例子：</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> asyncio
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">import asyncio
 
-<span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">compute</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Compute %s + %s ..."</span> <span class="token operator">%</span> <span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token keyword">await</span> asyncio<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span> x <span class="token operator">+</span> y
+async def compute(x, y):
+    print("Compute %s + %s ..." % (x, y))
+    await asyncio.sleep(1.0)
+    return x + y
 
-<span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">print_sum</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    result <span class="token operator">=</span> <span class="token keyword">await</span> compute<span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"%s + %s = %s"</span> <span class="token operator">%</span> <span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> result<span class="token punctuation">)</span><span class="token punctuation">)</span>
+async def print_sum(x, y):
+    result = await compute(x, y)
+    print("%s + %s = %s" % (x, y, result))
 
-loop <span class="token operator">=</span> asyncio<span class="token punctuation">.</span>get_event_loop<span class="token punctuation">(</span><span class="token punctuation">)</span>
-loop<span class="token punctuation">.</span>run_until_complete<span class="token punctuation">(</span>print_sum<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-loop<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
-</code></pre>
+loop = asyncio.get_event_loop()
+loop.run_until_complete(print_sum(1, 2))
+loop.close()
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>执行方式如下图：</p>
 <p><img src="http://static.ddlee.cn/static/img/coroutine/tulip_coro.png" alt="Chaining coroutines"></p>
 <p>利用coroutine，可以在一个线程(Task)上实现异步。</p>
 <h4 id="Impletation"><a href="#Impletation" class="headerlink" title="Impletation"></a>Impletation</h4><p>coroutine有两种实现方式，基于generator和原生async, awati关键字。</p>
-<h5 id="generator-based-coroutine"><a href="#generator-based-coroutine" class="headerlink" title="generator based coroutine"></a>generator based coroutine</h5><pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> asyncio
-<span class="token keyword">import</span> datetime
-<span class="token keyword">import</span> random
+<h5 id="generator-based-coroutine"><a href="#generator-based-coroutine" class="headerlink" title="generator based coroutine"></a>generator based coroutine</h5><pre class="line-numbers language-lang-python"><code class="language-lang-python">import asyncio
+import datetime
+import random
 
-@asyncio<span class="token punctuation">.</span>coroutine
-<span class="token keyword">def</span> <span class="token function">display_date</span><span class="token punctuation">(</span>num<span class="token punctuation">,</span> loop<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    end_time <span class="token operator">=</span> loop<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">50.0</span>
-    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
-        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Loop: {} Time: {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>num<span class="token punctuation">,</span> datetime<span class="token punctuation">.</span>datetime<span class="token punctuation">.</span>now<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>loop<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1.0</span><span class="token punctuation">)</span> <span class="token operator">>=</span> end_time<span class="token punctuation">:</span>
-            <span class="token keyword">break</span>
-        <span class="token keyword">yield</span> <span class="token keyword">from</span> asyncio<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+@asyncio.coroutine
+def display_date(num, loop):
+    end_time = loop.time() + 50.0
+    while True:
+        print("Loop: {} Time: {}".format(num, datetime.datetime.now()))
+        if (loop.time() + 1.0) >= end_time:
+            break
+        yield from asyncio.sleep(random.randint(0, 5))
 
-loop <span class="token operator">=</span> asyncio<span class="token punctuation">.</span>get_event_loop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+loop = asyncio.get_event_loop()
 
-asyncio<span class="token punctuation">.</span>ensure_future<span class="token punctuation">(</span>display_date<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> loop<span class="token punctuation">)</span><span class="token punctuation">)</span>
-asyncio<span class="token punctuation">.</span>ensure_future<span class="token punctuation">(</span>display_date<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> loop<span class="token punctuation">)</span><span class="token punctuation">)</span>
+asyncio.ensure_future(display_date(1, loop))
+asyncio.ensure_future(display_date(2, loop))
 
-loop<span class="token punctuation">.</span>run_forever<span class="token punctuation">(</span><span class="token punctuation">)</span>
-</code></pre>
+loop.run_forever()
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>上面的程序实现了在同一个线程里交互执行两个函数（sleep），而又能保持各自的状态</p>
 <h5 id="Native-support-python-3-5"><a href="#Native-support-python-3-5" class="headerlink" title="Native support(python 3.5+)"></a>Native support(python 3.5+)</h5><p>只需要修改函数定义头和<code>yield from</code>为关键字<code>await</code>即可。</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">display_date</span><span class="token punctuation">(</span>num<span class="token punctuation">,</span> loop<span class="token punctuation">,</span> <span class="token punctuation">)</span><span class="token punctuation">:</span>
-    end_time <span class="token operator">=</span> loop<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">50.0</span>
-    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
-        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Loop: {} Time: {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>num<span class="token punctuation">,</span> datetime<span class="token punctuation">.</span>datetime<span class="token punctuation">.</span>now<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>loop<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1.0</span><span class="token punctuation">)</span> <span class="token operator">>=</span> end_time<span class="token punctuation">:</span>
-            <span class="token keyword">break</span>
-        <span class="token keyword">await</span> asyncio<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-</code></pre>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">async def display_date(num, loop, ):
+    end_time = loop.time() + 50.0
+    while True:
+        print("Loop: {} Time: {}".format(num, datetime.datetime.now()))
+        if (loop.time() + 1.0) >= end_time:
+            break
+        await asyncio.sleep(random.randint(0, 5))
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h4><p>Coroutine常翻译成“协程”。</p>
 <h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h4><ul>
 <li><a href="http://www.dabeaz.com/coroutines/Coroutines.pdf" target="_blank" rel="external">David Beazley @ PyCon2009 Slides</a></li>
@@ -342,50 +797,50 @@ loop<span class="token punctuation">.</span>run_forever<span class="token punctu
 <h3 id="Crawler类"><a href="#Crawler类" class="headerlink" title="Crawler类"></a>Crawler类</h3><p>Crawler类实现了解析网址，抓取内容等基本功能，利用<code>asyncio</code>库构建<code>coroutine</code>（parse_lings(), fetch(), work()）。</p>
 <p><img src="http://static.ddlee.cn/static/img/500lines_crawler/500lines_crawler_class.png" alt="Class Crawler"></p>
 <p>核心之处是组织管理异步的抓取任务，代码块结构如下：</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Crawler</span><span class="token punctuation">:</span>
-  <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> roots<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span> loop<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    self<span class="token punctuation">.</span>q <span class="token operator">=</span> Queue<span class="token punctuation">(</span>loop<span class="token operator">=</span>self<span class="token punctuation">.</span>loop<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 建立队列</span>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">class Crawler:
+  def __init__(self, roots, ....., loop):
+    self.q = Queue(loop=self.loop) # 建立队列
 
-  @asyncio<span class="token punctuation">.</span>coroutine
-  <span class="token keyword">def</span> <span class="token function">parse_links</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> response<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token triple-quoted-string string">'''从返回内容中解析出要抓取的链接'''</span>
-    body <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token keyword">from</span> response<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">if</span> response<span class="token punctuation">.</span>status <span class="token operator">==</span> <span class="token number">200</span><span class="token punctuation">:</span>
-      <span class="token keyword">if</span> content_type<span class="token punctuation">:</span>
-        text <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token keyword">from</span> response<span class="token punctuation">.</span>text<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        urls <span class="token operator">=</span> set<span class="token punctuation">(</span>re<span class="token punctuation">.</span>findall<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token keyword">for</span> url <span class="token keyword">in</span> urls<span class="token punctuation">:</span>
-          <span class="token keyword">if</span> self<span class="token punctuation">.</span>url_allowed<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-            links<span class="token punctuation">.</span>add<span class="token punctuation">(</span><span class="token punctuation">)</span>
-  @asynico<span class="token punctuation">.</span>coroutine
-  <span class="token keyword">def</span> <span class="token function">fetch</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> url<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token triple-quoted-string string">'''访问链接，抓取返回结果'''</span>
-    <span class="token keyword">while</span> tries<span class="token punctuation">:</span>
-      <span class="token keyword">try</span><span class="token punctuation">:</span>
-        response <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token keyword">from</span> self<span class="token punctuation">.</span>session<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
-    <span class="token keyword">try</span><span class="token punctuation">:</span>
-      <span class="token keyword">if</span> is_redirect<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token keyword">pass</span>
-      <span class="token keyword">else</span><span class="token punctuation">:</span>
-        links <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token keyword">from</span> self<span class="token punctuation">.</span>parse_links<span class="token punctuation">(</span>response<span class="token punctuation">)</span>
-    <span class="token keyword">finally</span><span class="token punctuation">:</span>
-      <span class="token keyword">yield</span> <span class="token keyword">from</span> response<span class="token punctuation">.</span>releas<span class="token punctuation">(</span><span class="token punctuation">)</span>
-  @asyncio<span class="token punctuation">.</span>coroutine
-  <span class="token keyword">def</span> <span class="token function">work</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token triple-quoted-string string">'''封装抓取过程，与队列交互'''</span>
-    <span class="token keyword">try</span><span class="token punctuation">:</span>
-      <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
-        url <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token keyword">from</span> self<span class="token punctuation">.</span>q<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token keyword">assert</span> url <span class="token keyword">in</span> self<span class="token punctuation">.</span>seen_urls
-        <span class="token keyword">yield</span> <span class="token keyword">from</span> self<span class="token punctuation">.</span>fetch<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
-        self<span class="token punctuation">.</span>q<span class="token punctuation">.</span>task_done<span class="token punctuation">(</span><span class="token punctuation">)</span>
-  @asyncio<span class="token punctuation">.</span>coroutine
-  <span class="token keyword">def</span> <span class="token function">crawl</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token triple-quoted-string string">'''建立Tasks，启动Task'''</span>
-    workers <span class="token operator">=</span> <span class="token punctuation">[</span>asyncio<span class="token punctuation">.</span>Task<span class="token punctuation">(</span>self<span class="token punctuation">.</span>work<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> loop<span class="token operator">=</span>self<span class="token punctuation">.</span>loop<span class="token punctuation">)</span>
-                <span class="token keyword">for</span> _ <span class="token keyword">in</span> range<span class="token punctuation">(</span>self<span class="token punctuation">.</span>max_tasks<span class="token punctuation">)</span><span class="token punctuation">]</span>
-    <span class="token keyword">yield</span> <span class="token keyword">from</span> self<span class="token punctuation">.</span>q<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
-</code></pre>
+  @asyncio.coroutine
+  def parse_links(self, response):
+    '''从返回内容中解析出要抓取的链接'''
+    body = yield from response.read()
+    if response.status == 200:
+      if content_type:
+        text = yield from response.text()
+        urls = set(re.findall())
+        for url in urls:
+          if self.url_allowed():
+            links.add()
+  @asynico.coroutine
+  def fetch(self, url):
+    '''访问链接，抓取返回结果'''
+    while tries:
+      try:
+        response = yield from self.session.get(url)
+    try:
+      if is_redirect():
+        pass
+      else:
+        links = yield from self.parse_links(response)
+    finally:
+      yield from response.releas()
+  @asyncio.coroutine
+  def work(self):
+    '''封装抓取过程，与队列交互'''
+    try:
+      while True:
+        url = yield from self.q.get()
+        assert url in self.seen_urls
+        yield from self.fetch(url)
+        self.q.task_done()
+  @asyncio.coroutine
+  def crawl(self):
+    '''建立Tasks，启动Task'''
+    workers = [asyncio.Task(self.work(), loop=self.loop)
+                for _ in range(self.max_tasks)]
+    yield from self.q.join()
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>下图是我对上述代码结构的理解：</p>
 <p><img src="http://static.ddlee.cn/static/img/500lines_crawler/coroutine.JPG" alt="coroutines"></p>
 <p>对coroutine的进一步介绍，参见<a href="/2017/04/03/Coroutine-Generator-Async与Await/">Coroutine-Generator-Async与Await</a>。</p>
@@ -588,11 +1043,11 @@ loop<span class="token punctuation">.</span>run_forever<span class="token punctu
 <p>在Cerbot主页可以选择自己的操作系统，会有详细的步骤，在此不表。</p>
 <p>下面谈两个问题，一是强制重定向至HTTPS，二是取消管理端口的HTTPS。</p>
 <h6 id="强制HTTPS"><a href="#强制HTTPS" class="headerlink" title="强制HTTPS"></a>强制HTTPS</h6><p>Vestacp的架构是用nginx做proxy，Apache2做HTTP Server，首先下载nginx template（proxy template）：</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token function">cd</span> /usr/local/vesta/data/templates/web
-<span class="token function">wget</span> http://c.vestacp.com/0.9.8/rhel/force-https/nginx.tar.gz
-<span class="token function">tar</span> -xzvf nginx.tar.gz
-<span class="token function">rm</span> -f nginx.tar.gz
-</code></pre>
+<pre class="line-numbers language-lang-bash"><code class="language-lang-bash">cd /usr/local/vesta/data/templates/web
+wget http://c.vestacp.com/0.9.8/rhel/force-https/nginx.tar.gz
+tar -xzvf nginx.tar.gz
+rm -f nginx.tar.gz
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>之后在Package配置里，将proxy template配置为force-https，这样，身份由相应Package定义的用户建站时，proxy template就是用的强制HTTPS版本了。</p>
 <h6 id="取消管理端口的SSL"><a href="#取消管理端口的SSL" class="headerlink" title="取消管理端口的SSL"></a>取消管理端口的SSL</h6><p>用chrome访问管理页面时，会有Unsecure的警告，这里的SSL在<code>/usr/local/vesta/nginx/conf/nginx.conf</code>中配置。找到</p>
 <pre><code># Vhost
@@ -662,11 +1117,11 @@ server {
         
         <tags>
             
-            <tag> Hadoop </tag>
-            
             <tag> 分布式计算 </tag>
             
             <tag> Data Sicence </tag>
+            
+            <tag> Hadoop </tag>
             
         </tags>
         
@@ -826,35 +1281,35 @@ server {
 <p><img src="http://static.ddlee.cn/static/img/Python+SQLserver/Python+SQL_Server.png" alt="Python+SQLserver"></p>
 <h3 id="Python-Drivers"><a href="#Python-Drivers" class="headerlink" title="Python Drivers"></a>Python Drivers</h3><h4 id="PyODBC"><a href="#PyODBC" class="headerlink" title="PyODBC"></a>PyODBC</h4><p>Annaconda下可以用<code>pip install pyodbc</code>安装，也可以到<a href="https://www.microsoft.com/en-us/download/details.aspx?id=50420" target="_blank" rel="external">这里</a>下载。</p>
 <p>首先建立<code>connection</code>对象：</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> pyodbc
-conn <span class="token operator">=</span> pyodbc<span class="token punctuation">.</span>connect<span class="token punctuation">(</span>
-    r<span class="token string">'DRIVER={ODBC Driver 11 for SQL Server};'</span>  <span class="token comment" spellcheck="true">#or {ODBC Driver 13 for SQL Server}</span>
-    r<span class="token string">'SERVER=ServerHostName;'</span>
-    r<span class="token string">'DATABASE=DBName;'</span>
-    r<span class="token string">'UID=user;'</span>
-    r<span class="token string">'PWD=password'</span>
-    <span class="token punctuation">)</span>
-</code></pre>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">import pyodbc
+conn = pyodbc.connect(
+    r'DRIVER={ODBC Driver 11 for SQL Server};'  #or {ODBC Driver 13 for SQL Server}
+    r'SERVER=ServerHostName;'
+    r'DATABASE=DBName;'
+    r'UID=user;'
+    r'PWD=password'
+    )
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>添加游标（Cursor）对象并执行SQL查询语句：</p>
-<pre class=" language-python"><code class="language-python">cursor <span class="token operator">=</span> conn<span class="token punctuation">.</span>cursor<span class="token punctuation">(</span><span class="token punctuation">)</span>
-cursor<span class="token punctuation">.</span>execute<span class="token punctuation">(</span><span class="token string">'SQL Query Goes Here'</span><span class="token punctuation">)</span>
-<span class="token keyword">for</span> row <span class="token keyword">in</span> cursor<span class="token punctuation">.</span>fetchall<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-  <span class="token keyword">print</span><span class="token punctuation">(</span>rows<span class="token punctuation">.</span><span class="token punctuation">[</span>column name<span class="token punctuation">]</span><span class="token punctuation">)</span>
-</code></pre>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">cursor = conn.cursor()
+cursor.execute('SQL Query Goes Here')
+for row in cursor.fetchall():
+  print(rows.[column name])
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>更多信息参见<a href="https://docs.microsoft.com/en-us/sql/connect/python/pyodbc/python-sql-driver-pyodbc" target="_blank" rel="external">MSDN DOCs</a>。</p>
 <h4 id="pymssql"><a href="#pymssql" class="headerlink" title="pymssql"></a>pymssql</h4><p>同样可以用<code>pip install pymssql</code>安装，也可以到<a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#pymssql" target="_blank" rel="external">这里</a>，然后用<code>pip</code>安装<code>wheel</code>文件。</p>
 <p>pymssql目前还不支持Python3.6，这点要注意下。</p>
 <p>pymssql的用法跟pyODBC很像，下面是官网给出的例子：</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> os <span class="token keyword">import</span> getenv
-<span class="token keyword">import</span> pymssql
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">from os import getenv
+import pymssql
 
-server <span class="token operator">=</span> getenv<span class="token punctuation">(</span><span class="token string">"PYMSSQL_TEST_SERVER"</span><span class="token punctuation">)</span>
-user <span class="token operator">=</span> getenv<span class="token punctuation">(</span><span class="token string">"PYMSSQL_TEST_USERNAME"</span><span class="token punctuation">)</span>
-password <span class="token operator">=</span> getenv<span class="token punctuation">(</span><span class="token string">"PYMSSQL_TEST_PASSWORD"</span><span class="token punctuation">)</span>
+server = getenv("PYMSSQL_TEST_SERVER")
+user = getenv("PYMSSQL_TEST_USERNAME")
+password = getenv("PYMSSQL_TEST_PASSWORD")
 
-conn <span class="token operator">=</span> pymssql<span class="token punctuation">.</span>connect<span class="token punctuation">(</span>server<span class="token punctuation">,</span> user<span class="token punctuation">,</span> password<span class="token punctuation">,</span> <span class="token string">"tempdb"</span><span class="token punctuation">)</span>
-cursor <span class="token operator">=</span> conn<span class="token punctuation">.</span>cursor<span class="token punctuation">(</span><span class="token punctuation">)</span>
-cursor<span class="token punctuation">.</span>execute<span class="token punctuation">(</span><span class="token triple-quoted-string string">"""
+conn = pymssql.connect(server, user, password, "tempdb")
+cursor = conn.cursor()
+cursor.execute("""
 IF OBJECT_ID('persons', 'U') IS NOT NULL
     DROP TABLE persons
 CREATE TABLE persons (
@@ -863,42 +1318,42 @@ CREATE TABLE persons (
     salesrep VARCHAR(100),
     PRIMARY KEY(id)
 )
-"""</span><span class="token punctuation">)</span>
-cursor<span class="token punctuation">.</span>executemany<span class="token punctuation">(</span>
-    <span class="token string">"INSERT INTO persons VALUES (%d, %s, %s)"</span><span class="token punctuation">,</span>
-    <span class="token punctuation">[</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">'John Smith'</span><span class="token punctuation">,</span> <span class="token string">'John Doe'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-     <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">'Jane Doe'</span><span class="token punctuation">,</span> <span class="token string">'Joe Dog'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-     <span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">'Mike T.'</span><span class="token punctuation">,</span> <span class="token string">'Sarah H.'</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token comment" spellcheck="true"># you must call commit() to persist your data if you don't set autocommit to True</span>
-conn<span class="token punctuation">.</span>commit<span class="token punctuation">(</span><span class="token punctuation">)</span>
+""")
+cursor.executemany(
+    "INSERT INTO persons VALUES (%d, %s, %s)",
+    [(1, 'John Smith', 'John Doe'),
+     (2, 'Jane Doe', 'Joe Dog'),
+     (3, 'Mike T.', 'Sarah H.')])
+# you must call commit() to persist your data if you don't set autocommit to True
+conn.commit()
 
-cursor<span class="token punctuation">.</span>execute<span class="token punctuation">(</span><span class="token string">'SELECT * FROM persons WHERE salesrep=%s'</span><span class="token punctuation">,</span> <span class="token string">'John Doe'</span><span class="token punctuation">)</span>
-row <span class="token operator">=</span> cursor<span class="token punctuation">.</span>fetchone<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token keyword">while</span> row<span class="token punctuation">:</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"ID=%d, Name=%s"</span> <span class="token operator">%</span> <span class="token punctuation">(</span>row<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> row<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    row <span class="token operator">=</span> cursor<span class="token punctuation">.</span>fetchone<span class="token punctuation">(</span><span class="token punctuation">)</span>
+cursor.execute('SELECT * FROM persons WHERE salesrep=%s', 'John Doe')
+row = cursor.fetchone()
+while row:
+    print("ID=%d, Name=%s" % (row[0], row[1]))
+    row = cursor.fetchone()
 
-conn<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
-</code></pre>
+conn.close()
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>详细用法参见<a href="http://www.pymssql.org/en/stable/index.html" target="_blank" rel="external">pymssql docs</a>和<a href="https://docs.microsoft.com/en-us/sql/connect/python/pymssql/python-sql-driver-pymssql" target="_blank" rel="external">MSDN DOCs</a></p>
 <h4 id="SQLAlchemy-Python-SQL-Toolkit"><a href="#SQLAlchemy-Python-SQL-Toolkit" class="headerlink" title="SQLAlchemy(Python SQL Toolkit)"></a><a href="https://www.sqlalchemy.org/" target="_blank" rel="external">SQLAlchemy</a>(Python SQL Toolkit)</h4><p>SQLAlchemy提供了一系列丰富、完整、（我看不懂）的API用于数据库操作。这里只谈其<code>create_engine</code>方法。</p>
-<pre class=" language-python"><code class="language-python"><span class="token keyword">from</span> sqlalchemy <span class="token keyword">import</span> create_engine
-<span class="token comment" spellcheck="true"># pyodbc</span>
-engine <span class="token operator">=</span> create_engine<span class="token punctuation">(</span><span class="token string">'mssql+pyodbc://user:password@DSNname'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#需要配置DSN，参见最后一节</span>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">from sqlalchemy import create_engine
+# pyodbc
+engine = create_engine('mssql+pyodbc://user:password@DSNname') #需要配置DSN，参见最后一节
 
-<span class="token comment" spellcheck="true"># pymssql</span>
-engine <span class="token operator">=</span> create_engine<span class="token punctuation">(</span><span class="token string">'mssql+pymssql://user:password@Hostname:port/DBname'</span><span class="token punctuation">)</span>
-</code></pre>
+# pymssql
+engine = create_engine('mssql+pymssql://user:password@Hostname:port/DBname')
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>利用创建好的<code>engine</code>，可以结合pandas库进行批量的读取、写入操作。</p>
 <p>用SQLAlchemy与其他类型的数据库建立链接的方法参见<a href="http://docs.sqlalchemy.org/en/latest/core/engines.html" target="_blank" rel="external">这里</a>。</p>
 <h4 id="Pandas"><a href="#Pandas" class="headerlink" title="Pandas"></a>Pandas</h4><p>利用pyODBC和pymssql拉取的对象需要进一步处理才能进行常见的数据清洗等工作，而Pandas也提供了SQL相关的方法，在SQLAlchemy的辅助下，可以将<code>DataFrame</code>对象直接写入table。</p>
 <h5 id="读取：pd-read-sql"><a href="#读取：pd-read-sql" class="headerlink" title="读取：pd.read_sql()"></a>读取：pd.read_sql()</h5><p><a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_sql.html" target="_blank" rel="external">API</a>：</p>
-<pre class=" language-python"><code class="language-python">pandas<span class="token punctuation">.</span>read_sql<span class="token punctuation">(</span>sql<span class="token punctuation">,</span> con<span class="token punctuation">,</span> index_col<span class="token operator">=</span>None<span class="token punctuation">,</span> coerce_float<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> params<span class="token operator">=</span>None<span class="token punctuation">,</span> parse_dates<span class="token operator">=</span>None<span class="token punctuation">,</span> columns<span class="token operator">=</span>None<span class="token punctuation">,</span> chunksize<span class="token operator">=</span>None<span class="token punctuation">)</span>
-</code></pre>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">pandas.read_sql(sql, con, index_col=None, coerce_float=True, params=None, parse_dates=None, columns=None, chunksize=None)
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>其中的<code>con</code>参数，可以传入SQLAlchemy建立的<code>engine</code>对象，也可以是pyODBC或者pymssql建立的<code>DBAPI2 connection</code>对象。</p>
 <h5 id="写入-pd-DataFrame-to-sql"><a href="#写入-pd-DataFrame-to-sql" class="headerlink" title="写入:pd.DataFrame.to_sql()"></a>写入:pd.DataFrame.to_sql()</h5><p><a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.to_sql.html" target="_blank" rel="external">API</a>:</p>
-<pre class=" language-python"><code class="language-python">DataFrame<span class="token punctuation">.</span>to_sql<span class="token punctuation">(</span>name<span class="token punctuation">,</span> con<span class="token punctuation">,</span> flavor<span class="token operator">=</span>None<span class="token punctuation">,</span> schema<span class="token operator">=</span>None<span class="token punctuation">,</span> if_exists<span class="token operator">=</span><span class="token string">'fail'</span><span class="token punctuation">,</span> index<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> index_label<span class="token operator">=</span>None<span class="token punctuation">,</span> chunksize<span class="token operator">=</span>None<span class="token punctuation">,</span> dtype<span class="token operator">=</span>None<span class="token punctuation">)</span>
-</code></pre>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">DataFrame.to_sql(name, con, flavor=None, schema=None, if_exists='fail', index=True, index_label=None, chunksize=None, dtype=None)
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>这里的<code>con</code>参数，只支持sqlite3的<code>DBAPI2 connection</code>对象，支持所有的<code>SQLAlchemy engine</code>对象。<br><code>name</code>参数传入表名，用<code>if_exists</code>参数控制表存在时的动作：</p>
 <ul>
 <li><code>‘fail’</code>: 啥也不干。</li>
@@ -906,17 +1361,17 @@ engine <span class="token operator">=</span> create_engine<span class="token pun
 <li><code>’append&#39;</code>: 在表中插入数据。表不存在时新建表。</li>
 </ul>
 <h3 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h3><p>利用<code>Sqlcmd</code>命令，也可以在命令行下执行SQL文件，用法如下：</p>
-<pre class=" language-bash"><code class="language-bash">sqlcmd -U user -P password -S server -d DBName -i /path/to/myScript.sql
-</code></pre>
+<pre class="line-numbers language-lang-bash"><code class="language-lang-bash">sqlcmd -U user -P password -S server -d DBName -i /path/to/myScript.sql
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>这样可以有如下思路，将数据写入.SQL文件，再生成.bat文件（批量）写入上述命令，之后完成执行。</p>
 <h3 id="DSN"><a href="#DSN" class="headerlink" title="DSN"></a>DSN</h3><p>Windows下可以配置DSN(Data Source Names)预先存储数据库连接的信息，在<em>Control Panel</em> -&gt; <em>Administrative Tools</em> -&gt; <em>ODBC Data Source</em> 下添加即可。</p>
 <p>配置好DSN后，pyODBC的连接过程可以简化为：</p>
-<pre class=" language-python"><code class="language-python">conn <span class="token operator">=</span> pyodbc<span class="token punctuation">.</span>connect<span class="token punctuation">(</span>r<span class="token string">'DSN=DSNname;UID=user;PWD=password'</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">#UID和PWD也可以在DSN中配置</span>
-</code></pre>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">conn = pyodbc.connect(r'DSN=DSNname;UID=user;PWD=password') #UID和PWD也可以在DSN中配置
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <h3 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h3><p>Python与文件的IO、SQL数据库的读写时有中文字符可能会有编码问题。一种方案是在中文字符串前添加N，如<code>N&#39;python大法好&#39;</code>；另一种方案是传入<code>encoding</code>参数，常用的中文编码有<code>GB2123</code>，<code>GB18030</code>，推荐的还是统一用<code>UTF-8</code>编码、解码。</p>
 <p>利用如下命令，可以在SQLAlchemy中指定编码：</p>
-<pre class=" language-python"><code class="language-python">engine <span class="token operator">=</span> create_engine<span class="token punctuation">(</span><span class="token string">'mssql+pymssql://user:password@HostName\DBname'</span><span class="token punctuation">,</span> connect_args <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">'charset'</span><span class="token punctuation">:</span><span class="token string">'utf-8'</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
-</code></pre>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">engine = create_engine('mssql+pymssql://user:password@HostName\DBname', connect_args = {'charset':'utf-8'})
+<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>其他自定义<code>DBAPI connect()</code>参数的方法参见<a href="http://docs.sqlalchemy.org/en/latest/core/engines.html#custom-dbapi-connect-arguments" target="_blank" rel="external">这里</a>。</p>
 ]]></content>
       
@@ -970,18 +1425,18 @@ engine <span class="token operator">=</span> create_engine<span class="token pun
 <h3 id="U盘挂载，文件共享"><a href="#U盘挂载，文件共享" class="headerlink" title="U盘挂载，文件共享"></a>U盘挂载，文件共享</h3><p>安装好OpenWrt后，就可以从网页端访问路由器，设置PPPoE拨号，设置WIFI等等。</p>
 <h4 id="U盘挂载"><a href="#U盘挂载" class="headerlink" title="U盘挂载"></a>U盘挂载</h4><p>U盘挂载部分主要参考了<a href="https://my.oschina.net/umu618/blog/282984" target="_blank" rel="external">跟 UMU 一起玩 OpenWRT（入门篇6）：挂接 U 盘</a>。</p>
 <p>首先是安装相应的包：</p>
-<pre class=" language-bash"><code class="language-bash">opkg update
+<pre class="line-numbers language-lang-bash"><code class="language-lang-bash">opkg update
 
-<span class="token comment" spellcheck="true"># 核心包</span>
-opkg <span class="token function">install</span> kmod-usb-storage
-opkg <span class="token function">install</span> kmod-scsi-generic
+# 核心包
+opkg install kmod-usb-storage
+opkg install kmod-scsi-generic
 
-<span class="token comment" spellcheck="true"># 文件系统</span>
-opkg <span class="token function">install</span> kmod-fs-ext4
+# 文件系统
+opkg install kmod-fs-ext4
 
-<span class="token comment" spellcheck="true"># 辅助工具</span>
-opkg <span class="token function">install</span> usbutils <span class="token function">fdisk</span> e2fsprogs
-</code></pre>
+# 辅助工具
+opkg install usbutils fdisk e2fsprogs
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>利用<code>lsusb</code>命令查看U盘是否已经被路由器识别。</p>
 <p>这时可以选择用fdisk进行重新分区，不需要分区的话，可以用命令<code>ls /dev | grep sd</code>查看/dev分区中是否已经出现U盘。</p>
 <p>在OpenWrt上使用U盘，建议用ext4格式，可以用下面的命令进行格式化：</p>
@@ -996,24 +1451,24 @@ chmod 444 /mnt/usb/USB_DISK_NOT_PRESENT
 mount /dev/sda1 /mnt/usb
 </code></pre><p>这时可以测试一下，如果U盘里面存储了文件，可以通过<code>/mnt/usb</code>访问的到。</p>
 <p>下面是开机自动挂载U盘的命令。</p>
-<pre class=" language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># block-mount blkid用于查看U盘的UUID</span>
-opkg <span class="token function">install</span> block-mount blkid
+<pre class="line-numbers language-lang-bash"><code class="language-lang-bash"># block-mount blkid用于查看U盘的UUID
+opkg install block-mount blkid
 
-<span class="token comment" spellcheck="true"># 实际上要操作的是fstab的配置文件/etc/config/fstab，要将enabled值改成1</span>
-block detect <span class="token operator">></span> /etc/config/fstab
-uci <span class="token keyword">set</span> fstab.@mount<span class="token punctuation">[</span>-1<span class="token punctuation">]</span>.target<span class="token operator">=</span><span class="token string">'/mnt/usb'</span> u
-ci <span class="token keyword">set</span> fstab.@mount<span class="token punctuation">[</span>-1<span class="token punctuation">]</span>.enabled<span class="token operator">=</span>1
+# 实际上要操作的是fstab的配置文件/etc/config/fstab，要将enabled值改成1
+block detect > /etc/config/fstab
+uci set fstab.@mount[-1].target='/mnt/usb' u
+ci set fstab.@mount[-1].enabled=1
 uci commit fstab
-</code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>更详细的信息可以参见<a href="http://wiki.openwrt.org/doc/uci/fstab" target="_blank" rel="external">这里</a></p>
 <h4 id="文件共享"><a href="#文件共享" class="headerlink" title="文件共享"></a>文件共享</h4><p>文件共享可以通过FTP和SAMBA，推荐的方式是SAMBA。</p>
 <h5 id="SAMBA"><a href="#SAMBA" class="headerlink" title="SAMBA"></a>SAMBA</h5><p>安转SAMBA：</p>
-<pre class=" language-bash"><code class="language-bash">opkg update
-opkg <span class="token function">install</span> samba36-server
+<pre class="line-numbers language-lang-bash"><code class="language-lang-bash">opkg update
+opkg install samba36-server
 
-<span class="token comment" spellcheck="true"># luci程序，可选</span>
-opkg <span class="token function">install</span> luci-app-samba
-</code></pre>
+# luci程序，可选
+opkg install luci-app-samba
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>安装好SAMBA后，主要配置两个参数，一是共享文件夹的路径，如<code>/mnt/usb/sambashare</code>，可以通过更改配置文件<code>/etc/samba/smb.conf</code>实现，也可以通过luci实现。</p>
 <p>示例：</p>
 <pre><code>[sambashare]
@@ -1025,9 +1480,9 @@ create mask = 0750
 directory mask = 0750
 </code></pre><p>第二个参数是访问账户，可以通过命令<code>sambpasswd -a</code>将你的当前用户加入到SAMBA的组中，需要设置一个密码。另外，可能需要将配置文件<code>/etc/samba/smb.conf</code>的[global]中的<code>invalid users = root</code>注释掉。</p>
 <p>最后，设置SAMBA服务启动和开机自启</p>
-<pre class=" language-bash"><code class="language-bash">/etc/init.d/samba start
-/etc/init.d/samba <span class="token function">enable</span>
-</code></pre>
+<pre class="line-numbers language-lang-bash"><code class="language-lang-bash">/etc/init.d/samba start
+/etc/init.d/samba enable
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <h5 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h5><p>FTP可以用<code>vsftpd</code>包来设置，大致过程与SAMBA类似：设置路径、添加用户、设置自启。</p>
 <p>SAMBA服务可以在Windows文件资源管理器中自动检测的到，Linux下可以通过<code>smb://Host/sharepath</code>访问，在IOS系统中，类似Documents的应用也支持添加SAMBA的功能。</p>
 <p>这里强推一下Documents这个应用，结合PDF EXPERT，已经成为了我的文档中心。</p>
@@ -1462,9 +1917,9 @@ directory mask = 0750
         
         <tags>
             
-            <tag> Data </tag>
-            
             <tag> Data Science </tag>
+            
+            <tag> Data </tag>
             
         </tags>
         
