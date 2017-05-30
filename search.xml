@@ -57,9 +57,9 @@
             
             <tag> Deep Learning </tag>
             
-            <tag> AI </tag>
-            
             <tag> Machine Learning </tag>
+            
+            <tag> AI </tag>
             
             <tag> Paper </tag>
             
@@ -570,11 +570,96 @@ df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
             
             <tag> Deep Learning </tag>
             
+            <tag> Machine Learning </tag>
+            
+            <tag> Papers </tag>
+            
             <tag> AI </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[[论文笔记]Deep Residual Learning for Image Recognition]]></title>
+      <url>http://blog.ddlee.cn/2017/04/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Deep-Residual-Learning-for-Image-Recognition/</url>
+      <content type="html"><![CDATA[<p>论文：<a href="http://arxiv.org/abs/1512.03385" target="_blank" rel="external">Deep Residual Learning for Image Recognition</a></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>网络在堆叠到越来越深之后，由于BP算法所依赖的链式法则的连乘形式，会出现梯度消失和梯度下降的问题。初始标准化和中间标准化参数在一定程度上缓解了这一问题，但仍然存在更深的网络比浅层网络具有更大的训练误差的问题。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Deep-Residual-Learning-for-Image-Recognition/error.png" alt="error"></p>
+<h2 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h2><h3 id="假设"><a href="#假设" class="headerlink" title="假设"></a>假设</h3><p>多层的网络结构能够任意接近地拟合目标映射$H(x)$，那么也能任意接近地拟合其关于恒等映射的残差函数$H(x)-x$。记$F(x)=H(x)-x$，则原来的目标映射表为$F(x)+x$。由此，可以设计如下结构。</p>
+<h3 id="残差单元"><a href="#残差单元" class="headerlink" title="残差单元"></a>残差单元</h3><p><img src="http://static.ddlee.cn/static/img/论文笔记-Deep-Residual-Learning-for-Image-Recognition/block.jpg" alt="Residual Learning: a building block"></p>
+<p>残差单元包含一条恒等映射的捷径，不会给原有的网络结构增添新的参数。</p>
+<h2 id="动机-启发"><a href="#动机-启发" class="headerlink" title="动机/启发"></a>动机/启发</h2><p>层数的加深会导致更大的训练误差，但只增加恒等映射层则一定不会使训练误差增加，而若多层网络块要拟合的映射与恒等映射十分类似时，加入的捷径便可方便的发挥作用。</p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>文章中列举了大量在ImagNet和CIFAR-10上的分类表现，效果很好，在此不表。</p>
+<h2 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h2><h4 id="Deeper-Bottleneck-Architectures"><a href="#Deeper-Bottleneck-Architectures" class="headerlink" title="Deeper Bottleneck Architectures"></a>Deeper Bottleneck Architectures</h4><p><img src="http://static.ddlee.cn/static/img/论文笔记-Deep-Residual-Learning-for-Image-Recognition/Bottleneck.png" alt="Bottleneck"></p>
+<p>两头的1 * 1巻积核先降维再升维，中间的3 * 3巻积核成为“瓶颈”，用于提取重要的特征。这样的结构跟恒等映射捷径配合，在ImageNet上有很好的分类效果。</p>
+<h4 id="Standard-deviations-of-layer-responses"><a href="#Standard-deviations-of-layer-responses" class="headerlink" title="Standard deviations of layer responses"></a>Standard deviations of layer responses</h4><p><img src="http://static.ddlee.cn/static/img/论文笔记-Deep-Residual-Learning-for-Image-Recognition/std.png" alt="std"><br>上图是在CIFAR-10数据集上训练的网络各层的相应方差（Batch-Normalization之后，激活之前）。可以看到，残差网络相对普通网络有更小的方差。这一结果支持了残差函数比非残差函数更接近于0的想法（即更接近恒等映射）。此外，还显示出网络越深，越倾向于保留流过的信息。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>深度残差网络在当年的比赛中几乎是满贯。<br>下面是我的一些（未经实验证实的）理解：</p>
+<p>首先，其”跳级”的网络结构对深度网络的设计是一种启发，通过“跳级”，可以把之前网络的信息相对完整的跟后层网络结合起来，即低层次解耦得到的特征和高层次解耦得到的特征再组合。<br>再者，这种分叉的结构可以看作网络结构层面的”Dropout”: 如果被跳过的网络块不能习得更有用的信息，就被恒等映射跳过了。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Papers </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
             
             <tag> Machine Learning </tag>
             
             <tag> Papers </tag>
+            
+            <tag> Computer Vision </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[[论文笔记]Tensorflow White Paper]]></title>
+      <url>http://blog.ddlee.cn/2017/04/20/Tensorflow-White-Paper/</url>
+      <content type="html"><![CDATA[<p>论文：<a href="https://www.tensorflow.org/about/bib" target="_blank" rel="external">TensorFlow: Large-Scale Machine Learning on Heterogeneous Distributed Systems</a></p>
+<h2 id="抽象"><a href="#抽象" class="headerlink" title="抽象"></a>抽象</h2><h3 id="Computation-Graph"><a href="#Computation-Graph" class="headerlink" title="Computation Graph"></a>Computation Graph</h3><p>整张图如同管道结构，数据流就是其中的水流。<em>Control Dependency</em> 描述了管道的有向结构，而反向传播可以通过增加新的管道节点来实现。</p>
+<h3 id="Operation"><a href="#Operation" class="headerlink" title="Operation"></a>Operation</h3><p>即计算操作的抽象，相当于映射、函数。</p>
+<h3 id="Kernel"><a href="#Kernel" class="headerlink" title="Kernel"></a>Kernel</h3><p>执行计算的单元，CPU或GPU</p>
+<h3 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h3><p>Client-Server结构，进行计算或者调整图结构则视为一次会话</p>
+<h3 id="Variables"><a href="#Variables" class="headerlink" title="Variables"></a>Variables</h3><p>特殊的Operation，返回一个句柄，指向持久化的张量，这些张量在整张图的计算中不会被释放。</p>
+<h3 id="Device"><a href="#Device" class="headerlink" title="Device"></a>Device</h3><p>对Kernel的封装，包含类型属性，实行注册机制维护可供使用的Device列表。</p>
+<h2 id="多机实现"><a href="#多机实现" class="headerlink" title="多机实现"></a>多机实现</h2><p>要考虑两个问题：</p>
+<ol>
+<li>计算节点在Device间的分配问题</li>
+<li>Devices之间的通信</li>
+</ol>
+<p>针对这两个问题，分别建立了两个抽象层。</p>
+<h3 id="计算节点分配的C-S机制"><a href="#计算节点分配的C-S机制" class="headerlink" title="计算节点分配的C/S机制"></a>计算节点分配的C/S机制</h3><p><img src="http://static.ddlee.cn/static/img/Tensorflow-White-Paper/master.png" alt="master"><br>client提出计算请求，master负责切割计算图为子图，分配子图到Devices。分配时，会模拟执行子图，并采取贪心的策略分配。</p>
+<h3 id="不同Device之间的发送和接收节点"><a href="#不同Device之间的发送和接收节点" class="headerlink" title="不同Device之间的发送和接收节点"></a>不同Device之间的发送和接收节点</h3><p><img src="http://static.ddlee.cn/static/img/Tensorflow-White-Paper/rev-send.png" alt="rec-send"></p>
+<p>在每个Device上建立Receive和Send节点，负责与其他Device通信。</p>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><h3 id="数据化并行"><a href="#数据化并行" class="headerlink" title="数据化并行"></a>数据化并行</h3><p><img src="http://static.ddlee.cn/static/img/Tensorflow-White-Paper/Parallelize.png" alt="Parallelize"></p>
+<p>上：单线程，同步数据并行<br>下：多线程，异步更新</p>
+<h2 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h2><p>文章中很多内容并没涉及到（看不懂）。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>TensorFlow是个庞大的计算框架，不仅仅定位于深度网络。其对计算图的抽象和数据、计算资源的分配的处理是值得关注的。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Papers </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> Machine Learning </tag>
+            
+            <tag> Papers </tag>
+            
+            <tag> Tensorflow </tag>
             
         </tags>
         

@@ -73,9 +73,9 @@
     
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
-    
       <category term="Machine Learning" scheme="http://blog.ddlee.cn/tags/Machine-Learning/"/>
+    
+      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
     
       <category term="Paper" scheme="http://blog.ddlee.cn/tags/Paper/"/>
     
@@ -594,11 +594,101 @@ df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
     
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
+      <category term="Machine Learning" scheme="http://blog.ddlee.cn/tags/Machine-Learning/"/>
+    
+      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
+    
       <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[论文笔记]Deep Residual Learning for Image Recognition</title>
+    <link href="http://blog.ddlee.cn/2017/04/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Deep-Residual-Learning-for-Image-Recognition/"/>
+    <id>http://blog.ddlee.cn/2017/04/30/论文笔记-Deep-Residual-Learning-for-Image-Recognition/</id>
+    <published>2017-04-30T15:12:11.000Z</published>
+    <updated>2017-05-30T13:37:55.644Z</updated>
+    
+    <content type="html"><![CDATA[<p>论文：<a href="http://arxiv.org/abs/1512.03385" target="_blank" rel="external">Deep Residual Learning for Image Recognition</a></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>网络在堆叠到越来越深之后，由于BP算法所依赖的链式法则的连乘形式，会出现梯度消失和梯度下降的问题。初始标准化和中间标准化参数在一定程度上缓解了这一问题，但仍然存在更深的网络比浅层网络具有更大的训练误差的问题。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Deep-Residual-Learning-for-Image-Recognition/error.png" alt="error"></p>
+<h2 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h2><h3 id="假设"><a href="#假设" class="headerlink" title="假设"></a>假设</h3><p>多层的网络结构能够任意接近地拟合目标映射$H(x)$，那么也能任意接近地拟合其关于恒等映射的残差函数$H(x)-x$。记$F(x)=H(x)-x$，则原来的目标映射表为$F(x)+x$。由此，可以设计如下结构。</p>
+<h3 id="残差单元"><a href="#残差单元" class="headerlink" title="残差单元"></a>残差单元</h3><p><img src="http://static.ddlee.cn/static/img/论文笔记-Deep-Residual-Learning-for-Image-Recognition/block.jpg" alt="Residual Learning: a building block"></p>
+<p>残差单元包含一条恒等映射的捷径，不会给原有的网络结构增添新的参数。</p>
+<h2 id="动机-启发"><a href="#动机-启发" class="headerlink" title="动机/启发"></a>动机/启发</h2><p>层数的加深会导致更大的训练误差，但只增加恒等映射层则一定不会使训练误差增加，而若多层网络块要拟合的映射与恒等映射十分类似时，加入的捷径便可方便的发挥作用。</p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>文章中列举了大量在ImagNet和CIFAR-10上的分类表现，效果很好，在此不表。</p>
+<h2 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h2><h4 id="Deeper-Bottleneck-Architectures"><a href="#Deeper-Bottleneck-Architectures" class="headerlink" title="Deeper Bottleneck Architectures"></a>Deeper Bottleneck Architectures</h4><p><img src="http://static.ddlee.cn/static/img/论文笔记-Deep-Residual-Learning-for-Image-Recognition/Bottleneck.png" alt="Bottleneck"></p>
+<p>两头的1 * 1巻积核先降维再升维，中间的3 * 3巻积核成为“瓶颈”，用于提取重要的特征。这样的结构跟恒等映射捷径配合，在ImageNet上有很好的分类效果。</p>
+<h4 id="Standard-deviations-of-layer-responses"><a href="#Standard-deviations-of-layer-responses" class="headerlink" title="Standard deviations of layer responses"></a>Standard deviations of layer responses</h4><p><img src="http://static.ddlee.cn/static/img/论文笔记-Deep-Residual-Learning-for-Image-Recognition/std.png" alt="std"><br>上图是在CIFAR-10数据集上训练的网络各层的相应方差（Batch-Normalization之后，激活之前）。可以看到，残差网络相对普通网络有更小的方差。这一结果支持了残差函数比非残差函数更接近于0的想法（即更接近恒等映射）。此外，还显示出网络越深，越倾向于保留流过的信息。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>深度残差网络在当年的比赛中几乎是满贯。<br>下面是我的一些（未经实验证实的）理解：</p>
+<p>首先，其”跳级”的网络结构对深度网络的设计是一种启发，通过“跳级”，可以把之前网络的信息相对完整的跟后层网络结合起来，即低层次解耦得到的特征和高层次解耦得到的特征再组合。<br>再者，这种分叉的结构可以看作网络结构层面的”Dropout”: 如果被跳过的网络块不能习得更有用的信息，就被恒等映射跳过了。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;论文：&lt;a href=&quot;http://arxiv.org/abs/1512.03385&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Deep Residual Learning for Image Recognition&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;
+    
+    </summary>
+    
+      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+    
+    
+      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
       <category term="Machine Learning" scheme="http://blog.ddlee.cn/tags/Machine-Learning/"/>
     
       <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
+    
+      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[论文笔记]Tensorflow White Paper</title>
+    <link href="http://blog.ddlee.cn/2017/04/20/Tensorflow-White-Paper/"/>
+    <id>http://blog.ddlee.cn/2017/04/20/Tensorflow-White-Paper/</id>
+    <published>2017-04-20T13:32:29.000Z</published>
+    <updated>2017-05-30T13:33:20.407Z</updated>
+    
+    <content type="html"><![CDATA[<p>论文：<a href="https://www.tensorflow.org/about/bib" target="_blank" rel="external">TensorFlow: Large-Scale Machine Learning on Heterogeneous Distributed Systems</a></p>
+<h2 id="抽象"><a href="#抽象" class="headerlink" title="抽象"></a>抽象</h2><h3 id="Computation-Graph"><a href="#Computation-Graph" class="headerlink" title="Computation Graph"></a>Computation Graph</h3><p>整张图如同管道结构，数据流就是其中的水流。<em>Control Dependency</em> 描述了管道的有向结构，而反向传播可以通过增加新的管道节点来实现。</p>
+<h3 id="Operation"><a href="#Operation" class="headerlink" title="Operation"></a>Operation</h3><p>即计算操作的抽象，相当于映射、函数。</p>
+<h3 id="Kernel"><a href="#Kernel" class="headerlink" title="Kernel"></a>Kernel</h3><p>执行计算的单元，CPU或GPU</p>
+<h3 id="Session"><a href="#Session" class="headerlink" title="Session"></a>Session</h3><p>Client-Server结构，进行计算或者调整图结构则视为一次会话</p>
+<h3 id="Variables"><a href="#Variables" class="headerlink" title="Variables"></a>Variables</h3><p>特殊的Operation，返回一个句柄，指向持久化的张量，这些张量在整张图的计算中不会被释放。</p>
+<h3 id="Device"><a href="#Device" class="headerlink" title="Device"></a>Device</h3><p>对Kernel的封装，包含类型属性，实行注册机制维护可供使用的Device列表。</p>
+<h2 id="多机实现"><a href="#多机实现" class="headerlink" title="多机实现"></a>多机实现</h2><p>要考虑两个问题：</p>
+<ol>
+<li>计算节点在Device间的分配问题</li>
+<li>Devices之间的通信</li>
+</ol>
+<p>针对这两个问题，分别建立了两个抽象层。</p>
+<h3 id="计算节点分配的C-S机制"><a href="#计算节点分配的C-S机制" class="headerlink" title="计算节点分配的C/S机制"></a>计算节点分配的C/S机制</h3><p><img src="http://static.ddlee.cn/static/img/Tensorflow-White-Paper/master.png" alt="master"><br>client提出计算请求，master负责切割计算图为子图，分配子图到Devices。分配时，会模拟执行子图，并采取贪心的策略分配。</p>
+<h3 id="不同Device之间的发送和接收节点"><a href="#不同Device之间的发送和接收节点" class="headerlink" title="不同Device之间的发送和接收节点"></a>不同Device之间的发送和接收节点</h3><p><img src="http://static.ddlee.cn/static/img/Tensorflow-White-Paper/rev-send.png" alt="rec-send"></p>
+<p>在每个Device上建立Receive和Send节点，负责与其他Device通信。</p>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><h3 id="数据化并行"><a href="#数据化并行" class="headerlink" title="数据化并行"></a>数据化并行</h3><p><img src="http://static.ddlee.cn/static/img/Tensorflow-White-Paper/Parallelize.png" alt="Parallelize"></p>
+<p>上：单线程，同步数据并行<br>下：多线程，异步更新</p>
+<h2 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h2><p>文章中很多内容并没涉及到（看不懂）。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>TensorFlow是个庞大的计算框架，不仅仅定位于深度网络。其对计算图的抽象和数据、计算资源的分配的处理是值得关注的。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;论文：&lt;a href=&quot;https://www.tensorflow.org/about/bib&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;TensorFlow: Large-Scale Machine Learning on Heterogeneou
+    
+    </summary>
+    
+      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+    
+    
+      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="Machine Learning" scheme="http://blog.ddlee.cn/tags/Machine-Learning/"/>
+    
+      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
+    
+      <category term="Tensorflow" scheme="http://blog.ddlee.cn/tags/Tensorflow/"/>
     
   </entry>
   
@@ -1962,174 +2052,6 @@ directory mask = 0750
     
     
       <category term="随笔" scheme="http://blog.ddlee.cn/tags/%E9%9A%8F%E7%AC%94/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>小米3变身记</title>
-    <link href="http://blog.ddlee.cn/2016/09/23/%E5%B0%8F%E7%B1%B33%E5%8F%98%E8%BA%AB%E8%AE%B0/"/>
-    <id>http://blog.ddlee.cn/2016/09/23/小米3变身记/</id>
-    <published>2016-09-22T17:40:00.000Z</published>
-    <updated>2017-04-05T13:13:00.264Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p>Across the Great Wall we can reach every corner in the world.”（越过长城，走向世界）</p>
-</blockquote>
-<h1 id="1-缘起——我、小米、安卓和Android"><a href="#1-缘起——我、小米、安卓和Android" class="headerlink" title="1.缘起——我、小米、安卓和Android"></a>1.缘起——我、小米、安卓和Android</h1><p>知乎上有个抖机灵的回答，问题是“Nexus 5 如果不使用 VPN，会有什么影响”，回答是“android 体验变成安卓体验”。感谢无所不能的墙，让Android也有了中国特色。</p>
-<p>各家应用市场层出不穷，应用推广不择手段，申请权限多多益善，后台活动精彩不断。更不能忍的是，小米移除了Google的服务框架，无法从Play商店推动应用。为了用Sleep Cycle alarm clock, 我得用在线工具从Play商店获取链接，同步到云盘里，再从手机里打开.apk文件来安装。因为，百度搜索出的那个结果，应用中内置了烦人的广告。</p>
-<p>终于，我投奔了IOS阵营，手中服役的小米3也就闲置。在一个并没有那么蛋疼的午后，我拿出数据线，对它说，It’s time.</p>
-<p>注意：本系列不作为通用教程，只做经历分享。请移步相关论坛获取教程信息。</p>
-<h1 id="2-基础——是什么，为什么，怎么办"><a href="#2-基础——是什么，为什么，怎么办" class="headerlink" title="2.基础——是什么，为什么，怎么办"></a>2.基础——是什么，为什么，怎么办</h1><h2 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h2><p>你一定听说过，有种技术叫刷机。你也一定听说过，还有种技术叫越狱。你更一定听说过，还有种技术叫FanQiang。</p>
-<p>这三者有什么关系呢？</p>
-<p>在我看来，它们都关乎我们作为用户常常忽略的两个字——权限。</p>
-<p>换言之，我们常常关注可以用手机干什么、可以上网浏览什么，却常常不去注意，我们本来有更多事可以做，有更多信息可以获取。</p>
-<p>刷机意味着给手机重装系统，你获得的是选择硬件所运行系统的权利；越狱获得的是掌控某一操作系统的权利；而FanQiang，获得的则是“越过长城，走向世界”的权利。</p>
-<blockquote>
-<p>中国第一封电子邮件的内容是：Across the Great Wall we can reach every corner in the world.”（越过长城，走向世界）。这是1987年9月14日从北京向海外发出的中国第一封电子邮件，揭开了中国人使用互联网的序幕。</p>
-<p>来源：<a href="https://www.zhihu.com/question/32239520/answer/61354926" target="_blank" rel="external">知乎</a></p>
-</blockquote>
-<h2 id="为什么"><a href="#为什么" class="headerlink" title="为什么"></a>为什么</h2><p>因为无聊，因为好奇，因为喜欢，因为不满足，因为我们可以。</p>
-<h2 id="怎么办"><a href="#怎么办" class="headerlink" title="怎么办"></a>怎么办</h2><p>如果把刷机比作建造楼房，你所需要准备的就是知识（图纸）、刷机包（水泥、混凝土）、调试环境（吊塔）。</p>
-<h3 id="知识"><a href="#知识" class="headerlink" title="知识"></a>知识</h3><p>真正重要的知识，是关于知识的知识。拿到图纸不重要，重要的是学会如何看懂图纸。以我的经历，最耗费精力的部分不是学习教程，而是TROUBLE SHOOTING, 是如何解决出现的问题。</p>
-<p>因此，绝对不要使用某些工具的“一键刷机功能”，它们不会告诉你问题出在哪。<br><img src="http://static.ddlee.cn/static/img/Mi3/something-happened.jpg" alt="Something Happened"></p>
-<p>请保证你对整个过程的绝对控制，保证你清楚到底在哪一步无法继续进行。</p>
-<p>而为了看懂图纸，你需要准备好你的Google.它会是你最可靠的伙伴。</p>
-<p>下面是图纸中可能涉及的内容，请搜索并结合某些通用刷机教程理解它们发挥的作用。</p>
-<ul>
-<li>卡刷、线刷：两种刷机的操作方式（体位）</li>
-<li>Root：获取Android系统管理员的过程</li>
-<li>OTA：On The Air， 一种系统更新方式</li>
-<li>ROM包： 刷入手机ROM的系统软件包</li>
-<li>Recovery Mode： Android系统的一种模式，常在此模式下进行刷机操作</li>
-<li>Fastboot Mode： Android系统的一种模式，可在此模式下刷入自定义recovery</li>
-<li>ADB： Android Debug Bridge，用PC对Android系统进行USB调教所需的环境</li>
-<li>CM： 一家著名的ROM制作方，现已改名Lineage OS</li>
-<li>Android M： Android系统的一个版本，现在是N（Nougat，7.0）</li>
-<li>GApps： Google服务全家桶，需要刷入系统分区，包括Play和GMS等服务</li>
-</ul>
-<h1 id="3-刷机——大致的步骤，常见的坑"><a href="#3-刷机——大致的步骤，常见的坑" class="headerlink" title="3.刷机——大致的步骤，常见的坑"></a>3.刷机——大致的步骤，常见的坑</h1><h3 id="一个负责任的教程，大概会告诉你如下几个步骤"><a href="#一个负责任的教程，大概会告诉你如下几个步骤" class="headerlink" title="一个负责任的教程，大概会告诉你如下几个步骤"></a>一个负责任的教程，大概会告诉你如下几个步骤</h3><ul>
-<li>风险警示</li>
-<li>备份数据</li>
-<li>如何搭建ADB环境-PC</li>
-<li>如何进入fastboot模式-手机</li>
-<li>如何在ADB环境下，fastboot模式中刷入自定义recovery</li>
-<li>如何利用recovery模式清除数据，刷入ROM包（和Gapps）</li>
-<li>如何ROOT</li>
-</ul>
-<h3 id="一次蛋疼的刷机经历，常常会遇到这些坑"><a href="#一次蛋疼的刷机经历，常常会遇到这些坑" class="headerlink" title="一次蛋疼的刷机经历，常常会遇到这些坑"></a>一次蛋疼的刷机经历，常常会遇到这些坑</h3><ul>
-<li>找到正确的Recovery和ROM包：一定要仔细比对型号，尽量选用开源机构制作的包</li>
-<li>搭建ADB环境：要用到命令行（请慎重选用一件脚本，即.bat文件）</li>
-<li>连接电脑与手机：Windows系统下需要硬件驱动（请注意型号）</li>
-<li>……</li>
-</ul>
-<h1 id="4-资源——与你同行"><a href="#4-资源——与你同行" class="headerlink" title="4.资源——与你同行"></a>4.资源——与你同行</h1><h3 id="论坛与搜索引擎"><a href="#论坛与搜索引擎" class="headerlink" title="论坛与搜索引擎"></a>论坛与搜索引擎</h3><p>你会发现，手机厂商的官方论坛和XDA等论坛会很有帮助。但真正与你同行的，还是Google。</p>
-<h3 id="常用网址"><a href="#常用网址" class="headerlink" title="常用网址"></a>常用网址</h3><ul>
-<li><a href="https://twrp.me/" target="_blank" rel="external">TWRP，著名的自定义recovery</a></li>
-<li><a href="http://opengapps.org/" target="_blank" rel="external">GApps，Google全家桶</a></li>
-<li><a href="http://repo.xposed.info/module/de.robv.android.xposed.installer" target="_blank" rel="external">Xposed，著名开源框架</a></li>
-<li><a href="https://developer.android.com/studio/command-line/adb.html" target="_blank" rel="external">ADB Guide</a></li>
-<li><a href="http://www.supersu.com/download" target="_blank" rel="external">SuperSU，用于手机Root</a></li>
-</ul>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;Across the Great Wall we can reach every corner in the world.”（越过长城，走向世界）&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&quot;1-缘起——我、小米、安卓和Android&quot;&gt;&lt;
-    
-    </summary>
-    
-      <category term="Android" scheme="http://blog.ddlee.cn/categories/Android/"/>
-    
-    
-      <category term="Android" scheme="http://blog.ddlee.cn/tags/Android/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>数据分析在线学习资源(Personal Archive)</title>
-    <link href="http://blog.ddlee.cn/2016/08/07/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E8%B5%84%E6%BA%90/"/>
-    <id>http://blog.ddlee.cn/2016/08/07/数据分析资源/</id>
-    <published>2016-08-07T11:58:31.000Z</published>
-    <updated>2017-04-09T15:44:33.604Z</updated>
-    
-    <content type="html"><![CDATA[<p>数据分析方向的在线资源收集。</p>
-<h2 id="1-Some-wonderful-Tutorials"><a href="#1-Some-wonderful-Tutorials" class="headerlink" title="1.Some wonderful Tutorials"></a>1.Some wonderful Tutorials</h2><ol>
-<li><a href="https://www.springboard.com/learning-paths/data-analysis/learn/?" target="_blank" rel="external">Data Analysis Learning Path from Springboard</a></li>
-<li><a href="http://datasciencemasters.org/" target="_blank" rel="external">The Open Source Data Science Masters</a></li>
-</ol>
-<h2 id="2-Basic"><a href="#2-Basic" class="headerlink" title="2. Basic"></a>2. Basic</h2><h3 id="2-1-Database"><a href="#2-1-Database" class="headerlink" title="2.1 Database"></a>2.1 Database</h3><p>Stanford’s Database <a href="https://lagunita.stanford.edu/courses/Engineering/db/2014_1/info" target="_blank" rel="external">course</a></p>
-<h3 id="2-2-Agrolthms"><a href="#2-2-Agrolthms" class="headerlink" title="2.2 Agrolthms"></a>2.2 Agrolthms</h3><p>Algrothms from Stanford via <a href="https://class.coursera.org/algs4partI-010" target="_blank" rel="external">Coursera</a>(using Java)<br>Booksite <a href="http://algs4.cs.princeton.edu/home/" target="_blank" rel="external">here</a><br>Algorithm with Python in <a href="https://github.com/qiwsir/algorithm" target="_blank" rel="external">GItHub</a></p>
-<h3 id="2-3-Algebra"><a href="#2-3-Algebra" class="headerlink" title="2.3 Algebra"></a>2.3 Algebra</h3><p>Harvard’s Massive Parralle Algebra Course on iTunes U</p>
-<h3 id="2-4-Statistics"><a href="#2-4-Statistics" class="headerlink" title="2.4 Statistics"></a>2.4 Statistics</h3><p>Princeton’s Statistics One</p>
-<h3 id="2-5-Books"><a href="#2-5-Books" class="headerlink" title="2.5 Books"></a>2.5 Books</h3><ul>
-<li><em>Pattern Recognition and Machine Learning</em> by Bishop</li>
-<li><em>The Elements of Statistical Learning</em></li>
-</ul>
-<h2 id="3-Python"><a href="#3-Python" class="headerlink" title="3. Python"></a>3. Python</h2><h3 id="3-1-Scipy-amp-Pandas-amp-sklearn"><a href="#3-1-Scipy-amp-Pandas-amp-sklearn" class="headerlink" title="3.1 Scipy &amp; Pandas &amp; sklearn"></a>3.1 Scipy &amp; Pandas &amp; sklearn</h3><ul>
-<li>Scipy Lecture Notes</li>
-<li>Pandas Doc</li>
-<li>Pandas <a href="https://github.com/jvns/pandas-cookbook" target="_blank" rel="external">Cookbook</a></li>
-<li>sklearn Doc</li>
-</ul>
-<h3 id="3-2-Python-MOOCs"><a href="#3-2-Python-MOOCs" class="headerlink" title="3.2 Python MOOCs"></a>3.2 Python MOOCs</h3><h5 id="edX-course"><a href="#edX-course" class="headerlink" title="edX course"></a>edX course</h5><p>MITx: 6.00.2x Introduction to Computational Thinking and Data Science via <a href="https://courses.edx.org/courses/course-v1:MITx+6.00.2x_5+1T2016/info" target="_blank" rel="external">edX</a></p>
-<h5 id="Udacity-Course"><a href="#Udacity-Course" class="headerlink" title="Udacity Course"></a>Udacity Course</h5><ul>
-<li>Design of Computer Programs with Peter Novig</li>
-<li>Intro to Machine Learning (project oriented)</li>
-<li>Machine Learning: Unsupervised Learning</li>
-</ul>
-<h3 id="3-3-Books"><a href="#3-3-Books" class="headerlink" title="3.3 Books"></a>3.3 Books</h3><ul>
-<li><em>Python for Data Analysis</em> by Wes McKinney</li>
-<li><em>Programming Collective Intelligence</em> by Toby Segaran</li>
-</ul>
-<h2 id="4-R"><a href="#4-R" class="headerlink" title="4. R"></a>4. R</h2><h3 id="4-1-R-MOOCs"><a href="#4-1-R-MOOCs" class="headerlink" title="4.1 R MOOCs"></a>4.1 R MOOCs</h3><h5 id="edX-course-1"><a href="#edX-course-1" class="headerlink" title="edX course"></a>edX course</h5><p>MIT’s The Analytics Edge</p>
-<h5 id="JH-Data-Science-Specilization-via-Coursera"><a href="#JH-Data-Science-Specilization-via-Coursera" class="headerlink" title="JH Data Science Specilization via Coursera"></a>JH Data Science Specilization via Coursera</h5><ul>
-<li>Statistical Inference</li>
-<li>Regression Model</li>
-<li>Practical Machine Learning</li>
-<li>Develop Data Science Product</li>
-</ul>
-<h5 id="Stanford’s-Statistical-Learning"><a href="#Stanford’s-Statistical-Learning" class="headerlink" title="Stanford’s Statistical Learning"></a>Stanford’s Statistical Learning</h5><p><a href="https://lagunita.stanford.edu/courses/HumanitiesSciences/StatLearning/Winter2016/info" target="_blank" rel="external">here</a><br>and its text book <em>An Introduction to Statistical Learning</em> <a href="http://www-bcf.usc.edu/~gareth/ISL/" target="_blank" rel="external">ISLAR</a></p>
-<h3 id="4-2-R-Books"><a href="#4-2-R-Books" class="headerlink" title="4.2 R Books"></a>4.2 R Books</h3><ul>
-<li><em>R Graphics Cookbook</em> by Winston Chang</li>
-<li><em>ggplot2</em> by Hadley Wickham</li>
-<li><em>R in Action</em> by Robert I. Kabacoff</li>
-</ul>
-<h2 id="5-Big-Data"><a href="#5-Big-Data" class="headerlink" title="5. Big Data"></a>5. Big Data</h2><h3 id="5-1-“Big”-MOOCs"><a href="#5-1-“Big”-MOOCs" class="headerlink" title="5.1 “Big” MOOCs"></a>5.1 “Big” MOOCs</h3><h5 id="Udacity-Course-1"><a href="#Udacity-Course-1" class="headerlink" title="Udacity Course"></a>Udacity Course</h5><p>Intro to Hadoop and MapReduce from clourdera</p>
-<h5 id="Coursera-Course"><a href="#Coursera-Course" class="headerlink" title="Coursera Course"></a>Coursera Course</h5><p>Mining Massive Datasets</p>
-<h5 id="edX-Course"><a href="#edX-Course" class="headerlink" title="edX Course"></a>edX Course</h5><p>Xserise on Spark from BerkleyX</p>
-<h2 id="6-Capstone-Project"><a href="#6-Capstone-Project" class="headerlink" title="6. Capstone Project"></a>6. Capstone Project</h2><ul>
-<li>SITP Project</li>
-<li>Health Twitter Analysis via <a href="https://www.coursolve.org/need/229" target="_blank" rel="external">Coursolve</a></li>
-</ul>
-<h2 id="7-Additional-Resource"><a href="#7-Additional-Resource" class="headerlink" title="7. Additional Resource"></a>7. Additional Resource</h2><ul>
-<li>Harvard’s <a href="http://cs109.github.io/2015/" target="_blank" rel="external">CS109</a> Course: Data Science</li>
-<li>Berkley’s <a href="http://cs61a.org/" target="_blank" rel="external">CS61</a>:The Structure and Interpretation of Computer Programs</li>
-<li>Probabilistic Graphical Models via <a href="https://www.coursera.org/course/pgm" target="_blank" rel="external">Coursera</a></li>
-<li>Berkeley’s <a href="http://data8.org/datascience/" target="_blank" rel="external">Datascience’s Documentation</a></li>
-<li><a href="https://github.com/ipython/ipython/wiki/A-gallery-of-interesting-IPython-Notebooks" target="_blank" rel="external">A Gallery of IPython Notebooks</a></li>
-<li>A collection of Data Science Learning materials in the form of <a href="https://github.com/nborwankar/LearnDataScience" target="_blank" rel="external">IPython Notebooks</a></li>
-<li><a href="http://ufldl.stanford.edu/wiki/index.php/UFLDL_Tutorial" target="_blank" rel="external">Unsupervised Feature Learing and Deep Learning</a></li>
-</ul>
-<p>@<a href="http://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;数据分析方向的在线资源收集。&lt;/p&gt;
-&lt;h2 id=&quot;1-Some-wonderful-Tutorials&quot;&gt;&lt;a href=&quot;#1-Some-wonderful-Tutorials&quot; class=&quot;headerlink&quot; title=&quot;1.Some wonderful T
-    
-    </summary>
-    
-      <category term="Data Science" scheme="http://blog.ddlee.cn/categories/Data-Science/"/>
-    
-    
-      <category term="Data Science" scheme="http://blog.ddlee.cn/tags/Data-Science/"/>
-    
-      <category term="Data" scheme="http://blog.ddlee.cn/tags/Data/"/>
     
   </entry>
   
