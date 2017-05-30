@@ -4,6 +4,70 @@
   
     
     <entry>
+      <title><![CDATA[[论文笔记]On-the-fly Operation Batching in Dynamic Computation Graphs]]></title>
+      <url>http://blog.ddlee.cn/2017/05/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-On-the-fly-Operation-Batching-in-Dynamic-Computation-Graphs/</url>
+      <content type="html"><![CDATA[<p>论文：<a href="http://arxiv.org/abs/1705.07860" target="_blank" rel="external">On-the-fly Operation Batching in Dynamic Computaion Graphs</a></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>基于动态图的深度学习框架如<code>Pytorch</code>,<code>DyNet</code>提供了更为灵活的结构和数据维度的选择，但要求开发者自行将数据批量化，才能最大限度地发挥框架的并行计算优势。</p>
+<h2 id="当前的状况：灵活的结构与高效计算"><a href="#当前的状况：灵活的结构与高效计算" class="headerlink" title="当前的状况：灵活的结构与高效计算"></a>当前的状况：灵活的结构与高效计算</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-On-the-fly-Operation-Batching-in-Dynamic-Computation-Graphs/comparison.png" alt="左图为循环结构，右图将序列补齐，批量化"><br>左图为循环结构，右图将序列补齐，批量化</p>
+<ol>
+<li>灵活的结构和数据输入维度，采用朴素的循环结构实现，但不高效，因为尽管维度不同，在循环内数据接受的是同样的操作。</li>
+</ol>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-On-the-fly-Operation-Batching-in-Dynamic-Computation-Graphs/loop.png" alt="loop"></p>
+<ol>
+<li>对数据做“Padding”，即用傀儡数据将输入维度对齐，进而实现向量化，但这种操作对开发者并不友好，会使开发者浪费掉很多本该投入到结构设计等方面的精力。</li>
+</ol>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-On-the-fly-Operation-Batching-in-Dynamic-Computation-Graphs/padding.png" alt="padding"></p>
+<h2 id="本文提出的方法"><a href="#本文提出的方法" class="headerlink" title="本文提出的方法"></a>本文提出的方法</h2><h3 id="三个部分"><a href="#三个部分" class="headerlink" title="三个部分"></a>三个部分</h3><ol>
+<li>Graph Definition</li>
+<li>Operation Batching</li>
+<li>Computation</li>
+</ol>
+<p>第一步和第三步在当前已被大部分深度学习框架较好地实现。主要特点是，构建计算图与计算的分离，即”Lazy Evaluation”。比如在<code>Tensorflow</code>中，一个抽象层负责解析计算图各节点之间的依赖，决定执行计算的顺序，而另一个抽象层则负责分配计算资源。</p>
+<h3 id="Operation-Batching"><a href="#Operation-Batching" class="headerlink" title="Operation Batching"></a>Operation Batching</h3><h4 id="Computing-compatibility-groups"><a href="#Computing-compatibility-groups" class="headerlink" title="Computing compatibility groups"></a>Computing compatibility groups</h4><p>这一步是建立可以批量化计算的节点组。具体做法是，给每一个计算节点建立 <em>signature</em>，用于描述节点计算的特性，文中举出了如下几个例子:</p>
+<ol>
+<li>Component-wise operations: 直接施加在每个张量元素上的计算，跟张量的维度无关，如$tanh$,$log$</li>
+<li>Dimension-sensitive operations: 基于维度的计算，如线性传递$Wh+b$，要求$W$和$h$维度相符，<em>signature</em> 中要包含维度信息</li>
+<li>Operations with shared elements: 包含共享元素的计算，如共享的权值$W$</li>
+<li>Unbatchable operations: 其他</li>
+</ol>
+<h4 id="Determining-execution-order"><a href="#Determining-execution-order" class="headerlink" title="Determining execution order"></a>Determining execution order</h4><p>执行顺序要满足两个目标：</p>
+<ol>
+<li>每一节点的计算要在其依赖之后</li>
+<li>带有同样 <em>signature</em> 且没有依赖关系的节点放在同一批量执行</li>
+</ol>
+<p>但在一般情况下找到最大化批量规模的执行顺序是个NP问题。有如下两种策略：</p>
+<ol>
+<li>Depth-based Batching: 库<code>Tensorflow Fold</code>中使用的方法。某一节点的深度定义为其子节点到其本身的最大长度，同一深度的节点进行批量计算。但由于输入序列长度不一，可能会错失一些批量化的机会。</li>
+<li>Agenda-based Batching: 本文的方法，核心的想法是维护一个 <em>agenda</em> 序列，所有依赖已经被解析的节点入列，每次迭代时从 <em>agenda</em> 序列中按 <em>signature</em> 相同的原则取出节点进行批量计算。</li>
+</ol>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>文章选取了四个模型：BiLSTM, BiLSTM w/char, Tree-structured LSTMs, Transition-based Dependency Parsing。</p>
+<p>实验结果：（单位为Sentences/second）<br><img src="http://static.ddlee.cn/static/img/论文笔记-On-the-fly-Operation-Batching-in-Dynamic-Computation-Graphs/result.png" alt="result"></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本来读到题目还是蛮惊喜的，期待的是从模型构建的角度解决序列长度不一带来的计算上的不便。但通读下来发现是在计算图的计算这一层面进行的优化，有些失望但也感激，作者使用<code>DyNet</code>框架实现了他们的方法，希望自己也可以为<code>Pytorch</code>等框架该算法的实现出一份力。</p>
+<p>感谢这些开源的框架，正一步步拉近人类构建模型和机器高效计算之间的距离。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Papers </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> AI </tag>
+            
+            <tag> Machine Learning </tag>
+            
+            <tag> Paper </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[LSTM:Pytorch实现]]></title>
       <url>http://blog.ddlee.cn/2017/05/29/LSTM-Pytorch%E5%AE%9E%E7%8E%B0/</url>
       <content type="html"><![CDATA[<p>本文讨论LSTM网络的Pytorch实现，兼论Pytorch库的代码组织方式和架构设计。</p>
@@ -453,6 +517,64 @@ df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
             <tag> Data Science </tag>
             
             <tag> Programming </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[[论文笔记]Visualizing and Understanding Recurrent Networks]]></title>
+      <url>http://blog.ddlee.cn/2017/05/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Visualizing-and-Understanding-Recurrent-Networks/</url>
+      <content type="html"><![CDATA[<p>论文： <a href="http://arxiv.org/abs/1506.02078" target="_blank" rel="external">Visualizing and Understanding Recurrent Networks</a></p>
+<h2 id="实验设定"><a href="#实验设定" class="headerlink" title="实验设定"></a>实验设定</h2><p>字母级的循环神经网络，用Torch实现，代码见<a href="http://github.com/karpathy/char-rnn" target="_blank" rel="external">GitHub</a>。字母嵌入成One-hot向量。优化方面，采用了RMSProp算法，加入了学习速率的decay和early stopping。</p>
+<p>数据集采用了托尔斯泰的《战争与和平》和Linux核心的代码。</p>
+<h2 id="可解释性激活的例子"><a href="#可解释性激活的例子" class="headerlink" title="可解释性激活的例子"></a>可解释性激活的例子</h2><p>$tanh$函数激活的例子，$-1$为红色，$+1$为蓝色。</p>
+<p>！<a href="[论文笔记]Visualizing-and-Understanding-Recurrent-Networks/pane1.png">pane1</a></p>
+<p>上图分别是记录了行位置、引文和if语句特征的例子和失败的例子。</p>
+<p>！<a href="[论文笔记]Visualizing-and-Understanding-Recurrent-Networks/pane2.png">pane2</a></p>
+<p>上图分别是记录代码中注释、代码嵌套深度和行末标记特征的例子。</p>
+<h2 id="Gates数值的统计"><a href="#Gates数值的统计" class="headerlink" title="Gates数值的统计"></a>Gates数值的统计</h2><p><img src="http://static.ddlee.cn/static/img/[论文笔记]Visualizing-and-Understanding-Recurrent-Networks/gates.png" alt="gates"></p>
+<p>此图信息量很大。</p>
+<ol>
+<li>left-saturated和right-saturated表示各个Gates激活函数（$sigmoid$）小于0.1和大于0.9，即总是阻止信息流过和总是允许信息流过。</li>
+<li>横轴和纵轴表示该Gate处于这两种状态的时间比例，即有多少时间是阻塞状态，有多少时间是畅通状态。</li>
+<li>三种颜色表示不同的层。</li>
+</ol>
+<p>有以下几个观察：</p>
+<ol>
+<li>第一层的门总是比较中庸，既不阻塞，也不畅通</li>
+<li>第二三层的门在这两种状态间比较分散，经常处于畅通状态的门可能记录了长期的依赖信息，而经常处于阻塞状态的门则负责了短期信息的控制。</li>
+</ol>
+<h2 id="错误来源分析"><a href="#错误来源分析" class="headerlink" title="错误来源分析"></a>错误来源分析</h2><p>在这一节，作者用了“剥洋葱”的方法，建立了不同的模型将错误进行分解。此处错误指LSTM预测下一个字母产生的错误，数据集为托尔斯泰的《战争与和平》。</p>
+<ol>
+<li>n-gram</li>
+<li>Dynamic n-long memory，即对已经出现过得单词的复现。如句子”Jon yelled at<br>Mary but Mary couldn’t hear him.”中的Mary。</li>
+<li>Rare words，不常见单词</li>
+<li>Word model，单词首字母、新行、空格之后出现的错误</li>
+<li>Punctuation，标点之后</li>
+<li>Boost，其他错误</li>
+</ol>
+<p>根据作者的实验，错误的来源有如下分解：</p>
+<p>![[论文笔记]Visualizing-and-Understanding-Recurrent-Networks/error.png]</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>这篇文章是打开LSTM黑箱的尝试，提供了序列维度上共享权值的合理性证据，对Gates状态的可视化也非常值得关注，最后对误差的分解可能对新的网络结构有所启发（比如，如何将单词级别和字母级别的LSTM嵌套起来，解决首字母预测的问题？）。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Papers </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> AI </tag>
+            
+            <tag> Machine Learning </tag>
+            
+            <tag> Papers </tag>
             
         </tags>
         

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.ddlee.cn/"/>
-  <updated>2017-05-28T17:16:51.094Z</updated>
+  <updated>2017-05-30T07:24:34.453Z</updated>
   <id>http://blog.ddlee.cn/</id>
   
   <author>
@@ -14,6 +14,72 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[论文笔记]On-the-fly Operation Batching in Dynamic Computation Graphs</title>
+    <link href="http://blog.ddlee.cn/2017/05/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-On-the-fly-Operation-Batching-in-Dynamic-Computation-Graphs/"/>
+    <id>http://blog.ddlee.cn/2017/05/30/论文笔记-On-the-fly-Operation-Batching-in-Dynamic-Computation-Graphs/</id>
+    <published>2017-05-30T07:24:34.000Z</published>
+    <updated>2017-05-30T07:24:34.453Z</updated>
+    
+    <content type="html"><![CDATA[<p>论文：<a href="http://arxiv.org/abs/1705.07860" target="_blank" rel="external">On-the-fly Operation Batching in Dynamic Computaion Graphs</a></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>基于动态图的深度学习框架如<code>Pytorch</code>,<code>DyNet</code>提供了更为灵活的结构和数据维度的选择，但要求开发者自行将数据批量化，才能最大限度地发挥框架的并行计算优势。</p>
+<h2 id="当前的状况：灵活的结构与高效计算"><a href="#当前的状况：灵活的结构与高效计算" class="headerlink" title="当前的状况：灵活的结构与高效计算"></a>当前的状况：灵活的结构与高效计算</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-On-the-fly-Operation-Batching-in-Dynamic-Computation-Graphs/comparison.png" alt="左图为循环结构，右图将序列补齐，批量化"><br>左图为循环结构，右图将序列补齐，批量化</p>
+<ol>
+<li>灵活的结构和数据输入维度，采用朴素的循环结构实现，但不高效，因为尽管维度不同，在循环内数据接受的是同样的操作。</li>
+</ol>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-On-the-fly-Operation-Batching-in-Dynamic-Computation-Graphs/loop.png" alt="loop"></p>
+<ol>
+<li>对数据做“Padding”，即用傀儡数据将输入维度对齐，进而实现向量化，但这种操作对开发者并不友好，会使开发者浪费掉很多本该投入到结构设计等方面的精力。</li>
+</ol>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-On-the-fly-Operation-Batching-in-Dynamic-Computation-Graphs/padding.png" alt="padding"></p>
+<h2 id="本文提出的方法"><a href="#本文提出的方法" class="headerlink" title="本文提出的方法"></a>本文提出的方法</h2><h3 id="三个部分"><a href="#三个部分" class="headerlink" title="三个部分"></a>三个部分</h3><ol>
+<li>Graph Definition</li>
+<li>Operation Batching</li>
+<li>Computation</li>
+</ol>
+<p>第一步和第三步在当前已被大部分深度学习框架较好地实现。主要特点是，构建计算图与计算的分离，即”Lazy Evaluation”。比如在<code>Tensorflow</code>中，一个抽象层负责解析计算图各节点之间的依赖，决定执行计算的顺序，而另一个抽象层则负责分配计算资源。</p>
+<h3 id="Operation-Batching"><a href="#Operation-Batching" class="headerlink" title="Operation Batching"></a>Operation Batching</h3><h4 id="Computing-compatibility-groups"><a href="#Computing-compatibility-groups" class="headerlink" title="Computing compatibility groups"></a>Computing compatibility groups</h4><p>这一步是建立可以批量化计算的节点组。具体做法是，给每一个计算节点建立 <em>signature</em>，用于描述节点计算的特性，文中举出了如下几个例子:</p>
+<ol>
+<li>Component-wise operations: 直接施加在每个张量元素上的计算，跟张量的维度无关，如$tanh$,$log$</li>
+<li>Dimension-sensitive operations: 基于维度的计算，如线性传递$Wh+b$，要求$W$和$h$维度相符，<em>signature</em> 中要包含维度信息</li>
+<li>Operations with shared elements: 包含共享元素的计算，如共享的权值$W$</li>
+<li>Unbatchable operations: 其他</li>
+</ol>
+<h4 id="Determining-execution-order"><a href="#Determining-execution-order" class="headerlink" title="Determining execution order"></a>Determining execution order</h4><p>执行顺序要满足两个目标：</p>
+<ol>
+<li>每一节点的计算要在其依赖之后</li>
+<li>带有同样 <em>signature</em> 且没有依赖关系的节点放在同一批量执行</li>
+</ol>
+<p>但在一般情况下找到最大化批量规模的执行顺序是个NP问题。有如下两种策略：</p>
+<ol>
+<li>Depth-based Batching: 库<code>Tensorflow Fold</code>中使用的方法。某一节点的深度定义为其子节点到其本身的最大长度，同一深度的节点进行批量计算。但由于输入序列长度不一，可能会错失一些批量化的机会。</li>
+<li>Agenda-based Batching: 本文的方法，核心的想法是维护一个 <em>agenda</em> 序列，所有依赖已经被解析的节点入列，每次迭代时从 <em>agenda</em> 序列中按 <em>signature</em> 相同的原则取出节点进行批量计算。</li>
+</ol>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><p>文章选取了四个模型：BiLSTM, BiLSTM w/char, Tree-structured LSTMs, Transition-based Dependency Parsing。</p>
+<p>实验结果：（单位为Sentences/second）<br><img src="http://static.ddlee.cn/static/img/论文笔记-On-the-fly-Operation-Batching-in-Dynamic-Computation-Graphs/result.png" alt="result"></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本来读到题目还是蛮惊喜的，期待的是从模型构建的角度解决序列长度不一带来的计算上的不便。但通读下来发现是在计算图的计算这一层面进行的优化，有些失望但也感激，作者使用<code>DyNet</code>框架实现了他们的方法，希望自己也可以为<code>Pytorch</code>等框架该算法的实现出一份力。</p>
+<p>感谢这些开源的框架，正一步步拉近人类构建模型和机器高效计算之间的距离。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;论文：&lt;a href=&quot;http://arxiv.org/abs/1705.07860&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;On-the-fly Operation Batching in Dynamic Computaion Graphs&lt;/a
+    
+    </summary>
+    
+      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+    
+    
+      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
+    
+      <category term="Machine Learning" scheme="http://blog.ddlee.cn/tags/Machine-Learning/"/>
+    
+      <category term="Paper" scheme="http://blog.ddlee.cn/tags/Paper/"/>
+    
+  </entry>
   
   <entry>
     <title>LSTM:Pytorch实现</title>
@@ -472,6 +538,67 @@ df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
       <category term="Data Science" scheme="http://blog.ddlee.cn/tags/Data-Science/"/>
     
       <category term="Programming" scheme="http://blog.ddlee.cn/tags/Programming/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[论文笔记]Visualizing and Understanding Recurrent Networks</title>
+    <link href="http://blog.ddlee.cn/2017/05/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Visualizing-and-Understanding-Recurrent-Networks/"/>
+    <id>http://blog.ddlee.cn/2017/05/13/论文笔记-Visualizing-and-Understanding-Recurrent-Networks/</id>
+    <published>2017-05-13T06:06:51.000Z</published>
+    <updated>2017-05-29T06:07:17.863Z</updated>
+    
+    <content type="html"><![CDATA[<p>论文： <a href="http://arxiv.org/abs/1506.02078" target="_blank" rel="external">Visualizing and Understanding Recurrent Networks</a></p>
+<h2 id="实验设定"><a href="#实验设定" class="headerlink" title="实验设定"></a>实验设定</h2><p>字母级的循环神经网络，用Torch实现，代码见<a href="http://github.com/karpathy/char-rnn" target="_blank" rel="external">GitHub</a>。字母嵌入成One-hot向量。优化方面，采用了RMSProp算法，加入了学习速率的decay和early stopping。</p>
+<p>数据集采用了托尔斯泰的《战争与和平》和Linux核心的代码。</p>
+<h2 id="可解释性激活的例子"><a href="#可解释性激活的例子" class="headerlink" title="可解释性激活的例子"></a>可解释性激活的例子</h2><p>$tanh$函数激活的例子，$-1$为红色，$+1$为蓝色。</p>
+<p>！<a href="[论文笔记]Visualizing-and-Understanding-Recurrent-Networks/pane1.png">pane1</a></p>
+<p>上图分别是记录了行位置、引文和if语句特征的例子和失败的例子。</p>
+<p>！<a href="[论文笔记]Visualizing-and-Understanding-Recurrent-Networks/pane2.png">pane2</a></p>
+<p>上图分别是记录代码中注释、代码嵌套深度和行末标记特征的例子。</p>
+<h2 id="Gates数值的统计"><a href="#Gates数值的统计" class="headerlink" title="Gates数值的统计"></a>Gates数值的统计</h2><p><img src="http://static.ddlee.cn/static/img/[论文笔记]Visualizing-and-Understanding-Recurrent-Networks/gates.png" alt="gates"></p>
+<p>此图信息量很大。</p>
+<ol>
+<li>left-saturated和right-saturated表示各个Gates激活函数（$sigmoid$）小于0.1和大于0.9，即总是阻止信息流过和总是允许信息流过。</li>
+<li>横轴和纵轴表示该Gate处于这两种状态的时间比例，即有多少时间是阻塞状态，有多少时间是畅通状态。</li>
+<li>三种颜色表示不同的层。</li>
+</ol>
+<p>有以下几个观察：</p>
+<ol>
+<li>第一层的门总是比较中庸，既不阻塞，也不畅通</li>
+<li>第二三层的门在这两种状态间比较分散，经常处于畅通状态的门可能记录了长期的依赖信息，而经常处于阻塞状态的门则负责了短期信息的控制。</li>
+</ol>
+<h2 id="错误来源分析"><a href="#错误来源分析" class="headerlink" title="错误来源分析"></a>错误来源分析</h2><p>在这一节，作者用了“剥洋葱”的方法，建立了不同的模型将错误进行分解。此处错误指LSTM预测下一个字母产生的错误，数据集为托尔斯泰的《战争与和平》。</p>
+<ol>
+<li>n-gram</li>
+<li>Dynamic n-long memory，即对已经出现过得单词的复现。如句子”Jon yelled at<br>Mary but Mary couldn’t hear him.”中的Mary。</li>
+<li>Rare words，不常见单词</li>
+<li>Word model，单词首字母、新行、空格之后出现的错误</li>
+<li>Punctuation，标点之后</li>
+<li>Boost，其他错误</li>
+</ol>
+<p>根据作者的实验，错误的来源有如下分解：</p>
+<p>![[论文笔记]Visualizing-and-Understanding-Recurrent-Networks/error.png]</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>这篇文章是打开LSTM黑箱的尝试，提供了序列维度上共享权值的合理性证据，对Gates状态的可视化也非常值得关注，最后对误差的分解可能对新的网络结构有所启发（比如，如何将单词级别和字母级别的LSTM嵌套起来，解决首字母预测的问题？）。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;论文： &lt;a href=&quot;http://arxiv.org/abs/1506.02078&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Visualizing and Understanding Recurrent Networks&lt;/a&gt;&lt;/p&gt;
+&lt;h2
+    
+    </summary>
+    
+      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+    
+    
+      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
+    
+      <category term="Machine Learning" scheme="http://blog.ddlee.cn/tags/Machine-Learning/"/>
+    
+      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
     
   </entry>
   
@@ -2003,136 +2130,6 @@ directory mask = 0750
       <category term="Data Science" scheme="http://blog.ddlee.cn/tags/Data-Science/"/>
     
       <category term="Data" scheme="http://blog.ddlee.cn/tags/Data/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>个性化你的Ubuntu-3：主题，插件以及桌面小工具</title>
-    <link href="http://blog.ddlee.cn/2016/06/11/%E4%B8%AA%E6%80%A7%E5%8C%96%E4%BD%A0%E7%9A%84Ubuntu-3%EF%BC%9A%E4%B8%BB%E9%A2%98%EF%BC%8C%E6%8F%92%E4%BB%B6%E4%BB%A5%E5%8F%8A%E6%A1%8C%E9%9D%A2%E5%B0%8F%E5%B7%A5%E5%85%B7/"/>
-    <id>http://blog.ddlee.cn/2016/06/11/个性化你的Ubuntu-3：主题，插件以及桌面小工具/</id>
-    <published>2016-06-11T14:52:49.000Z</published>
-    <updated>2017-04-05T13:13:04.420Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="个性主题"><a href="#个性主题" class="headerlink" title="个性主题"></a>个性主题</h3><p>依赖于扩展<code>User themes</code>，分为GTK主题，shell主题和icon主题。</p>
-<ol>
-<li><p>从<a href="https://www.gnome-look.org/browse/cat/134/ord/latest/" target="_blank" rel="external">gnome-look.org</a>下载喜欢的主题（压缩文件）。</p>
-</li>
-<li><p>将下载的主题文件复制到用户文件夹</p>
-<pre><code> cd ~
- mkdir .themes
- cp file_path_to_download_file ~/.themes
-</code></pre><p> 并使用<code>unzip</code>或<code>tar xvzf</code>命令解压，或者：</p>
-<pre><code> sudo cp file_path_to_download_file /usr/local/themes/
-</code></pre></li>
-<li><p>在<code>gnome-tweak-tool</code>的扩展<code>User themes</code>中选择主题。</p>
-</li>
-</ol>
-<h5 id="推荐主题"><a href="#推荐主题" class="headerlink" title="推荐主题"></a>推荐主题</h5><p>我使用的是Numix系列的主题<a href="https://numixproject.org/" target="_blank" rel="external">（官网）</a></p>
-<ul>
-<li><a href="http://satya164.deviantart.com/art/Numix-GTK3-theme-360223962" target="_blank" rel="external">Numix-GTK3 theme</a></li>
-<li><a href="http://gnome-look.org/content/show.php/Numix-like+GNOME+Shell+3.16+theme?content=174129" target="_blank" rel="external">Numix-like GNOME Shell theme</a></li>
-<li><a href="http://me4oslav.deviantart.com/art/Numix-Circle-Linux-Desktop-Icon-Theme-414741466" target="_blank" rel="external">Numix-Circle Icons</a></li>
-</ul>
-<p>Numix开发者之一Satyajit Sahoo发布的GNOME shell theme:<br><a href="http://satya164.deviantart.com/art/Gnome-Shell-Elegance-Colors-305966388" target="_blank" rel="external">Gnome Shell - Elegance Colors</a></p>
-<p>通过PPA安装</p>
-<pre><code>sudo apt-add-repository ppa:numix/ppa
-sudo apt-get update
-sudo apt-get install numix-gtk-theme
-sudo apt-get install numix-icon-theme-circle
-</code></pre><pre><code>sudo add-apt-repository ppa:satyajit-happy/themes
-sudo apt-get update &amp;&amp; sudo apt-get install gnome-shell-theme-elegance-colors
-</code></pre><h2 id="扩展插件"><a href="#扩展插件" class="headerlink" title="扩展插件"></a>扩展插件</h2><p>我当前使用的插件：</p>
-<ol>
-<li>hide dash：隐藏侧边的favorite栏</li>
-<li>Pomotodo：番茄时钟<br><img src="http://static.ddlee.cn/static/img/Ubuntu-3/Pomodoro1.jpg" alt="Pomotodo1"><br><img src="http://static.ddlee.cn/static/img/Ubuntu-3/Pomodoro2.jpg" alt="Pomotodo2"></li>
-<li>（荐）Clipboard indicator：剪贴板切换<br><img src="http://static.ddlee.cn/static/img/Ubuntu-3/Selection_018.jpg" alt="Clipboard indicator"></li>
-<li>ToDo.txt：待办事项整理<br><img src="http://static.ddlee.cn/static/img/Ubuntu-3/ToDo_txt.jpg" alt="ToDo"></li>
-<li>Places indicator：文件浏览器的快捷方式</li>
-<li>Activities configurator: 当前活动程序管理</li>
-<li>Alternatetab: alt-tab桌面切换</li>
-<li>Applications menu：类似Windows下开始菜单<br><img src="http://static.ddlee.cn/static/img/Ubuntu-3/app.png" alt="Applications"></li>
-<li>（荐）Drop down terminal：快捷启动终端<br><img src="http://static.ddlee.cn/static/img/Ubuntu-3/drop.png" alt="Drop"></li>
-<li>Netspeed：网速监控</li>
-<li>Openweather：状态栏天气预报</li>
-<li>Removable drive menu：弹出U盘等可移除硬件</li>
-<li>（荐）Dynamic top bar：根据窗口颜色变换顶栏颜色</li>
-</ol>
-<h2 id="其他桌面工具"><a href="#其他桌面工具" class="headerlink" title="其他桌面工具"></a>其他桌面工具</h2><h4 id="DOCK"><a href="#DOCK" class="headerlink" title="DOCK"></a>DOCK</h4><p>推荐<code>Cairo-Dock</code>，效果如图，扩展性很高，自定义程度也很好。</p>
-<p><img src="http://static.ddlee.cn/static/img/Ubuntu-3/Dock1.jpg" alt="Cairo-Dock"></p>
-<h4 id="CONKY：桌面监测工具"><a href="#CONKY：桌面监测工具" class="headerlink" title="CONKY：桌面监测工具"></a>CONKY：桌面监测工具</h4><p>推荐<code>Conky</code>，皮肤也有很多，效果如图。</p>
-<p><img src="http://static.ddlee.cn/static/img/Ubuntu-3/Conky1.jpg" alt="Conky"></p>
-<p>本系列至此完结。欢迎入坑。</p>
-<p>@<a href="http://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
-<p>2016年6月</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;个性主题&quot;&gt;&lt;a href=&quot;#个性主题&quot; class=&quot;headerlink&quot; title=&quot;个性主题&quot;&gt;&lt;/a&gt;个性主题&lt;/h3&gt;&lt;p&gt;依赖于扩展&lt;code&gt;User themes&lt;/code&gt;，分为GTK主题，shell主题和icon主题。&lt;/p&gt;
-&lt;ol&gt;
-    
-    </summary>
-    
-      <category term="Linux" scheme="http://blog.ddlee.cn/categories/Linux/"/>
-    
-    
-      <category term="Linux" scheme="http://blog.ddlee.cn/tags/Linux/"/>
-    
-      <category term="Gnome" scheme="http://blog.ddlee.cn/tags/Gnome/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>个性化你的Ubuntu-2：GNOME安装与工具</title>
-    <link href="http://blog.ddlee.cn/2016/06/02/%E4%B8%AA%E6%80%A7%E5%8C%96%E4%BD%A0%E7%9A%84Ubuntu-2%EF%BC%9AGNOME%E5%AE%89%E8%A3%85%E4%B8%8E%E5%B7%A5%E5%85%B7/"/>
-    <id>http://blog.ddlee.cn/2016/06/02/个性化你的Ubuntu-2：GNOME安装与工具/</id>
-    <published>2016-06-02T14:19:50.000Z</published>
-    <updated>2017-04-05T13:13:02.736Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="GNOME安装"><a href="#GNOME安装" class="headerlink" title="GNOME安装"></a>GNOME安装</h3><p>从上一篇文章，大家可以看到，GNOME是一系列软件的集合，安装时可以有不同的取舍。对于Ubuntu用户来说，可以有以下两类体验GNOME的方式。（参考：<a href="https://wiki.ubuntuusers.de/GNOME_Installation/" target="_blank" rel="external">GNOME installation</a>）</p>
-<h4 id="1-Ubuntu-GNOME（系统）"><a href="#1-Ubuntu-GNOME（系统）" class="headerlink" title="1.Ubuntu GNOME（系统）"></a>1.Ubuntu GNOME（系统）</h4><p>Ubuntu GNOME是Ubuntu的一个发行版本（也称Ubuntu variants），就像Ubuntu和Fedora等都是GNU/Linux的发行版那样。Ubuntu GNOME不仅包含了Ubuntu的核心部分、GNOME的核心部分，还有一系列的标准应用。</p>
-<h5 id="Install-from-DVD"><a href="#Install-from-DVD" class="headerlink" title="Install from DVD"></a>Install from DVD</h5><p>如果可以接受重新安装系统，请到这里<a href="http://ubuntugnome.org/download/" target="_blank" rel="external">下载</a>Ubuntu GNOME。</p>
-<h5 id="Install-with-current-system"><a href="#Install-with-current-system" class="headerlink" title="Install with current system"></a>Install with current system</h5><p>你也可以通过安装metapackage，这样在安装GNOME桌面环境时，你的系统中未安装的标准应用也会被同时安装。</p>
-<p><code>sudo apt-get install ubuntu-gnome-desktop</code></p>
-<h4 id="2-GNOME（仅桌面环境）"><a href="#2-GNOME（仅桌面环境）" class="headerlink" title="2.GNOME（仅桌面环境）"></a>2.GNOME（仅桌面环境）</h4><h5 id="The-“real”-GNOME"><a href="#The-“real”-GNOME" class="headerlink" title="The “real” GNOME"></a>The “real” GNOME</h5><p>标准的GNOME桌面环境，没有Ubuntu的特性（尽管我区分不出哪些是Ubuntu提供的），也不安装附加的标准应用：</p>
-<p><code>sudo apt-get install gnome</code></p>
-<h5 id="The-minimux-GNOME"><a href="#The-minimux-GNOME" class="headerlink" title="The minimux GNOME"></a>The minimux GNOME</h5><p>GNOME的核心部分，不安装附加的标准应用：</p>
-<p><code>sudo apt-get install gnome-core</code></p>
-<h5 id="GNOME-shell"><a href="#GNOME-shell" class="headerlink" title="GNOME shell"></a>GNOME shell</h5><p>仅安装GNOME的图形界面：<br><code>sudo apt-get install gnome-shell</code></p>
-<p>你还需要：<br><code>sudo apt-get install gnome-session</code></p>
-<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><p>在同一系统上安装不同的桌面环境可能会造成一些意料不到的问题（如锁屏界面丢失），最推荐的方案还是重新安装Ubuntu GNOME，其次，可以安装<code>ubuntu-gnome-desktop</code>。</p>
-<h4 id="使用新的桌面环境"><a href="#使用新的桌面环境" class="headerlink" title="使用新的桌面环境"></a>使用新的桌面环境</h4><p>安装完毕后，重启，可在登录界面选择桌面环境。</p>
-<p><img src="http://static.ddlee.cn/static/img/Ubuntu-2/gnome-login1.png" alt="login1"></p>
-<p><img src="http://static.ddlee.cn/static/img/Ubuntu-2/gnome-login2.png" alt="login2"></p>
-<h3 id="GNOME配置工具：gnome-tweak-tool"><a href="#GNOME配置工具：gnome-tweak-tool" class="headerlink" title="GNOME配置工具：gnome-tweak-tool"></a>GNOME配置工具：gnome-tweak-tool</h3><p>想要充分个性化GNOME桌面环境，扩展GNOME的功能，你还需要安装GNOME的配置工具：gnome tweak tool</p>
-<p><code>sudo apt-get install gnome-tweak-tool</code></p>
-<p><img src="http://static.ddlee.cn/static/img/Ubuntu-2/gnome-tweak-tool_004.jpg" alt="图片：gnome tweak tool提供的功能"></p>
-<p>利用gnome tweak tool，你可以管理桌面主题、调整窗口特性、调整显示字体、加载GNOME扩展、管理开机自启程序等等。</p>
-<h3 id="扩展插件"><a href="#扩展插件" class="headerlink" title="扩展插件"></a>扩展插件</h3><p>在Ubuntu上，要调整桌面主题，可没有Windows上鼠标右击一下那么简单。<br>你要先安装上面的tweak tool，然后有人告诉你需要User theme扩展插件，而你跑到<code>extensions.gnome.org</code>，遇到的却是这个：<br><img src="http://static.ddlee.cn/static/img/Ubuntu-2/Selection_019.jpg" alt="错误"></p>
-<p>我明明装了GNOME的啊！</p>
-<p>这是因为，<code>extensions.gnome.org</code>需要与浏览器通信，调用click-to-play的功能，我们需要安装GNOMNE shell intergration这个插件。</p>
-<h4 id="Chrome用户"><a href="#Chrome用户" class="headerlink" title="Chrome用户"></a>Chrome用户</h4><h5 id="利用PPA"><a href="#利用PPA" class="headerlink" title="利用PPA"></a>利用PPA</h5><pre><code>sudo add-apt-repository ppa:ne0sight/chrome-gnome-shell
-sudo apt-get update
-sudo apt-get install chrome-gnome-shell
-</code></pre><h5 id="通过Chrome-Web-Store-GNOME-Shell-integration"><a href="#通过Chrome-Web-Store-GNOME-Shell-integration" class="headerlink" title="通过Chrome Web Store:GNOME Shell integration"></a>通过Chrome Web Store:<a href="https://chrome.google.com/webstore/detail/gnome-shell-integration/gphhapmejobijbbhgpjhcjognlahblep" target="_blank" rel="external">GNOME Shell integration</a></h5><p>可能需要通过CMake安装native connector,请参考这一<a href="https://wiki.gnome.org/Projects/GnomeShellIntegrationForChrome/Installation" target="_blank" rel="external">页面</a>。</p>
-<h4 id="FireFox用户"><a href="#FireFox用户" class="headerlink" title="FireFox用户"></a>FireFox用户</h4><p>使用FireFox访问<code>extensions.gnome.org</code>时会有运行GNOME shell integration的通知，允许运行后刷新即可。</p>
-<p>更多信息，请参考这一<a href="https://extensions.gnome.org/about/#no-detection" target="_blank" rel="external">页面</a></p>
-<p>安装好<code>tweak-tool</code>后，祝贺你已经打开了新世界的大门。下篇文章是关于扩展插件的推荐，欢迎继续阅读。</p>
-<p>@<a href="http://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;GNOME安装&quot;&gt;&lt;a href=&quot;#GNOME安装&quot; class=&quot;headerlink&quot; title=&quot;GNOME安装&quot;&gt;&lt;/a&gt;GNOME安装&lt;/h3&gt;&lt;p&gt;从上一篇文章，大家可以看到，GNOME是一系列软件的集合，安装时可以有不同的取舍。对于Ubuntu用
-    
-    </summary>
-    
-      <category term="Linux" scheme="http://blog.ddlee.cn/categories/Linux/"/>
-    
-    
-      <category term="Linux" scheme="http://blog.ddlee.cn/tags/Linux/"/>
-    
-      <category term="Gnome" scheme="http://blog.ddlee.cn/tags/Gnome/"/>
     
   </entry>
   
