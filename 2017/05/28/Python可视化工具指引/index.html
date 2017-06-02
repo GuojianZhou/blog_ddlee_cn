@@ -394,10 +394,10 @@
 <p>Python真是越来越火了。活跃的开源社区为Python这门语言贡献着长青的活力。</p>
 <p>子曾经曰过：轮子多了，车就稳了。</p>
 <p>本文帮助你选好轮子，也祝愿可视化的车开得越来越稳。</p>
-<h2 id="The-Landscape"><a href="#The-Landscape" class="headerlink" title="The Landscape"></a>The Landscape</h2><p><a href="Python可视化工具指引/landscape.png">landscape</a></p>
+<h2 id="The-Landscape"><a href="#The-Landscape" class="headerlink" title="The Landscape"></a>The Landscape</h2><p><a href="./Python可视化工具指引/landscape.png">landscape</a></p>
 <p>如图。</p>
 <p>VanderPlas在展示完这张全景图后给大家贴了这张图：</p>
-<p><a href="Python可视化工具指引/chan.png">chan</a></p>
+<p><a href="./Python可视化工具指引/chan.png">chan</a></p>
 <p>我差点笑喷。我们的表情包可能要在人民币之前走向国际化了。</p>
 <p>回到正题，可视化工具有两个主要阵营，一是基于matplotlib，二是基于JavaScript。还有的接入了JS下著名的D3.js库。</p>
 <h2 id="Matplotlib"><a href="#Matplotlib" class="headerlink" title="Matplotlib"></a>Matplotlib</h2><p>numpy, pandas, matplotlib可以说是python数据科学的三驾马车。凡以python为教学语言的数据科学相关课程必提这三个库。而matplotlib又有什么特点呢？</p>
@@ -415,7 +415,7 @@
 <li>对大数据集处理较慢</li>
 </ol>
 <p>于是就有了很多基于matplotlib的扩展，提供了更丰富、更人性化的API。</p>
-<p><a href="Python可视化工具指引/matplotlib.png">matplotlib</a></p>
+<p><a href="./Python可视化工具指引/matplotlib.png">matplotlib</a></p>
 <p>下面是几个比较受欢迎的包：</p>
 <h3 id="pandas"><a href="#pandas" class="headerlink" title="pandas"></a>pandas</h3><p>pandas的DataFrame对象是有plot()方法的，如：<br><code>iris.plot.scatter(&#39;petalLength&#39;, &#39;petalWidth&#39;)</code>生成二维散点图，只需指明两个轴取自哪一列数据即可。</p>
 <h3 id="seaborn"><a href="#seaborn" class="headerlink" title="seaborn"></a>seaborn</h3><p>seaborn(<a href="http://seaborn.pydata.org/examples/" target="_blank" rel="external">gallery</a>)专注于统计数据可视化，默认配色也还可以。语法示例：</p>
@@ -424,7 +424,7 @@ sns.lmplot('petalLength', 'sepalWidth', iris, hue='species', fit_reg=False)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <h3 id="类ggplot"><a href="#类ggplot" class="headerlink" title="类ggplot"></a>类ggplot</h3><p>对于R用户，最熟悉的可视化包可能是ggplot2，在python中可以考虑ggpy(<a href="https://github.com/yhat/ggpy)和近期上了Github" target="_blank" rel="external">https://github.com/yhat/ggpy)和近期上了Github</a> Trends的plotnie(<a href="https://github.com/has2k1/plotnine)。" target="_blank" rel="external">https://github.com/has2k1/plotnine)。</a></p>
 <h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p>基于JS的包常常具有非常好的交互性，其共同点是将图形格式化为json文件，再由JS完成渲染。</p>
-<p><a href="Python可视化工具指引/js.png">js</a></p>
+<p><a href="./Python可视化工具指引/js.png">js</a></p>
 <h3 id="Bokeh"><a href="#Bokeh" class="headerlink" title="Bokeh"></a>Bokeh</h3><p>Bokeh(<a href="http://bokeh.pydata.org/en/latest/docs/gallery.html" target="_blank" rel="external">Gallery</a>)定位于绘制用于浏览器展示的交互式图形。其优点是交互性、能够处理大量数据和流数据。语法示例：</p>
 <pre class="line-numbers language-lang-python"><code class="language-lang-python">p = figure()
 p.circle(iris.petalLength, iris.sepalWidth)
@@ -444,7 +444,7 @@ iplot(p)
 <pre class="line-numbers language-lang-Python"><code class="language-lang-Python">from colorcet import fire
 export(tf.shade(agg, cmap=cm(fire, 0.2), how='eq_hist'), 'census_ds_fier_eq_hist')
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p><a href="Python可视化工具指引/fire.jpg">fire</a></p>
+<p><a href="./Python可视化工具指引/fire.jpg">fire</a></p>
 <h2 id="最终的建议"><a href="#最终的建议" class="headerlink" title="最终的建议"></a>最终的建议</h2><p>上车忠告：</p>
 <ol>
 <li>matplotlib必会</li>
