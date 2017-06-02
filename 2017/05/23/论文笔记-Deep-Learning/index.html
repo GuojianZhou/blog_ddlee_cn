@@ -10,7 +10,7 @@
     
     <title>
         
-            归档: 2017/3 | 
+            [论文笔记]Deep Learning | 
         
         萧爽楼|李东东的安静一隅
     </title>
@@ -27,7 +27,7 @@
     <meta name="theme-color" content="#0097A7">
     <meta name="author" content="ddlee">
     <meta name="description" content="博客叫萧爽楼，从《浮生六记》中借来的名字。身边，很难寻找古人春游、结社、集会之乐趣。只愿文字在这个小小的空间里仍然能够发挥古老的力量。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、科学计算等方面的学习侧记。">
-    <meta name="keywords" content="ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee">
+    <meta name="keywords" content="ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee,Deep Learning,AI,Papers">
 
     <!--iOS -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -48,10 +48,10 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="http://blog.ddlee.cn">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="归档: 2017/3 | 萧爽楼|李东东的安静一隅">
+    <meta property="og:title" content="[论文笔记]Deep Learning | 萧爽楼|李东东的安静一隅">
     <meta property="og:description" content="博客叫萧爽楼，从《浮生六记》中借来的名字。身边，很难寻找古人春游、结社、集会之乐趣。只愿文字在这个小小的空间里仍然能够发挥古老的力量。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、科学计算等方面的学习侧记。">
 
-    
+    <meta property="og:article:tag" content="Deep Learning"> <meta property="og:article:tag" content="AI"> <meta property="og:article:tag" content="Papers"> 
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="/css/ie-blocker.css">
@@ -219,383 +219,326 @@
                         </button>
                     
 
-                    <!-- Index Module -->
-<div class="material-index mdl-grid">
-    
-    <div class="locate-thumbnail-symbol"></div>
+                    <!-- Post TOC -->
 
-    <!-- Pin on top -->
     
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
 
-    <!-- Normal Post -->
-    
-        
-        
-            <!-- Paradox Thumbnail -->
-            <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Abstract"><span class="post-toc-number">1.</span> <span class="post-toc-text">Abstract</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Supervised-learning"><span class="post-toc-number">2.</span> <span class="post-toc-text">Supervised learning</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Backpropagation-to-train-multilayer-architectures"><span class="post-toc-number">3.</span> <span class="post-toc-text">Backpropagation to train multilayer architectures</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Convolutional-neural-networks"><span class="post-toc-number">4.</span> <span class="post-toc-text">Convolutional neural networks</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Image-understanding-with-deep-convolutional-networks"><span class="post-toc-number">5.</span> <span class="post-toc-text">Image understanding with deep convolutional networks</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Distributed-representations-and-language-processing"><span class="post-toc-number">6.</span> <span class="post-toc-text">Distributed representations and language processing</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Recurrent-neural-networks"><span class="post-toc-number">7.</span> <span class="post-toc-text">Recurrent neural networks</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#The-future-of-deep-learning"><span class="post-toc-number">8.</span> <span class="post-toc-text">The future of deep learning</span></a></li></ol>
+
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
     
         
             <!-- Random Thumbnail -->
             <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
+            <script>
+    var randomNum = Math.floor(Math.random() * 43 + 1);
 
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2017/03/30/HADOOP学习速记/">HADOOP学习速记</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2017/03/30/HADOOP学习速记/" target="_self">继续阅读</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="http://static.ddlee.cn/static/img/material-theme-img/avatar.png" width="44px" height="44px" alt="ddlee's avatar">
-            </div>
-            <div>
-                <strong>ddlee</strong>
-                <span>3月 30, 2017</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                <a class="post_category-link" href="/categories/AI/">AI</a>
-            </span>
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-        
-        
-        
-    
-        
-        
-            <!-- Paradox Thumbnail -->
-            <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2017/03/26/Kaggle比赛中EDA：流程、做法与目的/">Kaggle比赛中EDA：流程、做法与目的</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2017/03/26/Kaggle比赛中EDA：流程、做法与目的/" target="_self">继续阅读</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="http://static.ddlee.cn/static/img/material-theme-img/avatar.png" width="44px" height="44px" alt="ddlee's avatar">
-            </div>
-            <div>
-                <strong>ddlee</strong>
-                <span>3月 26, 2017</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                <a class="post_category-link" href="/categories/Data-Science/">Data Science</a>
-            </span>
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-        
-        
-        
-    
-        
-        
-            <!-- Paradox Thumbnail -->
-            <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2017/03/22/DevOps侧记/">Udacity课程： Intro to DevOps侧记</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            文章主要内容来自Udacity的课程：
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2017/03/22/DevOps侧记/" target="_self">继续阅读</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="http://static.ddlee.cn/static/img/material-theme-img/avatar.png" width="44px" height="44px" alt="ddlee's avatar">
-            </div>
-            <div>
-                <strong>ddlee</strong>
-                <span>3月 22, 2017</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                <a class="post_category-link" href="/categories/Internet/">Internet</a>
-            </span>
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-        
-        
-        
-    
-        
-        
-            <!-- Paradox Thumbnail -->
-            <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2017/03/16/Python与SQL_Server的交互：pyODBC, pymssql, SQLAlchemy/">Python与SQL_Server的交互：pyODBC, pymssql, SQLAlchemy</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            Windows平台下Python读取、写入SQL Server相关的函数库，文章结构如下：
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2017/03/16/Python与SQL_Server的交互：pyODBC, pymssql, SQLAlchemy/" target="_self">继续阅读</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="http://static.ddlee.cn/static/img/material-theme-img/avatar.png" width="44px" height="44px" alt="ddlee's avatar">
-            </div>
-            <div>
-                <strong>ddlee</strong>
-                <span>3月 16, 2017</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                <a class="post_category-link" href="/categories/Data-Science/">Data Science</a>
-            </span>
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-        
-        
-        
-    
-        
-        
-            <!-- Paradox Thumbnail -->
-            <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2017/03/12/再次折腾我的WNDR4300/">再次折腾我的WNDR4300：OpenWrt文件共享</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            
-生命不惜，折腾不止。
-
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2017/03/12/再次折腾我的WNDR4300/" target="_self">继续阅读</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="http://static.ddlee.cn/static/img/material-theme-img/avatar.png" width="44px" height="44px" alt="ddlee's avatar">
-            </div>
-            <div>
-                <strong>ddlee</strong>
-                <span>3月 12, 2017</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                <a class="post_category-link" href="/categories/Linux/">Linux</a>
-            </span>
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-        
-        
-        
-    
-        
-        
-            <!-- Paradox Thumbnail -->
-            <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2017/03/03/谁会不厌其烦地安慰那无知的少年-3/">谁会不厌其烦地安慰那无知的少年（三）</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            
-年轻的时候可以随随便便喜欢一个人，可千万别真动情。那样的话你的余生就剩两种状态了，一种叫做想她，另一种是为克制自己...
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2017/03/03/谁会不厌其烦地安慰那无知的少年-3/" target="_self">继续阅读</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="http://static.ddlee.cn/static/img/material-theme-img/avatar.png" width="44px" height="44px" alt="ddlee's avatar">
-            </div>
-            <div>
-                <strong>ddlee</strong>
-                <span>3月 03, 2017</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                <a class="post_category-link" href="/categories/随笔/">随笔</a>
-            </span>
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-        
-        
-        
-    
-
-    
-
-    
-        <script>
-    var randomNum;
-
-    var locatePost = $('.locate-thumbnail-symbol').next();
-    for(var i = 0; i < 10; i++) {
-        randomNum = Math.floor(Math.random() * 43 + 1);
-
-        locatePost.children('.post_thumbnail-random').attr('id', 'random_thumbnail-'+randomNum);
-        locatePost.children('.post_thumbnail-random').css('background-image', 'url(' + 'http://static.ddlee.cn/static/img/material-theme-img/random/material-' + randomNum + '.png' + ')')
-
-        locatePost = locatePost.next();
-    }
+    $('.post_thumbnail-random').css('background-image', 'url(' + 'http://static.ddlee.cn/static/img/material-theme-img/random/material-' + randomNum + '.png' + ')');
 </script>
 
+        
+    
+            <p class="article-headline-p">
+                [论文笔记]Deep Learning
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="http://static.ddlee.cn/static/img/material-theme-img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>ddlee</strong>
+        <span>5月 23, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/AI/">AI</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Deep-Learning/">Deep Learning</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Papers/">Papers</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+        
+            <!-- Busuanzi Views -->
+            <a class="post_share-link" href="#">
+                <li class="mdl-menu__item">
+                    <span id="busuanzi_container_page_pv">
+                        <span id="busuanzi_value_page_pv"></span>&nbsp;浏览量
+                    </span>
+                </li>
+            </a>
+        
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=[论文笔记]Deep Learning&url=http://blog.ddlee.cn//2017/05/23/论文笔记-Deep-Learning/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=萧爽楼|李东东的安静一隅&title=[论文笔记]Deep Learning&summary=博客叫萧爽楼，从《浮生六记》中借来的名字。身边，很难寻找古人春游、结社、集会之乐趣。只愿文字在这个小小的空间里仍然能够发挥古老的力量。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、科学计算等方面的学习侧记。&pics=http://blog.ddlee.cnhttp://static.ddlee.cn/static/img/material-theme-img/favicon.png&url=http://blog.ddlee.cn/2017/05/23/论文笔记-Deep-Learning/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 QQ
+            </li>
+        </a>
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>论文：<a href="http://www.cs.toronto.edu/~hinton/absps/NatureDeepReview.pdf" target="_blank" rel="external">Deep Learning</a></p>
+<p>这篇文章是三位大牛15年发表在Nature上有关深度学习的综述，尽管这两年深度学习又有更多的模型和成果出现，文章显得有些过时，但来自三位领军人物对深度学习的深度阐述还是值得反复回味。</p>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>摘要的第一句话可以说给深度学习下了定义。有一些观点认为深度学习就是堆叠了很多层的神经网络，因计算力的提升而迎来第二春。但请看三位是怎么说的：</p>
+<blockquote>
+<p>Deep learning allows computational models that are composed of multiple processing layers to learn representations of data with multiple levels of abstraction.</p>
+</blockquote>
+<p>也就是说，深度学习是允许由 <em>多个处理层构成的计算模型</em> 用多个层次的 <em>抽象</em> 来习得 <em>数据表示</em> 的技术。我的解读如下：</p>
+<ol>
+<li>深度学习不限于神经网络模型，其关键之处在于多层的表示</li>
+<li>深度学习属于表示学习，目的是习得数据的某种表示，而这种表示由多个层次的抽象完成</li>
+</ol>
+<p>在第一段的导言中，文章总结了深度学习技术取得突破性成果的各个领域，也再次指出了深度学习与传统学习算法的不同之处：</p>
+<ul>
+<li>传统学习模型需要特征工程和领域知识来从数据构建较好的特征</li>
+<li>深度学习中，多层的特征由通用的学习过程得到，而不需要人类工程师的参与</li>
+</ul>
+<h2 id="Supervised-learning"><a href="#Supervised-learning" class="headerlink" title="Supervised learning"></a>Supervised learning</h2><p>这一段概述了监督学习的一般框架、优化策略，并指出浅层学习需要Feature Extractor来提取对最适合目标问题的特征。</p>
+<h2 id="Backpropagation-to-train-multilayer-architectures"><a href="#Backpropagation-to-train-multilayer-architectures" class="headerlink" title="Backpropagation to train multilayer architectures"></a>Backpropagation to train multilayer architectures</h2><p>这一段指出BP算法的关键在于目标函数关于某一子模块输入的导数可以反向通过目标函数关于该子模块输出的导数得出，而这一过程是可迭代的。BP算法曾因容易陷于局部最优解而被冷落，但对于大型网络，在实践中，理论和经验都表明尽管落于局部最优解，但这个解的效果却和全局最优解相差无几，而且几乎所有的局部最优解都可以取得类似的效果。</p>
+<h2 id="Convolutional-neural-networks"><a href="#Convolutional-neural-networks" class="headerlink" title="Convolutional neural networks"></a>Convolutional neural networks</h2><p>巻积网络背后有四个关键想法：</p>
+<ul>
+<li>local connections</li>
+<li>shared weights</li>
+<li>pooling</li>
+<li>the use of many layers</li>
+</ul>
+<p>巻积网络常由巻积层、池化层和激活层构成，巻积层用于提取局部特征，池化层用于整合相似的特征，激活层用于加入非线性。这样的结构有两点理由：</p>
+<ol>
+<li>张量性数据的局部数值常常高度相关，局部特征容易发现</li>
+<li>局部特征跟位置无关（平移不变性）</li>
+</ol>
+<p>文章也提到了这种巻积结构的仿生学证据。</p>
+<h2 id="Image-understanding-with-deep-convolutional-networks"><a href="#Image-understanding-with-deep-convolutional-networks" class="headerlink" title="Image understanding with deep convolutional networks"></a>Image understanding with deep convolutional networks</h2><p>这一段总结了巻积网路在图像方面取得的成就。</p>
+<h2 id="Distributed-representations-and-language-processing"><a href="#Distributed-representations-and-language-processing" class="headerlink" title="Distributed representations and language processing"></a>Distributed representations and language processing</h2><p>分布式表示在两点上可以取得指数级增益：</p>
+<ol>
+<li>习得特征的不同组合可以泛化出训练数据中不存在的类型</li>
+<li>特征组合的个数的增加关于层数是指数级的</li>
+</ol>
+<p>文章还比较了分布式表示相比传统的词频统计在表述人类语言方面的优势。</p>
+<h2 id="Recurrent-neural-networks"><a href="#Recurrent-neural-networks" class="headerlink" title="Recurrent neural networks"></a>Recurrent neural networks</h2><p>这一段概述了循环神经网络的动态特性和LSTM等结构上的改进。</p>
+<h2 id="The-future-of-deep-learning"><a href="#The-future-of-deep-learning" class="headerlink" title="The future of deep learning"></a>The future of deep learning</h2><p>作者认为在长期看来，无监督学习会更为重要，人工智能领域的重大飞跃将由组合了表示学习和复杂推理的系统取得。</p>
+
+    
+
     
 </div>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+
+
+    <!-- 使用 DISQUS -->
+    <div id="disqus-comment">
+        <div id="disqus_thread"></div>
+<script>
+    queue.offer(function() {
+            var disqus_config = function () {
+                this.page.url = 'http://blog.ddlee.cn/2017/05/23/论文笔记-Deep-Learning/index.html';  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+
+            (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document;
+                var s = d.createElement('script');
+                s.src = '//ddlee.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        });
+</script>
+
+    </div>
+    <style>
+        #disqus-comment{
+            background-color: #eee;
+            padding: 2pc;
+        }
+    </style>
+
+
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2017/05/28/Pandas速度优化/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/05/13/论文笔记-Visualizing-and-Understanding-Recurrent-Networks/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
 
 
                     

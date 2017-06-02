@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://blog.ddlee.cn/2017/05/23/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Deep-Learning/</loc>
+        <lastmod>2017-06-02T11:24:55.784Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://blog.ddlee.cn/2017/04/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Deep-Residual-Learning-for-Image-Recognition/</loc>
         <lastmod>2017-05-30T13:37:55.644Z</lastmod>
         <changefreq>weekly</changefreq>

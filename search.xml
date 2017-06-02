@@ -57,9 +57,9 @@
             
             <tag> Deep Learning </tag>
             
-            <tag> Machine Learning </tag>
-            
             <tag> AI </tag>
+            
+            <tag> Machine Learning </tag>
             
             <tag> Paper </tag>
             
@@ -259,11 +259,11 @@ def AutogradRNN(mode, input_size, hidden_size):
         
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> Deep Learning </tag>
             
             <tag> AI </tag>
+            
+            <tag> Python </tag>
             
             <tag> Pytorch </tag>
             
@@ -523,6 +523,70 @@ df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
     </entry>
     
     <entry>
+      <title><![CDATA[[论文笔记]Deep Learning]]></title>
+      <url>http://blog.ddlee.cn/2017/05/23/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Deep-Learning/</url>
+      <content type="html"><![CDATA[<p>论文：<a href="http://www.cs.toronto.edu/~hinton/absps/NatureDeepReview.pdf" target="_blank" rel="external">Deep Learning</a></p>
+<p>这篇文章是三位大牛15年发表在Nature上有关深度学习的综述，尽管这两年深度学习又有更多的模型和成果出现，文章显得有些过时，但来自三位领军人物对深度学习的深度阐述还是值得反复回味。</p>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>摘要的第一句话可以说给深度学习下了定义。有一些观点认为深度学习就是堆叠了很多层的神经网络，因计算力的提升而迎来第二春。但请看三位是怎么说的：</p>
+<blockquote>
+<p>Deep learning allows computational models that are composed of multiple processing layers to learn representations of data with multiple levels of abstraction.</p>
+</blockquote>
+<p>也就是说，深度学习是允许由 <em>多个处理层构成的计算模型</em> 用多个层次的 <em>抽象</em> 来习得 <em>数据表示</em> 的技术。我的解读如下：</p>
+<ol>
+<li>深度学习不限于神经网络模型，其关键之处在于多层的表示</li>
+<li>深度学习属于表示学习，目的是习得数据的某种表示，而这种表示由多个层次的抽象完成</li>
+</ol>
+<p>在第一段的导言中，文章总结了深度学习技术取得突破性成果的各个领域，也再次指出了深度学习与传统学习算法的不同之处：</p>
+<ul>
+<li>传统学习模型需要特征工程和领域知识来从数据构建较好的特征</li>
+<li>深度学习中，多层的特征由通用的学习过程得到，而不需要人类工程师的参与</li>
+</ul>
+<h2 id="Supervised-learning"><a href="#Supervised-learning" class="headerlink" title="Supervised learning"></a>Supervised learning</h2><p>这一段概述了监督学习的一般框架、优化策略，并指出浅层学习需要Feature Extractor来提取对最适合目标问题的特征。</p>
+<h2 id="Backpropagation-to-train-multilayer-architectures"><a href="#Backpropagation-to-train-multilayer-architectures" class="headerlink" title="Backpropagation to train multilayer architectures"></a>Backpropagation to train multilayer architectures</h2><p>这一段指出BP算法的关键在于目标函数关于某一子模块输入的导数可以反向通过目标函数关于该子模块输出的导数得出，而这一过程是可迭代的。BP算法曾因容易陷于局部最优解而被冷落，但对于大型网络，在实践中，理论和经验都表明尽管落于局部最优解，但这个解的效果却和全局最优解相差无几，而且几乎所有的局部最优解都可以取得类似的效果。</p>
+<h2 id="Convolutional-neural-networks"><a href="#Convolutional-neural-networks" class="headerlink" title="Convolutional neural networks"></a>Convolutional neural networks</h2><p>巻积网络背后有四个关键想法：</p>
+<ul>
+<li>local connections</li>
+<li>shared weights</li>
+<li>pooling</li>
+<li>the use of many layers</li>
+</ul>
+<p>巻积网络常由巻积层、池化层和激活层构成，巻积层用于提取局部特征，池化层用于整合相似的特征，激活层用于加入非线性。这样的结构有两点理由：</p>
+<ol>
+<li>张量性数据的局部数值常常高度相关，局部特征容易发现</li>
+<li>局部特征跟位置无关（平移不变性）</li>
+</ol>
+<p>文章也提到了这种巻积结构的仿生学证据。</p>
+<h2 id="Image-understanding-with-deep-convolutional-networks"><a href="#Image-understanding-with-deep-convolutional-networks" class="headerlink" title="Image understanding with deep convolutional networks"></a>Image understanding with deep convolutional networks</h2><p>这一段总结了巻积网路在图像方面取得的成就。</p>
+<h2 id="Distributed-representations-and-language-processing"><a href="#Distributed-representations-and-language-processing" class="headerlink" title="Distributed representations and language processing"></a>Distributed representations and language processing</h2><p>分布式表示在两点上可以取得指数级增益：</p>
+<ol>
+<li>习得特征的不同组合可以泛化出训练数据中不存在的类型</li>
+<li>特征组合的个数的增加关于层数是指数级的</li>
+</ol>
+<p>文章还比较了分布式表示相比传统的词频统计在表述人类语言方面的优势。</p>
+<h2 id="Recurrent-neural-networks"><a href="#Recurrent-neural-networks" class="headerlink" title="Recurrent neural networks"></a>Recurrent neural networks</h2><p>这一段概述了循环神经网络的动态特性和LSTM等结构上的改进。</p>
+<h2 id="The-future-of-deep-learning"><a href="#The-future-of-deep-learning" class="headerlink" title="The future of deep learning"></a>The future of deep learning</h2><p>作者认为在长期看来，无监督学习会更为重要，人工智能领域的重大飞跃将由组合了表示学习和复杂推理的系统取得。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Papers </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> AI </tag>
+            
+            <tag> Papers </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[[论文笔记]Visualizing and Understanding Recurrent Networks]]></title>
       <url>http://blog.ddlee.cn/2017/05/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Visualizing-and-Understanding-Recurrent-Networks/</url>
       <content type="html"><![CDATA[<p>论文： <a href="http://arxiv.org/abs/1506.02078" target="_blank" rel="external">Visualizing and Understanding Recurrent Networks</a></p>
@@ -570,11 +634,11 @@ df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
             
             <tag> Deep Learning </tag>
             
+            <tag> AI </tag>
+            
             <tag> Machine Learning </tag>
             
             <tag> Papers </tag>
-            
-            <tag> AI </tag>
             
         </tags>
         

@@ -219,13 +219,6 @@
     </url>
 
     <url>
-        <loc>http://blog.ddlee.cn/tags/AI/</loc>
-        <lastmod>2017-05-30T07:24:34.453Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://blog.ddlee.cn/tags/Paper/</loc>
         <lastmod>2017-05-30T07:24:34.453Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -240,21 +233,7 @@
     </url>
 
     <url>
-        <loc>http://blog.ddlee.cn/tags/Deep-Learning/</loc>
-        <lastmod>2017-05-30T13:37:55.644Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://blog.ddlee.cn/tags/Machine-Learning/</loc>
-        <lastmod>2017-05-30T13:37:55.644Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://blog.ddlee.cn/tags/Papers/</loc>
         <lastmod>2017-05-30T13:37:55.644Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -263,6 +242,27 @@
     <url>
         <loc>http://blog.ddlee.cn/tags/Computer-Vision/</loc>
         <lastmod>2017-05-30T13:37:55.644Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/tags/Deep-Learning/</loc>
+        <lastmod>2017-06-02T11:24:55.784Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/tags/AI/</loc>
+        <lastmod>2017-06-02T11:24:55.784Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/tags/Papers/</loc>
+        <lastmod>2017-06-02T11:24:55.784Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

@@ -73,9 +73,9 @@
     
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Machine Learning" scheme="http://blog.ddlee.cn/tags/Machine-Learning/"/>
-    
       <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
+    
+      <category term="Machine Learning" scheme="http://blog.ddlee.cn/tags/Machine-Learning/"/>
     
       <category term="Paper" scheme="http://blog.ddlee.cn/tags/Paper/"/>
     
@@ -278,11 +278,11 @@ def AutogradRNN(mode, input_size, hidden_size):
       <category term="AI" scheme="http://blog.ddlee.cn/categories/AI/"/>
     
     
-      <category term="Python" scheme="http://blog.ddlee.cn/tags/Python/"/>
-    
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
       <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
+    
+      <category term="Python" scheme="http://blog.ddlee.cn/tags/Python/"/>
     
       <category term="Pytorch" scheme="http://blog.ddlee.cn/tags/Pytorch/"/>
     
@@ -542,6 +542,73 @@ df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
   </entry>
   
   <entry>
+    <title>[论文笔记]Deep Learning</title>
+    <link href="http://blog.ddlee.cn/2017/05/23/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Deep-Learning/"/>
+    <id>http://blog.ddlee.cn/2017/05/23/论文笔记-Deep-Learning/</id>
+    <published>2017-05-23T11:09:09.000Z</published>
+    <updated>2017-06-02T11:24:55.784Z</updated>
+    
+    <content type="html"><![CDATA[<p>论文：<a href="http://www.cs.toronto.edu/~hinton/absps/NatureDeepReview.pdf" target="_blank" rel="external">Deep Learning</a></p>
+<p>这篇文章是三位大牛15年发表在Nature上有关深度学习的综述，尽管这两年深度学习又有更多的模型和成果出现，文章显得有些过时，但来自三位领军人物对深度学习的深度阐述还是值得反复回味。</p>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>摘要的第一句话可以说给深度学习下了定义。有一些观点认为深度学习就是堆叠了很多层的神经网络，因计算力的提升而迎来第二春。但请看三位是怎么说的：</p>
+<blockquote>
+<p>Deep learning allows computational models that are composed of multiple processing layers to learn representations of data with multiple levels of abstraction.</p>
+</blockquote>
+<p>也就是说，深度学习是允许由 <em>多个处理层构成的计算模型</em> 用多个层次的 <em>抽象</em> 来习得 <em>数据表示</em> 的技术。我的解读如下：</p>
+<ol>
+<li>深度学习不限于神经网络模型，其关键之处在于多层的表示</li>
+<li>深度学习属于表示学习，目的是习得数据的某种表示，而这种表示由多个层次的抽象完成</li>
+</ol>
+<p>在第一段的导言中，文章总结了深度学习技术取得突破性成果的各个领域，也再次指出了深度学习与传统学习算法的不同之处：</p>
+<ul>
+<li>传统学习模型需要特征工程和领域知识来从数据构建较好的特征</li>
+<li>深度学习中，多层的特征由通用的学习过程得到，而不需要人类工程师的参与</li>
+</ul>
+<h2 id="Supervised-learning"><a href="#Supervised-learning" class="headerlink" title="Supervised learning"></a>Supervised learning</h2><p>这一段概述了监督学习的一般框架、优化策略，并指出浅层学习需要Feature Extractor来提取对最适合目标问题的特征。</p>
+<h2 id="Backpropagation-to-train-multilayer-architectures"><a href="#Backpropagation-to-train-multilayer-architectures" class="headerlink" title="Backpropagation to train multilayer architectures"></a>Backpropagation to train multilayer architectures</h2><p>这一段指出BP算法的关键在于目标函数关于某一子模块输入的导数可以反向通过目标函数关于该子模块输出的导数得出，而这一过程是可迭代的。BP算法曾因容易陷于局部最优解而被冷落，但对于大型网络，在实践中，理论和经验都表明尽管落于局部最优解，但这个解的效果却和全局最优解相差无几，而且几乎所有的局部最优解都可以取得类似的效果。</p>
+<h2 id="Convolutional-neural-networks"><a href="#Convolutional-neural-networks" class="headerlink" title="Convolutional neural networks"></a>Convolutional neural networks</h2><p>巻积网络背后有四个关键想法：</p>
+<ul>
+<li>local connections</li>
+<li>shared weights</li>
+<li>pooling</li>
+<li>the use of many layers</li>
+</ul>
+<p>巻积网络常由巻积层、池化层和激活层构成，巻积层用于提取局部特征，池化层用于整合相似的特征，激活层用于加入非线性。这样的结构有两点理由：</p>
+<ol>
+<li>张量性数据的局部数值常常高度相关，局部特征容易发现</li>
+<li>局部特征跟位置无关（平移不变性）</li>
+</ol>
+<p>文章也提到了这种巻积结构的仿生学证据。</p>
+<h2 id="Image-understanding-with-deep-convolutional-networks"><a href="#Image-understanding-with-deep-convolutional-networks" class="headerlink" title="Image understanding with deep convolutional networks"></a>Image understanding with deep convolutional networks</h2><p>这一段总结了巻积网路在图像方面取得的成就。</p>
+<h2 id="Distributed-representations-and-language-processing"><a href="#Distributed-representations-and-language-processing" class="headerlink" title="Distributed representations and language processing"></a>Distributed representations and language processing</h2><p>分布式表示在两点上可以取得指数级增益：</p>
+<ol>
+<li>习得特征的不同组合可以泛化出训练数据中不存在的类型</li>
+<li>特征组合的个数的增加关于层数是指数级的</li>
+</ol>
+<p>文章还比较了分布式表示相比传统的词频统计在表述人类语言方面的优势。</p>
+<h2 id="Recurrent-neural-networks"><a href="#Recurrent-neural-networks" class="headerlink" title="Recurrent neural networks"></a>Recurrent neural networks</h2><p>这一段概述了循环神经网络的动态特性和LSTM等结构上的改进。</p>
+<h2 id="The-future-of-deep-learning"><a href="#The-future-of-deep-learning" class="headerlink" title="The future of deep learning"></a>The future of deep learning</h2><p>作者认为在长期看来，无监督学习会更为重要，人工智能领域的重大飞跃将由组合了表示学习和复杂推理的系统取得。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;论文：&lt;a href=&quot;http://www.cs.toronto.edu/~hinton/absps/NatureDeepReview.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Deep Learning&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这篇文章是三位
+    
+    </summary>
+    
+      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+    
+    
+      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
+    
+      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
+    
+  </entry>
+  
+  <entry>
     <title>[论文笔记]Visualizing and Understanding Recurrent Networks</title>
     <link href="http://blog.ddlee.cn/2017/05/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Visualizing-and-Understanding-Recurrent-Networks/"/>
     <id>http://blog.ddlee.cn/2017/05/13/论文笔记-Visualizing-and-Understanding-Recurrent-Networks/</id>
@@ -594,11 +661,11 @@ df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
     
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
+      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
+    
       <category term="Machine Learning" scheme="http://blog.ddlee.cn/tags/Machine-Learning/"/>
     
       <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
-    
-      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
     
   </entry>
   
@@ -1961,90 +2028,6 @@ directory mask = 0750
 &lt;/blockquote&gt;
 &lt;p&gt;丁丁再回到这条老街时，又是一年的光景。&lt;/p&gt;
 &lt;p&gt;这一年，家乡添了几处新房和俏媳妇，添了几家麻将交流中心，
-    
-    </summary>
-    
-      <category term="随笔" scheme="http://blog.ddlee.cn/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-      <category term="随笔" scheme="http://blog.ddlee.cn/tags/%E9%9A%8F%E7%AC%94/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>谁会不厌其烦地安慰那无知的少年（一）</title>
-    <link href="http://blog.ddlee.cn/2017/01/27/%E8%B0%81%E4%BC%9A%E4%B8%8D%E5%8E%8C%E5%85%B6%E7%83%A6%E5%9C%B0%E5%AE%89%E6%85%B0%E9%82%A3%E6%97%A0%E7%9F%A5%E7%9A%84%E5%B0%91%E5%B9%B4-1/"/>
-    <id>http://blog.ddlee.cn/2017/01/27/谁会不厌其烦地安慰那无知的少年-1/</id>
-    <published>2017-01-27T14:20:59.000Z</published>
-    <updated>2017-04-02T17:48:33.517Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p><em>一个男孩要下过多少电影，才能称得上是一个男人？一只海鸥要飞过多少海洋，才能在柔柔的沙滩上安息？——鲍勃·迪伦，《答案在风中飘荡》</em></p>
-</blockquote>
-<p>星星眨着眼，银河却不见。万家灯火散落在不遥远的远方，贪婪的夜色吞噬着视野，列车不紧不慢地刺破雾气的深不可测，卧铺床头的小台灯透过车窗温暖出朦胧一片，笼住返乡人的放松与期盼。</p>
-<p>其实丁丁差点没赶上火车。亏得遇到老司机，路上没怎么堵。过检票口的时候，广播刚刚喊着“你所乘坐的班次已停止检票”。</p>
-<p>火车终于安稳地行着。丁丁的心情也慢慢舒畅起来。</p>
-<p>丁丁趴在铺上，翻看相册，回想这又一个人生七年。</p>
-<p>小学到中学就是一趟火车，有起点也有终点，不慌不忙。大学是脱了轨的同一趟火车，东栽西撞，没有诗也到不了远方。</p>
-<p>想到这里，丁丁下了铺，留意了一下安全锤的位置，然而，在回来时，他还是不可避免地被旁边的大叔注意到了。</p>
-<p>嘿，小伙子，你也用Lumia 啊。</p>
-<p>丁丁尴尬地讲，没，只是备用机，主力还是安卓。心想着竟然还被看出来了，不过正好，用Lumia不装逼，那跟咸鱼有什么区别。</p>
-<p>大叔你做什么工作的呀。</p>
-<p>大叔讲他是个半个码农，三倍的房奴，两个孩子的爹地，一个老婆坚实的依靠。</p>
-<p>丁丁说自己是三个舍友的爸爸，五门课的开课赞助商，七个女生的备胎，九个社团的划水副总监。</p>
-<p>大叔说你这就是我的Pro版啊，深交吗小伙子？</p>
-<p>丁丁说，好。</p>
-<p>可这一开口，大叔就是从诗词歌赋到人生哲学。只不过，没有雪也没有月亮，我不是紫薇他也不叫尔康。</p>
-<p>大叔并不大，现在在南京，江北一套房，鼓楼一套学区。两个儿子，大的刚上一年级，小的还不会撒谎。</p>
-<p>自己公司年底出了状况，没能跟家人坐同一趟车回家。</p>
-<p>大叔说自己本科数学，毕了业才发现自己卵没什么用。女朋友学计算机，早就找好了工作，自己只好考了研，后来拿了个硕士，主攻信号转发与缓存。</p>
-<p>丁丁说我也数学。</p>
-<p>大叔抿了抿嘴，嗯，有意思有意思。</p>
-<p>大叔说那我给你介绍介绍考研经验吧。</p>
-<p>丁丁说好啊好啊。</p>
-<p>那年考研的形势很严峻，因为减招。</p>
-<p>为了考研，大三那年寒假，我初五就从家里跑出来了。赶巧的是，那年跟今年一样，过年赶得好晚，我统共在家不到十天。</p>
-<p>临走那天晚上，爸爸到单位值班，去之前又塞给我几百块钱，说穷家富路，但这种行为被我义正辞严地拒绝了。可爸爸走后，我泪湿眼底。</p>
-<p>因为这一离开就又是半年。</p>
-<p>考上大学第一年回家，奶奶跟我说你走后你爸来我这儿的时候哭了，说你跟小鸟一样飞走了。我说也是啊，我长大了，爸爸的一个时代也结束了呀，就在我报完到送他回去的那一刻。</p>
-<p>那天在楼下值班室那里领钥匙，爸爸在一边摸着头笑，见我回头，他跟遇到喜欢的女生那样不好意思，红着脸。</p>
-<p>爸爸的一个时代结束了呀。</p>
-<p>还记得，我上小学那会儿，连午休都要家长签字确认的，还有作业也是，爸爸兢兢业业地把题都重新算一遍，马虎的地方狠狠批我一顿，这才用方方正正的钢笔给我签上“家长已检查”，现在我才知道，这叫“背书”。</p>
-<p>那时候妈妈在一边儿踩着缝纫机，看点播台的我被爸爸叫过去，扭扭捏捏地摸着后脑勺，阳台上水仙开着，香味儿就飘到屋里来。</p>
-<p>其实那时候的我才最懂事儿。那时我最大的梦想就是娶了班上最文静的女生，让妈妈少操点儿心。而她当时就是我的同桌，放学我们还一起走到灵石路的尽头，走过小酒馆的门口。后来四五年级，起了流言，我们就分了。</p>
-<p>后来在外面求学，跟父母在一起的时间就越来越少了。那时候我最喜欢的时候是坐在大巴士高高的最后一排，靠窗，看路边的杨树一棵一棵闪过，我觉得我的人生康庄大道就在脚下一点一点伸展开来。</p>
-<p>爸爸给我的支持也越来越少了。他不懂遗传平衡定律，找不到辅助线，也人脸识别不了虚拟语气。我的小小心思就像宇宙那般，无边地膨胀起来了。</p>
-<p>高考就是碰到气球的那根针。我感觉自己是被发配到了南方，而且还被冻成了狗。</p>
-<p>丁丁顺着说，南方确实冷的不行，尤其下雨天。</p>
-<p>大叔说，你看，这些小事，我不说，就要一点一点埋葬在潺潺流去的岁月里了。</p>
-<p>可我考研那年不懂事。我哭的时候，却觉得自己分分钟像个大人了，我早回去正是在做着那些英雄们不得不做的事儿。天将降大任于斯人矣。</p>
-<p>为了呵护这个家，却要离开它。</p>
-<p>浊酒一杯，家万里。</p>
-<p>我觉得这就是我的燃情岁月。</p>
-<p>后来研考上了，女朋友等了我三年，然后就媳妇也有了。后来我才知道燃情岁月才算刚刚开始。</p>
-<p>丁丁蛮懂事，道，汪、汪、汪。</p>
-<p>再后来，有了一室一厅，吉利帝豪，郊区的三室两厅，又因为堵车把车给卖了，再后来有了一个儿子，鼓楼的学区加户口房，又添了个儿子，就把爸妈接过来了。</p>
-<p>这几年没有我特别想做的事儿。只有我需要做好的事儿。</p>
-<p>两个小魔王，说实话我不觉得爸妈老年生活有多幸福。</p>
-<p>不过多亏通了地铁，我每天八点半能到家，磕个瓜子，跟我爸聊聊我儿子和他儿子。</p>
-<p>可是，小伙子，你知道吗？我考研那年，就是个愣头青。</p>
-<p>那时候我对私人的时间有着近乎偏执的吝啬。我觉得自己独处的时间才是上天赐予的礼物。回家过年又烦又累，措不及防的应酬是对我神圣的私有时间的侵犯。所以，其实我早早就狠下心来，一定要早早的回学校。</p>
-<p>我上车那天风声呼啸，暗云疾行，干燥的北风中赫赫抬起的，是我打车的一只大手。路两边白杨赤条条的，行人裹着衣，绷着脸。</p>
-<p>风萧萧兮易水寒，众人向北我向南。</p>
-<p>可是，小伙子，你知道吗？</p>
-<p>让男孩成为男人的，不是事业，是家业啊。</p>
-<p>大叔突然不说了。他翻了个身，晚安。</p>
-<p>丁丁也回过头，抹了眼睛，退了返程。</p>
-<p>@<a href="http://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
-<p>2017年1月</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;一个男孩要下过多少电影，才能称得上是一个男人？一只海鸥要飞过多少海洋，才能在柔柔的沙滩上安息？——鲍勃·迪伦，《答案在风中飘荡》&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;星星眨着眼，银河却不见。万家灯火散落在不遥远的远方，贪婪的
     
     </summary>
     
