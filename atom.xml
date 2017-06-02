@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.ddlee.cn/"/>
-  <updated>2017-05-30T07:24:34.453Z</updated>
+  <updated>2017-06-02T14:52:53.858Z</updated>
   <id>http://blog.ddlee.cn/</id>
   
   <author>
@@ -14,6 +14,68 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>深度学习和分布式表示</title>
+    <link href="http://blog.ddlee.cn/2017/06/01/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
+    <id>http://blog.ddlee.cn/2017/06/01/深度学习和分布式表示/</id>
+    <published>2017-06-01T14:52:16.000Z</published>
+    <updated>2017-06-02T14:52:53.858Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文的两个主要参考资料：</p>
+<ol>
+<li>Yoshua Bengio在2016年九月<a href="https://www.bayareadlschool.org/" target="_blank" rel="external">Deep Learning School</a>的演讲Foundations and Challenges of Deep Learning。<a href="https://www.youtube.com/watch?v=11rsu_WwZTc" target="_blank" rel="external">YouTube</a></li>
+<li><a href="http://www.deeplearningbook.org/" target="_blank" rel="external">Deep Learning</a>, Goodfellow et al, Section 15.4</li>
+</ol>
+<h3 id="从机器学习到人工智能"><a href="#从机器学习到人工智能" class="headerlink" title="从机器学习到人工智能"></a>从机器学习到人工智能</h3><p>在演讲中，Bengio提到从机器学习到人工智能有五个关键的飞跃：</p>
+<ol>
+<li>Lots of data</li>
+<li>Very flexible models</li>
+<li>Enough computing power</li>
+<li>Powerful priors that can defeat the curse of dimensionality</li>
+<li>Computationally efficient inference</li>
+</ol>
+<p>第一点已经发生，到处都提大数据，到处都在招数据分析师。<br>我在读高中时，就曾预感数据将是新时代的石油和煤炭，因为数据正是人类社会经验的总结，数据带来的知识和见解将在驱动社会进步中发挥越来越重要的作用，而自己要立志成为新时代的矿工。</p>
+<p>第二点在我看来有两个例子，一是核技巧，通过核函数对分布空间的转换，赋予了模型更强大的表述能力；二是深度神经网络，多层的框架和非线性的引入使得模型理论上可以拟合任意函数。</p>
+<p>第三点，借云计算的浪潮，计算力不再是一项资产而是一项可供消费的服务，我们学生也可以廉价地接触到根本负担不起的计算力资源。而GPU等芯片技术的进步也为AI的浩浩征程添砖加瓦。</p>
+<p>第五点，近期发布的Tensorflow Lite和Caffe2等工具也有助于越来越多地将计算任务分配在终端上进行，而非作为一个发送与接收器。</p>
+<p>最后第四点，也是这篇文章的中心话题：借助分布式表示的强大能力，深度学习正尝试解决维度带来的灾难。</p>
+<h3 id="没有免费的午餐"><a href="#没有免费的午餐" class="headerlink" title="没有免费的午餐"></a>没有免费的午餐</h3><p>简单说，没有免费的午餐定理指出找不到一个在任何问题上都表现最优的模型/算法。不同的模型都有其擅长的问题，这由该模型建立时引入的先验知识决定。</p>
+<p>那么，深度学习加入的先验知识是什么？</p>
+<p>Bengio用的词是Compositionality，即复合性，<em>某一概念之意义由其组成部分的意义以及组合规则决定</em>。复合性的原则可以用于高效地描述我们的世界，而深度学习模型中隐藏的层正是去学习其组成部分，网络的结构则代表了组合规则。这正是深度学习模型潜在的信念。</p>
+<h3 id="分布式表示带来的指数增益"><a href="#分布式表示带来的指数增益" class="headerlink" title="分布式表示带来的指数增益"></a>分布式表示带来的指数增益</h3><p>分布式表示(Distributed Representation)是连接主义的核心概念，与复合性的原理相合。整体由组成它的个体及其组合来表示。请看下面的例子：</p>
+<p><a href="深度学习和分布式表示/distributed.webp">Distributed</a></p>
+<p>描述一个形状，我们将其分解为不同的特征来表述。分布式表示是一种解耦，它试图复杂的概念分离成独立的部分。而这也引出了分布式表示带来的缺点：隐藏层学到的分解特征难以得到显式的解释。</p>
+<p>传统的机器学习算法，如K-Means聚类、决策树等，大多使用的是非分布式表示，即用特定的参数去描述特定的区域。如K-Means聚类，我们要划分多少区域，就需要有多少个中心点。因而，这类算法的特点是，随着参数个数的提升，其能描述的概念线性增长。</p>
+<p><a href="深度学习和分布式表示/non-dist.png">non-dist</a><br>使用分布式表示的深度网络，则可以享受到指数级的增益，即，随着参数个数的提升，其表述能力是指数级的增长。具有$k$个值的$n$个特征，可以描述${k}^{n}$个不同的概念。</p>
+<p><a href="深度学习和分布式表示/dist.png">dist</a></p>
+<h3 id="分布式表示在泛化上的优势"><a href="#分布式表示在泛化上的优势" class="headerlink" title="分布式表示在泛化上的优势"></a>分布式表示在泛化上的优势</h3><p>分布式的想法还可以得到额外的泛化优势。通过重新组合在原有数据中抽离出来的特征，可以表示得到原有数据中不存在的实例。在Radford et al.的工作中，生成模型区习得了性别，并能从“戴眼镜的男人”-“男人”+“女人”=“戴眼镜的女人”这样的抽象概念表达式中生成实例。</p>
+<p><a href="深度学习和分布式表示/gengerative.png">generative</a></p>
+<h3 id="分布式表示与巻积神经网络"><a href="#分布式表示与巻积神经网络" class="headerlink" title="分布式表示与巻积神经网络"></a>分布式表示与巻积神经网络</h3><p>巻积神经网络不同的滤波器习得的特征可以为分布式表示的概念分解这一特性提供一些例子。下图是VGG16不同滤波器得到结果的可视化表示，<br>出自Francois Chollet的博文<a href="https://blog.keras.io/how-convolutional-neural-networks-see-the-world.html" target="_blank" rel="external">How convolutional neural networks see the world</a></p>
+<p><a href="深度学习和分布式表示/filters.jpg">filters</a></p>
+<p>可以看到，浅层的滤波器学到的是简单的颜色、线条走向等特征，较深的滤波器学到复杂的纹理。</p>
+<h3 id="量子计算机与分布式表示"><a href="#量子计算机与分布式表示" class="headerlink" title="量子计算机与分布式表示"></a>量子计算机与分布式表示</h3><p>在我看来，量子计算机的激动人心之处也在于其表示能力。一个量子态可以表示原先两个静态表示的信息，原先需要8个单位静态存储表示的信息只需要3个量子态单位即可表示，这也是指数级的增益。在这一点上，计算模型和概念模型已然殊途同归。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>从经验中总结原则，用原则生成套路，正是我们自己处理和解决新问题的途径。通过解耦得到的信息来消除未知和不确定性，是我们智能的一部分。我们眼中的世界，只是适合我们的一种表示而已。也许，真正的人工智能到来那一刻，会是我们创造的机器“理解”了自己的表示系统之时——我们所关注的可解释性，也就无关紧要了。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文的两个主要参考资料：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Yoshua Bengio在2016年九月&lt;a href=&quot;https://www.bayareadlschool.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Deep Learning Sc
+    
+    </summary>
+    
+      <category term="AI" scheme="http://blog.ddlee.cn/categories/AI/"/>
+    
+    
+      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
+    
+      <category term="Machine Learning" scheme="http://blog.ddlee.cn/tags/Machine-Learning/"/>
+    
+  </entry>
   
   <entry>
     <title>[论文笔记]On-the-fly Operation Batching in Dynamic Computation Graphs</title>
@@ -278,11 +340,11 @@ def AutogradRNN(mode, input_size, hidden_size):
       <category term="AI" scheme="http://blog.ddlee.cn/categories/AI/"/>
     
     
+      <category term="Python" scheme="http://blog.ddlee.cn/tags/Python/"/>
+    
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
       <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
-    
-      <category term="Python" scheme="http://blog.ddlee.cn/tags/Python/"/>
     
       <category term="Pytorch" scheme="http://blog.ddlee.cn/tags/Pytorch/"/>
     
@@ -538,6 +600,91 @@ df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
       <category term="Data Science" scheme="http://blog.ddlee.cn/tags/Data-Science/"/>
     
       <category term="Programming" scheme="http://blog.ddlee.cn/tags/Programming/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python可视化工具指引</title>
+    <link href="http://blog.ddlee.cn/2017/05/28/Python%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B7%A5%E5%85%B7%E6%8C%87%E5%BC%95/"/>
+    <id>http://blog.ddlee.cn/2017/05/28/Python可视化工具指引/</id>
+    <published>2017-05-27T16:12:28.000Z</published>
+    <updated>2017-06-02T16:13:18.095Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文主要材料来自Jake VanderPlas在PyCon 2017上的演讲<a href="https://www.youtube.com/watch?v=FytuB8nFHPQ" target="_blank" rel="external">Python’s Visualization Landscape</a></p>
+<p>Python真是越来越火了。活跃的开源社区为Python这门语言贡献着长青的活力。</p>
+<p>子曾经曰过：轮子多了，车就稳了。</p>
+<p>本文帮助你选好轮子，也祝愿可视化的车开得越来越稳。</p>
+<h2 id="The-Landscape"><a href="#The-Landscape" class="headerlink" title="The Landscape"></a>The Landscape</h2><p><a href="Python可视化工具指引/landscape.png">landscape</a></p>
+<p>如图。</p>
+<p>VanderPlas在展示完这张全景图后给大家贴了这张图：</p>
+<p><a href="Python可视化工具指引/chan.png">chan</a></p>
+<p>我差点笑喷。我们的表情包可能要在人民币之前走向国际化了。</p>
+<p>回到正题，可视化工具有两个主要阵营，一是基于matplotlib，二是基于JavaScript。还有的接入了JS下著名的D3.js库。</p>
+<h2 id="Matplotlib"><a href="#Matplotlib" class="headerlink" title="Matplotlib"></a>Matplotlib</h2><p>numpy, pandas, matplotlib可以说是python数据科学的三驾马车。凡以python为教学语言的数据科学相关课程必提这三个库。而matplotlib又有什么特点呢？</p>
+<p>先说优点：</p>
+<ol>
+<li>像MATLAB的语法，对MATLAB用户好上手</li>
+<li>稳定，久经考验</li>
+<li>渲染后端丰富，跨平台（GTK, Qt5, svg, pdf等）</li>
+</ol>
+<p>缺点也有很多：</p>
+<ol>
+<li>API过于繁琐</li>
+<li>默认配色太丑</li>
+<li>对web支持差，交互性差</li>
+<li>对大数据集处理较慢</li>
+</ol>
+<p>于是就有了很多基于matplotlib的扩展，提供了更丰富、更人性化的API。</p>
+<p><a href="Python可视化工具指引/matplotlib.png">matplotlib</a></p>
+<p>下面是几个比较受欢迎的包：</p>
+<h3 id="pandas"><a href="#pandas" class="headerlink" title="pandas"></a>pandas</h3><p>pandas的DataFrame对象是有plot()方法的，如：<br><code>iris.plot.scatter(&#39;petalLength&#39;, &#39;petalWidth&#39;)</code>生成二维散点图，只需指明两个轴取自哪一列数据即可。</p>
+<h3 id="seaborn"><a href="#seaborn" class="headerlink" title="seaborn"></a>seaborn</h3><p>seaborn(<a href="http://seaborn.pydata.org/examples/" target="_blank" rel="external">gallery</a>)专注于统计数据可视化，默认配色也还可以。语法示例：</p>
+<pre class="line-numbers language-lang-Python"><code class="language-lang-Python">import seaborn as sns
+sns.lmplot('petalLength', 'sepalWidth', iris, hue='species', fit_reg=False)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="类ggplot"><a href="#类ggplot" class="headerlink" title="类ggplot"></a>类ggplot</h3><p>对于R用户，最熟悉的可视化包可能是ggplot2，在python中可以考虑ggpy(<a href="https://github.com/yhat/ggpy)和近期上了Github" target="_blank" rel="external">https://github.com/yhat/ggpy)和近期上了Github</a> Trends的plotnie(<a href="https://github.com/has2k1/plotnine)。" target="_blank" rel="external">https://github.com/has2k1/plotnine)。</a></p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p>基于JS的包常常具有非常好的交互性，其共同点是将图形格式化为json文件，再由JS完成渲染。</p>
+<p><a href="Python可视化工具指引/js.png">js</a></p>
+<h3 id="Bokeh"><a href="#Bokeh" class="headerlink" title="Bokeh"></a>Bokeh</h3><p>Bokeh(<a href="http://bokeh.pydata.org/en/latest/docs/gallery.html" target="_blank" rel="external">Gallery</a>)定位于绘制用于浏览器展示的交互式图形。其优点是交互性、能够处理大量数据和流数据。语法示例：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">p = figure()
+p.circle(iris.petalLength, iris.sepalWidth)
+show(p)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3 id="Plotly"><a href="#Plotly" class="headerlink" title="Plotly"></a>Plotly</h3><p>Plotly(<a href="https://plot.ly/python/" target="_blank" rel="external">Gallery</a>)跟Bokeh类似。但其提供了多种语言接口(JS, R, Python, MATLAB)，并且支持3D和动画效果，缺点是有些功能需要付费。<br>语法示例：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">from plotly.graph_objs import Scatter
+from plotly.offline import iplot
+p = Scatter(x=iris.petalLength,
+            y=iris.sepalWidth,
+            mode='markers')
+iplot(p)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="处理大型数据集"><a href="#处理大型数据集" class="headerlink" title="处理大型数据集"></a>处理大型数据集</h2><p>对于大型数据集，可以考虑的包包括datashader, Vaex, 基于OpenGL的Vispy和Glumpy，GlueViz等。这里介绍datashader。</p>
+<h3 id="datashader"><a href="#datashader" class="headerlink" title="datashader"></a>datashader</h3><p>datashader(<a href="https://github.com/bokeh/datashader)是Bokeh的子项目，为处理大型数据集而生。" target="_blank" rel="external">https://github.com/bokeh/datashader)是Bokeh的子项目，为处理大型数据集而生。</a></p>
+<p>示例语法：</p>
+<pre class="line-numbers language-lang-Python"><code class="language-lang-Python">from colorcet import fire
+export(tf.shade(agg, cmap=cm(fire, 0.2), how='eq_hist'), 'census_ds_fier_eq_hist')
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p><a href="Python可视化工具指引/fire.jpg">fire</a></p>
+<h2 id="最终的建议"><a href="#最终的建议" class="headerlink" title="最终的建议"></a>最终的建议</h2><p>上车忠告：</p>
+<ol>
+<li>matplotlib必会</li>
+<li>R用户：ggpy/plotnine</li>
+<li>交互式：plotly(与R接口统一)/bokeh(免费)</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文主要材料来自Jake VanderPlas在PyCon 2017上的演讲&lt;a href=&quot;https://www.youtube.com/watch?v=FytuB8nFHPQ&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Python’s Visua
+    
+    </summary>
+    
+      <category term="Data Science" scheme="http://blog.ddlee.cn/categories/Data-Science/"/>
+    
+    
+      <category term="Python" scheme="http://blog.ddlee.cn/tags/Python/"/>
+    
+      <category term="Visualization" scheme="http://blog.ddlee.cn/tags/Visualization/"/>
     
   </entry>
   
@@ -1846,195 +1993,6 @@ directory mask = 0750
       <category term="OpenWrt" scheme="http://blog.ddlee.cn/tags/OpenWrt/"/>
     
       <category term="路由器" scheme="http://blog.ddlee.cn/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>谁会不厌其烦地安慰那无知的少年（三）</title>
-    <link href="http://blog.ddlee.cn/2017/03/03/%E8%B0%81%E4%BC%9A%E4%B8%8D%E5%8E%8C%E5%85%B6%E7%83%A6%E5%9C%B0%E5%AE%89%E6%85%B0%E9%82%A3%E6%97%A0%E7%9F%A5%E7%9A%84%E5%B0%91%E5%B9%B4-3/"/>
-    <id>http://blog.ddlee.cn/2017/03/03/谁会不厌其烦地安慰那无知的少年-3/</id>
-    <published>2017-03-03T15:41:10.000Z</published>
-    <updated>2017-04-02T17:48:51.599Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p><em>年轻的时候可以随随便便喜欢一个人，可千万别真动情。那样的话你的余生就剩两种状态了，一种叫做想她，另一种是为克制自己想她而努力。——丁丁前舍友</em></p>
-</blockquote>
-<p>丁丁的舍友告诉他，那年不懂事，一直陷于人生的错觉之中。</p>
-<p>他觉得那女生好像喜欢她，做什么事儿都是像在针对他，总是跑来问问题呀，不懂的时候卖个萌啊，连谢谢的话都是奶声奶气的。</p>
-<p>可他怎么能被这个给连累了呢。</p>
-<p>他可是老师眼中最有希望的学生，早熟的他也明白合适的平台对自己的发展是多么重要。他觉得在人生的一段时间内能单纯地为一个目标而奋斗是一件幸福的事儿，任何分心的想法都是罪恶。</p>
-<p>他在开始之前，就故作冷漠，就像结束了之后想要挽回那样。</p>
-<p>丁丁插着话问到底什么开始什么结束的啊？</p>
-<p>舍友答，年少的初恋啊我的旁友！</p>
-<p>舍友顿了顿，眼里含着惋惜。</p>
-<p>讲真，我是那种动情就会倾其所有的人，我真真觉得一生就只够爱一个人。但让我从没想到的是，我的故作冷漠才是动情的开始啊。</p>
-<p>那时候我千方百计地回避她。</p>
-<p>我特别跟组里的同学换了座位，这样就能离她远一点。</p>
-<p>问题的时候我也爱搭不理的，不是把她推给别人就是拖着藏着。</p>
-<p>她也算知趣，渐渐的就不来烦我了。</p>
-<p>就这样吧，高考完了以后，我们去了不同的学校，离得八十万杆子都打不着。</p>
-<p>但我逐渐的发现，这颗种子，已经在我的心底长成了参天大树，不管我给它什么样的脸色，它还是生长起来了。</p>
-<p>我再也不能回避它了，我再也不能隐藏它了。</p>
-<p>我以前听人家说暗恋一个人的时候，把她的动态错过都会有罪恶感。</p>
-<p>我细细的品味她的日志、说说里流露出来的情感，挖空心思复原她写下这些文字时的心情，然后小心翼翼地写下我的评论，斟酌一下，再发表。然后就是每隔几个小时就刷一下，看看她回复了没有。</p>
-<p>我也找她聊天，谈心，新的生活还适应没，高数有哪些不懂的跟我说说。</p>
-<p>我也跟她讲我的近况，我在听什么歌，我在读哪些书。</p>
-<p>可我从来都不敢表露我真实的心意，我也从来不敢提高中时候我的那段冷漠的时光。</p>
-<p>可是，你知道吗，就跟吃巧克力一样，她吃到了苦的，我却吃了块甜的，德芙，带榛果颗粒的。</p>
-<p>我终于等到了一个机会——她生病住院了。</p>
-<p>急性胃炎，但她没跟我说，她的闺蜜告诉我的。</p>
-<p>我买了票，赶到她所在的城市，在一个下着小雨的傍晚。</p>
-<p>行人匆匆，从四面赶往八方。风催着云，一来一回地玩弄着月亮，雨打在肩上，我才知道我还没有方向。</p>
-<p>我给她打电话，说我来看你来了，你在哪家医院。</p>
-<p>她说你怎么来了，她已经快好了，明天就要出院，那你过来吧，在江东北路的那家人民医院，8号楼，324。</p>
-<p>我说没事儿，马上就到。</p>
-<p>不过地铁并不方便，只能在珠江路那里下，我就打算骑ofo过去。</p>
-<p>然而我还是太年轻了，南方的冬天下着雨，可没那么好欺负，找路，问路，手冻僵，衣服也淋湿了，我想着张士超华师大的姑娘真的那么可爱吗。</p>
-<p>等我赶到时，已经是需要照顾的人了，一副洋葱模样，就剩一层一层剥开了。</p>
-<p>狼狈的我跑到厕所里，等个没人的空档，用烘干机吹了吹头发，把外套脱下来搭在胳膊上，这才往病房赶去。</p>
-<p>丁丁的舍友推了下眼镜，接着说。</p>
-<p>你可知道什么叫近乡情更怯呀，就跟查高考成绩一样啊，你再往前一步，就把那些想象过的所有美好的可能性全破除了，木已成舟，一切皆不可挽回，尽管，尽管你不往前一步，一切也早就注定了呀。</p>
-<p>我在病房门前愣住了，万一里面还有人怎么办，她的同学在晚上应该会陪她吧，她不会有男朋友了吧？</p>
-<p>我跑到离门远一点的地方，又给她打了个电话，我说我快到了，你有什么想吃的我给你带点。</p>
-<p>她说不用了，你过来就好，她也想赶快见到我。</p>
-<p>我说好的，这么突然出现，没赶上不方便的时候吧。</p>
-<p>她说没事儿，你直接过来吧，哪有什么方便不方便的。</p>
-<p>挂了之后，我在楼里瞎逛了几圈，顺手把紧急逃生的路线考察了一下，发现还是很科学的，指引也做的很到位。估摸时间差不多了，我就敲门进去了。</p>
-<p>她留起了长发，比高中的时候成熟不少，但终归有病在身，脸色有些发白，不过酒窝还是那样可爱。</p>
-<p>我们聊起来，从病情开始，一直聊到那些在网易云音乐的歌曲下面刷评论的考研党们到底考上了没。</p>
-<p>她似乎很开心，我也很开心。</p>
-<p>她说上了大学就没跟别人聊这么久过，还是以前的同学好呀。</p>
-<p>我说那当然了，以后有什么事你第一个告诉我。</p>
-<p>要走的时候，她说谢谢我这么大老远地跑过来，不过病差不多要好了，明天亲自到车站送送你。</p>
-<p>我说不用了，我自己走就行，你好好养着身体吧，注意一下饮食。</p>
-<p>离开医院 ，我随便找了家旅馆住下来。心底里无限的舒适与满足。但很快，紧张与自责将我包裹起来。</p>
-<p>太懦弱了我真是，聊那些没什么用的干啥，我该直接跟她说我喜欢你三年了我们在一起吧。</p>
-<p>可又转念一想，这也有点趁人之危吧，还是等等再说？</p>
-<p>这一等就是一夜，我慢慢睡着，天刚刚破晓。</p>
-<p>第二天，她还是来送我了，下地铁后，她用手机看了下时间，说还不晚不用着急。</p>
-<p>她竟然用的Xperia。我心想我喜欢的女孩子就是有格调。</p>
-<p>然后我就看到了手机桌面上男孩子的傻笑。</p>
-<p>那个男孩子似乎不是我，我笑的时候不傻，眼睛眯成一条缝。</p>
-<p>我说这也不早了你赶紧回去吧。</p>
-<p>她说你开玩笑呢这才几点啊。</p>
-<p>我说不对，我不是这个意思，我是说你不用跟我一起等了，我自己等，我自己能行。</p>
-<p>她告诉我她当然相信我能行，不然怎么能自己跑过来看她呢。</p>
-<p>我说也是哈，我这么催你干哈。</p>
-<p>后面的事情我自己也记不清了。</p>
-<p>回来的时候，出站换乘，转角碰见一家鲜花店，就进去买了一束满天星，捧着它回到寝室，摆在桌上。</p>
-<p>我是眼睁睁地看着那一束花慢慢枯萎的。</p>
-<p>不插在水中的话，只用了三天不到。</p>
-<p>舍友说我那三天跟个傻逼一样。</p>
-<p>后来她说我是她最好的朋友，跟高中的那个我完全不一样了。</p>
-<p>原来她从来就没喜欢过我，而我也从来没承认过我那么心动，但你知道吗？这的的确确发生了。</p>
-<p>舍友觉得可以做结了，便说出了这句丁丁永生难忘的话。</p>
-<p>年轻的时候可以随随便便喜欢一个人，可千万别真动情。那样的话你的余生就剩一种状态了，那就是想她。</p>
-<p>丁丁说没事儿你还有机会，天下没有不散的筵席，他们迟早会分的。</p>
-<p>舍友说丁丁是傻逼。</p>
-<p>————————————————全文完—————————————————</p>
-<p>我不再强说上面的故事是瞎编的了。它们是丁丁亲口告诉我的，在一次卧谈会上。</p>
-<p>丁丁说在刚好记得的时候讲出来，其实是自私的。</p>
-<p>他说他从小到大失去了很多人，从每天早到学校开门的劳动课老师到害了白血病的不幸前桌，从打架斗殴满嘴义气话的小魔王到奔走他乡借读名校的竞争对手，当好友列表里的灰色头像终于不再跳动的时候，我就不再是完整的了，他们把我的一部分带走了，而且永远找也找不回来了。这个永远是真的。</p>
-<p>我跟丁丁说你错了，你不知道更可怕的事情。你有没有想过，即使是陪你一起长大的人，也有很多东西找不回来了。像你的父母，你的淘气和无知，早就淹没在他们眼角的层层皱纹里了。而且，是你亲手把它们埋葬进去的。你看，谁都没有失去谁，谁也失去了谁。</p>
-<p>丁丁说是啊，我们都变了，变得都有些记不起从前的样子了。人们总是到失去了才懂得珍惜，这真是瞎话，我们就从来没有拥有过。</p>
-<p>我记起很久以前的一个秋天，我打开了一册我昔日嗜爱的书读了下去，突然回复到十四岁时那样温柔而多感，我在那里面找到了一节写在发黄的纸上的以这样两行开始的短诗：
-　　　 　</p>
-<blockquote>
-<p>在你眼睛里我找到了童年的梦，<br>如在秋天的园子里找到了迟暮的花……</p>
-</blockquote>
-<p>@<a href="http://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
-<p>2017年3月</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;年轻的时候可以随随便便喜欢一个人，可千万别真动情。那样的话你的余生就剩两种状态了，一种叫做想她，另一种是为克制自己想她而努力。——丁丁前舍友&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;丁丁的舍友告诉他，那年不懂事，一直陷于人生的错
-    
-    </summary>
-    
-      <category term="随笔" scheme="http://blog.ddlee.cn/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-      <category term="随笔" scheme="http://blog.ddlee.cn/tags/%E9%9A%8F%E7%AC%94/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>谁会不厌其烦地安慰那无知的少年（二）</title>
-    <link href="http://blog.ddlee.cn/2017/02/15/%E8%B0%81%E4%BC%9A%E4%B8%8D%E5%8E%8C%E5%85%B6%E7%83%A6%E5%9C%B0%E5%AE%89%E6%85%B0%E9%82%A3%E6%97%A0%E7%9F%A5%E7%9A%84%E5%B0%91%E5%B9%B4-2/"/>
-    <id>http://blog.ddlee.cn/2017/02/15/谁会不厌其烦地安慰那无知的少年-2/</id>
-    <published>2017-02-15T12:51:08.000Z</published>
-    <updated>2017-04-02T17:48:41.018Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p><em>不要做父母手中的烤鸭，要做一只自由的小小种马。——刘星，《（假的）家有儿女》</em></p>
-</blockquote>
-<p>丁丁再回到这条老街时，又是一年的光景。</p>
-<p>这一年，家乡添了几处新房和俏媳妇，添了几家麻将交流中心，添了几座坟头。</p>
-<p>村后的河今年却冻住了——往年不上冻的，因为里面东西太多。</p>
-<p>村前公路两旁的树全砍掉了。主人缺钱，不缺树。</p>
-<p>目力所及，坑洼的油漆路向北延伸到省道上，两旁田地里丛丛的麦子依偎而息，灰蒙蒙的天，树林间掩映着冬日里小姑娘红扑扑的脸蛋，那是北方的夕阳。哎呦，还蒙了层雾气。</p>
-<p>这次回老家，丁丁照例去拜访过道尽头被奶奶称为”二嫂“的老太太。</p>
-<p>二嫂是帝都过来的知青，这些年没入我们的乡音，跟谁也是一口侉侉的北京话。</p>
-<p>她最著名的话是，“我主的了疼，也主的了管”。</p>
-<p>这是跟人家解释为什么老打孙子。一时成为村里溺爱孙子老传统中的一股清流。</p>
-<p>可老人家现在状态不好：去年初四，脑出血，救回来之后半边失去了控制，歪了嘴，动不了腿。</p>
-<p>我进了门，走到轮椅边。老人眼睛亮了起来，一只手撑着扶手，要站起来。</p>
-<p>我大声说奶奶您不用起来，多累啊。</p>
-<p>二嫂摇着头坐下，攥着我的手，晃来晃去。又赶紧把暖手袋扯过来，叫我捧着。</p>
-<p>就像小时候那样。</p>
-<p>二嫂是看着我长大的。奶奶经常带着我到二嫂家里串门，二嫂家里有糖吃，有奶喝。</p>
-<p>那时候我最喜欢翻彻二嫂厚厚的影集，上面有好多我没见过的东西。</p>
-<p>奶奶你耳朵边别着的是什么花呀，那时候你几岁。</p>
-<p>二嫂说那年她十六，别着的花叫白玉兰。</p>
-<p>今年她七十六。照片上的小姑娘带一点自信，含一丝羞赧，就像每个十六七岁的女孩子那样。</p>
-<p>这让我想起妈妈。妈妈年轻的时候追邓丽君、小虎队，最喜欢的是粉红色的回忆。家里有一张她结婚时的照片，大红毛衣，傻傻的杵在那里，另一头爸爸给二叔骑在背上，向妈妈鞠躬，胸前歪着一朵大红花。</p>
-<p>我没见过作为年轻姑娘的二嫂和妈妈是什么样子的，跟我相关的，只有她们逐渐老去的岁月。</p>
-<p>二嫂晃动着身子，她打算站起身来。</p>
-<p>我扶着她，走一步，拖一步，不违背，不阻挡。</p>
-<p>五六米的距离，老人已经气喘吁吁。我也不说话，我单单陪着她。</p>
-<p>院里的枣树上落了一只麻雀，不知为何她没回南方的家。隔壁的二层小楼开始掌起灯火，夜色也正吞下了半边天。</p>
-<p>二嫂接着往外拖着步子，这时媳妇却迎着面从小卖部回来。</p>
-<p>哎呀，涛你怎么让你奶奶出屋里来了？外面冷，娘咱回屋里吧。</p>
-<p>二嫂不肯，但她做不了主。</p>
-<p>这已不是她做主的日子了。</p>
-<p>爷爷大二嫂好多岁，早就没了精神。多少年大大小小，一直是二嫂操持着。</p>
-<p>去年的时候，我坐在炕头边，绕着问她年轻时候的故事。</p>
-<p>她说她的一生就分为两部分，给大伙种地和给自己种地。前半段三十年，后半段三十年。</p>
-<p>明明从北京赶过来，她却说这里更冷一些。村支书被打得藏在柜子底下，三千斤麦子换来的推车充了公，大雨下到把房子冲塌，夜不闭户，好冷。</p>
-<p>二嫂说后来却是倒春寒。家乡的新媳妇，都凑不出一件体面衣裳。地里什么东西也不长。饿死的人排着队。</p>
-<p>我问再后来呢？自己种总好些了吧？</p>
-<p>二嫂说自己种也要上交粮食给国家的。那年她推着小车，走了二十几里的土路，把麦子送到乡上。三十年了。</p>
-<p>二嫂说这么多年看上去一直是我在做主支撑着这个家，但实际上我从来都没做过主，我对自己也做不了主，我对谁也做不了主。</p>
-<p>我说还是我们这一代人幸福啊，赶上了好的时候。</p>
-<p>二嫂说那只是看起来，长大了你就明白了。</p>
-<p>然而我从来都长不大，二嫂却变老了。</p>
-<p>二嫂老了，但从没老糊涂，也没装过糊涂，直到突然的疾病将糊涂的能力赐予给她。</p>
-<p>回到屋里，二嫂就又安静地坐下来。电视里恰巧是场晚会，在希望的田野上。</p>
-<p>夜幕已全然降临。猎户座的三星嵌在南面的而天空，月亮瘦成眉毛，挑在树枝上，除此之外，一片看不透的灰色将视野罩的密不透风。</p>
-<p>我瞪着窗外，正出神，二嫂那边却哼了起来，摇起我的手。</p>
-<p>呜呜声。奶奶又回到了回不去的小时候。</p>
-<p>@<a href="http://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
-<p>2017年2月</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;不要做父母手中的烤鸭，要做一只自由的小小种马。——刘星，《（假的）家有儿女》&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;丁丁再回到这条老街时，又是一年的光景。&lt;/p&gt;
-&lt;p&gt;这一年，家乡添了几处新房和俏媳妇，添了几家麻将交流中心，
-    
-    </summary>
-    
-      <category term="随笔" scheme="http://blog.ddlee.cn/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-      <category term="随笔" scheme="http://blog.ddlee.cn/tags/%E9%9A%8F%E7%AC%94/"/>
     
   </entry>
   

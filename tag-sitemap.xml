@@ -205,13 +205,6 @@
     </url>
 
     <url>
-        <loc>http://blog.ddlee.cn/tags/Python/</loc>
-        <lastmod>2017-05-28T17:16:51.094Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://blog.ddlee.cn/tags/Pytorch/</loc>
         <lastmod>2017-05-28T17:16:51.094Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -233,13 +226,6 @@
     </url>
 
     <url>
-        <loc>http://blog.ddlee.cn/tags/Machine-Learning/</loc>
-        <lastmod>2017-05-30T13:37:55.644Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://blog.ddlee.cn/tags/Computer-Vision/</loc>
         <lastmod>2017-05-30T13:37:55.644Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -247,22 +233,43 @@
     </url>
 
     <url>
-        <loc>http://blog.ddlee.cn/tags/Deep-Learning/</loc>
+        <loc>http://blog.ddlee.cn/tags/Papers/</loc>
         <lastmod>2017-06-02T11:24:55.784Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/tags/Deep-Learning/</loc>
+        <lastmod>2017-06-02T14:52:53.858Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://blog.ddlee.cn/tags/AI/</loc>
-        <lastmod>2017-06-02T11:24:55.784Z</lastmod>
+        <lastmod>2017-06-02T14:52:53.858Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://blog.ddlee.cn/tags/Papers/</loc>
-        <lastmod>2017-06-02T11:24:55.784Z</lastmod>
+        <loc>http://blog.ddlee.cn/tags/Machine-Learning/</loc>
+        <lastmod>2017-06-02T14:52:53.858Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/tags/Python/</loc>
+        <lastmod>2017-06-02T16:13:18.095Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/tags/Visualization/</loc>
+        <lastmod>2017-06-02T16:13:18.095Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

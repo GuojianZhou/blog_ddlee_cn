@@ -4,6 +4,64 @@
   
     
     <entry>
+      <title><![CDATA[深度学习和分布式表示]]></title>
+      <url>http://blog.ddlee.cn/2017/06/01/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E8%A1%A8%E7%A4%BA/</url>
+      <content type="html"><![CDATA[<p>本文的两个主要参考资料：</p>
+<ol>
+<li>Yoshua Bengio在2016年九月<a href="https://www.bayareadlschool.org/" target="_blank" rel="external">Deep Learning School</a>的演讲Foundations and Challenges of Deep Learning。<a href="https://www.youtube.com/watch?v=11rsu_WwZTc" target="_blank" rel="external">YouTube</a></li>
+<li><a href="http://www.deeplearningbook.org/" target="_blank" rel="external">Deep Learning</a>, Goodfellow et al, Section 15.4</li>
+</ol>
+<h3 id="从机器学习到人工智能"><a href="#从机器学习到人工智能" class="headerlink" title="从机器学习到人工智能"></a>从机器学习到人工智能</h3><p>在演讲中，Bengio提到从机器学习到人工智能有五个关键的飞跃：</p>
+<ol>
+<li>Lots of data</li>
+<li>Very flexible models</li>
+<li>Enough computing power</li>
+<li>Powerful priors that can defeat the curse of dimensionality</li>
+<li>Computationally efficient inference</li>
+</ol>
+<p>第一点已经发生，到处都提大数据，到处都在招数据分析师。<br>我在读高中时，就曾预感数据将是新时代的石油和煤炭，因为数据正是人类社会经验的总结，数据带来的知识和见解将在驱动社会进步中发挥越来越重要的作用，而自己要立志成为新时代的矿工。</p>
+<p>第二点在我看来有两个例子，一是核技巧，通过核函数对分布空间的转换，赋予了模型更强大的表述能力；二是深度神经网络，多层的框架和非线性的引入使得模型理论上可以拟合任意函数。</p>
+<p>第三点，借云计算的浪潮，计算力不再是一项资产而是一项可供消费的服务，我们学生也可以廉价地接触到根本负担不起的计算力资源。而GPU等芯片技术的进步也为AI的浩浩征程添砖加瓦。</p>
+<p>第五点，近期发布的Tensorflow Lite和Caffe2等工具也有助于越来越多地将计算任务分配在终端上进行，而非作为一个发送与接收器。</p>
+<p>最后第四点，也是这篇文章的中心话题：借助分布式表示的强大能力，深度学习正尝试解决维度带来的灾难。</p>
+<h3 id="没有免费的午餐"><a href="#没有免费的午餐" class="headerlink" title="没有免费的午餐"></a>没有免费的午餐</h3><p>简单说，没有免费的午餐定理指出找不到一个在任何问题上都表现最优的模型/算法。不同的模型都有其擅长的问题，这由该模型建立时引入的先验知识决定。</p>
+<p>那么，深度学习加入的先验知识是什么？</p>
+<p>Bengio用的词是Compositionality，即复合性，<em>某一概念之意义由其组成部分的意义以及组合规则决定</em>。复合性的原则可以用于高效地描述我们的世界，而深度学习模型中隐藏的层正是去学习其组成部分，网络的结构则代表了组合规则。这正是深度学习模型潜在的信念。</p>
+<h3 id="分布式表示带来的指数增益"><a href="#分布式表示带来的指数增益" class="headerlink" title="分布式表示带来的指数增益"></a>分布式表示带来的指数增益</h3><p>分布式表示(Distributed Representation)是连接主义的核心概念，与复合性的原理相合。整体由组成它的个体及其组合来表示。请看下面的例子：</p>
+<p><a href="深度学习和分布式表示/distributed.webp">Distributed</a></p>
+<p>描述一个形状，我们将其分解为不同的特征来表述。分布式表示是一种解耦，它试图复杂的概念分离成独立的部分。而这也引出了分布式表示带来的缺点：隐藏层学到的分解特征难以得到显式的解释。</p>
+<p>传统的机器学习算法，如K-Means聚类、决策树等，大多使用的是非分布式表示，即用特定的参数去描述特定的区域。如K-Means聚类，我们要划分多少区域，就需要有多少个中心点。因而，这类算法的特点是，随着参数个数的提升，其能描述的概念线性增长。</p>
+<p><a href="深度学习和分布式表示/non-dist.png">non-dist</a><br>使用分布式表示的深度网络，则可以享受到指数级的增益，即，随着参数个数的提升，其表述能力是指数级的增长。具有$k$个值的$n$个特征，可以描述${k}^{n}$个不同的概念。</p>
+<p><a href="深度学习和分布式表示/dist.png">dist</a></p>
+<h3 id="分布式表示在泛化上的优势"><a href="#分布式表示在泛化上的优势" class="headerlink" title="分布式表示在泛化上的优势"></a>分布式表示在泛化上的优势</h3><p>分布式的想法还可以得到额外的泛化优势。通过重新组合在原有数据中抽离出来的特征，可以表示得到原有数据中不存在的实例。在Radford et al.的工作中，生成模型区习得了性别，并能从“戴眼镜的男人”-“男人”+“女人”=“戴眼镜的女人”这样的抽象概念表达式中生成实例。</p>
+<p><a href="深度学习和分布式表示/gengerative.png">generative</a></p>
+<h3 id="分布式表示与巻积神经网络"><a href="#分布式表示与巻积神经网络" class="headerlink" title="分布式表示与巻积神经网络"></a>分布式表示与巻积神经网络</h3><p>巻积神经网络不同的滤波器习得的特征可以为分布式表示的概念分解这一特性提供一些例子。下图是VGG16不同滤波器得到结果的可视化表示，<br>出自Francois Chollet的博文<a href="https://blog.keras.io/how-convolutional-neural-networks-see-the-world.html" target="_blank" rel="external">How convolutional neural networks see the world</a></p>
+<p><a href="深度学习和分布式表示/filters.jpg">filters</a></p>
+<p>可以看到，浅层的滤波器学到的是简单的颜色、线条走向等特征，较深的滤波器学到复杂的纹理。</p>
+<h3 id="量子计算机与分布式表示"><a href="#量子计算机与分布式表示" class="headerlink" title="量子计算机与分布式表示"></a>量子计算机与分布式表示</h3><p>在我看来，量子计算机的激动人心之处也在于其表示能力。一个量子态可以表示原先两个静态表示的信息，原先需要8个单位静态存储表示的信息只需要3个量子态单位即可表示，这也是指数级的增益。在这一点上，计算模型和概念模型已然殊途同归。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>从经验中总结原则，用原则生成套路，正是我们自己处理和解决新问题的途径。通过解耦得到的信息来消除未知和不确定性，是我们智能的一部分。我们眼中的世界，只是适合我们的一种表示而已。也许，真正的人工智能到来那一刻，会是我们创造的机器“理解”了自己的表示系统之时——我们所关注的可解释性，也就无关紧要了。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> AI </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> AI </tag>
+            
+            <tag> Machine Learning </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[[论文笔记]On-the-fly Operation Batching in Dynamic Computation Graphs]]></title>
       <url>http://blog.ddlee.cn/2017/05/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-On-the-fly-Operation-Batching-in-Dynamic-Computation-Graphs/</url>
       <content type="html"><![CDATA[<p>论文：<a href="http://arxiv.org/abs/1705.07860" target="_blank" rel="external">On-the-fly Operation Batching in Dynamic Computaion Graphs</a></p>
@@ -259,11 +317,11 @@ def AutogradRNN(mode, input_size, hidden_size):
         
         <tags>
             
+            <tag> Python </tag>
+            
             <tag> Deep Learning </tag>
             
             <tag> AI </tag>
-            
-            <tag> Python </tag>
             
             <tag> Pytorch </tag>
             
@@ -517,6 +575,89 @@ df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
             <tag> Data Science </tag>
             
             <tag> Programming </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Python可视化工具指引]]></title>
+      <url>http://blog.ddlee.cn/2017/05/28/Python%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B7%A5%E5%85%B7%E6%8C%87%E5%BC%95/</url>
+      <content type="html"><![CDATA[<p>本文主要材料来自Jake VanderPlas在PyCon 2017上的演讲<a href="https://www.youtube.com/watch?v=FytuB8nFHPQ" target="_blank" rel="external">Python’s Visualization Landscape</a></p>
+<p>Python真是越来越火了。活跃的开源社区为Python这门语言贡献着长青的活力。</p>
+<p>子曾经曰过：轮子多了，车就稳了。</p>
+<p>本文帮助你选好轮子，也祝愿可视化的车开得越来越稳。</p>
+<h2 id="The-Landscape"><a href="#The-Landscape" class="headerlink" title="The Landscape"></a>The Landscape</h2><p><a href="Python可视化工具指引/landscape.png">landscape</a></p>
+<p>如图。</p>
+<p>VanderPlas在展示完这张全景图后给大家贴了这张图：</p>
+<p><a href="Python可视化工具指引/chan.png">chan</a></p>
+<p>我差点笑喷。我们的表情包可能要在人民币之前走向国际化了。</p>
+<p>回到正题，可视化工具有两个主要阵营，一是基于matplotlib，二是基于JavaScript。还有的接入了JS下著名的D3.js库。</p>
+<h2 id="Matplotlib"><a href="#Matplotlib" class="headerlink" title="Matplotlib"></a>Matplotlib</h2><p>numpy, pandas, matplotlib可以说是python数据科学的三驾马车。凡以python为教学语言的数据科学相关课程必提这三个库。而matplotlib又有什么特点呢？</p>
+<p>先说优点：</p>
+<ol>
+<li>像MATLAB的语法，对MATLAB用户好上手</li>
+<li>稳定，久经考验</li>
+<li>渲染后端丰富，跨平台（GTK, Qt5, svg, pdf等）</li>
+</ol>
+<p>缺点也有很多：</p>
+<ol>
+<li>API过于繁琐</li>
+<li>默认配色太丑</li>
+<li>对web支持差，交互性差</li>
+<li>对大数据集处理较慢</li>
+</ol>
+<p>于是就有了很多基于matplotlib的扩展，提供了更丰富、更人性化的API。</p>
+<p><a href="Python可视化工具指引/matplotlib.png">matplotlib</a></p>
+<p>下面是几个比较受欢迎的包：</p>
+<h3 id="pandas"><a href="#pandas" class="headerlink" title="pandas"></a>pandas</h3><p>pandas的DataFrame对象是有plot()方法的，如：<br><code>iris.plot.scatter(&#39;petalLength&#39;, &#39;petalWidth&#39;)</code>生成二维散点图，只需指明两个轴取自哪一列数据即可。</p>
+<h3 id="seaborn"><a href="#seaborn" class="headerlink" title="seaborn"></a>seaborn</h3><p>seaborn(<a href="http://seaborn.pydata.org/examples/" target="_blank" rel="external">gallery</a>)专注于统计数据可视化，默认配色也还可以。语法示例：</p>
+<pre class="line-numbers language-lang-Python"><code class="language-lang-Python">import seaborn as sns
+sns.lmplot('petalLength', 'sepalWidth', iris, hue='species', fit_reg=False)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="类ggplot"><a href="#类ggplot" class="headerlink" title="类ggplot"></a>类ggplot</h3><p>对于R用户，最熟悉的可视化包可能是ggplot2，在python中可以考虑ggpy(<a href="https://github.com/yhat/ggpy)和近期上了Github" target="_blank" rel="external">https://github.com/yhat/ggpy)和近期上了Github</a> Trends的plotnie(<a href="https://github.com/has2k1/plotnine)。" target="_blank" rel="external">https://github.com/has2k1/plotnine)。</a></p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p>基于JS的包常常具有非常好的交互性，其共同点是将图形格式化为json文件，再由JS完成渲染。</p>
+<p><a href="Python可视化工具指引/js.png">js</a></p>
+<h3 id="Bokeh"><a href="#Bokeh" class="headerlink" title="Bokeh"></a>Bokeh</h3><p>Bokeh(<a href="http://bokeh.pydata.org/en/latest/docs/gallery.html" target="_blank" rel="external">Gallery</a>)定位于绘制用于浏览器展示的交互式图形。其优点是交互性、能够处理大量数据和流数据。语法示例：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">p = figure()
+p.circle(iris.petalLength, iris.sepalWidth)
+show(p)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h3 id="Plotly"><a href="#Plotly" class="headerlink" title="Plotly"></a>Plotly</h3><p>Plotly(<a href="https://plot.ly/python/" target="_blank" rel="external">Gallery</a>)跟Bokeh类似。但其提供了多种语言接口(JS, R, Python, MATLAB)，并且支持3D和动画效果，缺点是有些功能需要付费。<br>语法示例：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">from plotly.graph_objs import Scatter
+from plotly.offline import iplot
+p = Scatter(x=iris.petalLength,
+            y=iris.sepalWidth,
+            mode='markers')
+iplot(p)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="处理大型数据集"><a href="#处理大型数据集" class="headerlink" title="处理大型数据集"></a>处理大型数据集</h2><p>对于大型数据集，可以考虑的包包括datashader, Vaex, 基于OpenGL的Vispy和Glumpy，GlueViz等。这里介绍datashader。</p>
+<h3 id="datashader"><a href="#datashader" class="headerlink" title="datashader"></a>datashader</h3><p>datashader(<a href="https://github.com/bokeh/datashader)是Bokeh的子项目，为处理大型数据集而生。" target="_blank" rel="external">https://github.com/bokeh/datashader)是Bokeh的子项目，为处理大型数据集而生。</a></p>
+<p>示例语法：</p>
+<pre class="line-numbers language-lang-Python"><code class="language-lang-Python">from colorcet import fire
+export(tf.shade(agg, cmap=cm(fire, 0.2), how='eq_hist'), 'census_ds_fier_eq_hist')
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p><a href="Python可视化工具指引/fire.jpg">fire</a></p>
+<h2 id="最终的建议"><a href="#最终的建议" class="headerlink" title="最终的建议"></a>最终的建议</h2><p>上车忠告：</p>
+<ol>
+<li>matplotlib必会</li>
+<li>R用户：ggpy/plotnine</li>
+<li>交互式：plotly(与R接口统一)/bokeh(免费)</li>
+</ol>
+]]></content>
+      
+        <categories>
+            
+            <category> Data Science </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Python </tag>
+            
+            <tag> Visualization </tag>
             
         </tags>
         
