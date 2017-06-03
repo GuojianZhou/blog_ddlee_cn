@@ -240,36 +240,36 @@
     </url>
 
     <url>
-        <loc>http://blog.ddlee.cn/tags/Deep-Learning/</loc>
-        <lastmod>2017-06-02T14:52:53.858Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://blog.ddlee.cn/tags/AI/</loc>
-        <lastmod>2017-06-02T14:52:53.858Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://blog.ddlee.cn/tags/Machine-Learning/</loc>
-        <lastmod>2017-06-02T14:52:53.858Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://blog.ddlee.cn/tags/Python/</loc>
-        <lastmod>2017-06-02T16:24:39.187Z</lastmod>
+        <lastmod>2017-06-03T04:27:24.027Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://blog.ddlee.cn/tags/Visualization/</loc>
-        <lastmod>2017-06-02T16:24:39.187Z</lastmod>
+        <lastmod>2017-06-03T04:27:24.027Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/tags/Deep-Learning/</loc>
+        <lastmod>2017-06-03T04:29:31.304Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/tags/AI/</loc>
+        <lastmod>2017-06-03T04:29:31.304Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/tags/Machine-Learning/</loc>
+        <lastmod>2017-06-03T04:29:31.304Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
