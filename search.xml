@@ -4,6 +4,126 @@
   
     
     <entry>
+      <title><![CDATA[[论文笔记]Large-Scale Evolution of Image Classifiers]]></title>
+      <url>http://blog.ddlee.cn/2017/06/05/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Large-Scale-Evolution-of-Image-Classifiers/</url>
+      <content type="html"><![CDATA[<p>论文：<a href="https://arxiv.org/abs/1703.01041" target="_blank" rel="external">Large-Scale Evolution of Image, Classifiers</a></p>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>深层网络在图片分类问题上表现优异，但网络结构的设计上并没有统一的指导。进化是构建深度网络架构的一种方式。利用本文的自动化方法得出的深度网络结构，已经能在CIFAR-10上取得可以跟人工设计的网络相媲美的结果</p>
+<h2 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h2><h3 id="Evolution-Algorithm"><a href="#Evolution-Algorithm" class="headerlink" title="Evolution Algorithm"></a>Evolution Algorithm</h3><p>整个算法的核心是如下的tournament selection:</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/tournament.jpg" alt="tournament"></p>
+<ul>
+<li>population: 供筛选的群体</li>
+<li>individual: 个体，带有指标fitness，特别地，指在CV集上的损失</li>
+<li>worker: 筛选者，上帝</li>
+</ul>
+<ol>
+<li><em>population</em> 中的 <em>individual</em> 均已在训练集上训练完毕，带有指标 <em>fitness</em></li>
+<li><em>worker</em> 随机选择一对 <em>individual</em>，比较 <em>fitness</em>，较差的 <em>individual</em> 被舍弃</li>
+<li>表现较好的 <em>individual</em> 成为parent，对其施加 <em>mutation</em> (变异)，得到 <em>child</em></li>
+<li>训练 <em>child</em> 并在CV集上得到其 <em>fitness</em>，归还到 <em>population</em> 中</li>
+</ol>
+<h3 id="Encoding-and-Mutation"><a href="#Encoding-and-Mutation" class="headerlink" title="Encoding and Mutation"></a>Encoding and Mutation</h3><p>个体的网络结构和部分参数被编码为DNA。</p>
+<p>能够施加的变异有：</p>
+<ul>
+<li>改变学习率</li>
+<li>恒等（不变）</li>
+<li>重设参数</li>
+<li>加入卷积层</li>
+<li>移除卷积层</li>
+<li>更改卷积层的stride参数</li>
+<li>更改卷积层的Channel参数</li>
+<li>更改卷积核大小</li>
+<li>加入skip连接（类似ResNet)</li>
+<li>移除skip连接</li>
+</ul>
+<h3 id="Computation"><a href="#Computation" class="headerlink" title="Computation"></a>Computation</h3><p>计算方面采用了并行、异步、无锁的策略。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/comp.jpg" alt="comp"></p>
+<p>建立约为 <em>population</em> 数1/4的 <em>worker</em>，分别运行于不同的机器上，之间独立异步。<em>population</em> 共享，若两个 <em>worker</em> 在一个 <em>individual</em> 上产生冲突，则后一个 <em>worker</em> 停止并等待再次尝试。</p>
+<h3 id="Weight-Inheritance"><a href="#Weight-Inheritance" class="headerlink" title="Weight Inheritance"></a>Weight Inheritance</h3><p>除了架构之外，子模型还会继承父母模型未经变异影响的隐藏层参数（不仅是DNA中的），这样使子模型的训练时间大幅减小。</p>
+<h2 id="Experiments-and-Results"><a href="#Experiments-and-Results" class="headerlink" title="Experiments and Results"></a>Experiments and Results</h2><p>文章的主要结果如下图：</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/results.png" alt="results"></p>
+<p>最右边的结构是在CIFAR-10上发现的最好（CV集准确度最高）的结构，左边两个是它的祖先。其中白色块相当于简单的线性层，彩色块则带有非线性激活，可以看到，不同于人工设计的网络，某一线性层之后可能包含多个非线性层。</p>
+<p>另外，利用本文的模型，也在CIFAR-100上做了实验，可以达到76.3%的准确率，一定程度上说明了算法的扩展性。</p>
+<h2 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/popu.png" alt="popu"></p>
+<p>上图说明随着 <em>population</em> 规模和训练步数的增加，模型的整体水平在变好。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/mutation.png" alt="mutation"></p>
+<p>在模型陷入局部最优值时，提高变异率和重设参数会使群体继续进化。这是由于变异中包含恒等映射等不改变模型架构的变异类型，再加上weight Inheritance，一些子模型只是训练次数比其他模型多很多的“活化石”。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>Google I/O时就提到了自动筛选最优网络结构，但没有公布论文。但将网络结构自动化，必定是未来的方向。个人认为，ResNet就相当于自动化网络深度（一些层实际上被跳过了），而Inception单元似乎包含了太多的先验，而且也没有逻辑上的证据说明这样的结构更有效。网络结构本身就是先验信息，而要达到通用的人工智能，这些先验也必须由模型自行发觉。</p>
+<p>强化学习本身也是一个进化过程，应该也有相关的工作将强化学习的框架应用于网络结构的学习上。</p>
+<p>更进一步地，若数据是一阶信息，深度网络的隐藏层学到的表示是二阶信息，深度网络的结构则是三阶信息，从一阶到二阶的框架是不是都可以移植到二阶到三阶上来？关键之处在于我们还没有描述好深度网络的结构空间，但就现在的发展看，深度网络的一些基本结构(conv, BN)等，已经被作为基本单元（离散的）来进行构建和筛选了，也就是说，所有深度网络构成的空间之性质如何，还有大量的工作可以做。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Papers </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> AI </tag>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> Papers </tag>
+            
+            <tag> autoML </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[[论文笔记]An Analysis of Deep Neural Network Models for Practical Applications]]></title>
+      <url>http://blog.ddlee.cn/2017/06/03/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/</url>
+      <content type="html"><![CDATA[<p>论文：<a href="https://arxiv.org/abs/1605.07678" target="_blank" rel="external">An Analysis of Deep Neural Network Models for Practical Applications</a></p>
+<p>本文是对现有（论文发表于2016年5月）深度网络的比较，从以下方面入手：</p>
+<ul>
+<li>accuracy</li>
+<li>memory footprint</li>
+<li>parameters</li>
+<li>operations count</li>
+<li>inference time</li>
+<li>power consumption</li>
+</ul>
+<p>以下图片各模型的着色是统一的：蓝色是Inception系，绿色是VGG系，粉色是ResNet系，黄色为AlexNet系。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/top1.png" alt="top1"></p>
+<p>上图是Top1准确率与模型参数数、操作数的关系。可以看到Inception系列网络以较少的参数取得相对高的准确率，而VGG系则在这一点上表现很差。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/infer-batch.png" alt="infer-batch"></p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/power-batch.png" alt="power-batch"></p>
+<p>上面两图分别是推断耗时和电量消耗与批量大小的关系。可以看到，两者均与批量大小无明显的相关关系。但电量消耗在不同的模型之间也非常类似，而推断时间与模型结构关系很大（VGG再次尴尬）。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/mem-batch.png" alt="mem-batch"></p>
+<p>上图展示了模型占用内存大小与批量大小的关系，大部分网络都有相对固定的内存占用，随后随批量大小的上扬而上涨。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/ops-infer.png" alt="infer-ops"></p>
+<p>从上图可以发现推断耗时和模型的操作数大体上呈现线性关系。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/ops-power.png" alt="ops-power"></p>
+<p>电量消耗与模型的参数数、操作数并没有明显的相关性。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/accuracy-infer.png" alt="accuracy-infer"></p>
+<p>注意，上图中点的大小代表模型操作数，横轴代表推断效率，纵轴表示准确率。灰色区域表示模型获得了额外的推断效率或准确率，而白色区域代表非最优。</p>
+<p>操作数越多的模型推断效率越低，大部分模型都落在相对平衡的边界上，VGG和小批量情形下的AlexNet落在了非最优区域。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>从这篇论文的比较中可以看到，在特定的任务中对网络特定结构的设计（如Inception单元），即加入更强的先验知识，比堆叠网络层数更有效。深度网络还是需要人类的指导才能发挥更大的作用。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Papers </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> Papers </tag>
+            
+            <tag> Neural Network </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[深度学习和分布式表示]]></title>
       <url>http://blog.ddlee.cn/2017/06/01/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E8%A1%A8%E7%A4%BA/</url>
       <content type="html"><![CDATA[<p>本文的两个主要参考资料：</p>
@@ -51,9 +171,9 @@
         
         <tags>
             
-            <tag> Deep Learning </tag>
-            
             <tag> AI </tag>
+            
+            <tag> Deep Learning </tag>
             
             <tag> Machine Learning </tag>
             
@@ -113,9 +233,9 @@
         
         <tags>
             
-            <tag> Deep Learning </tag>
-            
             <tag> AI </tag>
+            
+            <tag> Deep Learning </tag>
             
             <tag> Machine Learning </tag>
             
@@ -317,11 +437,11 @@ def AutogradRNN(mode, input_size, hidden_size):
         
         <tags>
             
+            <tag> AI </tag>
+            
             <tag> Python </tag>
             
             <tag> Deep Learning </tag>
-            
-            <tag> AI </tag>
             
             <tag> Pytorch </tag>
             
@@ -717,11 +837,116 @@ export(tf.shade(agg, cmap=cm(fire, 0.2), how='eq_hist'), 'census_ds_fier_eq_hist
         
         <tags>
             
+            <tag> AI </tag>
+            
             <tag> Deep Learning </tag>
+            
+            <tag> Papers </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Dropout-Pytorch实现]]></title>
+      <url>http://blog.ddlee.cn/2017/05/17/Dropout-Pytorch%E5%AE%9E%E7%8E%B0/</url>
+      <content type="html"><![CDATA[<p>Dropout技术是Srivastava等人在2012年提出的技术，现在已然成为各种深度模型的标配。其中心思想是随机地冻结一部分模型参数，用于提高模型的泛化性能。</p>
+<h3 id="Dropout的洞察"><a href="#Dropout的洞察" class="headerlink" title="Dropout的洞察"></a>Dropout的洞察</h3><p>关于Dropout，一个流行的解释是，通过随机行为训练网络，并平均多个随机决定的结果，实现了参数共享的Bagging。如下图，通过随机地冻结/抛弃某些隐藏单元，我们得到了新的子网络，而参数共享是说，与Bagging中子模型相互独立的参数不同，深度网络中Dropout生成的子网络是串行的，后一个子模型继承了前一个子模型的某些参数。</p>
+<p><img src="http://static.ddlee.cn/static/img/Dropout-Pytorch实现/dropout.jpg" alt="dropout"></p>
+<p>Dropout是模型自我破坏的一种形式，这种破坏使得存活下来的部分更加鲁棒。例如，某一隐藏单元学得了脸部鼻子的特征，而在Dropout中遭到破坏，则在之后的迭代中，要么该隐藏单元重新学习到鼻子的特征，要么学到别的特征，后者则说明，鼻子特征对该任务来说是冗余的，因而，通过Dropout，保留下来的特征更加稳定和富有信息。</p>
+<p>Hinton曾用生物学的观点解释这一点。神经网络的训练过程可以看做是生物种群逐渐适应环境的过程，在迭代中传递的模型参数可以看做种群的基因，Dropout以随机信号的方式给环境随机的干扰，使得传递的基因不得不适应更多的情况才能存活。</p>
+<p>另一个需要指出的地方是，Dropout给隐藏单元加入的噪声是乘性的，不像Bias那样加在隐藏单元上，这样在进行反向传播时，Dropout引入的噪声仍能够起作用。</p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p>下面看在实践中，Dropout层是如何实现的。简单来说，就是生成一系列随机数作为mask，然后再用mask点乘原有的输入，达到引入噪声的效果。</p>
+<h4 id="From-Scratch"><a href="#From-Scratch" class="headerlink" title="From Scratch"></a>From Scratch</h4><pre class="line-numbers language-lang-python"><code class="language-lang-python"># forward pass
+def dropout_forward(x, dropout_param):
+  p, mode = dropout_param['p'], dropout_param['mode']
+  # p: dropout rate; mode: train or test
+  if 'seed' in dropout_param:
+    np.random_seed(dropout_param['seed'])
+  # seed: random seed
+  mask = None
+  out = None
+  if mode == 'train':
+    mask = (np.random.rand(*x.shape) >= p)/(1-p)
+    # 1-p as normalization multiplier: to keep the size of input
+    out = x * mask
+  elif mode == 'test':
+    # do nothing when perform inference
+    out = x
+  cache = (dropout_param, mask)
+  out = out.astype(x.dtype, copy=False)
+  return out, cache
+
+# backward pass
+def dropout_backward(dout, cache):
+  dropout_param, mask = cache
+  mode = dropout_param['mode']
+
+  dx = None
+  if mode == 'train':
+    dx = dout * mask
+  elif mode == 'test':
+    dx = dout
+  return dx
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="Pytorch实现"><a href="#Pytorch实现" class="headerlink" title="Pytorch实现"></a>Pytorch实现</h3><p>file: <a href="https://github.com/pytorch/pytorch/blob/master/torch/nn/_functions/dropout.py" target="_blank" rel="external">/torch/nn/_functions/dropout.py</a></p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">class Dropout(InplaceFunction):
+
+    def __init__(self, p=0.5, train=False, inplace=False):
+        super(Dropout, self).__init__()
+        if p < 0 or p > 1:
+            raise ValueError("dropout probability has to be between 0 and 1, "
+                             "but got {}".format(p))
+        self.p = p
+        self.train = train
+        self.inplace = inplace
+
+    def _make_noise(self, input):
+    # generate random signal
+        return input.new().resize_as_(input)
+
+    def forward(self, input):
+        if self.inplace:
+            self.mark_dirty(input)
+            output = input
+        else:
+            output = input.clone()
+
+        if self.p > 0 and self.train:
+            self.noise = self._make_noise(input)
+            # multiply mask to input
+            self.noise.bernoulli_(1 - self.p).div_(1 - self.p)
+            if self.p == 1:
+                self.noise.fill_(0)
+            self.noise = self.noise.expand_as(input)
+            output.mul_(self.noise)
+
+        return output
+
+    def backward(self, grad_output):
+        if self.p > 0 and self.train:
+            return grad_output.mul(self.noise)
+        else:
+            return grad_output
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+]]></content>
+      
+        <categories>
+            
+            <category> AI </category>
+            
+        </categories>
+        
+        
+        <tags>
             
             <tag> AI </tag>
             
-            <tag> Papers </tag>
+            <tag> Python </tag>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> Pytorch </tag>
             
         </tags>
         
@@ -773,9 +998,9 @@ export(tf.shade(agg, cmap=cm(fire, 0.2), how='eq_hist'), 'census_ds_fier_eq_hist
         
         <tags>
             
-            <tag> Deep Learning </tag>
-            
             <tag> AI </tag>
+            
+            <tag> Deep Learning </tag>
             
             <tag> Machine Learning </tag>
             

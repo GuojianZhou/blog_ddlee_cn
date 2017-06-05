@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.ddlee.cn/"/>
-  <updated>2017-06-03T04:29:31.304Z</updated>
+  <updated>2017-06-05T08:09:52.667Z</updated>
   <id>http://blog.ddlee.cn/</id>
   
   <author>
@@ -14,6 +14,131 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[论文笔记]Large-Scale Evolution of Image Classifiers</title>
+    <link href="http://blog.ddlee.cn/2017/06/05/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Large-Scale-Evolution-of-Image-Classifiers/"/>
+    <id>http://blog.ddlee.cn/2017/06/05/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/</id>
+    <published>2017-06-05T08:09:52.000Z</published>
+    <updated>2017-06-05T08:09:52.667Z</updated>
+    
+    <content type="html"><![CDATA[<p>论文：<a href="https://arxiv.org/abs/1703.01041" target="_blank" rel="external">Large-Scale Evolution of Image, Classifiers</a></p>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>深层网络在图片分类问题上表现优异，但网络结构的设计上并没有统一的指导。进化是构建深度网络架构的一种方式。利用本文的自动化方法得出的深度网络结构，已经能在CIFAR-10上取得可以跟人工设计的网络相媲美的结果</p>
+<h2 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h2><h3 id="Evolution-Algorithm"><a href="#Evolution-Algorithm" class="headerlink" title="Evolution Algorithm"></a>Evolution Algorithm</h3><p>整个算法的核心是如下的tournament selection:</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/tournament.jpg" alt="tournament"></p>
+<ul>
+<li>population: 供筛选的群体</li>
+<li>individual: 个体，带有指标fitness，特别地，指在CV集上的损失</li>
+<li>worker: 筛选者，上帝</li>
+</ul>
+<ol>
+<li><em>population</em> 中的 <em>individual</em> 均已在训练集上训练完毕，带有指标 <em>fitness</em></li>
+<li><em>worker</em> 随机选择一对 <em>individual</em>，比较 <em>fitness</em>，较差的 <em>individual</em> 被舍弃</li>
+<li>表现较好的 <em>individual</em> 成为parent，对其施加 <em>mutation</em> (变异)，得到 <em>child</em></li>
+<li>训练 <em>child</em> 并在CV集上得到其 <em>fitness</em>，归还到 <em>population</em> 中</li>
+</ol>
+<h3 id="Encoding-and-Mutation"><a href="#Encoding-and-Mutation" class="headerlink" title="Encoding and Mutation"></a>Encoding and Mutation</h3><p>个体的网络结构和部分参数被编码为DNA。</p>
+<p>能够施加的变异有：</p>
+<ul>
+<li>改变学习率</li>
+<li>恒等（不变）</li>
+<li>重设参数</li>
+<li>加入卷积层</li>
+<li>移除卷积层</li>
+<li>更改卷积层的stride参数</li>
+<li>更改卷积层的Channel参数</li>
+<li>更改卷积核大小</li>
+<li>加入skip连接（类似ResNet)</li>
+<li>移除skip连接</li>
+</ul>
+<h3 id="Computation"><a href="#Computation" class="headerlink" title="Computation"></a>Computation</h3><p>计算方面采用了并行、异步、无锁的策略。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/comp.jpg" alt="comp"></p>
+<p>建立约为 <em>population</em> 数1/4的 <em>worker</em>，分别运行于不同的机器上，之间独立异步。<em>population</em> 共享，若两个 <em>worker</em> 在一个 <em>individual</em> 上产生冲突，则后一个 <em>worker</em> 停止并等待再次尝试。</p>
+<h3 id="Weight-Inheritance"><a href="#Weight-Inheritance" class="headerlink" title="Weight Inheritance"></a>Weight Inheritance</h3><p>除了架构之外，子模型还会继承父母模型未经变异影响的隐藏层参数（不仅是DNA中的），这样使子模型的训练时间大幅减小。</p>
+<h2 id="Experiments-and-Results"><a href="#Experiments-and-Results" class="headerlink" title="Experiments and Results"></a>Experiments and Results</h2><p>文章的主要结果如下图：</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/results.png" alt="results"></p>
+<p>最右边的结构是在CIFAR-10上发现的最好（CV集准确度最高）的结构，左边两个是它的祖先。其中白色块相当于简单的线性层，彩色块则带有非线性激活，可以看到，不同于人工设计的网络，某一线性层之后可能包含多个非线性层。</p>
+<p>另外，利用本文的模型，也在CIFAR-100上做了实验，可以达到76.3%的准确率，一定程度上说明了算法的扩展性。</p>
+<h2 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/popu.png" alt="popu"></p>
+<p>上图说明随着 <em>population</em> 规模和训练步数的增加，模型的整体水平在变好。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/mutation.png" alt="mutation"></p>
+<p>在模型陷入局部最优值时，提高变异率和重设参数会使群体继续进化。这是由于变异中包含恒等映射等不改变模型架构的变异类型，再加上weight Inheritance，一些子模型只是训练次数比其他模型多很多的“活化石”。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>Google I/O时就提到了自动筛选最优网络结构，但没有公布论文。但将网络结构自动化，必定是未来的方向。个人认为，ResNet就相当于自动化网络深度（一些层实际上被跳过了），而Inception单元似乎包含了太多的先验，而且也没有逻辑上的证据说明这样的结构更有效。网络结构本身就是先验信息，而要达到通用的人工智能，这些先验也必须由模型自行发觉。</p>
+<p>强化学习本身也是一个进化过程，应该也有相关的工作将强化学习的框架应用于网络结构的学习上。</p>
+<p>更进一步地，若数据是一阶信息，深度网络的隐藏层学到的表示是二阶信息，深度网络的结构则是三阶信息，从一阶到二阶的框架是不是都可以移植到二阶到三阶上来？关键之处在于我们还没有描述好深度网络的结构空间，但就现在的发展看，深度网络的一些基本结构(conv, BN)等，已经被作为基本单元（离散的）来进行构建和筛选了，也就是说，所有深度网络构成的空间之性质如何，还有大量的工作可以做。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;论文：&lt;a href=&quot;https://arxiv.org/abs/1703.01041&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Large-Scale Evolution of Image, Classifiers&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;
+    
+    </summary>
+    
+      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+    
+    
+      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
+    
+      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
+    
+      <category term="autoML" scheme="http://blog.ddlee.cn/tags/autoML/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[论文笔记]An Analysis of Deep Neural Network Models for Practical Applications</title>
+    <link href="http://blog.ddlee.cn/2017/06/03/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/"/>
+    <id>http://blog.ddlee.cn/2017/06/03/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/</id>
+    <published>2017-06-03T06:27:07.000Z</published>
+    <updated>2017-06-03T06:27:07.962Z</updated>
+    
+    <content type="html"><![CDATA[<p>论文：<a href="https://arxiv.org/abs/1605.07678" target="_blank" rel="external">An Analysis of Deep Neural Network Models for Practical Applications</a></p>
+<p>本文是对现有（论文发表于2016年5月）深度网络的比较，从以下方面入手：</p>
+<ul>
+<li>accuracy</li>
+<li>memory footprint</li>
+<li>parameters</li>
+<li>operations count</li>
+<li>inference time</li>
+<li>power consumption</li>
+</ul>
+<p>以下图片各模型的着色是统一的：蓝色是Inception系，绿色是VGG系，粉色是ResNet系，黄色为AlexNet系。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/top1.png" alt="top1"></p>
+<p>上图是Top1准确率与模型参数数、操作数的关系。可以看到Inception系列网络以较少的参数取得相对高的准确率，而VGG系则在这一点上表现很差。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/infer-batch.png" alt="infer-batch"></p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/power-batch.png" alt="power-batch"></p>
+<p>上面两图分别是推断耗时和电量消耗与批量大小的关系。可以看到，两者均与批量大小无明显的相关关系。但电量消耗在不同的模型之间也非常类似，而推断时间与模型结构关系很大（VGG再次尴尬）。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/mem-batch.png" alt="mem-batch"></p>
+<p>上图展示了模型占用内存大小与批量大小的关系，大部分网络都有相对固定的内存占用，随后随批量大小的上扬而上涨。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/ops-infer.png" alt="infer-ops"></p>
+<p>从上图可以发现推断耗时和模型的操作数大体上呈现线性关系。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/ops-power.png" alt="ops-power"></p>
+<p>电量消耗与模型的参数数、操作数并没有明显的相关性。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/accuracy-infer.png" alt="accuracy-infer"></p>
+<p>注意，上图中点的大小代表模型操作数，横轴代表推断效率，纵轴表示准确率。灰色区域表示模型获得了额外的推断效率或准确率，而白色区域代表非最优。</p>
+<p>操作数越多的模型推断效率越低，大部分模型都落在相对平衡的边界上，VGG和小批量情形下的AlexNet落在了非最优区域。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>从这篇论文的比较中可以看到，在特定的任务中对网络特定结构的设计（如Inception单元），即加入更强的先验知识，比堆叠网络层数更有效。深度网络还是需要人类的指导才能发挥更大的作用。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;论文：&lt;a href=&quot;https://arxiv.org/abs/1605.07678&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;An Analysis of Deep Neural Network Models for Practical Appl
+    
+    </summary>
+    
+      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+    
+    
+      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
+    
+      <category term="Neural Network" scheme="http://blog.ddlee.cn/tags/Neural-Network/"/>
+    
+  </entry>
   
   <entry>
     <title>深度学习和分布式表示</title>
@@ -69,9 +194,9 @@
       <category term="AI" scheme="http://blog.ddlee.cn/categories/AI/"/>
     
     
-      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
-    
       <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
+    
+      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
       <category term="Machine Learning" scheme="http://blog.ddlee.cn/tags/Machine-Learning/"/>
     
@@ -133,9 +258,9 @@
       <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
-    
       <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
+    
+      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
       <category term="Machine Learning" scheme="http://blog.ddlee.cn/tags/Machine-Learning/"/>
     
@@ -340,11 +465,11 @@ def AutogradRNN(mode, input_size, hidden_size):
       <category term="AI" scheme="http://blog.ddlee.cn/categories/AI/"/>
     
     
+      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
+    
       <category term="Python" scheme="http://blog.ddlee.cn/tags/Python/"/>
     
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
-    
-      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
     
       <category term="Pytorch" scheme="http://blog.ddlee.cn/tags/Pytorch/"/>
     
@@ -747,11 +872,119 @@ export(tf.shade(agg, cmap=cm(fire, 0.2), how='eq_hist'), 'census_ds_fier_eq_hist
       <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
     
     
+      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
+    
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Dropout-Pytorch实现</title>
+    <link href="http://blog.ddlee.cn/2017/05/17/Dropout-Pytorch%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://blog.ddlee.cn/2017/05/17/Dropout-Pytorch实现/</id>
+    <published>2017-05-17T11:30:44.000Z</published>
+    <updated>2017-06-03T08:32:34.577Z</updated>
+    
+    <content type="html"><![CDATA[<p>Dropout技术是Srivastava等人在2012年提出的技术，现在已然成为各种深度模型的标配。其中心思想是随机地冻结一部分模型参数，用于提高模型的泛化性能。</p>
+<h3 id="Dropout的洞察"><a href="#Dropout的洞察" class="headerlink" title="Dropout的洞察"></a>Dropout的洞察</h3><p>关于Dropout，一个流行的解释是，通过随机行为训练网络，并平均多个随机决定的结果，实现了参数共享的Bagging。如下图，通过随机地冻结/抛弃某些隐藏单元，我们得到了新的子网络，而参数共享是说，与Bagging中子模型相互独立的参数不同，深度网络中Dropout生成的子网络是串行的，后一个子模型继承了前一个子模型的某些参数。</p>
+<p><img src="http://static.ddlee.cn/static/img/Dropout-Pytorch实现/dropout.jpg" alt="dropout"></p>
+<p>Dropout是模型自我破坏的一种形式，这种破坏使得存活下来的部分更加鲁棒。例如，某一隐藏单元学得了脸部鼻子的特征，而在Dropout中遭到破坏，则在之后的迭代中，要么该隐藏单元重新学习到鼻子的特征，要么学到别的特征，后者则说明，鼻子特征对该任务来说是冗余的，因而，通过Dropout，保留下来的特征更加稳定和富有信息。</p>
+<p>Hinton曾用生物学的观点解释这一点。神经网络的训练过程可以看做是生物种群逐渐适应环境的过程，在迭代中传递的模型参数可以看做种群的基因，Dropout以随机信号的方式给环境随机的干扰，使得传递的基因不得不适应更多的情况才能存活。</p>
+<p>另一个需要指出的地方是，Dropout给隐藏单元加入的噪声是乘性的，不像Bias那样加在隐藏单元上，这样在进行反向传播时，Dropout引入的噪声仍能够起作用。</p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p>下面看在实践中，Dropout层是如何实现的。简单来说，就是生成一系列随机数作为mask，然后再用mask点乘原有的输入，达到引入噪声的效果。</p>
+<h4 id="From-Scratch"><a href="#From-Scratch" class="headerlink" title="From Scratch"></a>From Scratch</h4><pre class="line-numbers language-lang-python"><code class="language-lang-python"># forward pass
+def dropout_forward(x, dropout_param):
+  p, mode = dropout_param['p'], dropout_param['mode']
+  # p: dropout rate; mode: train or test
+  if 'seed' in dropout_param:
+    np.random_seed(dropout_param['seed'])
+  # seed: random seed
+  mask = None
+  out = None
+  if mode == 'train':
+    mask = (np.random.rand(*x.shape) >= p)/(1-p)
+    # 1-p as normalization multiplier: to keep the size of input
+    out = x * mask
+  elif mode == 'test':
+    # do nothing when perform inference
+    out = x
+  cache = (dropout_param, mask)
+  out = out.astype(x.dtype, copy=False)
+  return out, cache
+
+# backward pass
+def dropout_backward(dout, cache):
+  dropout_param, mask = cache
+  mode = dropout_param['mode']
+
+  dx = None
+  if mode == 'train':
+    dx = dout * mask
+  elif mode == 'test':
+    dx = dout
+  return dx
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="Pytorch实现"><a href="#Pytorch实现" class="headerlink" title="Pytorch实现"></a>Pytorch实现</h3><p>file: <a href="https://github.com/pytorch/pytorch/blob/master/torch/nn/_functions/dropout.py" target="_blank" rel="external">/torch/nn/_functions/dropout.py</a></p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">class Dropout(InplaceFunction):
+
+    def __init__(self, p=0.5, train=False, inplace=False):
+        super(Dropout, self).__init__()
+        if p < 0 or p > 1:
+            raise ValueError("dropout probability has to be between 0 and 1, "
+                             "but got {}".format(p))
+        self.p = p
+        self.train = train
+        self.inplace = inplace
+
+    def _make_noise(self, input):
+    # generate random signal
+        return input.new().resize_as_(input)
+
+    def forward(self, input):
+        if self.inplace:
+            self.mark_dirty(input)
+            output = input
+        else:
+            output = input.clone()
+
+        if self.p > 0 and self.train:
+            self.noise = self._make_noise(input)
+            # multiply mask to input
+            self.noise.bernoulli_(1 - self.p).div_(1 - self.p)
+            if self.p == 1:
+                self.noise.fill_(0)
+            self.noise = self.noise.expand_as(input)
+            output.mul_(self.noise)
+
+        return output
+
+    def backward(self, grad_output):
+        if self.p > 0 and self.train:
+            return grad_output.mul(self.noise)
+        else:
+            return grad_output
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Dropout技术是Srivastava等人在2012年提出的技术，现在已然成为各种深度模型的标配。其中心思想是随机地冻结一部分模型参数，用于提高模型的泛化性能。&lt;/p&gt;
+&lt;h3 id=&quot;Dropout的洞察&quot;&gt;&lt;a href=&quot;#Dropout的洞察&quot; class=&quot;he
+    
+    </summary>
+    
+      <category term="AI" scheme="http://blog.ddlee.cn/categories/AI/"/>
+    
     
       <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
+      <category term="Python" scheme="http://blog.ddlee.cn/tags/Python/"/>
+    
+      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="Pytorch" scheme="http://blog.ddlee.cn/tags/Pytorch/"/>
     
   </entry>
   
@@ -806,9 +1039,9 @@ export(tf.shade(agg, cmap=cm(fire, 0.2), how='eq_hist'), 'census_ds_fier_eq_hist
       <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
-    
       <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
+    
+      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
       <category term="Machine Learning" scheme="http://blog.ddlee.cn/tags/Machine-Learning/"/>
     
@@ -1650,349 +1883,6 @@ server {
       <category term="Data Sciencce" scheme="http://blog.ddlee.cn/tags/Data-Sciencce/"/>
     
       <category term="笔记" scheme="http://blog.ddlee.cn/tags/%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Udacity课程： Intro to DevOps侧记</title>
-    <link href="http://blog.ddlee.cn/2017/03/22/DevOps%E4%BE%A7%E8%AE%B0/"/>
-    <id>http://blog.ddlee.cn/2017/03/22/DevOps侧记/</id>
-    <published>2017-03-22T15:19:07.000Z</published>
-    <updated>2017-04-05T13:13:11.605Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章主要内容来自Udacity的课程：<a href="https://www.udacity.com/course/intro-to-devops--ud611" target="_blank" rel="external">Intro to DevOps</a></p>
-<h3 id="CAMS-The-DevOps-Lifecycle"><a href="#CAMS-The-DevOps-Lifecycle" class="headerlink" title="CAMS: The DevOps Lifecycle"></a>CAMS: The DevOps Lifecycle</h3><p>The Purpose of DevOps： 产品、开发、运维之间的协作问题</p>
-<h4 id="Definition-from-wiki"><a href="#Definition-from-wiki" class="headerlink" title="Definition(from wiki)"></a>Definition(from wiki)</h4><blockquote>
-<p>a set of practices that emphasize the collaboration and communication of both software developers and information technology (IT) professionals while automating the process of software delivery and infrastructure changes.</p>
-</blockquote>
-<p><img src="http://static.ddlee.cn/static/img/DevOps/Devops_venn.png" alt="DevOps_Venn"><br>(<a href="https://commons.wikimedia.org/wiki/File:Devops.png" target="_blank" rel="external">Source</a>)</p>
-<p>对比： Agile Development（敏捷软件开发）</p>
-<p>Plan-&gt;Code-&gt;Test-&gt;Release-&gt;Deploy-&gt;Operate</p>
-<h4 id="Means-of-CAMS"><a href="#Means-of-CAMS" class="headerlink" title="Means of CAMS"></a>Means of CAMS</h4><ul>
-<li>C: Culture</li>
-<li>A: Automation</li>
-<li>M: Measurement</li>
-<li>S: Sharing</li>
-</ul>
-<h3 id="The-DevOps-Environment"><a href="#The-DevOps-Environment" class="headerlink" title="The DevOps Environment"></a>The DevOps Environment</h3><p>Solving the Environment Problem:</p>
-<ul>
-<li>Golden Image: apps-libs-OS</li>
-<li>Configuration Management</li>
-</ul>
-<h4 id="Course-Project（使用Golden-Image方案，引入一批DevOps工具"><a href="#Course-Project（使用Golden-Image方案，引入一批DevOps工具" class="headerlink" title="Course Project（使用Golden Image方案，引入一批DevOps工具)"></a>Course Project（使用Golden Image方案，引入一批DevOps工具)</h4><p>dependencies-&gt;build scripts-&gt;tests-&gt;web apps</p>
-<h5 id="Packer"><a href="#Packer" class="headerlink" title="Packer"></a>Packer</h5><p>Packer is an open source tool for creating identical machine images for multiple platforms from a single source configuration.</p>
-<ul>
-<li><code>Artifacts</code> are the results of a single build, and are usually a set of IDs or files to represent a machine image.</li>
-<li><code>Builds</code> are a single task that eventually produces an image for a single platform.</li>
-<li><code>Builders</code> are components of Packer that are able to create a machine image for a single platform.</li>
-<li><code>Commands</code> are sub-commands for the packer program that perform some job.</li>
-<li><code>Post-processors</code> are components of Packer that take the result of a builder or another post-processor and process that to create a new artifact.</li>
-<li><code>Provisioners</code> are components of Packer that install and configure software within a running machine prior to that machine being turned into a static image.</li>
-<li><code>Templates</code> are JSON files which define one or more builds by configuring the various components of Packer.</li>
-</ul>
-<p><a href="https://github.com/ddlee96/devops-intro-project/blob/master/packer-templates/application-server.json" target="_blank" rel="external">Example JSON File</a></p>
-<h5 id="Vagrant"><a href="#Vagrant" class="headerlink" title="Vagrant"></a>Vagrant</h5><p>Vagrant is a tool for building complete development environments. With an easy-to-use workflow and focus on automation, Vagrant lowers development environment setup time, increases development/production parity, and makes the “works on my machine” excuse a relic of the past.</p>
-<h5 id="Project-Workflow-Packer-gt-Vagrant-gt-Virtualbox-gt-Web-Application"><a href="#Project-Workflow-Packer-gt-Vagrant-gt-Virtualbox-gt-Web-Application" class="headerlink" title="Project Workflow: Packer-&gt;Vagrant-&gt;Virtualbox-&gt;Web Application"></a>Project Workflow: Packer-&gt;Vagrant-&gt;Virtualbox-&gt;Web Application</h5><h6 id="Part-I-Building-a-box-with-Packer"><a href="#Part-I-Building-a-box-with-Packer" class="headerlink" title="Part I: Building a box with Packer"></a>Part I: Building a box with Packer</h6><p>From the packer-templates directory on your local machine:</p>
-<ul>
-<li><p>Run <code>packer build -only=virtualbox-iso application-server.json</code></p>
-<p>Troubleshooting: <em>Find the newest version number and checksum from the <a href="http://releases.ubuntu.com/trusty/" target="_blank" rel="external">Ubuntu website for this release</a></em><br><em>Edit <code>PACKER_BOX_NAME</code> and <code>iso_checksum</code> in the template files to match that version number and checksum.</em></p>
-</li>
-<li>Run <code>cd virtualbox</code></li>
-<li>Run <code>vagrant box add ubuntu-14.04.4-server-amd64-appserver_virtualbox.box --name devops-appserver</code></li>
-<li>Run <code>vagrant up</code></li>
-<li>Run <code>vagrant ssh</code> to connect to the server</li>
-</ul>
-<h6 id="Part-II-Cloning-developing-and-running-the-web-application"><a href="#Part-II-Cloning-developing-and-running-the-web-application" class="headerlink" title="Part II: Cloning, developing, and running the web application"></a>Part II: Cloning, developing, and running the web application</h6><ul>
-<li>On your local machine go to the root directory of the cloned repository</li>
-<li>Run <code>git clone https://github.com/chef/devops-kungfu.git devops-kungfu</code></li>
-<li>Open <a href="http://localhost:8080" target="_blank" rel="external">http://localhost:8080</a> from your local machine to see the app running.</li>
-<li>In the VM, run <code>cd devops-kungfu</code></li>
-<li>To install app specific node packages, run <code>sudo npm install</code>. You may see several errors; they can be ignored for now.</li>
-<li>Now you can run tests with the command <code>grunt -v</code>. The tests will run, then quit with an error.</li>
-</ul>
-<h6 id="On-Cloud-platform"><a href="#On-Cloud-platform" class="headerlink" title="On Cloud platform"></a>On Cloud platform</h6><p>Similar commands using packer:</p>
-<ul>
-<li><code>packer build -only=amazon-ebs &lt;server-name&gt;.json</code></li>
-<li><code>packer build -only=googlecompute application-server.json</code></li>
-</ul>
-<h3 id="Continuous-Integration（持续集成）"><a href="#Continuous-Integration（持续集成）" class="headerlink" title="Continuous Integration（持续集成）"></a>Continuous Integration（持续集成）</h3><p>CI System:</p>
-<p><img src="http://static.ddlee.cn/static/img/DevOps/CI.png" alt="CI"></p>
-<h4 id="Jenkins"><a href="#Jenkins" class="headerlink" title="Jenkins"></a>Jenkins</h4><p>Jenkins is a self-contained, open source automation server which can be used to automate all sorts of tasks such as building, testing, and deploying software.</p>
-<p>Using command:<br><code>packer build -only=&lt;cloud service target&gt; control-server.json</code></p>
-<p><a href="https://github.com/ddlee96/devops-intro-project/blob/master/packer-templates/control-server.json" target="_blank" rel="external">Example control-server.json file</a></p>
-<p>Jenkins was configured to be installed according to <code>Provisioners</code>.</p>
-<p>After building and launching, access Jenkins via URL <code>/jenkins</code>.</p>
-<h4 id="Testing（测试，QA）"><a href="#Testing（测试，QA）" class="headerlink" title="Testing（测试，QA）"></a>Testing（测试，QA）</h4><ul>
-<li>Unit Testing</li>
-<li>Regression testing</li>
-<li>Smoke testing</li>
-<li>System Integration testing</li>
-<li>Automate acceptance testing</li>
-<li>Manual QA testing</li>
-</ul>
-<p>Adding Manual QA step in Pipeline</p>
-<p><img src="http://static.ddlee.cn/static/img/DevOps/pipline.png" alt="Pipeline"></p>
-<h4 id="Monitoring"><a href="#Monitoring" class="headerlink" title="Monitoring"></a>Monitoring</h4><p>Monitoring process:</p>
-<p><img src="http://static.ddlee.cn/static/img/DevOps/Monitoring.png" alt="Monitoring"></p>
-<h3 id="Additional-Resources"><a href="#Additional-Resources" class="headerlink" title="Additional Resources"></a>Additional Resources</h3><p><a href="https://www.udacity.com/wiki/ud611#!#additional-resources" target="_blank" rel="external">Course Wiki</a></p>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>DevOps从开发和运维合作的角度审视软件开发过程，并提供了一套方法论，涉及开发、测试、部署、维护、监测各个方面。软件行业，不仅仅是写代码而已。</p>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;文章主要内容来自Udacity的课程：&lt;a href=&quot;https://www.udacity.com/course/intro-to-devops--ud611&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Intro to DevOps&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Internet" scheme="http://blog.ddlee.cn/categories/Internet/"/>
-    
-    
-      <category term="DevOps" scheme="http://blog.ddlee.cn/tags/DevOps/"/>
-    
-      <category term="技术" scheme="http://blog.ddlee.cn/tags/%E6%8A%80%E6%9C%AF/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python与SQL_Server的交互：pyODBC, pymssql, SQLAlchemy</title>
-    <link href="http://blog.ddlee.cn/2017/03/16/Python%E4%B8%8ESQL_Server%E7%9A%84%E4%BA%A4%E4%BA%92%EF%BC%9ApyODBC,%20pymssql,%20SQLAlchemy/"/>
-    <id>http://blog.ddlee.cn/2017/03/16/Python与SQL_Server的交互：pyODBC, pymssql, SQLAlchemy/</id>
-    <published>2017-03-16T14:57:37.000Z</published>
-    <updated>2017-04-05T13:13:08.948Z</updated>
-    
-    <content type="html"><![CDATA[<p>Windows平台下Python读取、写入SQL Server相关的函数库，文章结构如下：</p>
-<p><img src="http://static.ddlee.cn/static/img/Python+SQLserver/Python+SQL_Server.png" alt="Python+SQLserver"></p>
-<h3 id="Python-Drivers"><a href="#Python-Drivers" class="headerlink" title="Python Drivers"></a>Python Drivers</h3><h4 id="PyODBC"><a href="#PyODBC" class="headerlink" title="PyODBC"></a>PyODBC</h4><p>Annaconda下可以用<code>pip install pyodbc</code>安装，也可以到<a href="https://www.microsoft.com/en-us/download/details.aspx?id=50420" target="_blank" rel="external">这里</a>下载。</p>
-<p>首先建立<code>connection</code>对象：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">import pyodbc
-conn = pyodbc.connect(
-    r'DRIVER={ODBC Driver 11 for SQL Server};'  #or {ODBC Driver 13 for SQL Server}
-    r'SERVER=ServerHostName;'
-    r'DATABASE=DBName;'
-    r'UID=user;'
-    r'PWD=password'
-    )
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>添加游标（Cursor）对象并执行SQL查询语句：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">cursor = conn.cursor()
-cursor.execute('SQL Query Goes Here')
-for row in cursor.fetchall():
-  print(rows.[column name])
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>更多信息参见<a href="https://docs.microsoft.com/en-us/sql/connect/python/pyodbc/python-sql-driver-pyodbc" target="_blank" rel="external">MSDN DOCs</a>。</p>
-<h4 id="pymssql"><a href="#pymssql" class="headerlink" title="pymssql"></a>pymssql</h4><p>同样可以用<code>pip install pymssql</code>安装，也可以到<a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#pymssql" target="_blank" rel="external">这里</a>，然后用<code>pip</code>安装<code>wheel</code>文件。</p>
-<p>pymssql目前还不支持Python3.6，这点要注意下。</p>
-<p>pymssql的用法跟pyODBC很像，下面是官网给出的例子：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">from os import getenv
-import pymssql
-
-server = getenv("PYMSSQL_TEST_SERVER")
-user = getenv("PYMSSQL_TEST_USERNAME")
-password = getenv("PYMSSQL_TEST_PASSWORD")
-
-conn = pymssql.connect(server, user, password, "tempdb")
-cursor = conn.cursor()
-cursor.execute("""
-IF OBJECT_ID('persons', 'U') IS NOT NULL
-    DROP TABLE persons
-CREATE TABLE persons (
-    id INT NOT NULL,
-    name VARCHAR(100),
-    salesrep VARCHAR(100),
-    PRIMARY KEY(id)
-)
-""")
-cursor.executemany(
-    "INSERT INTO persons VALUES (%d, %s, %s)",
-    [(1, 'John Smith', 'John Doe'),
-     (2, 'Jane Doe', 'Joe Dog'),
-     (3, 'Mike T.', 'Sarah H.')])
-# you must call commit() to persist your data if you don't set autocommit to True
-conn.commit()
-
-cursor.execute('SELECT * FROM persons WHERE salesrep=%s', 'John Doe')
-row = cursor.fetchone()
-while row:
-    print("ID=%d, Name=%s" % (row[0], row[1]))
-    row = cursor.fetchone()
-
-conn.close()
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>详细用法参见<a href="http://www.pymssql.org/en/stable/index.html" target="_blank" rel="external">pymssql docs</a>和<a href="https://docs.microsoft.com/en-us/sql/connect/python/pymssql/python-sql-driver-pymssql" target="_blank" rel="external">MSDN DOCs</a></p>
-<h4 id="SQLAlchemy-Python-SQL-Toolkit"><a href="#SQLAlchemy-Python-SQL-Toolkit" class="headerlink" title="SQLAlchemy(Python SQL Toolkit)"></a><a href="https://www.sqlalchemy.org/" target="_blank" rel="external">SQLAlchemy</a>(Python SQL Toolkit)</h4><p>SQLAlchemy提供了一系列丰富、完整、（我看不懂）的API用于数据库操作。这里只谈其<code>create_engine</code>方法。</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">from sqlalchemy import create_engine
-# pyodbc
-engine = create_engine('mssql+pyodbc://user:password@DSNname') #需要配置DSN，参见最后一节
-
-# pymssql
-engine = create_engine('mssql+pymssql://user:password@Hostname:port/DBname')
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>利用创建好的<code>engine</code>，可以结合pandas库进行批量的读取、写入操作。</p>
-<p>用SQLAlchemy与其他类型的数据库建立链接的方法参见<a href="http://docs.sqlalchemy.org/en/latest/core/engines.html" target="_blank" rel="external">这里</a>。</p>
-<h4 id="Pandas"><a href="#Pandas" class="headerlink" title="Pandas"></a>Pandas</h4><p>利用pyODBC和pymssql拉取的对象需要进一步处理才能进行常见的数据清洗等工作，而Pandas也提供了SQL相关的方法，在SQLAlchemy的辅助下，可以将<code>DataFrame</code>对象直接写入table。</p>
-<h5 id="读取：pd-read-sql"><a href="#读取：pd-read-sql" class="headerlink" title="读取：pd.read_sql()"></a>读取：pd.read_sql()</h5><p><a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_sql.html" target="_blank" rel="external">API</a>：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">pandas.read_sql(sql, con, index_col=None, coerce_float=True, params=None, parse_dates=None, columns=None, chunksize=None)
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>其中的<code>con</code>参数，可以传入SQLAlchemy建立的<code>engine</code>对象，也可以是pyODBC或者pymssql建立的<code>DBAPI2 connection</code>对象。</p>
-<h5 id="写入-pd-DataFrame-to-sql"><a href="#写入-pd-DataFrame-to-sql" class="headerlink" title="写入:pd.DataFrame.to_sql()"></a>写入:pd.DataFrame.to_sql()</h5><p><a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.to_sql.html" target="_blank" rel="external">API</a>:</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">DataFrame.to_sql(name, con, flavor=None, schema=None, if_exists='fail', index=True, index_label=None, chunksize=None, dtype=None)
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>这里的<code>con</code>参数，只支持sqlite3的<code>DBAPI2 connection</code>对象，支持所有的<code>SQLAlchemy engine</code>对象。<br><code>name</code>参数传入表名，用<code>if_exists</code>参数控制表存在时的动作：</p>
-<ul>
-<li><code>‘fail’</code>: 啥也不干。</li>
-<li><code>’replace‘</code>: 将原有表删除，新建表，插入数据。</li>
-<li><code>’append&#39;</code>: 在表中插入数据。表不存在时新建表。</li>
-</ul>
-<h3 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h3><p>利用<code>Sqlcmd</code>命令，也可以在命令行下执行SQL文件，用法如下：</p>
-<pre class="line-numbers language-lang-bash"><code class="language-lang-bash">sqlcmd -U user -P password -S server -d DBName -i /path/to/myScript.sql
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>这样可以有如下思路，将数据写入.SQL文件，再生成.bat文件（批量）写入上述命令，之后完成执行。</p>
-<h3 id="DSN"><a href="#DSN" class="headerlink" title="DSN"></a>DSN</h3><p>Windows下可以配置DSN(Data Source Names)预先存储数据库连接的信息，在<em>Control Panel</em> -&gt; <em>Administrative Tools</em> -&gt; <em>ODBC Data Source</em> 下添加即可。</p>
-<p>配置好DSN后，pyODBC的连接过程可以简化为：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">conn = pyodbc.connect(r'DSN=DSNname;UID=user;PWD=password') #UID和PWD也可以在DSN中配置
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h3 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h3><p>Python与文件的IO、SQL数据库的读写时有中文字符可能会有编码问题。一种方案是在中文字符串前添加N，如<code>N&#39;python大法好&#39;</code>；另一种方案是传入<code>encoding</code>参数，常用的中文编码有<code>GB2123</code>，<code>GB18030</code>，推荐的还是统一用<code>UTF-8</code>编码、解码。</p>
-<p>利用如下命令，可以在SQLAlchemy中指定编码：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">engine = create_engine('mssql+pymssql://user:password@HostName\DBname', connect_args = {'charset':'utf-8'})
-<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>其他自定义<code>DBAPI connect()</code>参数的方法参见<a href="http://docs.sqlalchemy.org/en/latest/core/engines.html#custom-dbapi-connect-arguments" target="_blank" rel="external">这里</a>。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Windows平台下Python读取、写入SQL Server相关的函数库，文章结构如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://static.ddlee.cn/static/img/Python+SQLserver/Python+SQL_Server.png&quot; 
-    
-    </summary>
-    
-      <category term="Data Science" scheme="http://blog.ddlee.cn/categories/Data-Science/"/>
-    
-    
-      <category term="Python" scheme="http://blog.ddlee.cn/tags/Python/"/>
-    
-      <category term="SQL" scheme="http://blog.ddlee.cn/tags/SQL/"/>
-    
-      <category term="数据库" scheme="http://blog.ddlee.cn/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>再次折腾我的WNDR4300：OpenWrt文件共享</title>
-    <link href="http://blog.ddlee.cn/2017/03/12/%E5%86%8D%E6%AC%A1%E6%8A%98%E8%85%BE%E6%88%91%E7%9A%84WNDR4300/"/>
-    <id>http://blog.ddlee.cn/2017/03/12/再次折腾我的WNDR4300/</id>
-    <published>2017-03-12T07:00:25.000Z</published>
-    <updated>2017-04-03T04:31:29.756Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote>
-<p>生命不惜，折腾不止。</p>
-</blockquote>
-<h3 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h3><p>再次成为IOS用户后，访问Google和文件共享成了两大需求。问题出现了，就要解决，于是有此文记录的活动。</p>
-<h3 id="重新安装OpenWrt"><a href="#重新安装OpenWrt" class="headerlink" title="重新安装OpenWrt"></a>重新安装OpenWrt</h3><p>OpenWrt已经到了<code>15.05</code>版本，版本代号是<code>Chaos Calmer</code>。重装需要的<code>-factory.img</code>，可以在<a href="https://downloads.openwrt.org/chaos_calmer/15.05/" target="_blank" rel="external">这里</a>下载。</p>
-<p>我的WNDR4300平台是<code>ar71xx</code>，可以从OpenWrt对应的<a href="https://wiki.openwrt.org/toh/hwdata/netgear/netgear_wndr4300_v1" target="_blank" rel="external">硬件主页</a>找到固件镜像文件。</p>
-<h4 id="TFTP重装"><a href="#TFTP重装" class="headerlink" title="TFTP重装"></a>TFTP重装</h4><p>如果你的路由器还是出厂系统的话，可以通过登入后台在线上传镜像文件进行刷机，而我的已经是OpenWrt系统，只能通过网页端升级，故选用了TFTP方式刷机。</p>
-<p>刷机步骤摘自<a href="https://wiki.openwrt.org/toh/netgear/wndr4300" target="_blank" rel="external">OpenWrt wiki</a></p>
-<p>&gt;</p>
-<blockquote>
-<ol>
-<li>set a static IP on your computer, i.e 192.168.1.35, and connect the ethernet cable to the router</li>
-<li>power on the router</li>
-<li>press and hold the RESET button as soon as the switch LEDs light up.</li>
-<li>keep holding RESET until the power LED begins to flash orange and then green.</li>
-<li>once the power LED is flashing green, release RESET</li>
-<li>start the TFTP transfer to router at 192.168.1.1. In your computer execute:<br><code>tftp 192.168.1.1 -m binary -c put factory.img</code></li>
-</ol>
-</blockquote>
-<p>总体来说是分为三步：</p>
-<ol>
-<li>将电脑与路由器设置在同一内网中</li>
-<li>令路由器进入恢复模式</li>
-<li>利用TFTP将刷机包推入路由器</li>
-</ol>
-<h3 id="U盘挂载，文件共享"><a href="#U盘挂载，文件共享" class="headerlink" title="U盘挂载，文件共享"></a>U盘挂载，文件共享</h3><p>安装好OpenWrt后，就可以从网页端访问路由器，设置PPPoE拨号，设置WIFI等等。</p>
-<h4 id="U盘挂载"><a href="#U盘挂载" class="headerlink" title="U盘挂载"></a>U盘挂载</h4><p>U盘挂载部分主要参考了<a href="https://my.oschina.net/umu618/blog/282984" target="_blank" rel="external">跟 UMU 一起玩 OpenWRT（入门篇6）：挂接 U 盘</a>。</p>
-<p>首先是安装相应的包：</p>
-<pre class="line-numbers language-lang-bash"><code class="language-lang-bash">opkg update
-
-# 核心包
-opkg install kmod-usb-storage
-opkg install kmod-scsi-generic
-
-# 文件系统
-opkg install kmod-fs-ext4
-
-# 辅助工具
-opkg install usbutils fdisk e2fsprogs
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>利用<code>lsusb</code>命令查看U盘是否已经被路由器识别。</p>
-<p>这时可以选择用fdisk进行重新分区，不需要分区的话，可以用命令<code>ls /dev | grep sd</code>查看/dev分区中是否已经出现U盘。</p>
-<p>在OpenWrt上使用U盘，建议用ext4格式，可以用下面的命令进行格式化：</p>
-<pre><code># sda1为上一命令得到的结果
-mkfs.ext4 /dev/sda1
-</code></pre><p>接下来就可以用<code>mount</code>命令进行挂载了：</p>
-<pre><code># 路径/mnt/usb/即为挂载目标点
-mkdir /mnt/usb
-touch /mnt/usb/USB_DISK_NOT_PRESENT
-chmod 555 /mnt/usb
-chmod 444 /mnt/usb/USB_DISK_NOT_PRESENT
-mount /dev/sda1 /mnt/usb
-</code></pre><p>这时可以测试一下，如果U盘里面存储了文件，可以通过<code>/mnt/usb</code>访问的到。</p>
-<p>下面是开机自动挂载U盘的命令。</p>
-<pre class="line-numbers language-lang-bash"><code class="language-lang-bash"># block-mount blkid用于查看U盘的UUID
-opkg install block-mount blkid
-
-# 实际上要操作的是fstab的配置文件/etc/config/fstab，要将enabled值改成1
-block detect > /etc/config/fstab
-uci set fstab.@mount[-1].target='/mnt/usb' u
-ci set fstab.@mount[-1].enabled=1
-uci commit fstab
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>更详细的信息可以参见<a href="http://wiki.openwrt.org/doc/uci/fstab" target="_blank" rel="external">这里</a></p>
-<h4 id="文件共享"><a href="#文件共享" class="headerlink" title="文件共享"></a>文件共享</h4><p>文件共享可以通过FTP和SAMBA，推荐的方式是SAMBA。</p>
-<h5 id="SAMBA"><a href="#SAMBA" class="headerlink" title="SAMBA"></a>SAMBA</h5><p>安转SAMBA：</p>
-<pre class="line-numbers language-lang-bash"><code class="language-lang-bash">opkg update
-opkg install samba36-server
-
-# luci程序，可选
-opkg install luci-app-samba
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>安装好SAMBA后，主要配置两个参数，一是共享文件夹的路径，如<code>/mnt/usb/sambashare</code>，可以通过更改配置文件<code>/etc/samba/smb.conf</code>实现，也可以通过luci实现。</p>
-<p>示例：</p>
-<pre><code>[sambashare]
-path = /mnt/usb/sambashare
-valid users = root
-read only = no
-guest ok = yes
-create mask = 0750
-directory mask = 0750
-</code></pre><p>第二个参数是访问账户，可以通过命令<code>sambpasswd -a</code>将你的当前用户加入到SAMBA的组中，需要设置一个密码。另外，可能需要将配置文件<code>/etc/samba/smb.conf</code>的[global]中的<code>invalid users = root</code>注释掉。</p>
-<p>最后，设置SAMBA服务启动和开机自启</p>
-<pre class="line-numbers language-lang-bash"><code class="language-lang-bash">/etc/init.d/samba start
-/etc/init.d/samba enable
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h5 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h5><p>FTP可以用<code>vsftpd</code>包来设置，大致过程与SAMBA类似：设置路径、添加用户、设置自启。</p>
-<p>SAMBA服务可以在Windows文件资源管理器中自动检测的到，Linux下可以通过<code>smb://Host/sharepath</code>访问，在IOS系统中，类似Documents的应用也支持添加SAMBA的功能。</p>
-<p>这里强推一下Documents这个应用，结合PDF EXPERT，已经成为了我的文档中心。</p>
-<h3 id="访问Google"><a href="#访问Google" class="headerlink" title="访问Google"></a>访问Google</h3><p>这部分操作相当复杂，主要参考<a href="https://cokebar.info/archives/664" target="_blank" rel="external">这里</a>，感谢博主。</p>
-<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>这天的活动，本来只有我和上帝知道，再过一个月，就只有上帝知道了。遂作笔记。</p>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;生命不惜，折腾不止。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id=&quot;缘起&quot;&gt;&lt;a href=&quot;#缘起&quot; class=&quot;headerlink&quot; title=&quot;缘起&quot;&gt;&lt;/a&gt;缘起&lt;/h3&gt;&lt;p&gt;再次成为IOS用户后，访问Google和文件共享成
-    
-    </summary>
-    
-      <category term="Linux" scheme="http://blog.ddlee.cn/categories/Linux/"/>
-    
-    
-      <category term="OpenWrt" scheme="http://blog.ddlee.cn/tags/OpenWrt/"/>
-    
-      <category term="路由器" scheme="http://blog.ddlee.cn/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/"/>
     
   </entry>
   
