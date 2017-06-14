@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.ddlee.cn/"/>
-  <updated>2017-06-05T08:09:52.667Z</updated>
+  <updated>2017-06-14T10:58:41.185Z</updated>
   <id>http://blog.ddlee.cn/</id>
   
   <author>
@@ -14,6 +14,45 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>自用LaTeX中英文简历模板</title>
+    <link href="http://blog.ddlee.cn/2017/06/14/%E8%87%AA%E7%94%A8LaTeX%E4%B8%AD%E8%8B%B1%E6%96%87%E5%BB%BA%E7%AB%8B%E6%A8%A1%E6%9D%BF/"/>
+    <id>http://blog.ddlee.cn/2017/06/14/自用LaTeX中英文建立模板/</id>
+    <published>2017-06-14T10:58:41.000Z</published>
+    <updated>2017-06-14T10:58:41.185Z</updated>
+    
+    <content type="html"><![CDATA[<p>分享一套自用的LaTeX中英文简历模板，改编自Alessandro Plasmati在<a href="https://www.sharelatex.com/templates/cv-or-resume/professional-cv" target="_blank" rel="external">ShareLaTeX</a>上分享的模板。</p>
+<h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><ul>
+<li>Github仓库：<a href="https://github.com/ddlee96/latex_cv_template" target="_blank" rel="external">ddlee96/latex_cv_template</a></li>
+<li>编译引擎： XeLaTeX</li>
+<li>下载地址： <a href="https://github.com/ddlee96/latex_cv_template/releases/tag/0.1" target="_blank" rel="external">v0.1</a></li>
+<li>压缩包内包含.tex文件和所用字体文件，解压后修改.tex文件再编译即可。</li>
+<li>在Ubuntu 16.04, Texlive 2016环境下测试通过。</li>
+<li>英文字体: Fontin，中文字体：方正兰亭黑</li>
+</ul>
+<h4 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h4><ul>
+<li>.tex代码：Apache 2.0</li>
+<li>字体： 仅供个人使用</li>
+</ul>
+<h4 id="效果预览"><a href="#效果预览" class="headerlink" title="效果预览"></a>效果预览</h4><h5 id="英文"><a href="#英文" class="headerlink" title="英文"></a>英文</h5><p><img src="http://static.ddlee.cn/static/img/自用LaTeX中英文建立模板/cv-1.png" alt="en"></p>
+<h5 id="中文"><a href="#中文" class="headerlink" title="中文"></a>中文</h5><p><img src="http://static.ddlee.cn/static/img/自用LaTeX中英文建立模板/cv_zh-1.png" alt="zh"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;分享一套自用的LaTeX中英文简历模板，改编自Alessandro Plasmati在&lt;a href=&quot;https://www.sharelatex.com/templates/cv-or-resume/professional-cv&quot; target=&quot;_blank&quot; re
+    
+    </summary>
+    
+      <category term="Individual Development" scheme="http://blog.ddlee.cn/categories/Individual-Development/"/>
+    
+    
+      <category term="Individual Development" scheme="http://blog.ddlee.cn/tags/Individual-Development/"/>
+    
+      <category term="LaTeX" scheme="http://blog.ddlee.cn/tags/LaTeX/"/>
+    
+  </entry>
   
   <entry>
     <title>[论文笔记]Large-Scale Evolution of Image Classifiers</title>
@@ -1832,57 +1871,6 @@ server {
       <category term="Data Sicence" scheme="http://blog.ddlee.cn/tags/Data-Sicence/"/>
     
       <category term="Hadoop" scheme="http://blog.ddlee.cn/tags/Hadoop/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Kaggle比赛中EDA：流程、做法与目的</title>
-    <link href="http://blog.ddlee.cn/2017/03/26/Kaggle%E6%AF%94%E8%B5%9B%E4%B8%ADEDA%EF%BC%9A%E6%B5%81%E7%A8%8B%E3%80%81%E5%81%9A%E6%B3%95%E4%B8%8E%E7%9B%AE%E7%9A%84/"/>
-    <id>http://blog.ddlee.cn/2017/03/26/Kaggle比赛中EDA：流程、做法与目的/</id>
-    <published>2017-03-26T11:09:00.000Z</published>
-    <updated>2017-04-02T17:47:54.245Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="数据集大小、字段及相应的数据类型"><a href="#数据集大小、字段及相应的数据类型" class="headerlink" title="数据集大小、字段及相应的数据类型"></a>数据集大小、字段及相应的数据类型</h4><ul>
-<li>大小：占用内存估计</li>
-<li>字段数：维度估计，是否需要降维</li>
-<li>数据类型：numerical, factor, string, etc. 是否需要归一化，二元化等等</li>
-</ul>
-<h4 id="了解数据的缺失值情况及分布"><a href="#了解数据的缺失值情况及分布" class="headerlink" title="了解数据的缺失值情况及分布"></a>了解数据的缺失值情况及分布</h4><h4 id="了解数据分布情况，可用众多图形完成"><a href="#了解数据分布情况，可用众多图形完成" class="headerlink" title="了解数据分布情况，可用众多图形完成"></a>了解数据分布情况，可用众多图形完成</h4><ul>
-<li>bar plot</li>
-<li>histogram</li>
-<li>violin plot</li>
-<li>box plot</li>
-<li>scatter plot</li>
-</ul>
-<h5 id="主要目的："><a href="#主要目的：" class="headerlink" title="主要目的："></a>主要目的：</h5><ol>
-<li>了解整体状况，是否具有野点</li>
-<li>结合目标变量，考察特征与目标变量间的相关性</li>
-</ol>
-<h5 id="文本数据常用的探索："><a href="#文本数据常用的探索：" class="headerlink" title="文本数据常用的探索："></a>文本数据常用的探索：</h5><ul>
-<li>词频统计（消除stopwords之后）</li>
-<li>词云</li>
-</ul>
-<h4 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h4><p>本来文章是从几个经典的EDA notebook开始，试图总结出其共性之处，但写来写去，总觉得随便一本跟数据分析相关的书中，探索性数据分析的章节也大概都会涉及到这些内容，但在读书的情景之下又难留下深刻的印象，做分析的真正见地与经验，还是要从实践中来啊。</p>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h4 id=&quot;数据集大小、字段及相应的数据类型&quot;&gt;&lt;a href=&quot;#数据集大小、字段及相应的数据类型&quot; class=&quot;headerlink&quot; title=&quot;数据集大小、字段及相应的数据类型&quot;&gt;&lt;/a&gt;数据集大小、字段及相应的数据类型&lt;/h4&gt;&lt;ul&gt;
-&lt;li&gt;大小：占用内存估
-    
-    </summary>
-    
-      <category term="Data Science" scheme="http://blog.ddlee.cn/categories/Data-Science/"/>
-    
-    
-      <category term="Kaggle" scheme="http://blog.ddlee.cn/tags/Kaggle/"/>
-    
-      <category term="EDA" scheme="http://blog.ddlee.cn/tags/EDA/"/>
-    
-      <category term="Data Sciencce" scheme="http://blog.ddlee.cn/tags/Data-Sciencce/"/>
-    
-      <category term="笔记" scheme="http://blog.ddlee.cn/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
