@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh">
     <head>
-    <!--
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!--
         © Material Theme
         https://github.com/viosey/hexo-theme-material
         Version: 1.3.0 -->
@@ -198,12 +198,12 @@
     <!-- Custom Head -->
     
 <link rel="stylesheet" href="/css/prism.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 
 
     
         <body id="scheme-Paradox" class="lazy">
-            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+            <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="material-layout  mdl-js-layout has-drawer is-upgraded">
                 
 
                 <!-- Main Container -->
@@ -395,11 +395,10 @@
 <p>我觉得本文的亮点有二：</p>
 <h3 id="1-提出T-ReLU并配合Affine-Tranformation使在引入WN后网络的表达能力维持不变"><a href="#1-提出T-ReLU并配合Affine-Tranformation使在引入WN后网络的表达能力维持不变" class="headerlink" title="1. 提出T-ReLU并配合Affine Tranformation使在引入WN后网络的表达能力维持不变"></a>1. 提出T-ReLU并配合Affine Tranformation使在引入WN后网络的表达能力维持不变</h3><p>朴素的参数标准化层有如下的形式：<br>
 $$y=\frac{{w}^{T}x}{\|w\|}$$
-
-文中称这样形式的层为“strict weight-normalized layer”。若将线性层换为这样的层，网络的表达能力会下降，因而需要添加如下的affine transformation:
+<br>文中称这样形式的层为“strict weight-normalized layer”。若将线性层换为这样的层，网络的表达能力会下降，因而需要添加如下的affine transformation:</p>
 
 $$y=\frac{{w}^{T}x}{\|w\|} \gamma + \beta$$
-</p>
+
 <p>用于恢复网络的表达能力。</p>
 <p>将上述变换带入ReLU，简化后可以得到如下T-ReLu:</p>
 <script type="math/tex; mode=display">TReLU_\alpha (x) = ReLU(x-\alpha) + \alpha</script><p>文章的一个重要结论是，在网络的最后一层加入affine transformation层之后，堆叠的“线性层+ReLU”与“strict weight-normalized layer + T-ReLU”表达能力相同（在附录中给出证明）。</p>
@@ -1023,7 +1022,24 @@ It will not impact the appearance and can give developers a lot of support :)
 
 
                 </main>
-            </div>
+            </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
         </body>
     
 </html>

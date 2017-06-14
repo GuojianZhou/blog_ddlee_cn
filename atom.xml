@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.ddlee.cn/"/>
-  <updated>2017-06-14T14:56:28.149Z</updated>
+  <updated>2017-06-14T14:58:06.109Z</updated>
   <id>http://blog.ddlee.cn/</id>
   
   <author>
@@ -20,14 +20,16 @@
     <link href="http://blog.ddlee.cn/2017/06/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Accurate-Large-Minibatch-SGD-Training-ImageNet-in-One-Hour/"/>
     <id>http://blog.ddlee.cn/2017/06/14/论文笔记-Accurate-Large-Minibatch-SGD-Training-ImageNet-in-One-Hour/</id>
     <published>2017-06-14T14:43:41.000Z</published>
-    <updated>2017-06-14T14:56:28.149Z</updated>
+    <updated>2017-06-14T14:58:06.109Z</updated>
     
     <content type="html"><![CDATA[<p>论文：<a href="https://arxiv.org/abs/1706.02677" target="_blank" rel="external">Accurate, Large Minibatch SGD: Training ImageNet in One Hour</a></p>
 <p>这篇文章在各处都有很广泛的讨论，作为实验经验并不多的小白，将文中tricks只做些记录。</p>
 <h3 id="Linear-Scaling-Rule"><a href="#Linear-Scaling-Rule" class="headerlink" title="Linear Scaling Rule"></a>Linear Scaling Rule</h3><p>进行大批量的Minibatch SGD时会有批量越大，误差越大的问题。本文提出的Linear Scaling Rule正是试图解决这一问题。</p>
-<h4 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h4><p>设想两个情景：一是在一次参数更新中使用kn个样本梯度，二是分为k次更新，每次取n个样本梯度。<br>
-第一种情景的参数更新公式：
-$$w_t+1^(1) = w_t^(1) - \mu^(1) \frac{1}{kn} \sum_{j<k} \sum="" \bigtriangledown="" l(x,="" w_t)$$="" 第二种情景的参数更新公式：="" $$w_t+k^(2)="w_t^(2)" -="" \mu^(2)="" \frac{1}{n}="" \sum_{j<k}="" w_t+j)$$="" <="" p="">
+<h4 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h4><p>设想两个情景：一是在一次参数更新中使用kn个样本梯度，二是分为k次更新，每次取n个样本梯度。</p>
+<p>第一种情景的参数更新公式：<br>
+$$w_t+1^(1) = w_t^(1) - \mu^(1) \frac{1}{kn} \sum_{j<k} \sum="" \bigtriangledown="" l(x,="" w_t)$$="" <="" p="">
+<p>第二种情景的参数更新公式：<br>
+$$w_t+k^(2) = w_t^(2) - \mu^(2) \frac{1}{n} \sum_{j<k} \sum="" \bigtriangledown="" l(x,="" w_t+j)$$="" <="" p="">
 <p>由上面可以看出，主要的区别是梯度平均时批量的大小不同，前者为kn，后者为每次n，更新k次。</p>
 <p>再假设双重求和号内项变化不大时，为使情景二更新k次（即使用同样数量的样本）之后参数与情景一类似，我们自然要将学习速率$\mu$线性提升。</p>
 <h3 id="Gradual-Warmup"><a href="#Gradual-Warmup" class="headerlink" title="Gradual Warmup"></a>Gradual Warmup</h3><p>上面提到的Linear Scaling Rule使用的假设是梯度变化不大。但在训练初期，参数随机初始化，梯度变化很大，因而Linear Scaling Rule不再适用。在实践中，可以使学习速率在初始时较小，在经过几个epoch训练后再升至与kn批量相应的大小。</p>
@@ -35,7 +37,7 @@ $$w_t+1^(1) = w_t^(1) - \mu^(1) \frac{1}{kn} \sum_{j<k} \sum="" \bigtriangledown
 <h3 id="Weight-Decay"><a href="#Weight-Decay" class="headerlink" title="Weight Decay"></a>Weight Decay</h3><p>由于weight decay的存在，Linear Scaling Rule最好用于学习速率，而非用于Loss Function</p>
 <h3 id="Momentum-Correction"><a href="#Momentum-Correction" class="headerlink" title="Momentum Correction"></a>Momentum Correction</h3><p>加入Linear Scaling Rule之后，适用动量加速的SGD需要进行动量更正。</p>
 <h3 id="Data-Shuffling"><a href="#Data-Shuffling" class="headerlink" title="Data Shuffling"></a>Data Shuffling</h3><p>在分布式的系统中，先进行Data Shuffling，再分配数据到每个worker上。</p>
-</k}></p>]]></content>
+</k}></p></k}></p>]]></content>
     
     <summary type="html">
     
@@ -98,18 +100,17 @@ $$w_t+1^(1) = w_t^(1) - \mu^(1) \frac{1}{kn} \sum_{j<k} \sum="" \bigtriangledown
     <link href="http://blog.ddlee.cn/2017/06/10/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-On-the-Effects-and-Weight-Normalization-in-GAN/"/>
     <id>http://blog.ddlee.cn/2017/06/10/论文笔记-On-the-Effects-and-Weight-Normalization-in-GAN/</id>
     <published>2017-06-10T14:01:21.000Z</published>
-    <updated>2017-06-14T14:56:38.801Z</updated>
+    <updated>2017-06-14T14:57:42.981Z</updated>
     
     <content type="html"><![CDATA[<p>论文：<a href="https://arxiv.org/abs/1704.03971" target="_blank" rel="external">On the Effects and Weight Normalization in GAN</a></p>
 <p>本文探索了参数标准化(Weight Normalization)这一技术在GAN中的应用。BN在mini-batch的层级上计算均值和方差，容易引入噪声，并不适用于GAN这种生成模型，而WN对参数进行重写，引入噪声更少。</p>
 <p>我觉得本文的亮点有二：</p>
 <h3 id="1-提出T-ReLU并配合Affine-Tranformation使在引入WN后网络的表达能力维持不变"><a href="#1-提出T-ReLU并配合Affine-Tranformation使在引入WN后网络的表达能力维持不变" class="headerlink" title="1. 提出T-ReLU并配合Affine Tranformation使在引入WN后网络的表达能力维持不变"></a>1. 提出T-ReLU并配合Affine Tranformation使在引入WN后网络的表达能力维持不变</h3><p>朴素的参数标准化层有如下的形式：<br>
 $$y=\frac{{w}^{T}x}{\|w\|}$$
-
-文中称这样形式的层为“strict weight-normalized layer”。若将线性层换为这样的层，网络的表达能力会下降，因而需要添加如下的affine transformation:
+<br>文中称这样形式的层为“strict weight-normalized layer”。若将线性层换为这样的层，网络的表达能力会下降，因而需要添加如下的affine transformation:</p>
 
 $$y=\frac{{w}^{T}x}{\|w\|} \gamma + \beta$$
-</p>
+
 <p>用于恢复网络的表达能力。</p>
 <p>将上述变换带入ReLU，简化后可以得到如下T-ReLu:</p>
 <script type="math/tex; mode=display">TReLU_\alpha (x) = ReLU(x-\alpha) + \alpha</script><p>文章的一个重要结论是，在网络的最后一层加入affine transformation层之后，堆叠的“线性层+ReLU”与“strict weight-normalized layer + T-ReLU”表达能力相同（在附录中给出证明）。</p>
