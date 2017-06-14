@@ -282,29 +282,29 @@
     </url>
 
     <url>
-        <loc>http://blog.ddlee.cn/tags/GAN/</loc>
-        <lastmod>2017-06-14T14:53:26.108Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://blog.ddlee.cn/tags/AI/</loc>
-        <lastmod>2017-06-14T14:53:53.080Z</lastmod>
+        <lastmod>2017-06-14T14:56:38.801Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://blog.ddlee.cn/tags/Deep-Learning/</loc>
-        <lastmod>2017-06-14T14:53:53.080Z</lastmod>
+        <lastmod>2017-06-14T14:56:38.801Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://blog.ddlee.cn/tags/Papers/</loc>
-        <lastmod>2017-06-14T14:53:53.080Z</lastmod>
+        <lastmod>2017-06-14T14:56:38.801Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/tags/GAN/</loc>
+        <lastmod>2017-06-14T14:56:38.801Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

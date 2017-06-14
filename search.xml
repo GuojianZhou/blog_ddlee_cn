@@ -9,9 +9,9 @@
       <content type="html"><![CDATA[<p>论文：<a href="https://arxiv.org/abs/1706.02677" target="_blank" rel="external">Accurate, Large Minibatch SGD: Training ImageNet in One Hour</a></p>
 <p>这篇文章在各处都有很广泛的讨论，作为实验经验并不多的小白，将文中tricks只做些记录。</p>
 <h3 id="Linear-Scaling-Rule"><a href="#Linear-Scaling-Rule" class="headerlink" title="Linear Scaling Rule"></a>Linear Scaling Rule</h3><p>进行大批量的Minibatch SGD时会有批量越大，误差越大的问题。本文提出的Linear Scaling Rule正是试图解决这一问题。</p>
-<h4 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h4><p>设想两个情景：一是在一次参数更新中使用kn个样本梯度，二是分为k次更新，每次取n个样本梯度。<br><br>第一种情景的参数更新公式：</p>
-<script type="math/tex; mode=display">w_t+1^(1) = w_t^(1) - \mu^(1) \frac{1}{kn} \sum_{j<k} \sum \bigtriangledown l(x, w_t)</script><p>第二种情景的参数更新公式：</p>
-<script type="math/tex; mode=display">w_t+k^(2) = w_t^(2) - \mu^(2) \frac{1}{n} \sum_{j<k} \sum \bigtriangledown l(x, w_t+j)</script>{% raw %}
+<h4 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h4><p>设想两个情景：一是在一次参数更新中使用kn个样本梯度，二是分为k次更新，每次取n个样本梯度。<br>
+第一种情景的参数更新公式：
+$$w_t+1^(1) = w_t^(1) - \mu^(1) \frac{1}{kn} \sum_{j<k} \sum="" \bigtriangledown="" l(x,="" w_t)$$="" 第二种情景的参数更新公式：="" $$w_t+k^(2)="w_t^(2)" -="" \mu^(2)="" \frac{1}{n}="" \sum_{j<k}="" w_t+j)$$="" <="" p="">
 <p>由上面可以看出，主要的区别是梯度平均时批量的大小不同，前者为kn，后者为每次n，更新k次。</p>
 <p>再假设双重求和号内项变化不大时，为使情景二更新k次（即使用同样数量的样本）之后参数与情景一类似，我们自然要将学习速率$\mu$线性提升。</p>
 <h3 id="Gradual-Warmup"><a href="#Gradual-Warmup" class="headerlink" title="Gradual Warmup"></a>Gradual Warmup</h3><p>上面提到的Linear Scaling Rule使用的假设是梯度变化不大。但在训练初期，参数随机初始化，梯度变化很大，因而Linear Scaling Rule不再适用。在实践中，可以使学习速率在初始时较小，在经过几个epoch训练后再升至与kn批量相应的大小。</p>
@@ -19,7 +19,7 @@
 <h3 id="Weight-Decay"><a href="#Weight-Decay" class="headerlink" title="Weight Decay"></a>Weight Decay</h3><p>由于weight decay的存在，Linear Scaling Rule最好用于学习速率，而非用于Loss Function</p>
 <h3 id="Momentum-Correction"><a href="#Momentum-Correction" class="headerlink" title="Momentum Correction"></a>Momentum Correction</h3><p>加入Linear Scaling Rule之后，适用动量加速的SGD需要进行动量更正。</p>
 <h3 id="Data-Shuffling"><a href="#Data-Shuffling" class="headerlink" title="Data Shuffling"></a>Data Shuffling</h3><p>在分布式的系统中，先进行Data Shuffling，再分配数据到每个worker上。</p>
-]]></content>
+</k}></p>]]></content>
       
         <categories>
             
@@ -89,28 +89,17 @@ $$y=\frac{{w}^{T}x}{\|w\|}$$
 文中称这样形式的层为“strict weight-normalized layer”。若将线性层换为这样的层，网络的表达能力会下降，因而需要添加如下的affine transformation:
 
 $$y=\frac{{w}^{T}x}{\|w\|} \gamma + \beta$$
-{% raw %}
+</p>
+<p>用于恢复网络的表达能力。</p>
+<p>将上述变换带入ReLU，简化后可以得到如下T-ReLu:</p>
+<script type="math/tex; mode=display">TReLU_\alpha (x) = ReLU(x-\alpha) + \alpha</script><p>文章的一个重要结论是，在网络的最后一层加入affine transformation层之后，堆叠的“线性层+ReLU”与“strict weight-normalized layer + T-ReLU”表达能力相同（在附录中给出证明）。</p>
+<p>下面L表示线性层，R表示ReLU，TR表示TReLU，A表示affine transformation，S表示上述的strict weight-normalized layer。</p>
+<p>证明的大致思路是，在ReLU与线性层之间加入affine transformation层，由于线性层的存在，affine transformation带来的效果会被吸收（相当于多个线性层叠在一起还是线性层），网络表达能力不变。而”L+R+A”的结构可以等价于”S+TR+A”。如此递归下去，即可得到结论。个人认为相当于把线性层中的bias转嫁成了TReLU中的threshold（即$\alpha$）。</p>
+<h3 id="2-提出对生成图形的评估指标"><a href="#2-提出对生成图形的评估指标" class="headerlink" title="2. 提出对生成图形的评估指标"></a>2. 提出对生成图形的评估指标</h3><p>生成式模型的生成效果常常难以评价。DcGAN给出的结果也是生成图片的对比。本文中提出一个评价生成效果的指标，且与人的主观评价一致。</p>
+<p>评价的具体指标是生成图片与测试集图片的欧氏距离，评价的对象是生成器是Generator。有如下形式：</p>
 
-用于恢复网络的表达能力。
-
-将上述变换带入ReLU，简化后可以得到如下T-ReLu:
-$$TReLU_\alpha (x) = ReLU(x-\alpha) + \alpha$$
-
-文章的一个重要结论是，在网络的最后一层加入affine transformation层之后，堆叠的“线性层+ReLU”与“strict weight-normalized layer + T-ReLU”表达能力相同（在附录中给出证明）。
-
-下面L表示线性层，R表示ReLU，TR表示TReLU，A表示affine transformation，S表示上述的strict weight-normalized layer。
-
-证明的大致思路是，在ReLU与线性层之间加入affine transformation层，由于线性层的存在，affine transformation带来的效果会被吸收（相当于多个线性层叠在一起还是线性层），网络表达能力不变。而"L+R+A"的结构可以等价于"S+TR+A"。如此递归下去，即可得到结论。个人认为相当于把线性层中的bias转嫁成了TReLU中的threshold（即$\alpha$）。
-
-### 2. 提出对生成图形的评估指标
-
-生成式模型的生成效果常常难以评价。DcGAN给出的结果也是生成图片的对比。本文中提出一个评价生成效果的指标，且与人的主观评价一致。
-
-评价的具体指标是生成图片与测试集图片的欧氏距离，评价的对象是生成器是Generator。有如下形式：
-
-{% raw %}
 $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
-{% endraw %}</p>
+
 <p>其中的$min$指使用梯度下降方法等使生成图片的效果最好。但事实上这样做开销很高。</p>
 <h3 id="PyTorch实现"><a href="#PyTorch实现" class="headerlink" title="PyTorch实现"></a>PyTorch实现</h3><p>作者将他们的实现代码公布在了<a href="https://github.com/stormraiser/GAN-weight-norm" target="_blank" rel="external">GitHub</a>上。</p>
 <p>下面是利用PyTorch对T-ReLU的实现：</p>
