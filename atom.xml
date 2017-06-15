@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.ddlee.cn/"/>
-  <updated>2017-06-14T15:22:19.907Z</updated>
+  <updated>2017-06-14T15:23:44.849Z</updated>
   <id>http://blog.ddlee.cn/</id>
   
   <author>
@@ -20,17 +20,17 @@
     <link href="http://blog.ddlee.cn/2017/06/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Accurate-Large-Minibatch-SGD-Training-ImageNet-in-One-Hour/"/>
     <id>http://blog.ddlee.cn/2017/06/14/论文笔记-Accurate-Large-Minibatch-SGD-Training-ImageNet-in-One-Hour/</id>
     <published>2017-06-14T14:43:41.000Z</published>
-    <updated>2017-06-14T15:22:19.907Z</updated>
+    <updated>2017-06-14T15:23:44.849Z</updated>
     
     <content type="html"><![CDATA[<p>论文：<a href="https://arxiv.org/abs/1706.02677" target="_blank" rel="external">Accurate, Large Minibatch SGD: Training ImageNet in One Hour</a></p>
 <p>这篇文章在各处都有很广泛的讨论，作为实验经验并不多的小白，将文中tricks只做些记录。</p>
 <h3 id="Linear-Scaling-Rule"><a href="#Linear-Scaling-Rule" class="headerlink" title="Linear Scaling Rule"></a>Linear Scaling Rule</h3><p>进行大批量的Minibatch SGD时会有批量越大，误差越大的问题。本文提出的Linear Scaling Rule正是试图解决这一问题。</p>
 <h4 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h4><p>设想两个情景：一是在一次参数更新中使用kn个样本梯度，二是分为k次更新，每次取n个样本梯度。</p>
 <p>第一种情景的参数更新公式：<br>
-$$w_t+1^(1) = w_t^(1) - \mu^(1) \frac{1}{kn} \sum_{j \leq k} \sum \bigtriangledown l(x, w_t)$$
+$$w_t+1^{(1)} = w_t^{(1)} - \mu^{(1)} \frac{1}{kn} \sum_{j \leq k} \sum \bigtriangledown l(x, w_t)$$
 </p>
 <p>第二种情景的参数更新公式：<br>
-$$w_t+k^(2) = w_t^(2) - \mu^(2) \frac{1}{n} \sum_{j \leq k} \sum \bigtriangledown l(x, w_t+j)$$
+$$w_t+k^{(2)} = w_t^{(2)} - \mu^{(2)} \frac{1}{n} \sum_{j \leq k} \sum \bigtriangledown l(x, w_t+j)$$
 </p>
 <p>由上面可以看出，主要的区别是梯度平均时批量的大小不同，前者为kn，后者为每次n，更新k次。</p>
 <p>再假设双重求和号内项变化不大时，为使情景二更新k次（即使用同样数量的样本）之后参数与情景一类似，我们自然要将学习速率$\mu$线性提升。</p>
@@ -1799,7 +1799,7 @@ loop.run_forever()
     <link href="http://blog.ddlee.cn/2017/04/03/Feedly-Reeder3-FeedMe-%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96%E4%B8%8E%E5%A4%84%E7%90%86/"/>
     <id>http://blog.ddlee.cn/2017/04/03/Feedly-Reeder3-FeedMe-信息获取与处理/</id>
     <published>2017-04-03T03:13:37.000Z</published>
-    <updated>2017-04-05T13:13:10.337Z</updated>
+    <updated>2017-06-15T05:49:43.310Z</updated>
     
     <content type="html"><![CDATA[<p>我蛮早就意识到自己被信息淹没了。于是关了票圈，屏蔽了空间，不装任何新闻APP，失去效力的微信群一概不留，知乎上的关注也缩减了很多很多。</p>
 <blockquote>
@@ -1870,7 +1870,7 @@ loop.run_forever()
     
     </summary>
     
-      <category term="Individual Management" scheme="http://blog.ddlee.cn/categories/Individual-Management/"/>
+      <category term="Individual Development" scheme="http://blog.ddlee.cn/categories/Individual-Development/"/>
     
     
       <category term="Individual Management" scheme="http://blog.ddlee.cn/tags/Individual-Management/"/>

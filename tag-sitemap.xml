@@ -107,20 +107,6 @@
     </url>
 
     <url>
-        <loc>http://blog.ddlee.cn/tags/Individual-Management/</loc>
-        <lastmod>2017-04-05T13:13:10.337Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://blog.ddlee.cn/tags/RSS/</loc>
-        <lastmod>2017-04-05T13:13:10.337Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://blog.ddlee.cn/tags/DevOps/</loc>
         <lastmod>2017-04-05T13:13:11.605Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -186,20 +172,6 @@
     <url>
         <loc>http://blog.ddlee.cn/tags/Refactoring/</loc>
         <lastmod>2017-04-09T16:38:15.126Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://blog.ddlee.cn/tags/Data-Science/</loc>
-        <lastmod>2017-05-28T12:17:21.127Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://blog.ddlee.cn/tags/Programming/</loc>
-        <lastmod>2017-05-28T12:17:21.127Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
@@ -290,21 +262,56 @@
 
     <url>
         <loc>http://blog.ddlee.cn/tags/AI/</loc>
-        <lastmod>2017-06-14T15:22:19.907Z</lastmod>
+        <lastmod>2017-06-14T15:23:44.849Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://blog.ddlee.cn/tags/Deep-Learning/</loc>
-        <lastmod>2017-06-14T15:22:19.907Z</lastmod>
+        <lastmod>2017-06-14T15:23:44.849Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://blog.ddlee.cn/tags/Papers/</loc>
-        <lastmod>2017-06-14T15:22:19.907Z</lastmod>
+        <lastmod>2017-06-14T15:23:44.849Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/tags/Individual-Management/</loc>
+        <lastmod>2017-06-15T05:49:43.310Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/tags/RSS/</loc>
+        <lastmod>2017-06-15T05:49:43.310Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/tags/Data-Science/</loc>
+        <lastmod>2017-06-15T05:51:23.914Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/tags/Programming/</loc>
+        <lastmod>2017-06-15T05:51:23.914Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/tags/R/</loc>
+        <lastmod>2017-06-15T05:51:23.914Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
