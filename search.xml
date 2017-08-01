@@ -4,6 +4,197 @@
   
     
     <entry>
+      <title><![CDATA[Tensorflow最佳实践：试验管理]]></title>
+      <url>http://blog.ddlee.cn/2017/07/11/Tensorflow%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%EF%BC%9A%E8%AF%95%E9%AA%8C%E7%AE%A1%E7%90%86/</url>
+      <content type="html"><![CDATA[<p>本文主要记录使用TensorFlow训练模型中与试验管理相关的最佳实践，主要包括模型训练的大致代码框架、模型的保存与恢复、训练过程的监测、随机性的控制等。主要材料来自<a href="https://web.stanford.edu/class/cs20si/index.html" target="_blank" rel="external">CS 20SI: Tensorflow for Deep Learning Research</a>。</p>
+<h3 id="TensorFlow代码框架"><a href="#TensorFlow代码框架" class="headerlink" title="TensorFlow代码框架"></a>TensorFlow代码框架</h3><p>使用TensorFlow构建深度网络模型大致包括数据预处理、图的构建、模型训练、模型推断与评估等部分，大致的代码框架如下：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">import tensorflow as tf
+import numpy as np
+
+# Data
+X = tf.placeholder("float", [None, n_input])
+Y = tf.placeholder("float", [None, n_output])
+
+# Parameters
+W = tf.Variable(tf.random_normal([n_input, n_output]))
+b = tf.Variable(tf.random_normal([n_output]))
+
+# Define model
+y = tf.matmul(x, W) + b
+y_pred = tf.nn.relu(y)
+cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(y_pred, y_true))
+optimizer = tf.train.GradientDescentOptimizer(0.05).minimize(cost)
+
+# Training
+with tf.Session() as sess:
+    tf.initialize_all_variables().run()
+    sess.run(optimizer, feed_dict={X: x_data, Y: y_data})
+
+# Prediction
+y_test = tf.nn.relu(tf.matmul(x_test, W) + b))
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="模型的保存与恢复"><a href="#模型的保存与恢复" class="headerlink" title="模型的保存与恢复"></a>模型的保存与恢复</h3><p>一个很深的网络训练成本是比较高的，因而将模型定期保存（写入硬盘）则有必要。这里的模型，实际上是有组织的一批数据，包括图的结构描述、参数当前值等。因而我们要保存的不仅是模型，还有模型当前的运行状态，实际上每一次保存可以作为一个还原点。</p>
+<h4 id="tf-train-Saver类"><a href="#tf-train-Saver类" class="headerlink" title="tf.train.Saver类"></a>tf.train.Saver类</h4><p>使用<code>tf.train.Saver</code>类需传入以下参数：<code>tf.train.Saver.save(sess, save_path, global_step=step)</code>。</p>
+<p>首先定义步数变量：<code>self​.​global_step ​=​ tf​.​Variable​(​0​,​ dtype​=​tf​.​int32​,​ trainable​=​False​,name​=​&#39;global_step&#39;)</code></p>
+<p>在模型训练的过程中插入还原点的保存：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">self​.​optimizer ​=​ tf​.​train​.​GradientDescentOptimizer​(​self​.​lr​).​minimize​(​self​.​loss​,global_step​=​self​.​global_step)
+saver ​=​ tf​.​train​.​Saver​()​​
+​with​ tf​.​Session​()​​as​ sess:
+ sess​.​run​(​tf​.​global_variables_initializer​())        
+ average_loss ​=​​0.0
+ for​ index ​in​ range​(​num_train_steps​):            
+    batch ​=​ batch_gen​.​next​()
+    loss_batch​,​ _ ​=​ sess​.​run​([​model​.​loss​,​ model​.​optimizer​], feed_dict​={...})
+    average_loss ​+=​ loss_batch
+    # Save model every 1000 steps
+    ​if​​(​index ​+​​1​)​​%​​1000​​==​​0:
+      saver​.​save​(​sess​,​​'checkpoints/model'​,​ global_step​=​model​.​global_step)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在训练过程中，在<code>checkpoints</code>路径下会存储一系列的还原点文件，要恢复session到某个还原点，可使用如下代码：<code>saver.restore(sess, &#39;checkpoints/name_of_the_checkpoint&#39;)</code>。</p>
+<h4 id="Keras封装：keras-callbacks-ModelCheckpoint"><a href="#Keras封装：keras-callbacks-ModelCheckpoint" class="headerlink" title="Keras封装：keras.callbacks.ModelCheckpoint()"></a>Keras封装：<code>keras.callbacks.ModelCheckpoint()</code></h4><p>Keras对TensorFlow进行了高层的封装，使用一系列回调函数<code>keras.callbacks.Callback()</code>来进行试验管理。</p>
+<p>模型保存<code>ModelCheckpoint()</code>需要传入的参数：<br><code>keras.callbacks.ModelCheckpoint(filepath, monitor=&#39;val_loss&#39;, verbose=0, save_best_only=False, save_weights_only=False, mode=&#39;auto&#39;, period=1)</code></p>
+<p>实际的使用中，将上述回调函数类传入<code>model.fit()</code>过程即可：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">from keras.callbacks import ModelCheckpoint
+
+model = Sequential()
+model.add(Dense(10, input_dim=784, kernel_initializer='uniform'))
+model.add(Activation('softmax'))
+model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
+checkpointer = ModelCheckpoint(filepath='/checkpoints/weights.hdf5', verbose=1, save_best_only=True)
+model.fit(x_train, y_train, batch_size=128, epochs=20, verbose=0, validation_data=(X_test, Y_test), callbacks=[checkpointer])
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="模型训练过程的监测"><a href="#模型训练过程的监测" class="headerlink" title="模型训练过程的监测"></a>模型训练过程的监测</h3><p>训练过程中，我们常常需要提取阶段性的信息来评估模型是否符合预期效果。</p>
+<h4 id="tf-summary"><a href="#tf-summary" class="headerlink" title="tf.summary"></a><code>tf.summary</code></h4><p>首先创建想要观察指标的<code>tf.summary</code>对象：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">with tf.name_scope("summaries"):
+  tf.summary.scalar("loss", self.loss)
+  tf.summary.scalar("accuracy", self.accuracy)
+  tf.summary.histogram("histogram loss", self.loss)
+  # merge them all
+  self.summary_op = tf.summary.merge_all()
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>tf.summary</code>是一种operation，因而可以随训练过程一同运行：<br><code>loss_batch, _, summary = sess.run([model.loss, model.optimizer, model.summary_op], feed_dict=feed_dict)</code></p>
+<p>最后，将summary加入writer以写入文件：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">with tf.Session() as sess:
+  writer ​=​ tf​.​summary​.​FileWriter​(​'./summary'​,​ sess​.​graph)
+  for​ index ​in​ range​(​num_train_steps​):
+    writer.add_summary(summary, global_step=step)
+  writer.close()
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这样，就可以用TensorBoard监测我们关心的指标在训练过程中的变化情况。</p>
+<h4 id="Keras封装：keras-callbacks-TensorBoard"><a href="#Keras封装：keras-callbacks-TensorBoard" class="headerlink" title="Keras封装：keras.callbacks.TensorBoard()"></a>Keras封装：<code>keras.callbacks.TensorBoard()</code></h4><p>Keras同样将TensorBoard封装成回调函数的形式，在模型训练时进行调用即可：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">from keras.callbacks import TensorBoard
+
+tensorboard = TensorBoard(log_dir="./logs")
+model.fit(x_train, y_train, batch_size=128, epochs=20, verbose=0, validation_data=(X_test, Y_test), callbacks=[tensorboard]
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="随机性的控制"><a href="#随机性的控制" class="headerlink" title="随机性的控制"></a>随机性的控制</h3><p>TensorFlow中随机性的控制分为operation和graph两个层面。</p>
+<h4 id="Operation层面"><a href="#Operation层面" class="headerlink" title="Operation层面"></a>Operation层面</h4><p>在Operation层面中，建立随机seed之后，新建立的Session每一次调用<code>sess.run()</code>都会遵循同一随机状态：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">c ​=​ tf​.​random_uniform​([],​​-​10​,​​10​,​ seed​=​2)
+
+with​ tf​.​Session​()​​as​ sess:
+  print​ sess​.​run​(​c) # >> 3.57493
+
+with​ tf​.​Session​()​​as​ sess:
+  print​ sess​.​run​(​c) # >> 3.57493
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>而且，不同的operation可以保存自己的seed:</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">c ​=​ tf​.​random_uniform​([],​​-​10​,​​10​,​ seed​=​1)
+d ​=​ tf​.​random_uniform​([],​​-​10​,​​10​,​ seed​=​2)
+with​ tf​.​Session​() ​​as​ sess:
+  sess​.​run​(​c)
+  sess​.​run​(​d)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="Graph层面"><a href="#Graph层面" class="headerlink" title="Graph层面"></a>Graph层面</h4><p>在Graph层面，整张图公用一个随机状态，多次运行同一图模型的计算，其随机状态保持一致。</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">import​ tensorflow ​as​ tf
+
+tf​.​set_random_seed​(​2)
+
+c ​=​ tf​.​random_uniform​([],​​-​10​,​​10)
+d ​=​ tf​.​random_uniform​([],​​-​10​,​​10)
+with​ tf​.​Session​()​​ as​ sess:
+  sess​.​run​(​c)
+  sess​.​run​(​d)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> AI </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> AI </tag>
+            
+            <tag> best practice </tag>
+            
+            <tag> Tensorflow </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Python最佳实践：遍历列表]]></title>
+      <url>http://blog.ddlee.cn/2017/06/29/Python%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%EF%BC%9A%E9%81%8D%E5%8E%86%E5%88%97%E8%A1%A8/</url>
+      <content type="html"><![CDATA[<h3 id="enumerate-遍历索引和值"><a href="#enumerate-遍历索引和值" class="headerlink" title="enumerate(): 遍历索引和值"></a>enumerate(): 遍历索引和值</h3><p>对列表进行遍历操作时，常也要用到当前遍历项的索引值：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">for i in range(len(flavor_list)):
+  flavor = flaver[i]
+  print('%d: %s' % (i + 1, flavor))
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>这种写法既要取出列表长度，又要根据索引取列表值。但要改用<code>enumerate()</code>函数，则可同时取出索引值和遍历项值：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">for i, flavor in enumerate(flavor_list):
+  print('%d: %s' % (i+1, flavor))
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="zip-并行遍历多个列表"><a href="#zip-并行遍历多个列表" class="headerlink" title="zip(): 并行遍历多个列表"></a>zip(): 并行遍历多个列表</h3><p>我们有多个长度相同的列表，需要在同一索引下对遍历项值进行操作：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">names = ['Cecilia', 'Lise', 'Marie']
+letters = [len(n) for n in names]
+
+longest_name = None
+max_letters = 0
+
+for i, name in enumerate(names):
+  count = letters[i]
+  if count > max_letters:
+    longest_name = name
+    max_letters = count
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>由上可见，name和letter通过索引值关联起来，而使用<code>zip()</code>函数，可免去根据索引取值的过程：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">for name, count in zip(names, letters):
+  if count > max_letters:
+    longest_name = name
+    max_letters = count
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>要注意的是，当多个列表长度不一时，到达最短列表的末尾时，遍历停止。</p>
+<p>而且，<code>enumerate()</code>和<code>zip()</code>返回的对象都是lazy generator，相对来说更加高效。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Programming </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Python </tag>
+            
+            <tag> Programming </tag>
+            
+            <tag> best practice </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[[论文笔记]Accurate, Large Minibatch SGD: Training ImageNet in One Hour]]></title>
       <url>http://blog.ddlee.cn/2017/06/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Accurate-Large-Minibatch-SGD-Training-ImageNet-in-One-Hour/</url>
       <content type="html"><![CDATA[<p>论文：<a href="https://arxiv.org/abs/1706.02677" target="_blank" rel="external">Accurate, Large Minibatch SGD: Training ImageNet in One Hour</a></p>
@@ -34,9 +225,9 @@ $$w_t+k^{(2)} = w_t^{(2)} - \mu^{(2)} \frac{1}{n} \sum_{j \leq k} \sum \bigtrian
         
         <tags>
             
-            <tag> AI </tag>
-            
             <tag> Deep Learning </tag>
+            
+            <tag> AI </tag>
             
             <tag> Papers </tag>
             
@@ -168,9 +359,9 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
         
         <tags>
             
-            <tag> AI </tag>
-            
             <tag> Deep Learning </tag>
+            
+            <tag> AI </tag>
             
             <tag> Papers </tag>
             
@@ -238,9 +429,9 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
         
         <tags>
             
-            <tag> AI </tag>
-            
             <tag> Deep Learning </tag>
+            
+            <tag> AI </tag>
             
             <tag> Papers </tag>
             
@@ -348,9 +539,9 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
         
         <tags>
             
-            <tag> AI </tag>
-            
             <tag> Deep Learning </tag>
+            
+            <tag> AI </tag>
             
             <tag> Machine Learning </tag>
             
@@ -410,9 +601,9 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
         
         <tags>
             
-            <tag> AI </tag>
-            
             <tag> Deep Learning </tag>
+            
+            <tag> AI </tag>
             
             <tag> Machine Learning </tag>
             
@@ -614,11 +805,11 @@ def AutogradRNN(mode, input_size, hidden_size):
         
         <tags>
             
-            <tag> AI </tag>
-            
             <tag> Python </tag>
             
             <tag> Deep Learning </tag>
+            
+            <tag> AI </tag>
             
             <tag> Pytorch </tag>
             
@@ -1014,9 +1205,9 @@ export(tf.shade(agg, cmap=cm(fire, 0.2), how='eq_hist'), 'census_ds_fier_eq_hist
         
         <tags>
             
-            <tag> AI </tag>
-            
             <tag> Deep Learning </tag>
+            
+            <tag> AI </tag>
             
             <tag> Papers </tag>
             
@@ -1117,11 +1308,11 @@ def dropout_backward(dout, cache):
         
         <tags>
             
-            <tag> AI </tag>
-            
             <tag> Python </tag>
             
             <tag> Deep Learning </tag>
+            
+            <tag> AI </tag>
             
             <tag> Pytorch </tag>
             
@@ -1175,9 +1366,9 @@ def dropout_backward(dout, cache):
         
         <tags>
             
-            <tag> AI </tag>
-            
             <tag> Deep Learning </tag>
+            
+            <tag> AI </tag>
             
             <tag> Machine Learning </tag>
             

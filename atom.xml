@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.ddlee.cn/"/>
-  <updated>2017-06-14T15:23:44.849Z</updated>
+  <updated>2017-08-01T13:00:20.447Z</updated>
   <id>http://blog.ddlee.cn/</id>
   
   <author>
@@ -16,11 +16,206 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Tensorflow最佳实践：试验管理</title>
+    <link href="http://blog.ddlee.cn/2017/07/11/Tensorflow%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%EF%BC%9A%E8%AF%95%E9%AA%8C%E7%AE%A1%E7%90%86/"/>
+    <id>http://blog.ddlee.cn/2017/07/11/Tensorflow最佳实践：试验管理/</id>
+    <published>2017-07-11T12:53:27.000Z</published>
+    <updated>2017-08-01T13:00:20.447Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文主要记录使用TensorFlow训练模型中与试验管理相关的最佳实践，主要包括模型训练的大致代码框架、模型的保存与恢复、训练过程的监测、随机性的控制等。主要材料来自<a href="https://web.stanford.edu/class/cs20si/index.html" target="_blank" rel="external">CS 20SI: Tensorflow for Deep Learning Research</a>。</p>
+<h3 id="TensorFlow代码框架"><a href="#TensorFlow代码框架" class="headerlink" title="TensorFlow代码框架"></a>TensorFlow代码框架</h3><p>使用TensorFlow构建深度网络模型大致包括数据预处理、图的构建、模型训练、模型推断与评估等部分，大致的代码框架如下：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">import tensorflow as tf
+import numpy as np
+
+# Data
+X = tf.placeholder("float", [None, n_input])
+Y = tf.placeholder("float", [None, n_output])
+
+# Parameters
+W = tf.Variable(tf.random_normal([n_input, n_output]))
+b = tf.Variable(tf.random_normal([n_output]))
+
+# Define model
+y = tf.matmul(x, W) + b
+y_pred = tf.nn.relu(y)
+cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(y_pred, y_true))
+optimizer = tf.train.GradientDescentOptimizer(0.05).minimize(cost)
+
+# Training
+with tf.Session() as sess:
+    tf.initialize_all_variables().run()
+    sess.run(optimizer, feed_dict={X: x_data, Y: y_data})
+
+# Prediction
+y_test = tf.nn.relu(tf.matmul(x_test, W) + b))
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="模型的保存与恢复"><a href="#模型的保存与恢复" class="headerlink" title="模型的保存与恢复"></a>模型的保存与恢复</h3><p>一个很深的网络训练成本是比较高的，因而将模型定期保存（写入硬盘）则有必要。这里的模型，实际上是有组织的一批数据，包括图的结构描述、参数当前值等。因而我们要保存的不仅是模型，还有模型当前的运行状态，实际上每一次保存可以作为一个还原点。</p>
+<h4 id="tf-train-Saver类"><a href="#tf-train-Saver类" class="headerlink" title="tf.train.Saver类"></a>tf.train.Saver类</h4><p>使用<code>tf.train.Saver</code>类需传入以下参数：<code>tf.train.Saver.save(sess, save_path, global_step=step)</code>。</p>
+<p>首先定义步数变量：<code>self​.​global_step ​=​ tf​.​Variable​(​0​,​ dtype​=​tf​.​int32​,​ trainable​=​False​,name​=​&#39;global_step&#39;)</code></p>
+<p>在模型训练的过程中插入还原点的保存：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">self​.​optimizer ​=​ tf​.​train​.​GradientDescentOptimizer​(​self​.​lr​).​minimize​(​self​.​loss​,global_step​=​self​.​global_step)
+saver ​=​ tf​.​train​.​Saver​()​​
+​with​ tf​.​Session​()​​as​ sess:
+ sess​.​run​(​tf​.​global_variables_initializer​())        
+ average_loss ​=​​0.0
+ for​ index ​in​ range​(​num_train_steps​):            
+    batch ​=​ batch_gen​.​next​()
+    loss_batch​,​ _ ​=​ sess​.​run​([​model​.​loss​,​ model​.​optimizer​], feed_dict​={...})
+    average_loss ​+=​ loss_batch
+    # Save model every 1000 steps
+    ​if​​(​index ​+​​1​)​​%​​1000​​==​​0:
+      saver​.​save​(​sess​,​​'checkpoints/model'​,​ global_step​=​model​.​global_step)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在训练过程中，在<code>checkpoints</code>路径下会存储一系列的还原点文件，要恢复session到某个还原点，可使用如下代码：<code>saver.restore(sess, &#39;checkpoints/name_of_the_checkpoint&#39;)</code>。</p>
+<h4 id="Keras封装：keras-callbacks-ModelCheckpoint"><a href="#Keras封装：keras-callbacks-ModelCheckpoint" class="headerlink" title="Keras封装：keras.callbacks.ModelCheckpoint()"></a>Keras封装：<code>keras.callbacks.ModelCheckpoint()</code></h4><p>Keras对TensorFlow进行了高层的封装，使用一系列回调函数<code>keras.callbacks.Callback()</code>来进行试验管理。</p>
+<p>模型保存<code>ModelCheckpoint()</code>需要传入的参数：<br><code>keras.callbacks.ModelCheckpoint(filepath, monitor=&#39;val_loss&#39;, verbose=0, save_best_only=False, save_weights_only=False, mode=&#39;auto&#39;, period=1)</code></p>
+<p>实际的使用中，将上述回调函数类传入<code>model.fit()</code>过程即可：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">from keras.callbacks import ModelCheckpoint
+
+model = Sequential()
+model.add(Dense(10, input_dim=784, kernel_initializer='uniform'))
+model.add(Activation('softmax'))
+model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
+checkpointer = ModelCheckpoint(filepath='/checkpoints/weights.hdf5', verbose=1, save_best_only=True)
+model.fit(x_train, y_train, batch_size=128, epochs=20, verbose=0, validation_data=(X_test, Y_test), callbacks=[checkpointer])
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="模型训练过程的监测"><a href="#模型训练过程的监测" class="headerlink" title="模型训练过程的监测"></a>模型训练过程的监测</h3><p>训练过程中，我们常常需要提取阶段性的信息来评估模型是否符合预期效果。</p>
+<h4 id="tf-summary"><a href="#tf-summary" class="headerlink" title="tf.summary"></a><code>tf.summary</code></h4><p>首先创建想要观察指标的<code>tf.summary</code>对象：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">with tf.name_scope("summaries"):
+  tf.summary.scalar("loss", self.loss)
+  tf.summary.scalar("accuracy", self.accuracy)
+  tf.summary.histogram("histogram loss", self.loss)
+  # merge them all
+  self.summary_op = tf.summary.merge_all()
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>tf.summary</code>是一种operation，因而可以随训练过程一同运行：<br><code>loss_batch, _, summary = sess.run([model.loss, model.optimizer, model.summary_op], feed_dict=feed_dict)</code></p>
+<p>最后，将summary加入writer以写入文件：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">with tf.Session() as sess:
+  writer ​=​ tf​.​summary​.​FileWriter​(​'./summary'​,​ sess​.​graph)
+  for​ index ​in​ range​(​num_train_steps​):
+    writer.add_summary(summary, global_step=step)
+  writer.close()
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这样，就可以用TensorBoard监测我们关心的指标在训练过程中的变化情况。</p>
+<h4 id="Keras封装：keras-callbacks-TensorBoard"><a href="#Keras封装：keras-callbacks-TensorBoard" class="headerlink" title="Keras封装：keras.callbacks.TensorBoard()"></a>Keras封装：<code>keras.callbacks.TensorBoard()</code></h4><p>Keras同样将TensorBoard封装成回调函数的形式，在模型训练时进行调用即可：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">from keras.callbacks import TensorBoard
+
+tensorboard = TensorBoard(log_dir="./logs")
+model.fit(x_train, y_train, batch_size=128, epochs=20, verbose=0, validation_data=(X_test, Y_test), callbacks=[tensorboard]
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="随机性的控制"><a href="#随机性的控制" class="headerlink" title="随机性的控制"></a>随机性的控制</h3><p>TensorFlow中随机性的控制分为operation和graph两个层面。</p>
+<h4 id="Operation层面"><a href="#Operation层面" class="headerlink" title="Operation层面"></a>Operation层面</h4><p>在Operation层面中，建立随机seed之后，新建立的Session每一次调用<code>sess.run()</code>都会遵循同一随机状态：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">c ​=​ tf​.​random_uniform​([],​​-​10​,​​10​,​ seed​=​2)
+
+with​ tf​.​Session​()​​as​ sess:
+  print​ sess​.​run​(​c) # >> 3.57493
+
+with​ tf​.​Session​()​​as​ sess:
+  print​ sess​.​run​(​c) # >> 3.57493
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>而且，不同的operation可以保存自己的seed:</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">c ​=​ tf​.​random_uniform​([],​​-​10​,​​10​,​ seed​=​1)
+d ​=​ tf​.​random_uniform​([],​​-​10​,​​10​,​ seed​=​2)
+with​ tf​.​Session​() ​​as​ sess:
+  sess​.​run​(​c)
+  sess​.​run​(​d)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="Graph层面"><a href="#Graph层面" class="headerlink" title="Graph层面"></a>Graph层面</h4><p>在Graph层面，整张图公用一个随机状态，多次运行同一图模型的计算，其随机状态保持一致。</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">import​ tensorflow ​as​ tf
+
+tf​.​set_random_seed​(​2)
+
+c ​=​ tf​.​random_uniform​([],​​-​10​,​​10)
+d ​=​ tf​.​random_uniform​([],​​-​10​,​​10)
+with​ tf​.​Session​()​​ as​ sess:
+  sess​.​run​(​c)
+  sess​.​run​(​d)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文主要记录使用TensorFlow训练模型中与试验管理相关的最佳实践，主要包括模型训练的大致代码框架、模型的保存与恢复、训练过程的监测、随机性的控制等。主要材料来自&lt;a href=&quot;https://web.stanford.edu/class/cs20si/index.h
+    
+    </summary>
+    
+      <category term="AI" scheme="http://blog.ddlee.cn/categories/AI/"/>
+    
+    
+      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
+    
+      <category term="best practice" scheme="http://blog.ddlee.cn/tags/best-practice/"/>
+    
+      <category term="Tensorflow" scheme="http://blog.ddlee.cn/tags/Tensorflow/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python最佳实践：遍历列表</title>
+    <link href="http://blog.ddlee.cn/2017/06/29/Python%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%EF%BC%9A%E9%81%8D%E5%8E%86%E5%88%97%E8%A1%A8/"/>
+    <id>http://blog.ddlee.cn/2017/06/29/Python最佳实践：遍历列表/</id>
+    <published>2017-06-29T14:12:50.000Z</published>
+    <updated>2017-08-01T13:00:37.746Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="enumerate-遍历索引和值"><a href="#enumerate-遍历索引和值" class="headerlink" title="enumerate(): 遍历索引和值"></a>enumerate(): 遍历索引和值</h3><p>对列表进行遍历操作时，常也要用到当前遍历项的索引值：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">for i in range(len(flavor_list)):
+  flavor = flaver[i]
+  print('%d: %s' % (i + 1, flavor))
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>这种写法既要取出列表长度，又要根据索引取列表值。但要改用<code>enumerate()</code>函数，则可同时取出索引值和遍历项值：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">for i, flavor in enumerate(flavor_list):
+  print('%d: %s' % (i+1, flavor))
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="zip-并行遍历多个列表"><a href="#zip-并行遍历多个列表" class="headerlink" title="zip(): 并行遍历多个列表"></a>zip(): 并行遍历多个列表</h3><p>我们有多个长度相同的列表，需要在同一索引下对遍历项值进行操作：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">names = ['Cecilia', 'Lise', 'Marie']
+letters = [len(n) for n in names]
+
+longest_name = None
+max_letters = 0
+
+for i, name in enumerate(names):
+  count = letters[i]
+  if count > max_letters:
+    longest_name = name
+    max_letters = count
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>由上可见，name和letter通过索引值关联起来，而使用<code>zip()</code>函数，可免去根据索引取值的过程：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">for name, count in zip(names, letters):
+  if count > max_letters:
+    longest_name = name
+    max_letters = count
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>要注意的是，当多个列表长度不一时，到达最短列表的末尾时，遍历停止。</p>
+<p>而且，<code>enumerate()</code>和<code>zip()</code>返回的对象都是lazy generator，相对来说更加高效。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;enumerate-遍历索引和值&quot;&gt;&lt;a href=&quot;#enumerate-遍历索引和值&quot; class=&quot;headerlink&quot; title=&quot;enumerate(): 遍历索引和值&quot;&gt;&lt;/a&gt;enumerate(): 遍历索引和值&lt;/h3&gt;&lt;p&gt;对列表进行遍历操
+    
+    </summary>
+    
+      <category term="Programming" scheme="http://blog.ddlee.cn/categories/Programming/"/>
+    
+    
+      <category term="Python" scheme="http://blog.ddlee.cn/tags/Python/"/>
+    
+      <category term="Programming" scheme="http://blog.ddlee.cn/tags/Programming/"/>
+    
+      <category term="best practice" scheme="http://blog.ddlee.cn/tags/best-practice/"/>
+    
+  </entry>
+  
+  <entry>
     <title>[论文笔记]Accurate, Large Minibatch SGD: Training ImageNet in One Hour</title>
     <link href="http://blog.ddlee.cn/2017/06/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Accurate-Large-Minibatch-SGD-Training-ImageNet-in-One-Hour/"/>
     <id>http://blog.ddlee.cn/2017/06/14/论文笔记-Accurate-Large-Minibatch-SGD-Training-ImageNet-in-One-Hour/</id>
     <published>2017-06-14T14:43:41.000Z</published>
-    <updated>2017-06-14T15:23:44.849Z</updated>
+    <updated>2017-06-14T15:23:44.000Z</updated>
     
     <content type="html"><![CDATA[<p>论文：<a href="https://arxiv.org/abs/1706.02677" target="_blank" rel="external">Accurate, Large Minibatch SGD: Training ImageNet in One Hour</a></p>
 <p>这篇文章在各处都有很广泛的讨论，作为实验经验并不多的小白，将文中tricks只做些记录。</p>
@@ -50,9 +245,9 @@ $$w_t+k^{(2)} = w_t^{(2)} - \mu^{(2)} \frac{1}{n} \sum_{j \leq k} \sum \bigtrian
       <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
-    
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
     
       <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
     
@@ -63,7 +258,7 @@ $$w_t+k^{(2)} = w_t^{(2)} - \mu^{(2)} \frac{1}{n} \sum_{j \leq k} \sum \bigtrian
     <link href="http://blog.ddlee.cn/2017/06/14/%E8%87%AA%E7%94%A8LaTeX%E4%B8%AD%E8%8B%B1%E6%96%87%E5%BB%BA%E7%AB%8B%E6%A8%A1%E6%9D%BF/"/>
     <id>http://blog.ddlee.cn/2017/06/14/自用LaTeX中英文建立模板/</id>
     <published>2017-06-14T10:58:41.000Z</published>
-    <updated>2017-06-14T10:58:41.185Z</updated>
+    <updated>2017-06-14T10:58:42.000Z</updated>
     
     <content type="html"><![CDATA[<p>分享一套自用的LaTeX中英文简历模板，改编自Alessandro Plasmati在<a href="https://www.sharelatex.com/templates/cv-or-resume/professional-cv" target="_blank" rel="external">ShareLaTeX</a>上分享的模板。</p>
 <h4 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h4><ul>
@@ -102,7 +297,7 @@ $$w_t+k^{(2)} = w_t^{(2)} - \mu^{(2)} \frac{1}{n} \sum_{j \leq k} \sum \bigtrian
     <link href="http://blog.ddlee.cn/2017/06/10/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-On-the-Effects-and-Weight-Normalization-in-GAN/"/>
     <id>http://blog.ddlee.cn/2017/06/10/论文笔记-On-the-Effects-and-Weight-Normalization-in-GAN/</id>
     <published>2017-06-10T14:01:21.000Z</published>
-    <updated>2017-06-14T14:57:42.981Z</updated>
+    <updated>2017-06-14T14:57:42.000Z</updated>
     
     <content type="html"><![CDATA[<p>论文：<a href="https://arxiv.org/abs/1704.03971" target="_blank" rel="external">On the Effects and Weight Normalization in GAN</a></p>
 <p>本文探索了参数标准化(Weight Normalization)这一技术在GAN中的应用。BN在mini-batch的层级上计算均值和方差，容易引入噪声，并不适用于GAN这种生成模型，而WN对参数进行重写，引入噪声更少。</p>
@@ -189,9 +384,9 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
       <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
-    
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
     
       <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
     
@@ -204,7 +399,7 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
     <link href="http://blog.ddlee.cn/2017/06/05/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Large-Scale-Evolution-of-Image-Classifiers/"/>
     <id>http://blog.ddlee.cn/2017/06/05/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/</id>
     <published>2017-06-05T08:09:52.000Z</published>
-    <updated>2017-06-05T08:09:52.667Z</updated>
+    <updated>2017-06-05T08:09:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>论文：<a href="https://arxiv.org/abs/1703.01041" target="_blank" rel="external">Large-Scale Evolution of Image, Classifiers</a></p>
 <h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>深层网络在图片分类问题上表现优异，但网络结构的设计上并没有统一的指导。进化是构建深度网络架构的一种方式。利用本文的自动化方法得出的深度网络结构，已经能在CIFAR-10上取得可以跟人工设计的网络相媲美的结果</p>
@@ -262,9 +457,9 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
       <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
-    
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
     
       <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
     
@@ -277,7 +472,7 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
     <link href="http://blog.ddlee.cn/2017/06/03/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/"/>
     <id>http://blog.ddlee.cn/2017/06/03/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/</id>
     <published>2017-06-03T06:27:07.000Z</published>
-    <updated>2017-06-03T06:27:07.962Z</updated>
+    <updated>2017-06-03T06:27:08.000Z</updated>
     
     <content type="html"><![CDATA[<p>论文：<a href="https://arxiv.org/abs/1605.07678" target="_blank" rel="external">An Analysis of Deep Neural Network Models for Practical Applications</a></p>
 <p>本文是对现有（论文发表于2016年5月）深度网络的比较，从以下方面入手：</p>
@@ -329,7 +524,7 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
     <link href="http://blog.ddlee.cn/2017/06/01/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E8%A1%A8%E7%A4%BA/"/>
     <id>http://blog.ddlee.cn/2017/06/01/深度学习和分布式表示/</id>
     <published>2017-06-01T14:52:16.000Z</published>
-    <updated>2017-06-03T04:29:31.304Z</updated>
+    <updated>2017-06-03T04:29:32.000Z</updated>
     
     <content type="html"><![CDATA[<p>本文的两个主要参考资料：</p>
 <ol>
@@ -378,9 +573,9 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
       <category term="AI" scheme="http://blog.ddlee.cn/categories/AI/"/>
     
     
-      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
-    
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
     
       <category term="Machine Learning" scheme="http://blog.ddlee.cn/tags/Machine-Learning/"/>
     
@@ -391,7 +586,7 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
     <link href="http://blog.ddlee.cn/2017/05/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-On-the-fly-Operation-Batching-in-Dynamic-Computation-Graphs/"/>
     <id>http://blog.ddlee.cn/2017/05/30/论文笔记-On-the-fly-Operation-Batching-in-Dynamic-Computation-Graphs/</id>
     <published>2017-05-30T07:24:34.000Z</published>
-    <updated>2017-05-30T07:24:34.453Z</updated>
+    <updated>2017-05-30T07:24:34.000Z</updated>
     
     <content type="html"><![CDATA[<p>论文：<a href="http://arxiv.org/abs/1705.07860" target="_blank" rel="external">On-the-fly Operation Batching in Dynamic Computaion Graphs</a></p>
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>基于动态图的深度学习框架如<code>Pytorch</code>,<code>DyNet</code>提供了更为灵活的结构和数据维度的选择，但要求开发者自行将数据批量化，才能最大限度地发挥框架的并行计算优势。</p>
@@ -442,9 +637,9 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
       <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
-    
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
     
       <category term="Machine Learning" scheme="http://blog.ddlee.cn/tags/Machine-Learning/"/>
     
@@ -457,7 +652,7 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
     <link href="http://blog.ddlee.cn/2017/05/29/LSTM-Pytorch%E5%AE%9E%E7%8E%B0/"/>
     <id>http://blog.ddlee.cn/2017/05/29/LSTM-Pytorch实现/</id>
     <published>2017-05-28T17:06:44.000Z</published>
-    <updated>2017-05-28T17:16:51.094Z</updated>
+    <updated>2017-05-28T17:16:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>本文讨论LSTM网络的Pytorch实现，兼论Pytorch库的代码组织方式和架构设计。</p>
 <h2 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a>LSTM</h2><p>LSTM是一种循环神经网络，适用于对序列化的输入建模。Chris Olah的这篇<a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="external">文章</a>细致地解释了一个LSTM单元的运作方式，建议阅读。</p>
@@ -649,11 +844,11 @@ def AutogradRNN(mode, input_size, hidden_size):
       <category term="AI" scheme="http://blog.ddlee.cn/categories/AI/"/>
     
     
-      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
-    
       <category term="Python" scheme="http://blog.ddlee.cn/tags/Python/"/>
     
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
     
       <category term="Pytorch" scheme="http://blog.ddlee.cn/tags/Pytorch/"/>
     
@@ -664,7 +859,7 @@ def AutogradRNN(mode, input_size, hidden_size):
     <link href="http://blog.ddlee.cn/2017/05/28/Pandas%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96/"/>
     <id>http://blog.ddlee.cn/2017/05/28/Pandas速度优化/</id>
     <published>2017-05-28T12:06:14.000Z</published>
-    <updated>2017-05-28T12:17:21.127Z</updated>
+    <updated>2017-05-28T12:17:22.000Z</updated>
     
     <content type="html"><![CDATA[<p>本文主要内容取自Sofia Heisler在PyCon 2017上的演讲<a href="https://www.youtube.com/watch?v=HN5d490_KKk" target="_blank" rel="external">No More Sad Pandas Optimizing Pandas Code for Speed and Efficiency</a>，讲稿代码和幻灯片见<a href="https://github.com/sversh/pycon2017-optimizing-pandas" target="_blank" rel="external">GitHub</a>。</p>
 <h2 id="Set-Up"><a href="#Set-Up" class="headerlink" title="Set Up"></a>Set Up</h2><h4 id="示例数据"><a href="#示例数据" class="headerlink" title="示例数据"></a>示例数据</h4><div class="table-container">
@@ -917,7 +1112,7 @@ df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
     <link href="http://blog.ddlee.cn/2017/05/28/Python%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B7%A5%E5%85%B7%E6%8C%87%E5%BC%95/"/>
     <id>http://blog.ddlee.cn/2017/05/28/Python可视化工具指引/</id>
     <published>2017-05-27T16:12:28.000Z</published>
-    <updated>2017-06-03T04:27:24.027Z</updated>
+    <updated>2017-06-03T04:27:24.000Z</updated>
     
     <content type="html"><![CDATA[<p>本文主要材料来自Jake VanderPlas在PyCon 2017上的演讲<a href="https://www.youtube.com/watch?v=FytuB8nFHPQ" target="_blank" rel="external">Python’s Visualization Landscape</a></p>
 <p>Python真是越来越火了。活跃的开源社区为Python这门语言贡献着长青的活力。</p>
@@ -1002,7 +1197,7 @@ export(tf.shade(agg, cmap=cm(fire, 0.2), how='eq_hist'), 'census_ds_fier_eq_hist
     <link href="http://blog.ddlee.cn/2017/05/23/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Deep-Learning/"/>
     <id>http://blog.ddlee.cn/2017/05/23/论文笔记-Deep-Learning/</id>
     <published>2017-05-23T11:09:09.000Z</published>
-    <updated>2017-06-02T11:24:55.784Z</updated>
+    <updated>2017-06-02T11:24:56.000Z</updated>
     
     <content type="html"><![CDATA[<p>论文：<a href="http://www.cs.toronto.edu/~hinton/absps/NatureDeepReview.pdf" target="_blank" rel="external">Deep Learning</a></p>
 <p>这篇文章是三位大牛15年发表在Nature上有关深度学习的综述，尽管这两年深度学习又有更多的模型和成果出现，文章显得有些过时，但来自三位领军人物对深度学习的深度阐述还是值得反复回味。</p>
@@ -1056,9 +1251,9 @@ export(tf.shade(agg, cmap=cm(fire, 0.2), how='eq_hist'), 'census_ds_fier_eq_hist
       <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
-    
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
     
       <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
     
@@ -1069,7 +1264,7 @@ export(tf.shade(agg, cmap=cm(fire, 0.2), how='eq_hist'), 'census_ds_fier_eq_hist
     <link href="http://blog.ddlee.cn/2017/05/17/Dropout-Pytorch%E5%AE%9E%E7%8E%B0/"/>
     <id>http://blog.ddlee.cn/2017/05/17/Dropout-Pytorch实现/</id>
     <published>2017-05-17T11:30:44.000Z</published>
-    <updated>2017-06-03T08:32:34.577Z</updated>
+    <updated>2017-06-03T08:32:34.000Z</updated>
     
     <content type="html"><![CDATA[<p>Dropout技术是Srivastava等人在2012年提出的技术，现在已然成为各种深度模型的标配。其中心思想是随机地冻结一部分模型参数，用于提高模型的泛化性能。</p>
 <h3 id="Dropout的洞察"><a href="#Dropout的洞察" class="headerlink" title="Dropout的洞察"></a>Dropout的洞察</h3><p>关于Dropout，一个流行的解释是，通过随机行为训练网络，并平均多个随机决定的结果，实现了参数共享的Bagging。如下图，通过随机地冻结/抛弃某些隐藏单元，我们得到了新的子网络，而参数共享是说，与Bagging中子模型相互独立的参数不同，深度网络中Dropout生成的子网络是串行的，后一个子模型继承了前一个子模型的某些参数。</p>
@@ -1162,11 +1357,11 @@ def dropout_backward(dout, cache):
       <category term="AI" scheme="http://blog.ddlee.cn/categories/AI/"/>
     
     
-      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
-    
       <category term="Python" scheme="http://blog.ddlee.cn/tags/Python/"/>
     
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
     
       <category term="Pytorch" scheme="http://blog.ddlee.cn/tags/Pytorch/"/>
     
@@ -1177,7 +1372,7 @@ def dropout_backward(dout, cache):
     <link href="http://blog.ddlee.cn/2017/05/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Visualizing-and-Understanding-Recurrent-Networks/"/>
     <id>http://blog.ddlee.cn/2017/05/13/论文笔记-Visualizing-and-Understanding-Recurrent-Networks/</id>
     <published>2017-05-13T06:06:51.000Z</published>
-    <updated>2017-06-03T04:35:09.919Z</updated>
+    <updated>2017-06-03T04:35:10.000Z</updated>
     
     <content type="html"><![CDATA[<p>论文： <a href="http://arxiv.org/abs/1506.02078" target="_blank" rel="external">Visualizing and Understanding Recurrent Networks</a></p>
 <h2 id="实验设定"><a href="#实验设定" class="headerlink" title="实验设定"></a>实验设定</h2><p>字母级的循环神经网络，用Torch实现，代码见<a href="http://github.com/karpathy/char-rnn" target="_blank" rel="external">GitHub</a>。字母嵌入成One-hot向量。优化方面，采用了RMSProp算法，加入了学习速率的decay和early stopping。</p>
@@ -1223,9 +1418,9 @@ def dropout_backward(dout, cache):
       <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
-    
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
     
       <category term="Machine Learning" scheme="http://blog.ddlee.cn/tags/Machine-Learning/"/>
     
@@ -1238,7 +1433,7 @@ def dropout_backward(dout, cache):
     <link href="http://blog.ddlee.cn/2017/04/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Deep-Residual-Learning-for-Image-Recognition/"/>
     <id>http://blog.ddlee.cn/2017/04/30/论文笔记-Deep-Residual-Learning-for-Image-Recognition/</id>
     <published>2017-04-30T15:12:11.000Z</published>
-    <updated>2017-05-30T13:37:55.644Z</updated>
+    <updated>2017-05-30T13:37:56.000Z</updated>
     
     <content type="html"><![CDATA[<p>论文：<a href="http://arxiv.org/abs/1512.03385" target="_blank" rel="external">Deep Residual Learning for Image Recognition</a></p>
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>网络在堆叠到越来越深之后，由于BP算法所依赖的链式法则的连乘形式，会出现梯度消失和梯度下降的问题。初始标准化和中间标准化参数在一定程度上缓解了这一问题，但仍然存在更深的网络比浅层网络具有更大的训练误差的问题。</p>
@@ -1280,7 +1475,7 @@ def dropout_backward(dout, cache):
     <link href="http://blog.ddlee.cn/2017/04/20/Tensorflow-White-Paper/"/>
     <id>http://blog.ddlee.cn/2017/04/20/Tensorflow-White-Paper/</id>
     <published>2017-04-20T13:32:29.000Z</published>
-    <updated>2017-05-30T13:33:20.407Z</updated>
+    <updated>2017-05-30T13:33:20.000Z</updated>
     
     <content type="html"><![CDATA[<p>论文：<a href="https://www.tensorflow.org/about/bib" target="_blank" rel="external">TensorFlow: Large-Scale Machine Learning on Heterogeneous Distributed Systems</a></p>
 <h2 id="抽象"><a href="#抽象" class="headerlink" title="抽象"></a>抽象</h2><h3 id="Computation-Graph"><a href="#Computation-Graph" class="headerlink" title="Computation Graph"></a>Computation Graph</h3><p>整张图如同管道结构，数据流就是其中的水流。<em>Control Dependency</em> 描述了管道的有向结构，而反向传播可以通过增加新的管道节点来实现。</p>
@@ -1328,7 +1523,7 @@ def dropout_backward(dout, cache):
     <link href="http://blog.ddlee.cn/2017/04/08/%E7%BC%96%E7%A8%8B%E6%96%B9%E6%B3%95%E8%AE%BA-%E9%87%8D%E6%9E%84/"/>
     <id>http://blog.ddlee.cn/2017/04/08/编程方法论-重构/</id>
     <published>2017-04-07T18:21:19.000Z</published>
-    <updated>2017-04-09T16:38:15.126Z</updated>
+    <updated>2017-04-09T16:38:16.000Z</updated>
     
     <content type="html"><![CDATA[<p>本文内容主要整理自lynda.com课程<a href="https://www.lynda.com/Developer-Programming-Foundations-tutorials/Foundations-Programming-Refactoring-Code/122457-2.html" target="_blank" rel="external">Programming Foudations: Refactoring Code</a>和<em>Martin Fowler</em>的<a href="https://martinfowler.com/books/refactoring.html" target="_blank" rel="external">重构</a>。全部例子来源于<a href="https://refactoring.com" target="_blank" rel="external">refactoring.com</a>。</p>
 <p>内容大纲：<br><img src="http://static.ddlee.cn/static/img/编程方法论-重构/Refactoring.png" alt="structure"></p>
@@ -1478,7 +1673,7 @@ void setWidth (int arg) {
     <link href="http://blog.ddlee.cn/2017/04/05/ddlee%E7%BA%A6%E4%B9%A6%E8%AE%A1%E5%88%92%EF%BC%88%E7%AC%AC%E4%BA%8C%E5%BC%B9%EF%BC%89/"/>
     <id>http://blog.ddlee.cn/2017/04/05/ddlee约书计划（第二弹）/</id>
     <published>2017-04-04T16:45:28.000Z</published>
-    <updated>2017-04-07T18:26:39.880Z</updated>
+    <updated>2017-04-07T18:26:40.000Z</updated>
     
     <content type="html"><![CDATA[<h4 id="缘起"><a href="#缘起" class="headerlink" title="缘起"></a>缘起</h4><p>读书这种事情，每几个月都会有那么几天。</p>
 <p>浑身难受。不干点什么，眼睛闲得团团转，双手也不知道往哪搁。</p>
@@ -1544,7 +1739,7 @@ void setWidth (int arg) {
     <link href="http://blog.ddlee.cn/2017/04/03/Coroutine-Generator-Async%E4%B8%8EAwait/"/>
     <id>http://blog.ddlee.cn/2017/04/03/Coroutine-Generator-Async与Await/</id>
     <published>2017-04-03T14:57:54.000Z</published>
-    <updated>2017-04-07T18:27:24.796Z</updated>
+    <updated>2017-04-07T18:27:24.000Z</updated>
     
     <content type="html"><![CDATA[<h4 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h4><p>Generator能保存自己的状态，进入一种“Paused”状态，再次调用时会继续执行。</p>
 <p>Generator的好处之一是节省了存储空间开销，带一些”流处理”的思想。</p>
@@ -1653,229 +1848,6 @@ loop.run_forever()
       <category term="Python" scheme="http://blog.ddlee.cn/tags/Python/"/>
     
       <category term="异步" scheme="http://blog.ddlee.cn/tags/%E5%BC%82%E6%AD%A5/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>500lines项目Crawler源码阅读笔记</title>
-    <link href="http://blog.ddlee.cn/2017/04/03/500lines%E9%A1%B9%E7%9B%AECrawler%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/"/>
-    <id>http://blog.ddlee.cn/2017/04/03/500lines项目Crawler阅读笔记/</id>
-    <published>2017-04-03T14:57:20.000Z</published>
-    <updated>2017-04-07T18:27:34.968Z</updated>
-    
-    <content type="html"><![CDATA[<p>源码来自GitHub上著名的Repo: <a href="https://github.com/aosabook/500lines" target="_blank" rel="external">500lines or less</a>。</p>
-<h3 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h3><p><img src="http://static.ddlee.cn/static/img/500lines_crawler/500lines_crawler.png" alt="structure"></p>
-<p>代码结构由crawling, crawl, reporting三大部分组成。</p>
-<ul>
-<li>crawl: 驱动，解析传入的参数，管理loop，调用crawler，生成report</li>
-<li>Crawling: 实现crawler类及一系列辅助函数</li>
-<li>reporting： 生成记录</li>
-</ul>
-<h3 id="Crawler类"><a href="#Crawler类" class="headerlink" title="Crawler类"></a>Crawler类</h3><p>Crawler类实现了解析网址，抓取内容等基本功能，利用<code>asyncio</code>库构建<code>coroutine</code>（parse_lings(), fetch(), work()）。</p>
-<p><img src="http://static.ddlee.cn/static/img/500lines_crawler/500lines_crawler_class.png" alt="Class Crawler"></p>
-<p>核心之处是组织管理异步的抓取任务，代码块结构如下：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">class Crawler:
-  def __init__(self, roots, ....., loop):
-    self.q = Queue(loop=self.loop) # 建立队列
-
-  @asyncio.coroutine
-  def parse_links(self, response):
-    '''从返回内容中解析出要抓取的链接'''
-    body = yield from response.read()
-    if response.status == 200:
-      if content_type:
-        text = yield from response.text()
-        urls = set(re.findall())
-        for url in urls:
-          if self.url_allowed():
-            links.add()
-  @asynico.coroutine
-  def fetch(self, url):
-    '''访问链接，抓取返回结果'''
-    while tries:
-      try:
-        response = yield from self.session.get(url)
-    try:
-      if is_redirect():
-        pass
-      else:
-        links = yield from self.parse_links(response)
-    finally:
-      yield from response.releas()
-  @asyncio.coroutine
-  def work(self):
-    '''封装抓取过程，与队列交互'''
-    try:
-      while True:
-        url = yield from self.q.get()
-        assert url in self.seen_urls
-        yield from self.fetch(url)
-        self.q.task_done()
-  @asyncio.coroutine
-  def crawl(self):
-    '''建立Tasks，启动Task'''
-    workers = [asyncio.Task(self.work(), loop=self.loop)
-                for _ in range(self.max_tasks)]
-    yield from self.q.join()
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>下图是我对上述代码结构的理解：</p>
-<p><img src="http://static.ddlee.cn/static/img/500lines_crawler/coroutine.JPG" alt="coroutines"></p>
-<p>对coroutine的进一步介绍，参见<a href="/2017/04/03/Coroutine-Generator-Async与Await/">Coroutine-Generator-Async与Await</a>。</p>
-<h3 id="A-Web-Crawler-With-asyncio-Coroutines导读"><a href="#A-Web-Crawler-With-asyncio-Coroutines导读" class="headerlink" title="A Web Crawler With asyncio Coroutines导读"></a><a href="http://aosabook.org/en/500L/a-web-crawler-with-asyncio-coroutines.html" target="_blank" rel="external">A Web Crawler With asyncio Coroutines</a>导读</h3><p>文章整体结构：</p>
-<ul>
-<li>分析爬虫任务</li>
-<li><ul>
-<li>传统方式：抢锁</li>
-</ul>
-</li>
-<li><ul>
-<li>异步方式的特点：无锁；单线程上同时运行多操作</li>
-</ul>
-</li>
-<li>回调函数：fetch(),connecte(),read_response()的实现</li>
-<li>Coroutine</li>
-<li><ul>
-<li>Generator的工作原理</li>
-</ul>
-</li>
-<li><ul>
-<li>用Generator实现Coroutine</li>
-</ul>
-</li>
-<li>Asyncio库中的Coroutine</li>
-<li><ul>
-<li>crawl()</li>
-</ul>
-</li>
-<li><ul>
-<li>work()</li>
-</ul>
-</li>
-<li><ul>
-<li>fetch(), handle redirections</li>
-</ul>
-</li>
-<li><ul>
-<li>Queue()</li>
-</ul>
-</li>
-<li><ul>
-<li>EventLoop()</li>
-</ul>
-</li>
-<li><ul>
-<li>Task()</li>
-</ul>
-</li>
-<li>Conclusion</li>
-</ul>
-<p>文章最后，作者点明了主题思想：</p>
-<blockquote>
-<p>Increasingly often, modern programs are I/O-bound instead of CPU-bound. For such programs, Python threads are the worst of both worlds: the global interpreter lock prevents them from actually executing computations in parallel, and preemptive switching makes them prone to races. Async is often the right pattern. But as callback-based async code grows, it tends to become a dishevelled mess. Coroutines are a tidy alternative. They factor naturally into subroutines, with sane exception handling and stack traces.</p>
-</blockquote>
-<p>大意是说，对I/O密集型的程序，Python多线程在两方面令人失望：全局锁的设定使之不能真正并行；抢占式多任务处理机制又让多个线程间形成竞争关系。异步通常是正确的选择。但持续增长的回调函数会使代码丧失可读性，Coroutine便是一种保持整洁性的替代方案。</p>
-<h4 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h4><p>这样说，Python的多线程效率带来的提高只是Python程序抢占了系统中非Python进程的资源（参考召集一波狐朋狗友帮你抢选修课），多个线程提高了Python作为一个整体在系统资源调配中的竞争力。</p>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;源码来自GitHub上著名的Repo: &lt;a href=&quot;https://github.com/aosabook/500lines&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;500lines or less&lt;/a&gt;。&lt;/p&gt;
-&lt;h3 id=&quot;整体结构&quot;
-    
-    </summary>
-    
-      <category term="Programming" scheme="http://blog.ddlee.cn/categories/Programming/"/>
-    
-    
-      <category term="Python" scheme="http://blog.ddlee.cn/tags/Python/"/>
-    
-      <category term="爬虫" scheme="http://blog.ddlee.cn/tags/%E7%88%AC%E8%99%AB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Feedly+Reeder3+FeedMe:信息获取与处理</title>
-    <link href="http://blog.ddlee.cn/2017/04/03/Feedly-Reeder3-FeedMe-%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96%E4%B8%8E%E5%A4%84%E7%90%86/"/>
-    <id>http://blog.ddlee.cn/2017/04/03/Feedly-Reeder3-FeedMe-信息获取与处理/</id>
-    <published>2017-04-03T03:13:37.000Z</published>
-    <updated>2017-06-15T05:49:43.310Z</updated>
-    
-    <content type="html"><![CDATA[<p>我蛮早就意识到自己被信息淹没了。于是关了票圈，屏蔽了空间，不装任何新闻APP，失去效力的微信群一概不留，知乎上的关注也缩减了很多很多。</p>
-<blockquote>
-<p>世界终于清静了。</p>
-</blockquote>
-<p>但仍然需要有关注的动向。我又捡起了RSS这个老朋友，建立起的信息获取跟处理流如下图：</p>
-<p><img src="http://static.ddlee.cn/static/img/Feedly_Reeder/Feedly+Reeder.png" alt="Feedly+Reeder3"></p>
-<h3 id="服务与APP"><a href="#服务与APP" class="headerlink" title="服务与APP"></a>服务与APP</h3><p>主要涉及的服务：Feedly（免费，有高级版）</p>
-<p>IOS APP：</p>
-<ul>
-<li>Reeder3（￥30）</li>
-<li>Pocket（免费）</li>
-<li>Pushbullet（免费）</li>
-<li>Evernote（免费版限制客户端个数）</li>
-</ul>
-<p>Android APP:</p>
-<ul>
-<li>FeedMe（免费）</li>
-<li>Pocket</li>
-<li>Inbox</li>
-<li>Evernote</li>
-<li>Google Keep</li>
-</ul>
-<h3 id="获取：Feedly整合"><a href="#获取：Feedly整合" class="headerlink" title="获取：Feedly整合"></a>获取：Feedly整合</h3><p><a href="https://feedly.com/i/welcome" target="_blank" rel="external">Feedly</a>是著名的信息聚合服务，能从媒体RSS、博客、YouTube Chanel等拉取文章/动态，还提供Google关键词动态提醒服务。</p>
-<p>这里先推荐两个Chrome插件，可以更方便地将网页端想要订阅的信息整合到Feedly中。</p>
-<ul>
-<li><a href="https://chrome.google.com/webstore/detail/save-to-feedly-board/hdhblphcdjcicefneapkhmleapfaocih?hl=en-US" target="_blank" rel="external">Follow Feed</a>: 识别跟当前网页内容相关的信息源，添加到Feedly订阅中。</li>
-<li><a href="https://chrome.google.com/webstore/detail/save-to-feedly-board/hdhblphcdjcicefneapkhmleapfaocih?hl=en-US" target="_blank" rel="external">Save to Feedly Board</a>: 将当前网页添加到Feedly Board中，可以标记后分享给团队，实时更新。</li>
-</ul>
-<h4 id="信息源"><a href="#信息源" class="headerlink" title="信息源"></a>信息源</h4><h5 id="微信公众号"><a href="#微信公众号" class="headerlink" title="微信公众号"></a>微信公众号</h5><p>先直接在Feedly中搜索公众号，若找不到订阅源，则可通过<a href="http://www.iwgc.cn/" target="_blank" rel="external">微广场</a>等服务转成RSS。</p>
-<h5 id="媒体-博客RSS源"><a href="#媒体-博客RSS源" class="headerlink" title="媒体/博客RSS源"></a>媒体/博客RSS源</h5><p>很多在线媒体会在主页提供RSS地址，也可直接在Feedly中搜索媒体名。</p>
-<h5 id="知乎专栏"><a href="#知乎专栏" class="headerlink" title="知乎专栏"></a>知乎专栏</h5><p>有些<a href="https://rss.lilydjwg.me/" target="_blank" rel="external">工具</a>可以将知乎专栏转成RSS订阅源。</p>
-<h5 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h5><p>Feedly支持设置关键词动态提醒。</p>
-<h3 id="处理：Reeder3-FeedMe"><a href="#处理：Reeder3-FeedMe" class="headerlink" title="处理：Reeder3 + FeedMe"></a>处理：Reeder3 + FeedMe</h3><p>支持Feedly的APP实在太多，<a href="https://feedly.com/apps.html" target="_blank" rel="external">这里</a>是官方给出的列表，可看脸挑选。</p>
-<p>我平常同时用Android和IOS处理订阅的信息，大屏精读，小屏浏览。</p>
-<h4 id="IOS-Reeder3"><a href="#IOS-Reeder3" class="headerlink" title="IOS: Reeder3"></a>IOS: Reeder3</h4><p>不幸的是Reeder3是要付费的， 30块，几乎没有降过价。</p>
-<p>替代品可以考虑自家的Feedly，Ziner等，可以参考<a href="http://www.makeuseof.com/tag/5-best-ipad-rss-readers/" target="_blank" rel="external">这篇文章</a>对比的结果选择。</p>
-<h4 id="Android-FeedMe"><a href="#Android-FeedMe" class="headerlink" title="Android: FeedMe"></a>Android: FeedMe</h4><p>这里强推FeedMe(<a href="https://play.google.com/store/apps/details?id=com.seazon.feedme&amp;hl=en" target="_blank" rel="external">Google Play</a>)，抓取、缓存迅速，界面简洁，还有“中国大陆”模式。</p>
-<h3 id="消化：Pocket-Inbox-Evernote-Keep"><a href="#消化：Pocket-Inbox-Evernote-Keep" class="headerlink" title="消化：Pocket, Inbox, Evernote/Keep"></a>消化：Pocket, Inbox, Evernote/Keep</h3><p>我个人将信息处理的结果分为三类：</p>
-<ul>
-<li>Read Later: 没消化</li>
-<li>Links to save: 还想接着吃</li>
-<li>Favorite:　想学着做</li>
-</ul>
-<p>稍后再读用Pocket，接口丰富，功能专一（尽管也有了“发现”模块）。</p>
-<p>文章中挂的一些外链，移动端不好处理，要发往PC，手机端存在Inbox中，当临时的标签栏，iPad端用Pushbullet发给Chrome，下次打开Chrome时浏览处理。</p>
-<p>收藏的文章存到Evernote，打好tags，长篇干货/可反复参考的转到OneNote。</p>
-<h3 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h3><p>其他情境下遇到的好文章、信息等尽量文字存到Google Keep，链接存到Inbox，或者给自己写封邮件。</p>
-<p>微信的Favorite尽量不用，收藏的目的就在于情景分离，在不同的上下文中，我门信息获取的效率和质量区别实在太大了。详情参考拉微信群异地参加美赛的战友们。</p>
-<p>最后推荐几个不错的订阅源(右击复制链接)：</p>
-<ul>
-<li><a href="http://www.sbnation.com/authors/mike-prada/rss" target="_blank" rel="external">SBNation上Mike Prada的文章</a>: 对NBA比赛、球队战术的分析</li>
-<li><a href="http://rsarxiv.github.io/atom.xml" target="_blank" rel="external">Paper Weekly</a>: 机器学习方面的论文解读</li>
-<li><a href="http://cos.name/feed/" target="_blank" rel="external">统计之都</a>: 统计学及应用、R语言方面的优秀内容</li>
-<li><a href="http://github-trends.ryotarai.info/rss/github_trends_all_weekly.rss" target="_blank" rel="external">GitHub Trends</a></li>
-<li><a href="https://blog.ddlee.cn/atom.xml">blog.ddlee.cn</a>: 大言不惭 -_-！</li>
-</ul>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;我蛮早就意识到自己被信息淹没了。于是关了票圈，屏蔽了空间，不装任何新闻APP，失去效力的微信群一概不留，知乎上的关注也缩减了很多很多。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;世界终于清静了。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;但仍然需要有关注的动向。我又捡起了RS
-    
-    </summary>
-    
-      <category term="Individual Development" scheme="http://blog.ddlee.cn/categories/Individual-Development/"/>
-    
-    
-      <category term="Individual Management" scheme="http://blog.ddlee.cn/tags/Individual-Management/"/>
-    
-      <category term="RSS" scheme="http://blog.ddlee.cn/tags/RSS/"/>
     
   </entry>
   

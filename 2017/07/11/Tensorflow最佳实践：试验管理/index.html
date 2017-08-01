@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.3.0 -->
+
+    <!-- Title -->
+    
+    <title>
+        
+            Tensorflow最佳实践：试验管理 | 
+        
+        萧爽楼
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="http://static.ddlee.cn/static/img/material-theme-img/favicon.png">
+    <link rel="icon" sizes="192x192" href="http://static.ddlee.cn/static/img/material-theme-img/favicon.png">
+    <link rel="apple-touch-icon" href="http://static.ddlee.cn/static/img/material-theme-img/favicon.png">
+
+    <!-- Meta & Info -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0097A7">
+    <meta name="author" content="ddlee">
+    <meta name="description" content="我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
+    <meta name="keywords" content="ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee,Deep Learning,AI,best practice,Tensorflow">
+
+    <!--iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="萧爽楼">
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="http://blog.ddlee.cn">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="Tensorflow最佳实践：试验管理 | 萧爽楼">
+    <meta property="og:description" content="我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
+
+    <meta property="og:article:tag" content="Deep Learning"> <meta property="og:article:tag" content="AI"> <meta property="og:article:tag" content="best practice"> <meta property="og:article:tag" content="Tensorflow"> 
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import CSS -->
+    <link rel="stylesheet" href="/css/material.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+    <!-- Config CSS -->
+
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+
+  a {
+    color: #0092ED;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #00cfbd !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #00cfbd !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #00cfbd !important;
+  }
+
+  .toTop {
+    background: #404040 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #404040;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #404040;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #404040;
+  }
+
+  .post-toc a:hover {
+    color: #0092ED;
+    text-decoration: underline;
+  }
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #cdecd9;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/queue.js"></script>
+
+    <!-- UC Browser Compatible -->
+    <script>
+        var agent = navigator.userAgent.toLowerCase();
+        if(agent.indexOf('ucbrowser')>0) {
+            document.write("<link rel=\"stylesheet\" href=\"/css/uc.css\">");
+            alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+        }
+    </script>
+
+    
+
+    
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-93514996-1', 'auto');ga('send', 'pageview');
+    </script>
+    
+
+    <!-- Bing Background -->
+    
+
+    <!-- Custom Head -->
+    
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#TensorFlow代码框架"><span class="post-toc-number">1.</span> <span class="post-toc-text">TensorFlow代码框架</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#模型的保存与恢复"><span class="post-toc-number">2.</span> <span class="post-toc-text">模型的保存与恢复</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#tf-train-Saver类"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">tf.train.Saver类</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Keras封装：keras-callbacks-ModelCheckpoint"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">Keras封装：keras.callbacks.ModelCheckpoint()</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#模型训练过程的监测"><span class="post-toc-number">3.</span> <span class="post-toc-text">模型训练过程的监测</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#tf-summary"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">tf.summary</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Keras封装：keras-callbacks-TensorBoard"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">Keras封装：keras.callbacks.TensorBoard()</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#随机性的控制"><span class="post-toc-number">4.</span> <span class="post-toc-text">随机性的控制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Operation层面"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">Operation层面</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Graph层面"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">Graph层面</span></a></li></ol></li></ol>
+
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script>
+    var randomNum = Math.floor(Math.random() * 43 + 1);
+
+    $('.post_thumbnail-random').css('background-image', 'url(' + 'http://static.ddlee.cn/static/img/material-theme-img/random/material-' + randomNum + '.png' + ')');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                Tensorflow最佳实践：试验管理
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="http://static.ddlee.cn/static/img/material-theme-img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>ddlee</strong>
+        <span>7月 11, 2017</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/AI/">AI</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Deep-Learning/">Deep Learning</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Tensorflow/">Tensorflow</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/best-practice/">best practice</a>
+    </ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+        
+            <!-- Busuanzi Views -->
+            <a class="post_share-link" href="#">
+                <li class="mdl-menu__item">
+                    <span id="busuanzi_container_page_pv">
+                        <span id="busuanzi_value_page_pv"></span>&nbsp;浏览量
+                    </span>
+                </li>
+            </a>
+        
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=Tensorflow最佳实践：试验管理&url=http://blog.ddlee.cn//2017/07/11/Tensorflow最佳实践：试验管理/index.html&pic=&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=萧爽楼&title=Tensorflow最佳实践：试验管理&summary=我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。&pics=http://blog.ddlee.cnhttp://static.ddlee.cn/static/img/material-theme-img/favicon.png&url=http://blog.ddlee.cn/2017/07/11/Tensorflow最佳实践：试验管理/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 QQ
+            </li>
+        </a>
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>本文主要记录使用TensorFlow训练模型中与试验管理相关的最佳实践，主要包括模型训练的大致代码框架、模型的保存与恢复、训练过程的监测、随机性的控制等。主要材料来自<a href="https://web.stanford.edu/class/cs20si/index.html" target="_blank" rel="external">CS 20SI: Tensorflow for Deep Learning Research</a>。</p>
+<h3 id="TensorFlow代码框架"><a href="#TensorFlow代码框架" class="headerlink" title="TensorFlow代码框架"></a>TensorFlow代码框架</h3><p>使用TensorFlow构建深度网络模型大致包括数据预处理、图的构建、模型训练、模型推断与评估等部分，大致的代码框架如下：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">import tensorflow as tf
+import numpy as np
+
+# Data
+X = tf.placeholder("float", [None, n_input])
+Y = tf.placeholder("float", [None, n_output])
+
+# Parameters
+W = tf.Variable(tf.random_normal([n_input, n_output]))
+b = tf.Variable(tf.random_normal([n_output]))
+
+# Define model
+y = tf.matmul(x, W) + b
+y_pred = tf.nn.relu(y)
+cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(y_pred, y_true))
+optimizer = tf.train.GradientDescentOptimizer(0.05).minimize(cost)
+
+# Training
+with tf.Session() as sess:
+    tf.initialize_all_variables().run()
+    sess.run(optimizer, feed_dict={X: x_data, Y: y_data})
+
+# Prediction
+y_test = tf.nn.relu(tf.matmul(x_test, W) + b))
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="模型的保存与恢复"><a href="#模型的保存与恢复" class="headerlink" title="模型的保存与恢复"></a>模型的保存与恢复</h3><p>一个很深的网络训练成本是比较高的，因而将模型定期保存（写入硬盘）则有必要。这里的模型，实际上是有组织的一批数据，包括图的结构描述、参数当前值等。因而我们要保存的不仅是模型，还有模型当前的运行状态，实际上每一次保存可以作为一个还原点。</p>
+<h4 id="tf-train-Saver类"><a href="#tf-train-Saver类" class="headerlink" title="tf.train.Saver类"></a>tf.train.Saver类</h4><p>使用<code>tf.train.Saver</code>类需传入以下参数：<code>tf.train.Saver.save(sess, save_path, global_step=step)</code>。</p>
+<p>首先定义步数变量：<code>self​.​global_step ​=​ tf​.​Variable​(​0​,​ dtype​=​tf​.​int32​,​ trainable​=​False​,name​=​&#39;global_step&#39;)</code></p>
+<p>在模型训练的过程中插入还原点的保存：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">self​.​optimizer ​=​ tf​.​train​.​GradientDescentOptimizer​(​self​.​lr​).​minimize​(​self​.​loss​,global_step​=​self​.​global_step)
+saver ​=​ tf​.​train​.​Saver​()​​
+​with​ tf​.​Session​()​​as​ sess:
+ sess​.​run​(​tf​.​global_variables_initializer​())        
+ average_loss ​=​​0.0
+ for​ index ​in​ range​(​num_train_steps​):            
+    batch ​=​ batch_gen​.​next​()
+    loss_batch​,​ _ ​=​ sess​.​run​([​model​.​loss​,​ model​.​optimizer​], feed_dict​={...})
+    average_loss ​+=​ loss_batch
+    # Save model every 1000 steps
+    ​if​​(​index ​+​​1​)​​%​​1000​​==​​0:
+      saver​.​save​(​sess​,​​'checkpoints/model'​,​ global_step​=​model​.​global_step)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在训练过程中，在<code>checkpoints</code>路径下会存储一系列的还原点文件，要恢复session到某个还原点，可使用如下代码：<code>saver.restore(sess, &#39;checkpoints/name_of_the_checkpoint&#39;)</code>。</p>
+<h4 id="Keras封装：keras-callbacks-ModelCheckpoint"><a href="#Keras封装：keras-callbacks-ModelCheckpoint" class="headerlink" title="Keras封装：keras.callbacks.ModelCheckpoint()"></a>Keras封装：<code>keras.callbacks.ModelCheckpoint()</code></h4><p>Keras对TensorFlow进行了高层的封装，使用一系列回调函数<code>keras.callbacks.Callback()</code>来进行试验管理。</p>
+<p>模型保存<code>ModelCheckpoint()</code>需要传入的参数：<br><code>keras.callbacks.ModelCheckpoint(filepath, monitor=&#39;val_loss&#39;, verbose=0, save_best_only=False, save_weights_only=False, mode=&#39;auto&#39;, period=1)</code></p>
+<p>实际的使用中，将上述回调函数类传入<code>model.fit()</code>过程即可：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">from keras.callbacks import ModelCheckpoint
+
+model = Sequential()
+model.add(Dense(10, input_dim=784, kernel_initializer='uniform'))
+model.add(Activation('softmax'))
+model.compile(loss='categorical_crossentropy', optimizer='rmsprop')
+checkpointer = ModelCheckpoint(filepath='/checkpoints/weights.hdf5', verbose=1, save_best_only=True)
+model.fit(x_train, y_train, batch_size=128, epochs=20, verbose=0, validation_data=(X_test, Y_test), callbacks=[checkpointer])
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="模型训练过程的监测"><a href="#模型训练过程的监测" class="headerlink" title="模型训练过程的监测"></a>模型训练过程的监测</h3><p>训练过程中，我们常常需要提取阶段性的信息来评估模型是否符合预期效果。</p>
+<h4 id="tf-summary"><a href="#tf-summary" class="headerlink" title="tf.summary"></a><code>tf.summary</code></h4><p>首先创建想要观察指标的<code>tf.summary</code>对象：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">with tf.name_scope("summaries"):
+  tf.summary.scalar("loss", self.loss)
+  tf.summary.scalar("accuracy", self.accuracy)
+  tf.summary.histogram("histogram loss", self.loss)
+  # merge them all
+  self.summary_op = tf.summary.merge_all()
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>tf.summary</code>是一种operation，因而可以随训练过程一同运行：<br><code>loss_batch, _, summary = sess.run([model.loss, model.optimizer, model.summary_op], feed_dict=feed_dict)</code></p>
+<p>最后，将summary加入writer以写入文件：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">with tf.Session() as sess:
+  writer ​=​ tf​.​summary​.​FileWriter​(​'./summary'​,​ sess​.​graph)
+  for​ index ​in​ range​(​num_train_steps​):
+    writer.add_summary(summary, global_step=step)
+  writer.close()
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这样，就可以用TensorBoard监测我们关心的指标在训练过程中的变化情况。</p>
+<h4 id="Keras封装：keras-callbacks-TensorBoard"><a href="#Keras封装：keras-callbacks-TensorBoard" class="headerlink" title="Keras封装：keras.callbacks.TensorBoard()"></a>Keras封装：<code>keras.callbacks.TensorBoard()</code></h4><p>Keras同样将TensorBoard封装成回调函数的形式，在模型训练时进行调用即可：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">from keras.callbacks import TensorBoard
+
+tensorboard = TensorBoard(log_dir="./logs")
+model.fit(x_train, y_train, batch_size=128, epochs=20, verbose=0, validation_data=(X_test, Y_test), callbacks=[tensorboard]
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="随机性的控制"><a href="#随机性的控制" class="headerlink" title="随机性的控制"></a>随机性的控制</h3><p>TensorFlow中随机性的控制分为operation和graph两个层面。</p>
+<h4 id="Operation层面"><a href="#Operation层面" class="headerlink" title="Operation层面"></a>Operation层面</h4><p>在Operation层面中，建立随机seed之后，新建立的Session每一次调用<code>sess.run()</code>都会遵循同一随机状态：</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">c ​=​ tf​.​random_uniform​([],​​-​10​,​​10​,​ seed​=​2)
+
+with​ tf​.​Session​()​​as​ sess:
+  print​ sess​.​run​(​c) # >> 3.57493
+
+with​ tf​.​Session​()​​as​ sess:
+  print​ sess​.​run​(​c) # >> 3.57493
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>而且，不同的operation可以保存自己的seed:</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">c ​=​ tf​.​random_uniform​([],​​-​10​,​​10​,​ seed​=​1)
+d ​=​ tf​.​random_uniform​([],​​-​10​,​​10​,​ seed​=​2)
+with​ tf​.​Session​() ​​as​ sess:
+  sess​.​run​(​c)
+  sess​.​run​(​d)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="Graph层面"><a href="#Graph层面" class="headerlink" title="Graph层面"></a>Graph层面</h4><p>在Graph层面，整张图公用一个随机状态，多次运行同一图模型的计算，其随机状态保持一致。</p>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">import​ tensorflow ​as​ tf
+
+tf​.​set_random_seed​(​2)
+
+c ​=​ tf​.​random_uniform​([],​​-​10​,​​10)
+d ​=​ tf​.​random_uniform​([],​​-​10​,​​10)
+with​ tf​.​Session​()​​ as​ sess:
+  sess​.​run​(​c)
+  sess​.​run​(​d)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+
+    
+
+    
+</div>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+
+
+    <!-- 使用 DISQUS -->
+    <div id="disqus-comment">
+        <div id="disqus_thread"></div>
+<script>
+    queue.offer(function() {
+            var disqus_config = function () {
+                this.page.url = 'http://blog.ddlee.cn/2017/07/11/Tensorflow最佳实践：试验管理/index.html';  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+            };
+
+            (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document;
+                var s = d.createElement('script');
+                s.src = '//ddlee.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', + new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        });
+</script>
+
+    </div>
+    <style>
+        #disqus-comment{
+            background-color: #eee;
+            padding: 2pc;
+        }
+    </style>
+
+
+
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2017/06/29/Python最佳实践：遍历列表/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(http://static.ddlee.cn/static/img/material-theme-img/sidebar_header.jpg);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="http://static.ddlee.cn/static/img/material-theme-img/avatar.png" alt="ddlee's avatar">
+
+    </div>
+
+
+
+        <div>
+            <strong style="font-size:1.3em; color:#FFFFFF; margin-left: 20px;">萧爽楼</strong>
+        </div>
+
+    <!-- Sidebar Email -->
+
+ <!--
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        cnlijiacheng96 at gmail.com
+        <b class="caret"></b>
+    </a>
+    -->
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto:cnlijiacheng96@gmail.com" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/" target="_self">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
+            </ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
+            </ul>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/tags" title="Tags">
+                
+                    <i class="material-icons sidebar-material-icons">bookmark</i>
+                
+                Tags
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/About" title="About">
+                
+                    <i class="material-icons sidebar-material-icons">person</i>
+                
+                About
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+<!--
+
+    <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
+        <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
+            主题 - Material
+            <span class="sidebar-badge badge-circle">i</span>
+        </div>
+    </a>
+-->
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+        <a href="https://www.facebook.com/ddlee96" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(http://static.ddlee.cn/static/img/material-theme-img/footer/footer_ico-facebook.png);">
+                <span class="visuallyhidden">Facebook</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/ddlee96" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(http://static.ddlee.cn/static/img/material-theme-img/footer/footer_ico-github.png);">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+        <a href="https://www.linkedin.com/in/jiacheng-li-157a07116/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(http://static.ddlee.cn/static/img/material-theme-img/footer/footer_ico-linkedin.png);">
+                <span class="visuallyhidden">LinkedIn</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Zhihu -->
+    
+        <a href="https://www.zhihu.com/people/li-jia-cheng-37-33/" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn" style="background-image: url(http://static.ddlee.cn/static/img/material-theme-img/footer/footer_ico-zhihu.png);">
+                <span class="visuallyhidden">Zhihu</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;
+            <script type="text/javascript">
+                var fd = new Date();
+                document.write(fd.getFullYear());
+            </script>
+            &nbsp;萧爽楼
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import File -->
+<script src="/js/lazyload.min.js"></script>
+<script src="/js/js.min.js"></script>
+<script src="/js/nprogress.js"></script>
+
+<script type="text/javascript">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#0092ED'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #0092ED, 0 0 15px #0092ED'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#0092ED',
+        'border-left-color': '#0092ED'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+    <script src="/js/smoothscroll.js"></script>
+
+
+
+
+
+    <!-- Busuanzi -->
+    <script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+    <!-- 使用 DISQUS js 代码 -->
+    <script id="dsq-count-scr" src="//ddlee.disqus.com/count.js" async></script>
+
+
+
+<!-- Swiftye -->
+
+
+<!-- Local Search-->
+
+    <script>
+    var searchFunc = function(path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: 'xml',
+            success: function( xmlResponse ) {
+                // get the contents from search data
+                var datas = $( 'entry', xmlResponse ).map(function() {
+                    return {
+                        title: $( 'title', this ).text(),
+                        content: $('content',this).text(),
+                        url: $( 'url' , this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function() {
+                    var str='<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = '';
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function(data) {
+                        var isMatch = true;
+                        var content_index = [];
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g,'').toLowerCase();
+                        var data_url = data.url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if(data_title !== '' && data_content !== '') {
+                            keywords.forEach(function(keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if( index_title < 0 && index_content < 0 ) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += '<li><a href="'+ data_url +'" class="search-result-title" target="_blank">'+ data_title;
+                            var content = data.content.trim().replace(/<[^>]+>/g, '');
+                            if (first_occur >= 0) {
+                                // cut out characters
+                                var start = first_occur - 6;
+                                var end = first_occur + 6;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 10;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, 'gi');
+                                    match_content = match_content.replace(regS, '<em class="search-keyword">'+keyword+'</em>');
+                                })
+                                str += '<p class="search-result">' + match_content + '...</p>' +'</a>';
+                            }
+                        }
+                    });
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    }
+</script>
+
+
+    <script>
+        var inputArea = document.querySelector('#search');
+        var getSearchFile = function() {
+            var path = 'search.xml';
+            searchFunc(path, 'search', 'local-search-result');
+        }
+
+        if(inputArea) {
+            inputArea.onfocus = function() {
+                getSearchFile();
+            }
+        }
+    </script>
+
+
+<!-- Window Load-->
+<script>
+    $(window).load(function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- MathJax Load-->
+
+
+                </main>
+            </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config("");
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+        </body>
+    
+</html>
