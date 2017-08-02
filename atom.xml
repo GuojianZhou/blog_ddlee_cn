@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.ddlee.cn/"/>
-  <updated>2017-08-01T13:00:20.447Z</updated>
+  <updated>2017-08-02T15:59:09.816Z</updated>
   <id>http://blog.ddlee.cn/</id>
   
   <author>
@@ -14,6 +14,85 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>深度学习中的权重衰减</title>
+    <link href="http://blog.ddlee.cn/2017/07/22/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E6%9D%83%E9%87%8D%E8%A1%B0%E5%87%8F/"/>
+    <id>http://blog.ddlee.cn/2017/07/22/深度学习中的权重衰减/</id>
+    <published>2017-07-22T15:51:13.000Z</published>
+    <updated>2017-08-02T15:59:09.816Z</updated>
+    
+    <content type="html"><![CDATA[<p>权重衰减（weight dacay），即<script type="math/tex">L^2</script>范数惩罚，是最常见的正则化技术之一。本文将介绍它是如何起作用的。主要材料来自<a href="https://deeplearningbook.org" target="_blank" rel="external">The Deep Learning Book</a>。</p>
+<h3 id="为什么要引入权重衰减"><a href="#为什么要引入权重衰减" class="headerlink" title="为什么要引入权重衰减"></a>为什么要引入权重衰减</h3><p>机器学习的逻辑与我们最初解决问题的思维方式恰恰相反：要解决问题，一种经典的思路是把它拆成小问题，考虑之间的依赖，然后分而治之。而机器学习的哲学是“<em>trail-error-correct</em>”：先假设一堆可能的方案，根据结果去选择/调整这些方案，直到满意。换句话说，机器学习在假设空间中搜索最符合数据的模型：以果推因，即为最大似然的想法。随着数据量的增大，我们越来越需要表达能力更强的模型，而深度学习的优势正符合这一需要：通过分布式表示带来的指数增益，深度学习模型的扩展能力几乎是无限的（详见<a href="https://blog.ddlee.cn/2017/06/01/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E8%A1%A8%E7%A4%BA/">深度学习和分布式表示</a>）。</p>
+<p>有了模型（备选模型集），有了数据，就不得不面对机器学习领域的核心问题：如何保证模型能够描述数据（拟合）和生成数据（泛化）。</p>
+<p>粗略来看，有以下三种情况：</p>
+<ul>
+<li>我们假定的模型族不包含真实数据的生成过程：欠拟合/高偏差</li>
+<li>匹配真实的数据生成过程</li>
+<li>除了包含真实的生成过程，还包含了其他信息：过拟合/高方差</li>
+</ul>
+<p>高偏差意味着我们的模型不够准确（模型族不足以描述数据），高方差意味着我们建模了不必要的信息（训练数据的随机性带来的）。前者通过提高模型的表述能力来解决（更深的网络），后者则需要合理的正则化技术来控制。这即是著名的trade-off。</p>
+<h3 id="深度学习模型的参数"><a href="#深度学习模型的参数" class="headerlink" title="深度学习模型的参数"></a>深度学习模型的参数</h3><p>对数据建模，其实是从数据中提取我们能够理解的信息。建立的模型，是从数据分布的空间到目标变量所在空间的映射。从这个角度看，我们通过模型带来的变换获得了数据的一种表示，我们认为能够理解和操作的表示。</p>
+<p>为了表述这一变换，深度模型的套路是线性层施加变换，非线性层固定信息（不能平移），然后将这样的结构堆叠起来，分层提取数据特征。</p>
+<p>这让我想起实变中证明定理的套路：先证明简单函数的情形，再推广到连续函数，再到勒贝格可积的函数。</p>
+<p>常规的套路（MLP）在拟合普通的函数任务上能够胜任，但面对更复杂的图像等数据，就需要更灵活的网络结构。</p>
+<p>非常出色的CNN, LSTM, Inception块, ResNet, DenseNet等结构，就是加入了人类的先验知识，使之更有效的提取图像/音频数据分布空间的特征。（所以Manning有次在课堂上说，机器学习事实上还是人类在学习：机器只是在求导数、做乘法，最好的模型都是人们学习出来的。）</p>
+<p>人们确实设计了很多巧妙的结构来解决不同的问题，但落实到网络的层和单元上，仍是最基本的矩阵乘法、加法运算。决定模型表述能力的，也正是这些普通的乘法运算中涉及的矩阵和向量了。</p>
+<h3 id="权重衰减如何起作用"><a href="#权重衰减如何起作用" class="headerlink" title="权重衰减如何起作用"></a>权重衰减如何起作用</h3><p>下面我们通过观察加入权重衰减后目标函数的梯度变化来讨论权重衰减是如何起作用的。可以跳过公式部分直接看最后一段。</p>
+<p>——————————————————————————————推导部分————————————————————————————————————————————</p>
+<p>简单起见，令偏置为0，模型的目标函数：</p>
+<script type="math/tex; mode=display">J_{1}(w; X,y)=\frac{\alpha}{2} w^T w+J(w; X,y)</script><p>对应的梯度为：</p>
+<script type="math/tex; mode=display">{\nabla}_{w} J_{1}(w; X,y) = \alpha w + {\nabla}_{w} J(w; X,y)</script><p>进行梯度下降，参数的更新规则为：</p>
+<script type="math/tex; mode=display">w = w - \epsilon (\alpha w + {\nabla}_{w} J(w; X,y))</script><p>也就是：</p>
+<script type="math/tex; mode=display">w = (1 - \epsilon \alpha )w - \epsilon {\nabla}_{w} J(w; X,y)</script><p>从上式可以发现，加入权重衰减后，先对参数进行伸缩，再沿梯度下降。下面令<script type="math/tex">x^{(1)}</script>为使目标函数达到最优的参数值，在其附近考虑目标函数的二次近似：</p>
+<script type="math/tex; mode=display">J(w) \approx J(w^{(1)}) + \frac{1}{2} (w - w^{(1)})^T H (w - w^{(1)})</script><p>其中<script type="math/tex">H</script>为近似目标函数在的Hessian矩阵。当近似目标函数最小时，其梯度为<script type="math/tex">0</script>，即：</p>
+<script type="math/tex; mode=display">{\nabla}_{w} J(w) \approx H(w - w^{(1)})</script><p>该式也向我们说明了基于梯度的优化算法主要的信息来自Hessian矩阵。添加入权重衰减项之后，上式变为（记此时的最优点为<script type="math/tex">w^{(2)}</script>）：</p>
+<script type="math/tex; mode=display">{\nabla}_{w} J_{1}(w) \approx \alpha w^{(2)} + H(w^{(2)} - w^{(1)}) = 0</script><p>所以</p>
+<script type="math/tex; mode=display">w^{(2)} = (H + \alpha I)^{-1} H w^{(1)}</script><p>该式表明了了加入正则化对参数最优质点的影响，由Hessian矩阵和正则化系数<script type="math/tex">\alpha</script>共同决定。</p>
+<p>进一步将Hessian矩阵分解，可以得到：</p>
+<script type="math/tex; mode=display">w^{(2)} = Q(\Lambda + \alpha I)^{-1} \Lambda Q^T w^{(1)}</script><p>其中，<script type="math/tex">Q</script>为正交矩阵，<script type="math/tex">\Lambda</script>为对角矩阵。这样可以看到，<em>权重衰减的效果是沿着由<script type="math/tex">H</script>的特征向量所定义的轴缩放<script type="math/tex">w</script></em>， 具体的伸缩因子为<script type="math/tex">\frac{ {\lambda}_{i} }{ {\lambda}_i + \alpha }</script>，其中<script type="math/tex">{\lambda}_{i}</script>表示第<script type="math/tex">i</script>个特征向量对应的特征值。</p>
+<p>当特征值<script type="math/tex">\lambda</script>很大（相比<script type="math/tex">\alpha</script>）时，缩放因子对权重影响较小，因而更新过程中产生的变化也不大；而当特征值较小时，<script type="math/tex">\alpha</script>的缩放作用就显现出来，将这个方向的权重衰减到0。</p>
+<p>这种效果也可以由下图表示：</p>
+<p><img src="http://static.ddlee.cn/static/img/深度学习中的权重衰减/transform.png" alt="transform"></p>
+<p>——————————————————————————推导部分结束————————————————————————————————————————————————————————————————————</p>
+<p><em>总结来说，目标函数的Hessian矩阵（显式、隐式或者近似的）是现有优化算法进行寻优的主要依据。通过控制权重衰减的<script type="math/tex">\alpha</script>参数，我们实际上控制的是在Hessian矩阵的特征方向上以多大的幅度缩放权重，相对重要（能够显著减小目标函数）的方向上权重保留比较完好，而无助于目标函数减小的方向上权重在训练过程中逐渐地衰减掉了。而这也就是权重衰减的意义。</em></p>
+<p>从宏观上来看，对目标函数来说，特征值较大的方向包含更多有关数据的信息，较小的方向则有随机性的噪声，权重衰减正是通过忽略较少信息方向的变化来对抗过拟合的。</p>
+<h3 id="L-1范数正则化"><a href="#L-1范数正则化" class="headerlink" title="L^1范数正则化"></a><script type="math/tex">L^1</script>范数正则化</h3><p>通过类似的推导，可以得到加入了<script type="math/tex">L^1</script>范数惩罚项对参数最优解的影响如下：</p>
+<script type="math/tex; mode=display">w^{(2)}_{i} = sign(w^{(1)}_{i}) max \big\{|w^{(1)}_{i}| - \frac{\alpha}{H_{i,i}}, 0 \big\}</script><p>相比<script type="math/tex">L^2</script>范数的影响，这是一个离散的结果，因而<script type="math/tex">L^1</script>范数惩罚会将参数推向更加稀疏的解。这种稀疏性质常被用作特征选择。</p>
+<h3 id="权重衰减的贝叶斯解释"><a href="#权重衰减的贝叶斯解释" class="headerlink" title="权重衰减的贝叶斯解释"></a>权重衰减的贝叶斯解释</h3><p>在贝叶斯统计的框架下，常用的推断策略是最大后验点估计(Maximum A Posteriori, MAP)。有如下的推断公式（由贝叶斯定律导出）：</p>
+<script type="math/tex; mode=display">{\theta}_{MAP} = argmax p(\theta | x) = argmax (log p( x | \theta) + log p(\theta))</script><p>上式右边第一项是标准的对数似然项，而第二项对应着先验分布。</p>
+<p>在这样的视角下，我们只进行最大似然估计是不够的，还要考虑先验<script type="math/tex">p(\theta)</script>的分布。而当假定参数为正态分布<script type="math/tex">N(w; 0, \frac{1}{\lambda}I^2)</script>时，带入上式（<script type="math/tex">\theta</script>为参数），即可发现第二项的结果正比于权重衰减惩罚项<script type="math/tex">\lambda w^T w</script>，加上一个不依赖于<script type="math/tex">w</script>也不影响学习过程的项。于是，具有高斯先验权重的MAP贝叶斯推断对应着权重衰减。</p>
+<h3 id="权重衰减与提前终止"><a href="#权重衰减与提前终止" class="headerlink" title="权重衰减与提前终止"></a>权重衰减与提前终止</h3><p>提前终止也是一种正则化技术，其想法简单粗暴：每个epoch之后在验证集上评估结果，当验证集误差不再下降的时候，我们认为模型已经尽它所能了，于是终止训练过程。</p>
+<p>提前终止以牺牲一部分训练数据来作为验证数据来的代价来对抗过拟合，其逻辑是实证主义的。</p>
+<p>然而，在二次近似和简单梯度下降的情形下，可以观察到提前终止可以有相当于权重衰减的效果。</p>
+<p>我们仍考虑目标函数的二次近似：</p>
+<script type="math/tex; mode=display">J(w) \approx J(w^{(1)}) + \frac{1}{2} (w - w^{(1)})^T H (w - w^{(1)})</script><p>记最优参数点为<script type="math/tex">w^{(1)}</script>，其梯度为：</p>
+<script type="math/tex; mode=display">{\nabla}_{w} J(w) \approx H(w - w^{(1)})</script><p>不加入正则化项，其梯度下降的更新策略（从第<script type="math/tex">\tau-1</script>步到<script type="math/tex">\tau</script>步）为：</p>
+<script type="math/tex; mode=display">w^{(\tau)} = w^{\tau - 1)} - \epsilon H (w^{(\tau - 1)} - w^{(1)})</script><p>累加得到</p>
+<script type="math/tex; mode=display">w^{(\tau)} - w^{(1)} = (I - \epsilon H) (w^{(\tau - 1)} - w^{(1)})</script><p>将Hessian矩阵分解，得到如下形式</p>
+<script type="math/tex; mode=display">w^{(\tau)} = Q[I - (I - \epsilon \Lambda) ^ {\tau}] Q^T w^{(1)}</script><p>将加入正则化项的权重影响改写为</p>
+<script type="math/tex; mode=display">w^{(2)} = Q[I - (\Lambda + \alpha I) ^ {-1} \alpha] Q^T w^{(1)}</script><p>对比可以得到，如果超参数<script type="math/tex">\epsilon, \alpha, \tau</script>满足</p>
+<script type="math/tex; mode=display">(I - \epsilon \Lambda) ^ {\tau} = (\Lambda + \alpha I) ^ {-1} \alpha</script><p>则提前终止将与权重衰减有相当的效果。具体的，即第<script type="math/tex">\tau</script>步结束的训练过程将到达超参数为<script type="math/tex">\alpha</script>的<script type="math/tex">L^2</script>正则化得到的最优点。</p>
+<p>但提前终止带来的好处是，我们不再需要去找合适的超参数<script type="math/tex">\alpha</script>，而只需要制定合理的终止策略（如3个epoch均不带来验证集误差的减小即终止训练），在训练成本的节约上，还是很值得的。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;权重衰减（weight dacay），即&lt;script type=&quot;math/tex&quot;&gt;L^2&lt;/script&gt;范数惩罚，是最常见的正则化技术之一。本文将介绍它是如何起作用的。主要材料来自&lt;a href=&quot;https://deeplearningbook.org&quot; targ
+    
+    </summary>
+    
+      <category term="AI" scheme="http://blog.ddlee.cn/categories/AI/"/>
+    
+    
+      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
+    
+      <category term="Machine Learning" scheme="http://blog.ddlee.cn/tags/Machine-Learning/"/>
+    
+  </entry>
   
   <entry>
     <title>Tensorflow最佳实践：试验管理</title>
@@ -147,9 +226,9 @@ with​ tf​.​Session​()​​ as​ sess:
     
       <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
     
-      <category term="best practice" scheme="http://blog.ddlee.cn/tags/best-practice/"/>
-    
       <category term="Tensorflow" scheme="http://blog.ddlee.cn/tags/Tensorflow/"/>
+    
+      <category term="best practice" scheme="http://blog.ddlee.cn/tags/best-practice/"/>
     
   </entry>
   
@@ -1731,123 +1810,6 @@ void setWidth (int arg) {
     
     
       <category term="Reading" scheme="http://blog.ddlee.cn/tags/Reading/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Coroutine,Generator,Async与Await</title>
-    <link href="http://blog.ddlee.cn/2017/04/03/Coroutine-Generator-Async%E4%B8%8EAwait/"/>
-    <id>http://blog.ddlee.cn/2017/04/03/Coroutine-Generator-Async与Await/</id>
-    <published>2017-04-03T14:57:54.000Z</published>
-    <updated>2017-04-07T18:27:24.000Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h4><p>Generator能保存自己的状态，进入一种“Paused”状态，再次调用时会继续执行。</p>
-<p>Generator的好处之一是节省了存储空间开销，带一些”流处理”的思想。</p>
-<p>其实，我们也可以对Generator进行传入数据的操作：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">def coro():
-    hello = yield "Hello"
-    yield hello
-
-c = coro()
-print(next(c))
-print(c.send("World"))
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="Coroutine"><a href="#Coroutine" class="headerlink" title="Coroutine"></a>Coroutine</h4><p>coroutine可以认为是generator思想的泛化：</p>
-<ul>
-<li>generator一个一个地吐出数据（返回值）</li>
-<li>coroutine一个一个地吃掉数据（传入参数）并返回结果，即可控地执行函数</li>
-</ul>
-<p>关键点在于，generator与coroutine都能保存自己的状态，而这种特点正可以用于任务切换。yield可以看做是操作系统在进行进程管理时的traps:</p>
-<p><img src="http://static.ddlee.cn/static/img/coroutine/os.png" alt="traps"></p>
-<p>实际上，coroutine可以看做”用户自定义”的进程，状态、启用和暂停都可控，David Beazley就利用这一点用coroutine实现了Python上的操作系统（参见Reference)。</p>
-<h4 id="Conroutine与Concurrent-Programming"><a href="#Conroutine与Concurrent-Programming" class="headerlink" title="Conroutine与Concurrent Programming"></a>Conroutine与Concurrent Programming</h4><p>Concurrent Programming中有Task的概念，有如下特点：</p>
-<ul>
-<li>独立的控制流</li>
-<li>内部状态变量</li>
-<li>支持计划任务（暂停、恢复执行）</li>
-<li>与其他Task通信</li>
-</ul>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">@coroutine
-def grep(pattern):  #正则匹配
-    print "Looking for %s" % pattern    
-    while True:
-        line = (yield)
-        if pattern in line:
-            print line,
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>conroutine有自己的控制流（while/if），有局部变量（pattern, line），能暂停和恢复（yield()/send()），能相互通信（send()）</p>
-<p>====》coroutine就是一种Task！</p>
-<p>Python Docs中提供了一个例子：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">import asyncio
-
-async def compute(x, y):
-    print("Compute %s + %s ..." % (x, y))
-    await asyncio.sleep(1.0)
-    return x + y
-
-async def print_sum(x, y):
-    result = await compute(x, y)
-    print("%s + %s = %s" % (x, y, result))
-
-loop = asyncio.get_event_loop()
-loop.run_until_complete(print_sum(1, 2))
-loop.close()
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>执行方式如下图：</p>
-<p><img src="http://static.ddlee.cn/static/img/coroutine/tulip_coro.png" alt="Chaining coroutines"></p>
-<p>利用coroutine，可以在一个线程(Task)上实现异步。</p>
-<h4 id="Impletation"><a href="#Impletation" class="headerlink" title="Impletation"></a>Impletation</h4><p>coroutine有两种实现方式，基于generator和原生async, awati关键字。</p>
-<h5 id="generator-based-coroutine"><a href="#generator-based-coroutine" class="headerlink" title="generator based coroutine"></a>generator based coroutine</h5><pre class="line-numbers language-lang-python"><code class="language-lang-python">import asyncio
-import datetime
-import random
-
-@asyncio.coroutine
-def display_date(num, loop):
-    end_time = loop.time() + 50.0
-    while True:
-        print("Loop: {} Time: {}".format(num, datetime.datetime.now()))
-        if (loop.time() + 1.0) >= end_time:
-            break
-        yield from asyncio.sleep(random.randint(0, 5))
-
-loop = asyncio.get_event_loop()
-
-asyncio.ensure_future(display_date(1, loop))
-asyncio.ensure_future(display_date(2, loop))
-
-loop.run_forever()
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>上面的程序实现了在同一个线程里交互执行两个函数（sleep），而又能保持各自的状态</p>
-<h5 id="Native-support-python-3-5"><a href="#Native-support-python-3-5" class="headerlink" title="Native support(python 3.5+)"></a>Native support(python 3.5+)</h5><p>只需要修改函数定义头和<code>yield from</code>为关键字<code>await</code>即可。</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">async def display_date(num, loop, ):
-    end_time = loop.time() + 50.0
-    while True:
-        print("Loop: {} Time: {}".format(num, datetime.datetime.now()))
-        if (loop.time() + 1.0) >= end_time:
-            break
-        await asyncio.sleep(random.randint(0, 5))
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h4 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h4><p>Coroutine常翻译成“协程”。</p>
-<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h4><ul>
-<li><a href="http://www.dabeaz.com/coroutines/Coroutines.pdf" target="_blank" rel="external">David Beazley @ PyCon2009 Slides</a></li>
-<li><a href="http://masnun.com/2015/11/13/python-generators-coroutines-native-coroutines-and-async-await.html" target="_blank" rel="external">PYTHON: GENERATORS, COROUTINES, NATIVE COROUTINES AND ASYNC/AWAIT</a></li>
-<li><a href="https://docs.python.org/3/library/asyncio-task.html" target="_blank" rel="external">Python 3.6 Docs: Taks and coroutines</a></li>
-</ul>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h4 id=&quot;Generator&quot;&gt;&lt;a href=&quot;#Generator&quot; class=&quot;headerlink&quot; title=&quot;Generator&quot;&gt;&lt;/a&gt;Generator&lt;/h4&gt;&lt;p&gt;Generator能保存自己的状态，进入一种“Paused”状态，再次调用时会继续执
-    
-    </summary>
-    
-      <category term="Programming" scheme="http://blog.ddlee.cn/categories/Programming/"/>
-    
-    
-      <category term="Python" scheme="http://blog.ddlee.cn/tags/Python/"/>
-    
-      <category term="异步" scheme="http://blog.ddlee.cn/tags/%E5%BC%82%E6%AD%A5/"/>
     
   </entry>
   

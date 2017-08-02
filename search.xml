@@ -4,6 +4,83 @@
   
     
     <entry>
+      <title><![CDATA[深度学习中的权重衰减]]></title>
+      <url>http://blog.ddlee.cn/2017/07/22/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E6%9D%83%E9%87%8D%E8%A1%B0%E5%87%8F/</url>
+      <content type="html"><![CDATA[<p>权重衰减（weight dacay），即<script type="math/tex">L^2</script>范数惩罚，是最常见的正则化技术之一。本文将介绍它是如何起作用的。主要材料来自<a href="https://deeplearningbook.org" target="_blank" rel="external">The Deep Learning Book</a>。</p>
+<h3 id="为什么要引入权重衰减"><a href="#为什么要引入权重衰减" class="headerlink" title="为什么要引入权重衰减"></a>为什么要引入权重衰减</h3><p>机器学习的逻辑与我们最初解决问题的思维方式恰恰相反：要解决问题，一种经典的思路是把它拆成小问题，考虑之间的依赖，然后分而治之。而机器学习的哲学是“<em>trail-error-correct</em>”：先假设一堆可能的方案，根据结果去选择/调整这些方案，直到满意。换句话说，机器学习在假设空间中搜索最符合数据的模型：以果推因，即为最大似然的想法。随着数据量的增大，我们越来越需要表达能力更强的模型，而深度学习的优势正符合这一需要：通过分布式表示带来的指数增益，深度学习模型的扩展能力几乎是无限的（详见<a href="https://blog.ddlee.cn/2017/06/01/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E8%A1%A8%E7%A4%BA/">深度学习和分布式表示</a>）。</p>
+<p>有了模型（备选模型集），有了数据，就不得不面对机器学习领域的核心问题：如何保证模型能够描述数据（拟合）和生成数据（泛化）。</p>
+<p>粗略来看，有以下三种情况：</p>
+<ul>
+<li>我们假定的模型族不包含真实数据的生成过程：欠拟合/高偏差</li>
+<li>匹配真实的数据生成过程</li>
+<li>除了包含真实的生成过程，还包含了其他信息：过拟合/高方差</li>
+</ul>
+<p>高偏差意味着我们的模型不够准确（模型族不足以描述数据），高方差意味着我们建模了不必要的信息（训练数据的随机性带来的）。前者通过提高模型的表述能力来解决（更深的网络），后者则需要合理的正则化技术来控制。这即是著名的trade-off。</p>
+<h3 id="深度学习模型的参数"><a href="#深度学习模型的参数" class="headerlink" title="深度学习模型的参数"></a>深度学习模型的参数</h3><p>对数据建模，其实是从数据中提取我们能够理解的信息。建立的模型，是从数据分布的空间到目标变量所在空间的映射。从这个角度看，我们通过模型带来的变换获得了数据的一种表示，我们认为能够理解和操作的表示。</p>
+<p>为了表述这一变换，深度模型的套路是线性层施加变换，非线性层固定信息（不能平移），然后将这样的结构堆叠起来，分层提取数据特征。</p>
+<p>这让我想起实变中证明定理的套路：先证明简单函数的情形，再推广到连续函数，再到勒贝格可积的函数。</p>
+<p>常规的套路（MLP）在拟合普通的函数任务上能够胜任，但面对更复杂的图像等数据，就需要更灵活的网络结构。</p>
+<p>非常出色的CNN, LSTM, Inception块, ResNet, DenseNet等结构，就是加入了人类的先验知识，使之更有效的提取图像/音频数据分布空间的特征。（所以Manning有次在课堂上说，机器学习事实上还是人类在学习：机器只是在求导数、做乘法，最好的模型都是人们学习出来的。）</p>
+<p>人们确实设计了很多巧妙的结构来解决不同的问题，但落实到网络的层和单元上，仍是最基本的矩阵乘法、加法运算。决定模型表述能力的，也正是这些普通的乘法运算中涉及的矩阵和向量了。</p>
+<h3 id="权重衰减如何起作用"><a href="#权重衰减如何起作用" class="headerlink" title="权重衰减如何起作用"></a>权重衰减如何起作用</h3><p>下面我们通过观察加入权重衰减后目标函数的梯度变化来讨论权重衰减是如何起作用的。可以跳过公式部分直接看最后一段。</p>
+<p>——————————————————————————————推导部分————————————————————————————————————————————</p>
+<p>简单起见，令偏置为0，模型的目标函数：</p>
+<script type="math/tex; mode=display">J_{1}(w; X,y)=\frac{\alpha}{2} w^T w+J(w; X,y)</script><p>对应的梯度为：</p>
+<script type="math/tex; mode=display">{\nabla}_{w} J_{1}(w; X,y) = \alpha w + {\nabla}_{w} J(w; X,y)</script><p>进行梯度下降，参数的更新规则为：</p>
+<script type="math/tex; mode=display">w = w - \epsilon (\alpha w + {\nabla}_{w} J(w; X,y))</script><p>也就是：</p>
+<script type="math/tex; mode=display">w = (1 - \epsilon \alpha )w - \epsilon {\nabla}_{w} J(w; X,y)</script><p>从上式可以发现，加入权重衰减后，先对参数进行伸缩，再沿梯度下降。下面令<script type="math/tex">x^{(1)}</script>为使目标函数达到最优的参数值，在其附近考虑目标函数的二次近似：</p>
+<script type="math/tex; mode=display">J(w) \approx J(w^{(1)}) + \frac{1}{2} (w - w^{(1)})^T H (w - w^{(1)})</script><p>其中<script type="math/tex">H</script>为近似目标函数在的Hessian矩阵。当近似目标函数最小时，其梯度为<script type="math/tex">0</script>，即：</p>
+<script type="math/tex; mode=display">{\nabla}_{w} J(w) \approx H(w - w^{(1)})</script><p>该式也向我们说明了基于梯度的优化算法主要的信息来自Hessian矩阵。添加入权重衰减项之后，上式变为（记此时的最优点为<script type="math/tex">w^{(2)}</script>）：</p>
+<script type="math/tex; mode=display">{\nabla}_{w} J_{1}(w) \approx \alpha w^{(2)} + H(w^{(2)} - w^{(1)}) = 0</script><p>所以</p>
+<script type="math/tex; mode=display">w^{(2)} = (H + \alpha I)^{-1} H w^{(1)}</script><p>该式表明了了加入正则化对参数最优质点的影响，由Hessian矩阵和正则化系数<script type="math/tex">\alpha</script>共同决定。</p>
+<p>进一步将Hessian矩阵分解，可以得到：</p>
+<script type="math/tex; mode=display">w^{(2)} = Q(\Lambda + \alpha I)^{-1} \Lambda Q^T w^{(1)}</script><p>其中，<script type="math/tex">Q</script>为正交矩阵，<script type="math/tex">\Lambda</script>为对角矩阵。这样可以看到，<em>权重衰减的效果是沿着由<script type="math/tex">H</script>的特征向量所定义的轴缩放<script type="math/tex">w</script></em>， 具体的伸缩因子为<script type="math/tex">\frac{ {\lambda}_{i} }{ {\lambda}_i + \alpha }</script>，其中<script type="math/tex">{\lambda}_{i}</script>表示第<script type="math/tex">i</script>个特征向量对应的特征值。</p>
+<p>当特征值<script type="math/tex">\lambda</script>很大（相比<script type="math/tex">\alpha</script>）时，缩放因子对权重影响较小，因而更新过程中产生的变化也不大；而当特征值较小时，<script type="math/tex">\alpha</script>的缩放作用就显现出来，将这个方向的权重衰减到0。</p>
+<p>这种效果也可以由下图表示：</p>
+<p><img src="http://static.ddlee.cn/static/img/深度学习中的权重衰减/transform.png" alt="transform"></p>
+<p>——————————————————————————推导部分结束————————————————————————————————————————————————————————————————————</p>
+<p><em>总结来说，目标函数的Hessian矩阵（显式、隐式或者近似的）是现有优化算法进行寻优的主要依据。通过控制权重衰减的<script type="math/tex">\alpha</script>参数，我们实际上控制的是在Hessian矩阵的特征方向上以多大的幅度缩放权重，相对重要（能够显著减小目标函数）的方向上权重保留比较完好，而无助于目标函数减小的方向上权重在训练过程中逐渐地衰减掉了。而这也就是权重衰减的意义。</em></p>
+<p>从宏观上来看，对目标函数来说，特征值较大的方向包含更多有关数据的信息，较小的方向则有随机性的噪声，权重衰减正是通过忽略较少信息方向的变化来对抗过拟合的。</p>
+<h3 id="L-1范数正则化"><a href="#L-1范数正则化" class="headerlink" title="L^1范数正则化"></a><script type="math/tex">L^1</script>范数正则化</h3><p>通过类似的推导，可以得到加入了<script type="math/tex">L^1</script>范数惩罚项对参数最优解的影响如下：</p>
+<script type="math/tex; mode=display">w^{(2)}_{i} = sign(w^{(1)}_{i}) max \big\{|w^{(1)}_{i}| - \frac{\alpha}{H_{i,i}}, 0 \big\}</script><p>相比<script type="math/tex">L^2</script>范数的影响，这是一个离散的结果，因而<script type="math/tex">L^1</script>范数惩罚会将参数推向更加稀疏的解。这种稀疏性质常被用作特征选择。</p>
+<h3 id="权重衰减的贝叶斯解释"><a href="#权重衰减的贝叶斯解释" class="headerlink" title="权重衰减的贝叶斯解释"></a>权重衰减的贝叶斯解释</h3><p>在贝叶斯统计的框架下，常用的推断策略是最大后验点估计(Maximum A Posteriori, MAP)。有如下的推断公式（由贝叶斯定律导出）：</p>
+<script type="math/tex; mode=display">{\theta}_{MAP} = argmax p(\theta | x) = argmax (log p( x | \theta) + log p(\theta))</script><p>上式右边第一项是标准的对数似然项，而第二项对应着先验分布。</p>
+<p>在这样的视角下，我们只进行最大似然估计是不够的，还要考虑先验<script type="math/tex">p(\theta)</script>的分布。而当假定参数为正态分布<script type="math/tex">N(w; 0, \frac{1}{\lambda}I^2)</script>时，带入上式（<script type="math/tex">\theta</script>为参数），即可发现第二项的结果正比于权重衰减惩罚项<script type="math/tex">\lambda w^T w</script>，加上一个不依赖于<script type="math/tex">w</script>也不影响学习过程的项。于是，具有高斯先验权重的MAP贝叶斯推断对应着权重衰减。</p>
+<h3 id="权重衰减与提前终止"><a href="#权重衰减与提前终止" class="headerlink" title="权重衰减与提前终止"></a>权重衰减与提前终止</h3><p>提前终止也是一种正则化技术，其想法简单粗暴：每个epoch之后在验证集上评估结果，当验证集误差不再下降的时候，我们认为模型已经尽它所能了，于是终止训练过程。</p>
+<p>提前终止以牺牲一部分训练数据来作为验证数据来的代价来对抗过拟合，其逻辑是实证主义的。</p>
+<p>然而，在二次近似和简单梯度下降的情形下，可以观察到提前终止可以有相当于权重衰减的效果。</p>
+<p>我们仍考虑目标函数的二次近似：</p>
+<script type="math/tex; mode=display">J(w) \approx J(w^{(1)}) + \frac{1}{2} (w - w^{(1)})^T H (w - w^{(1)})</script><p>记最优参数点为<script type="math/tex">w^{(1)}</script>，其梯度为：</p>
+<script type="math/tex; mode=display">{\nabla}_{w} J(w) \approx H(w - w^{(1)})</script><p>不加入正则化项，其梯度下降的更新策略（从第<script type="math/tex">\tau-1</script>步到<script type="math/tex">\tau</script>步）为：</p>
+<script type="math/tex; mode=display">w^{(\tau)} = w^{\tau - 1)} - \epsilon H (w^{(\tau - 1)} - w^{(1)})</script><p>累加得到</p>
+<script type="math/tex; mode=display">w^{(\tau)} - w^{(1)} = (I - \epsilon H) (w^{(\tau - 1)} - w^{(1)})</script><p>将Hessian矩阵分解，得到如下形式</p>
+<script type="math/tex; mode=display">w^{(\tau)} = Q[I - (I - \epsilon \Lambda) ^ {\tau}] Q^T w^{(1)}</script><p>将加入正则化项的权重影响改写为</p>
+<script type="math/tex; mode=display">w^{(2)} = Q[I - (\Lambda + \alpha I) ^ {-1} \alpha] Q^T w^{(1)}</script><p>对比可以得到，如果超参数<script type="math/tex">\epsilon, \alpha, \tau</script>满足</p>
+<script type="math/tex; mode=display">(I - \epsilon \Lambda) ^ {\tau} = (\Lambda + \alpha I) ^ {-1} \alpha</script><p>则提前终止将与权重衰减有相当的效果。具体的，即第<script type="math/tex">\tau</script>步结束的训练过程将到达超参数为<script type="math/tex">\alpha</script>的<script type="math/tex">L^2</script>正则化得到的最优点。</p>
+<p>但提前终止带来的好处是，我们不再需要去找合适的超参数<script type="math/tex">\alpha</script>，而只需要制定合理的终止策略（如3个epoch均不带来验证集误差的减小即终止训练），在训练成本的节约上，还是很值得的。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> AI </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> AI </tag>
+            
+            <tag> Machine Learning </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Tensorflow最佳实践：试验管理]]></title>
       <url>http://blog.ddlee.cn/2017/07/11/Tensorflow%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%EF%BC%9A%E8%AF%95%E9%AA%8C%E7%AE%A1%E7%90%86/</url>
       <content type="html"><![CDATA[<p>本文主要记录使用TensorFlow训练模型中与试验管理相关的最佳实践，主要包括模型训练的大致代码框架、模型的保存与恢复、训练过程的监测、随机性的控制等。主要材料来自<a href="https://web.stanford.edu/class/cs20si/index.html" target="_blank" rel="external">CS 20SI: Tensorflow for Deep Learning Research</a>。</p>
@@ -131,9 +208,9 @@ with​ tf​.​Session​()​​ as​ sess:
             
             <tag> AI </tag>
             
-            <tag> best practice </tag>
-            
             <tag> Tensorflow </tag>
+            
+            <tag> best practice </tag>
             
         </tags>
         
