@@ -208,9 +208,9 @@ with​ tf​.​Session​()​​ as​ sess:
             
             <tag> AI </tag>
             
-            <tag> Tensorflow </tag>
-            
             <tag> best practice </tag>
+            
+            <tag> Tensorflow </tag>
             
         </tags>
         

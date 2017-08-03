@@ -226,9 +226,9 @@ with​ tf​.​Session​()​​ as​ sess:
     
       <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
     
-      <category term="Tensorflow" scheme="http://blog.ddlee.cn/tags/Tensorflow/"/>
-    
       <category term="best practice" scheme="http://blog.ddlee.cn/tags/best-practice/"/>
+    
+      <category term="Tensorflow" scheme="http://blog.ddlee.cn/tags/Tensorflow/"/>
     
   </entry>
   
