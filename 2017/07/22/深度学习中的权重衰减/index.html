@@ -390,7 +390,7 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>权重衰减（weight dacay），即$$L^2$$范数惩罚，是最常见的正则化技术之一。本文将介绍它是如何起作用的。主要材料来自<a href="https://deeplearningbook.org" target="_blank" rel="external">The Deep Learning Book</a>。</p>
+        <p>权重衰减（weight dacay），即L^2范数惩罚，是最常见的正则化技术之一。本文将介绍它是如何起作用的。主要材料来自<a href="https://deeplearningbook.org" target="_blank" rel="external">The Deep Learning Book</a>。</p>
 <h3 id="为什么要引入权重衰减"><a href="#为什么要引入权重衰减" class="headerlink" title="为什么要引入权重衰减"></a>为什么要引入权重衰减</h3><p>机器学习的逻辑与我们最初解决问题的思维方式恰恰相反：要解决问题，一种经典的思路是把它拆成小问题，考虑之间的依赖，然后分而治之。而机器学习的哲学是“<em>trail-error-correct</em>”：先假设一堆可能的方案，根据结果去选择/调整这些方案，直到满意。换句话说，机器学习在假设空间中搜索最符合数据的模型：以果推因，即为最大似然的想法。随着数据量的增大，我们越来越需要表达能力更强的模型，而深度学习的优势正符合这一需要：通过分布式表示带来的指数增益，深度学习模型的扩展能力几乎是无限的（详见<a href="https://blog.ddlee.cn/2017/06/01/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E8%A1%A8%E7%A4%BA/">深度学习和分布式表示</a>）。</p>
 <p>有了模型（备选模型集），有了数据，就不得不面对机器学习领域的核心问题：如何保证模型能够描述数据（拟合）和生成数据（泛化）。</p>
 <p>粗略来看，有以下三种情况：</p>
