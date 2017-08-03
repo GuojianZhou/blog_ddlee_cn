@@ -392,48 +392,47 @@
     
         <p>本文讨论LSTM网络的Pytorch实现，兼论Pytorch库的代码组织方式和架构设计。</p>
 <h2 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a>LSTM</h2><p>LSTM是一种循环神经网络，适用于对序列化的输入建模。Chris Olah的这篇<a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="external">文章</a>细致地解释了一个LSTM单元的运作方式，建议阅读。</p>
-<h3 id="两个想法"><a href="#两个想法" class="headerlink" title="两个想法"></a>两个想法</h3><h4 id="Gate：信息流动的闸门"><a href="#Gate：信息流动的闸门" class="headerlink" title="Gate：信息流动的闸门"></a>Gate：信息流动的闸门</h4><script type="math/tex; mode=display">i_t = sigmoid(W_{xi} x_t  +  W_{hi}h_{t-1} + b_i)</script><script type="math/tex; mode=display">f_t = sigmoid(W_{xf} x_t  +  W_{hf}h_{t-1} + b_f)</script><script type="math/tex; mode=display">o_t = sigmoid(W_{xo} x_t  +  W_{ho}h_{t-1} + b_o)</script><p>$x$ 表示输入，$h$表示隐藏状态，用$sigmoid$函数将输入二者的传递结果映射到$（0,1)$上，分别赋予输入门、遗忘门、输出门的含义，来控制不同神经单元（同一神经元不同时间点的状态）之间信息流动。</p>
-<h4 id="Cell：记忆池"><a href="#Cell：记忆池" class="headerlink" title="Cell：记忆池"></a>Cell：记忆池</h4><script type="math/tex; mode=display">c_t = f_t \odot c_{t - 1} + i_t \odot tanh(W_{xc} x_t  +  W_{hc}h_{t-1} + b_c)\\
-h_t = o_t \odot tanh(c_t)</script><p>$h$表示隐藏状态，$C$表示记忆池，通过Gate，上一单元（状态）的信息有控制地遗忘，当前的输入有控制地流入，记忆池中的信息有控制地流入隐藏状态。</p>
+<h3 id="两个想法"><a href="#两个想法" class="headerlink" title="两个想法"></a>两个想法</h3><h4 id="Gate：信息流动的闸门"><a href="#Gate：信息流动的闸门" class="headerlink" title="Gate：信息流动的闸门"></a>Gate：信息流动的闸门</h4><p>$$i<em>t = sigmoid(W</em>{xi} x<em>t  +  W</em>{hi}h_{t-1} + b_i)$$<br>$$f<em>t = sigmoid(W</em>{xf} x<em>t  +  W</em>{hf}h_{t-1} + b_f)$$<br>$$o<em>t = sigmoid(W</em>{xo} x<em>t  +  W</em>{ho}h_{t-1} + b_o)$$<br>$x$ 表示输入，$h$表示隐藏状态，用$sigmoid$函数将输入二者的传递结果映射到$（0,1)$上，分别赋予输入门、遗忘门、输出门的含义，来控制不同神经单元（同一神经元不同时间点的状态）之间信息流动。</p>
+<h4 id="Cell：记忆池"><a href="#Cell：记忆池" class="headerlink" title="Cell：记忆池"></a>Cell：记忆池</h4><p>$$c_t = f<em>t \odot c</em>{t - 1} + i<em>t \odot tanh(W</em>{xc} x<em>t  +  W</em>{hc}h_{t-1} + b_c)\<br>h_t = o_t \odot tanh(c_t)$$<br>$h$表示隐藏状态，$C$表示记忆池，通过Gate，上一单元（状态）的信息有控制地遗忘，当前的输入有控制地流入，记忆池中的信息有控制地流入隐藏状态。</p>
 <h3 id="与普通RNN的对比"><a href="#与普通RNN的对比" class="headerlink" title="与普通RNN的对比"></a>与普通RNN的对比</h3><p><img src="http://static.ddlee.cn/static/img/./LSTM-Pytorch实现/LSTM3-SimpleRNN.png" alt="RNN"><br>普通RNN只有一个自更新的隐藏状态单元。</p>
 <p><img src="http://static.ddlee.cn/static/img/./LSTM-Pytorch实现/LSTM.jpg" alt="LSTM"><br>LSTM增加了记忆池Cell，并通过几个Gate将信息有控制地更新在记忆池中，并通过记忆池中的信息来决定隐藏状态。</p>
 <h2 id="From-Scratch"><a href="#From-Scratch" class="headerlink" title="From Scratch"></a>From Scratch</h2><p>下面是手动实现LSTM的代码，继承了基类<code>nn.Module</code>。</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">import torch.nn as nn
-import torch
-from torch.autograd import Variable
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> torch<span class="token punctuation">.</span>nn <span class="token keyword">as</span> nn
+<span class="token keyword">import</span> torch
+<span class="token keyword">from</span> torch<span class="token punctuation">.</span>autograd <span class="token keyword">import</span> Variable
 
-class LSTM(nn.Module):
-    def __init__(self, input_size, hidden_size, cell_size, output_size):
-        super(LSTM, self).__init__()
-        self.hidden_size = hidden_size
-        self.cell_size = cell_size
-        self.gate = nn.Linear(input_size + hidden_size, cell_size)
-        self.output = nn.Linear(hidden_size, output_size)
-        self.sigmoid = nn.Sigmoid()
-        self.tanh = nn.Tanh()
-        self.softmax = nn.LogSoftmax()
+<span class="token keyword">class</span> <span class="token class-name">LSTM</span><span class="token punctuation">(</span>nn<span class="token punctuation">.</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> input_size<span class="token punctuation">,</span> hidden_size<span class="token punctuation">,</span> cell_size<span class="token punctuation">,</span> output_size<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        super<span class="token punctuation">(</span>LSTM<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>hidden_size <span class="token operator">=</span> hidden_size
+        self<span class="token punctuation">.</span>cell_size <span class="token operator">=</span> cell_size
+        self<span class="token punctuation">.</span>gate <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>input_size <span class="token operator">+</span> hidden_size<span class="token punctuation">,</span> cell_size<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>output <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>hidden_size<span class="token punctuation">,</span> output_size<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>sigmoid <span class="token operator">=</span> nn<span class="token punctuation">.</span>Sigmoid<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>tanh <span class="token operator">=</span> nn<span class="token punctuation">.</span>Tanh<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>softmax <span class="token operator">=</span> nn<span class="token punctuation">.</span>LogSoftmax<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
-    def forward(self, input, hidden, cell):
-        combined = torch.cat((input, hidden), 1)
-        f_gate = self.gate(combined)
-        i_gate = self.gate(combined)
-        o_gate = self.gate(combined)
-        f_gate = self.sigmoid(f_gate)
-        i_gate = self.sigmoid(i_gate)
-        o_gate = self.sigmoid(o_gate)
-        cell_helper = self.gate(combined)
-        cell_helper = self.tanh(cell_helper)
-        cell = torch.add(torch.mul(cell, f_gate), torch.mul(cell_helper, i_gate))
-        hidden = torch.mul(self.tanh(cell), o_gate)
-        output = self.output(hidden)
-        output = self.softmax(output)
-        return output, hidden, cell
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> input<span class="token punctuation">,</span> hidden<span class="token punctuation">,</span> cell<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        combined <span class="token operator">=</span> torch<span class="token punctuation">.</span>cat<span class="token punctuation">(</span><span class="token punctuation">(</span>input<span class="token punctuation">,</span> hidden<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        f_gate <span class="token operator">=</span> self<span class="token punctuation">.</span>gate<span class="token punctuation">(</span>combined<span class="token punctuation">)</span>
+        i_gate <span class="token operator">=</span> self<span class="token punctuation">.</span>gate<span class="token punctuation">(</span>combined<span class="token punctuation">)</span>
+        o_gate <span class="token operator">=</span> self<span class="token punctuation">.</span>gate<span class="token punctuation">(</span>combined<span class="token punctuation">)</span>
+        f_gate <span class="token operator">=</span> self<span class="token punctuation">.</span>sigmoid<span class="token punctuation">(</span>f_gate<span class="token punctuation">)</span>
+        i_gate <span class="token operator">=</span> self<span class="token punctuation">.</span>sigmoid<span class="token punctuation">(</span>i_gate<span class="token punctuation">)</span>
+        o_gate <span class="token operator">=</span> self<span class="token punctuation">.</span>sigmoid<span class="token punctuation">(</span>o_gate<span class="token punctuation">)</span>
+        cell_helper <span class="token operator">=</span> self<span class="token punctuation">.</span>gate<span class="token punctuation">(</span>combined<span class="token punctuation">)</span>
+        cell_helper <span class="token operator">=</span> self<span class="token punctuation">.</span>tanh<span class="token punctuation">(</span>cell_helper<span class="token punctuation">)</span>
+        cell <span class="token operator">=</span> torch<span class="token punctuation">.</span>add<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>mul<span class="token punctuation">(</span>cell<span class="token punctuation">,</span> f_gate<span class="token punctuation">)</span><span class="token punctuation">,</span> torch<span class="token punctuation">.</span>mul<span class="token punctuation">(</span>cell_helper<span class="token punctuation">,</span> i_gate<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        hidden <span class="token operator">=</span> torch<span class="token punctuation">.</span>mul<span class="token punctuation">(</span>self<span class="token punctuation">.</span>tanh<span class="token punctuation">(</span>cell<span class="token punctuation">)</span><span class="token punctuation">,</span> o_gate<span class="token punctuation">)</span>
+        output <span class="token operator">=</span> self<span class="token punctuation">.</span>output<span class="token punctuation">(</span>hidden<span class="token punctuation">)</span>
+        output <span class="token operator">=</span> self<span class="token punctuation">.</span>softmax<span class="token punctuation">(</span>output<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> output<span class="token punctuation">,</span> hidden<span class="token punctuation">,</span> cell
 
-    def initHidden(self):
-        return Variable(torch.zeros(1, self.hidden_size))
+    <span class="token keyword">def</span> <span class="token function">initHidden</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> Variable<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> self<span class="token punctuation">.</span>hidden_size<span class="token punctuation">)</span><span class="token punctuation">)</span>
 
-    def initCell(self):
-        return Variable(torch.zeros(1, self.cell_size))
+    <span class="token keyword">def</span> <span class="token function">initCell</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> Variable<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> self<span class="token punctuation">.</span>cell_size<span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>几个关键点：</p>
 <ol>
@@ -447,7 +446,7 @@ class LSTM(nn.Module):
 </ol>
 <p>下面开始按图索骥，源码见<a href="https://github.com/pytorch/pytorch/tree/master/torch" target="_blank" rel="external">GitHub</a>。</p>
 <h4 id="LSTM类"><a href="#LSTM类" class="headerlink" title="LSTM类"></a>LSTM类</h4><p>文件：<a href="https://github.com/pytorch/pytorch/blob/master/torch/nn/modules/rnn.py" target="_blank" rel="external">nn/modules/rnn.py</a></p>
-<pre class="line-numbers language-lang-Python"><code class="language-lang-Python"># nn/modules/rnn.py
+<pre class="line-numbers language-Python"><code class="language-Python"># nn/modules/rnn.py
 class RNNBase(Module):
   def __init__(self, mode, input_size, output_size):
       pass
@@ -469,28 +468,28 @@ class LSTM(RNNBase):
 <li>在基类<code>nn.Module</code>中，把<code>__call__()</code>定义为调用<code>forward()</code>方法，因而真正的功能实现在<code>_backend.RNN()</code>中</li>
 </ol>
 <h4 id="AutogradRNN函数"><a href="#AutogradRNN函数" class="headerlink" title="AutogradRNN函数"></a>AutogradRNN函数</h4><p>下面寻找<code>_backend.RNN</code>。<br>文件：<a href="https://github.com/pytorch/pytorch/blob/master/torch/nn/backends/thnn.py" target="_blank" rel="external">nn/backends/thnn.py</a></p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python"># nn/backends/thnn.py
-def _initialize_backend():
-    from .._functions.rnn import RNN, LSTMCell
+<pre class="line-numbers language-python"><code class="language-python"><span class="token comment" spellcheck="true"># nn/backends/thnn.py</span>
+<span class="token keyword">def</span> <span class="token function">_initialize_backend</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">from</span> <span class="token punctuation">.</span><span class="token punctuation">.</span>_functions<span class="token punctuation">.</span>rnn <span class="token keyword">import</span> RNN<span class="token punctuation">,</span> LSTMCell
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>原来，<code>_backend</code>也是索引。</p>
 <p>终于找到<code>RNN()</code>函数。<br>文件：<a href="https://github.com/pytorch/pytorch/blob/master/torch/nn/_functions/rnn.py" target="_blank" rel="external">nn/_functions/rnn.py</a></p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python"># nn/_functions/rnn.py
-def RNN(*args, **kwargs):
-    def forward(input, *fargs, **fkwargs):
-        func = AutogradRNN(*args, **kwargs)
-        return func(input, *fargs, **fkwargs)
-    return forward
+<pre class="line-numbers language-python"><code class="language-python"><span class="token comment" spellcheck="true"># nn/_functions/rnn.py</span>
+<span class="token keyword">def</span> <span class="token function">RNN</span><span class="token punctuation">(</span><span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>input<span class="token punctuation">,</span> <span class="token operator">*</span>fargs<span class="token punctuation">,</span> <span class="token operator">**</span>fkwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        func <span class="token operator">=</span> AutogradRNN<span class="token punctuation">(</span><span class="token operator">*</span>args<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> func<span class="token punctuation">(</span>input<span class="token punctuation">,</span> <span class="token operator">*</span>fargs<span class="token punctuation">,</span> <span class="token operator">**</span>fkwargs<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> forward
 
-def AutogradRNN(mode, input_size, hidden_size):
-    cell = LSTMCell
-    rec_factory = Recurrent
-    layer = (rec_factory(cell),)
-    func = StackedRNN(layer, num_layers)
-    def forward(input, weight, hidden):
-        nexth, output = func(input, hidden, weight)
-        return output, nexth
-    return forward
+<span class="token keyword">def</span> <span class="token function">AutogradRNN</span><span class="token punctuation">(</span>mode<span class="token punctuation">,</span> input_size<span class="token punctuation">,</span> hidden_size<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    cell <span class="token operator">=</span> LSTMCell
+    rec_factory <span class="token operator">=</span> Recurrent
+    layer <span class="token operator">=</span> <span class="token punctuation">(</span>rec_factory<span class="token punctuation">(</span>cell<span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token punctuation">)</span>
+    func <span class="token operator">=</span> StackedRNN<span class="token punctuation">(</span>layer<span class="token punctuation">,</span> num_layers<span class="token punctuation">)</span>
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>input<span class="token punctuation">,</span> weight<span class="token punctuation">,</span> hidden<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        nexth<span class="token punctuation">,</span> output <span class="token operator">=</span> func<span class="token punctuation">(</span>input<span class="token punctuation">,</span> hidden<span class="token punctuation">,</span> weight<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> output<span class="token punctuation">,</span> nexth
+    <span class="token keyword">return</span> forward
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ol>
 <li><code>RNN()</code>是一个装饰器，根据是否有<code>cudnn</code>库决定调用<code>AutogradRNN()</code>还是<code>CudnnRNN()</code>，这里仅观察<code>AutogradRNN()</code></li>
@@ -498,64 +497,64 @@ def AutogradRNN(mode, input_size, hidden_size):
 <li><code>RNN()</code>和<code>AutogradRNN()</code>返回的都是其<code>forward()</code>函数句柄</li>
 </ol>
 <p>下面是<code>Recurrent()</code>函数：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">def Recurrent(inner):
-    def forward(input, hidden, weight):
-        output = []
-        steps = range(input.size(0) - 1, -1, -1)
-        for i in steps:
-            hidden = inner(input[i], hidden, *weight)
-            output.append(hidden[0])
-        return hidden, output
-    return forward
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">Recurrent</span><span class="token punctuation">(</span>inner<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>input<span class="token punctuation">,</span> hidden<span class="token punctuation">,</span> weight<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        output <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        steps <span class="token operator">=</span> range<span class="token punctuation">(</span>input<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> steps<span class="token punctuation">:</span>
+            hidden <span class="token operator">=</span> inner<span class="token punctuation">(</span>input<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> hidden<span class="token punctuation">,</span> <span class="token operator">*</span>weight<span class="token punctuation">)</span>
+            output<span class="token punctuation">.</span>append<span class="token punctuation">(</span>hidden<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> hidden<span class="token punctuation">,</span> output
+    <span class="token keyword">return</span> forward
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ol>
 <li><code>Recurrent()</code>函数实现了“递归”的结构，根据输入的大小组合<code>Cell</code>，完成了隐藏状态和参数的迭代。</li>
 <li><code>Recurrent()</code>函数将<code>Cell(inner)</code>组合为<code>Layer</code>。</li>
 </ol>
-<h4 id="StackedRNN-函数"><a href="#StackedRNN-函数" class="headerlink" title="StackedRNN()函数"></a>StackedRNN()函数</h4><pre class="line-numbers language-lang-python"><code class="language-lang-python">def StackedRNN(inners, num_layers):
-    num_directions = len(inners)
-    total_layers = num_layers * num_directions
-    def forward(input, hidden, weight):
-        next_hidden = []
-        hidden = list(zip(*hidden))
-        for i in range(num_layers):
-          all_output = []
-          for j, inner in enumerate(inners):
-              hy, output = inner(input, hidden[l], weight[l])
-              next_hidden.append(hy)
-              all_output.append(output)
-          input = torch.cat(all_output, input.dim() - 1)
-        next_h, next_c = zip(*next_hidden)
-        next_hidden = (torch.cat(next_h, 0).view(total_layers, *next_h[0].size()),
-                  torch.cat(next_c, 0).view(total_layers, *next_c[0].size()))
-        return next_hidden, input
-    return forward
+<h4 id="StackedRNN-函数"><a href="#StackedRNN-函数" class="headerlink" title="StackedRNN()函数"></a>StackedRNN()函数</h4><pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">StackedRNN</span><span class="token punctuation">(</span>inners<span class="token punctuation">,</span> num_layers<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    num_directions <span class="token operator">=</span> len<span class="token punctuation">(</span>inners<span class="token punctuation">)</span>
+    total_layers <span class="token operator">=</span> num_layers <span class="token operator">*</span> num_directions
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>input<span class="token punctuation">,</span> hidden<span class="token punctuation">,</span> weight<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        next_hidden <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+        hidden <span class="token operator">=</span> list<span class="token punctuation">(</span>zip<span class="token punctuation">(</span><span class="token operator">*</span>hidden<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>num_layers<span class="token punctuation">)</span><span class="token punctuation">:</span>
+          all_output <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+          <span class="token keyword">for</span> j<span class="token punctuation">,</span> inner <span class="token keyword">in</span> enumerate<span class="token punctuation">(</span>inners<span class="token punctuation">)</span><span class="token punctuation">:</span>
+              hy<span class="token punctuation">,</span> output <span class="token operator">=</span> inner<span class="token punctuation">(</span>input<span class="token punctuation">,</span> hidden<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">,</span> weight<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">)</span>
+              next_hidden<span class="token punctuation">.</span>append<span class="token punctuation">(</span>hy<span class="token punctuation">)</span>
+              all_output<span class="token punctuation">.</span>append<span class="token punctuation">(</span>output<span class="token punctuation">)</span>
+          input <span class="token operator">=</span> torch<span class="token punctuation">.</span>cat<span class="token punctuation">(</span>all_output<span class="token punctuation">,</span> input<span class="token punctuation">.</span>dim<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
+        next_h<span class="token punctuation">,</span> next_c <span class="token operator">=</span> zip<span class="token punctuation">(</span><span class="token operator">*</span>next_hidden<span class="token punctuation">)</span>
+        next_hidden <span class="token operator">=</span> <span class="token punctuation">(</span>torch<span class="token punctuation">.</span>cat<span class="token punctuation">(</span>next_h<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">.</span>view<span class="token punctuation">(</span>total_layers<span class="token punctuation">,</span> <span class="token operator">*</span>next_h<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                  torch<span class="token punctuation">.</span>cat<span class="token punctuation">(</span>next_c<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">.</span>view<span class="token punctuation">(</span>total_layers<span class="token punctuation">,</span> <span class="token operator">*</span>next_c<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> next_hidden<span class="token punctuation">,</span> input
+    <span class="token keyword">return</span> forward
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <ol>
 <li><code>StackedRNN()</code>函数将<code>Layer(inner)</code>组合为栈</li>
 </ol>
 <p>最后的最后，一个基本的LSTM单元内的计算由<code>LSTMCell()</code>函数实现。</p>
-<h4 id="LSTMCell-函数"><a href="#LSTMCell-函数" class="headerlink" title="LSTMCell()函数"></a>LSTMCell()函数</h4><pre class="line-numbers language-lang-python"><code class="language-lang-python">def LSTMCell(input, hidden, w_ih, w_hh, b_ih=None, b_hh=None):
-    if input.is_cuda:
-        igates = F.linear(input, w_ih)
-        hgates = F.linear(hidden[0], w_hh)
-        state = fusedBackend.LSTMFused()
-        return state(igates, hgates, hidden[1]) if b_ih is None else state(igates, hgates, hidden[1], b_ih, b_hh)
+<h4 id="LSTMCell-函数"><a href="#LSTMCell-函数" class="headerlink" title="LSTMCell()函数"></a>LSTMCell()函数</h4><pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">LSTMCell</span><span class="token punctuation">(</span>input<span class="token punctuation">,</span> hidden<span class="token punctuation">,</span> w_ih<span class="token punctuation">,</span> w_hh<span class="token punctuation">,</span> b_ih<span class="token operator">=</span>None<span class="token punctuation">,</span> b_hh<span class="token operator">=</span>None<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> input<span class="token punctuation">.</span>is_cuda<span class="token punctuation">:</span>
+        igates <span class="token operator">=</span> F<span class="token punctuation">.</span>linear<span class="token punctuation">(</span>input<span class="token punctuation">,</span> w_ih<span class="token punctuation">)</span>
+        hgates <span class="token operator">=</span> F<span class="token punctuation">.</span>linear<span class="token punctuation">(</span>hidden<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> w_hh<span class="token punctuation">)</span>
+        state <span class="token operator">=</span> fusedBackend<span class="token punctuation">.</span>LSTMFused<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> state<span class="token punctuation">(</span>igates<span class="token punctuation">,</span> hgates<span class="token punctuation">,</span> hidden<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token keyword">if</span> b_ih <span class="token keyword">is</span> None <span class="token keyword">else</span> state<span class="token punctuation">(</span>igates<span class="token punctuation">,</span> hgates<span class="token punctuation">,</span> hidden<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> b_ih<span class="token punctuation">,</span> b_hh<span class="token punctuation">)</span>
 
-    hx, cx = hidden
-    gates = F.linear(input, w_ih, b_ih) + F.linear(hx, w_hh, b_hh)
+    hx<span class="token punctuation">,</span> cx <span class="token operator">=</span> hidden
+    gates <span class="token operator">=</span> F<span class="token punctuation">.</span>linear<span class="token punctuation">(</span>input<span class="token punctuation">,</span> w_ih<span class="token punctuation">,</span> b_ih<span class="token punctuation">)</span> <span class="token operator">+</span> F<span class="token punctuation">.</span>linear<span class="token punctuation">(</span>hx<span class="token punctuation">,</span> w_hh<span class="token punctuation">,</span> b_hh<span class="token punctuation">)</span>
 
-    ingate, forgetgate, cellgate, outgate = gates.chunk(4, 1)
+    ingate<span class="token punctuation">,</span> forgetgate<span class="token punctuation">,</span> cellgate<span class="token punctuation">,</span> outgate <span class="token operator">=</span> gates<span class="token punctuation">.</span>chunk<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
 
-    ingate = F.sigmoid(ingate)
-    forgetgate = F.sigmoid(forgetgate)
-    cellgate = F.tanh(cellgate)
-    outgate = F.sigmoid(outgate)
+    ingate <span class="token operator">=</span> F<span class="token punctuation">.</span>sigmoid<span class="token punctuation">(</span>ingate<span class="token punctuation">)</span>
+    forgetgate <span class="token operator">=</span> F<span class="token punctuation">.</span>sigmoid<span class="token punctuation">(</span>forgetgate<span class="token punctuation">)</span>
+    cellgate <span class="token operator">=</span> F<span class="token punctuation">.</span>tanh<span class="token punctuation">(</span>cellgate<span class="token punctuation">)</span>
+    outgate <span class="token operator">=</span> F<span class="token punctuation">.</span>sigmoid<span class="token punctuation">(</span>outgate<span class="token punctuation">)</span>
 
-    cy = (forgetgate * cx) + (ingate * cellgate)
-    hy = outgate * F.tanh(cy)
+    cy <span class="token operator">=</span> <span class="token punctuation">(</span>forgetgate <span class="token operator">*</span> cx<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token punctuation">(</span>ingate <span class="token operator">*</span> cellgate<span class="token punctuation">)</span>
+    hy <span class="token operator">=</span> outgate <span class="token operator">*</span> F<span class="token punctuation">.</span>tanh<span class="token punctuation">(</span>cy<span class="token punctuation">)</span>
 
-    return hy, cy
+    <span class="token keyword">return</span> hy<span class="token punctuation">,</span> cy
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>观察上面的代码，即是LSTM的基本信息传递公式。至此，我们的旅程完成。</p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><blockquote>
@@ -766,7 +765,7 @@ def AutogradRNN(mode, input_size, hidden_size):
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -784,7 +783,7 @@ def AutogradRNN(mode, input_size, hidden_size):
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
+                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
             </ul>
         </li>
         

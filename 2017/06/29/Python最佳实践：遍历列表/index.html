@@ -391,32 +391,32 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <h3 id="enumerate-遍历索引和值"><a href="#enumerate-遍历索引和值" class="headerlink" title="enumerate(): 遍历索引和值"></a>enumerate(): 遍历索引和值</h3><p>对列表进行遍历操作时，常也要用到当前遍历项的索引值：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">for i in range(len(flavor_list)):
-  flavor = flaver[i]
-  print('%d: %s' % (i + 1, flavor))
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>flavor_list<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+  flavor <span class="token operator">=</span> flaver<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+  <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'%d: %s'</span> <span class="token operator">%</span> <span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> flavor<span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>这种写法既要取出列表长度，又要根据索引取列表值。但要改用<code>enumerate()</code>函数，则可同时取出索引值和遍历项值：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">for i, flavor in enumerate(flavor_list):
-  print('%d: %s' % (i+1, flavor))
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">for</span> i<span class="token punctuation">,</span> flavor <span class="token keyword">in</span> enumerate<span class="token punctuation">(</span>flavor_list<span class="token punctuation">)</span><span class="token punctuation">:</span>
+  <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'%d: %s'</span> <span class="token operator">%</span> <span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> flavor<span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <h3 id="zip-并行遍历多个列表"><a href="#zip-并行遍历多个列表" class="headerlink" title="zip(): 并行遍历多个列表"></a>zip(): 并行遍历多个列表</h3><p>我们有多个长度相同的列表，需要在同一索引下对遍历项值进行操作：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">names = ['Cecilia', 'Lise', 'Marie']
-letters = [len(n) for n in names]
+<pre class="line-numbers language-python"><code class="language-python">names <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'Cecilia'</span><span class="token punctuation">,</span> <span class="token string">'Lise'</span><span class="token punctuation">,</span> <span class="token string">'Marie'</span><span class="token punctuation">]</span>
+letters <span class="token operator">=</span> <span class="token punctuation">[</span>len<span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token keyword">for</span> n <span class="token keyword">in</span> names<span class="token punctuation">]</span>
 
-longest_name = None
-max_letters = 0
+longest_name <span class="token operator">=</span> None
+max_letters <span class="token operator">=</span> <span class="token number">0</span>
 
-for i, name in enumerate(names):
-  count = letters[i]
-  if count > max_letters:
-    longest_name = name
-    max_letters = count
+<span class="token keyword">for</span> i<span class="token punctuation">,</span> name <span class="token keyword">in</span> enumerate<span class="token punctuation">(</span>names<span class="token punctuation">)</span><span class="token punctuation">:</span>
+  count <span class="token operator">=</span> letters<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+  <span class="token keyword">if</span> count <span class="token operator">></span> max_letters<span class="token punctuation">:</span>
+    longest_name <span class="token operator">=</span> name
+    max_letters <span class="token operator">=</span> count
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>由上可见，name和letter通过索引值关联起来，而使用<code>zip()</code>函数，可免去根据索引取值的过程：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">for name, count in zip(names, letters):
-  if count > max_letters:
-    longest_name = name
-    max_letters = count
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">for</span> name<span class="token punctuation">,</span> count <span class="token keyword">in</span> zip<span class="token punctuation">(</span>names<span class="token punctuation">,</span> letters<span class="token punctuation">)</span><span class="token punctuation">:</span>
+  <span class="token keyword">if</span> count <span class="token operator">></span> max_letters<span class="token punctuation">:</span>
+    longest_name <span class="token operator">=</span> name
+    max_letters <span class="token operator">=</span> count
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>要注意的是，当多个列表长度不一时，到达最短列表的末尾时，遍历停止。</p>
 <p>而且，<code>enumerate()</code>和<code>zip()</code>返回的对象都是lazy generator，相对来说更加高效。</p>
@@ -619,7 +619,7 @@ for i, name in enumerate(names):
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -637,7 +637,7 @@ for i, name in enumerate(names):
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
+                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
             </ul>
         </li>
         
