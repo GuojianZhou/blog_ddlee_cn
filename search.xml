@@ -7,7 +7,7 @@
       <title><![CDATA[[源码笔记]keras源码分析之Model]]></title>
       <url>http://blog.ddlee.cn/2017/07/30/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BModel/</url>
       <content type="html"><![CDATA[<p>本篇是keras源码笔记系列的第三篇。在前两篇中，我们分析了keras对Tensor和Layer等概念的处理，并说明了它们是如何作用别弄个构成有向无环图的。本篇着眼于多层网络模型层面的抽象，即与用户距离最近的接口，源代码文件是<a href="https://github.com/fchollet/keras/blob/master/keras/engine/training.py" target="_blank" rel="external">/keras/engine/training.py</a>和<a href="https://github.com/fchollet/keras/blob/master/keras/models.py" target="_blank" rel="external">/keras/model.py</a>，要观察的类是<code>Model</code>和<code>Sequential</code>。</p>
-<p>本系列第一篇：<a href="">【源码笔记】keras源码分析之Tensor, Node和Layer</a><br>第二篇：<a href="">【源码笔记】keras源码分析之Container</a></p>
+<p>本系列第一篇：<a href="https://blog.ddlee.cn/2017/07/15/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BLayer%E3%80%81Tensor%E5%92%8CNode/">【源码笔记】keras源码分析之Tensor, Node和Layer</a><br>第二篇：<a href="https://blog.ddlee.cn/2017/07/25/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BContainer/">【源码笔记】keras源码分析之Container</a></p>
 <h3 id="Model：添加了训练信息的Container"><a href="#Model：添加了训练信息的Container" class="headerlink" title="Model：添加了训练信息的Container"></a><code>Model</code>：添加了训练信息的<code>Container</code></h3><p><code>Model.compile()</code>主要完成了配置<code>optimizer</code>, <code>loss</code>, <code>metrics</code>等操作，而要执行的<code>fit</code>, <code>evaluate</code>等则不在<code>compile</code>过程中配置。</p>
 <pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">compile</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> optimizer<span class="token punctuation">,</span> loss<span class="token punctuation">,</span> metrics<span class="token operator">=</span>None<span class="token punctuation">,</span> loss_weights<span class="token operator">=</span>None<span class="token punctuation">,</span>
             sample_weight_mode<span class="token operator">=</span>None<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
@@ -167,7 +167,7 @@
       <title><![CDATA[[源码笔记]keras源码分析之Container]]></title>
       <url>http://blog.ddlee.cn/2017/07/25/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BContainer/</url>
       <content type="html"><![CDATA[<p>本篇继续讨论keras的源码结构。</p>
-<p><a href="">第一篇源码笔记</a>中我们观察了<code>Layer</code>, <code>Tensor</code>和<code>Node</code>是如何耦合在一起的，而本篇的重点是观察多层网络构成的有向无环图（DAG）。主要涉及的文件为<a href="https://github.com/fchollet/keras/blob/master/keras/engine/topology.py" target="_blank" rel="external">keras/engine/topology.py</a>， 要观察的类是<code>Container</code>。</p>
+<p><a href="https://blog.ddlee.cn/2017/07/15/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BLayer%E3%80%81Tensor%E5%92%8CNode/">第一篇源码笔记</a>中我们观察了<code>Layer</code>, <code>Tensor</code>和<code>Node</code>是如何耦合在一起的，而本篇的重点是观察多层网络构成的有向无环图（DAG）。主要涉及的文件为<a href="https://github.com/fchollet/keras/blob/master/keras/engine/topology.py" target="_blank" rel="external">keras/engine/topology.py</a>， 要观察的类是<code>Container</code>。</p>
 <h3 id="Container对象：DAG的拓扑原型"><a href="#Container对象：DAG的拓扑原型" class="headerlink" title="Container对象：DAG的拓扑原型"></a><code>Container</code>对象：DAG的拓扑原型</h3><p>在第一篇中我们提到，Keras Tensor中增强的<code>\_keras_history</code>属性使得我们仅通过输入和输出的Tensor，就可以构建出整张计算图。而<code>Container</code>对象正是实现了这样的过程。</p>
 <h4 id="计算图的构建"><a href="#计算图的构建" class="headerlink" title="计算图的构建"></a>计算图的构建</h4><p>DAG计算图的构建在<code>Container</code>对象实例化时完成，主要包括如下几个操作：</p>
 <ol>
@@ -186,7 +186,7 @@
    self<span class="token punctuation">.</span>input_layers_tensor_indices<span class="token punctuation">.</span>append<span class="token punctuation">(</span>tensor_index<span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
-<li><p>从<code>output_tensors</code>开始反向递归构建计算图，采用广度优先的准则</p>
+<li><p>从<code>output_tensors</code>开始反向递归构建计算图，采用广度优先的准则，本步的关键是构建<code>nodes_in_decreasing_depth</code>这一队列，这些<code>Node</code>包含的连接信息和深度信息将是后续正向传播和反向训练计算执行顺序的依据。</p>
 </li>
 </ol>
 <pre class="line-numbers language-python"><code class="language-python">  <span class="token keyword">def</span> <span class="token function">build_map_of_graph</span><span class="token punctuation">(</span>tensor<span class="token punctuation">,</span> finished_nodes<span class="token punctuation">,</span> nodes_in_progress<span class="token punctuation">)</span><span class="token punctuation">:</span>
@@ -213,7 +213,6 @@
   <span class="token keyword">for</span> x <span class="token keyword">in</span> self<span class="token punctuation">.</span>outputs<span class="token punctuation">:</span>
       build_map_of_graph<span class="token punctuation">(</span>x<span class="token punctuation">,</span> finished_nodes<span class="token punctuation">,</span> nodes_in_progress<span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>本步的关键是构建<code>nodes_in_decreasing_depth</code>这一队列，这些<code>Node</code>包含的连接信息和深度信息将是后续正向传播和反向训练计算执行顺序的依据。</p>
 <ol>
 <li>计算各节点的深度并按深度标定节点在DAG中的位置</li>
 </ol>
@@ -294,7 +293,7 @@ Node<span class="token punctuation">(</span>outbound_layer<span class="token ope
        <span class="token keyword">return</span> output_tensors<span class="token punctuation">,</span> output_masks
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>从上面的代码可以看到计算是依据深度进行的，并通过更新<code>computed_data</code>和<code>output_tensor</code>等变量完成整张图的遍历计算。</p>
-<p>继续阅读系列第三篇：<a href="">【源码笔记】keras源码分析之Model</a></p>
+<p>继续阅读系列第三篇：<a href="https://blog.ddlee.cn/2017/07/30/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BModel/">【源码笔记】keras源码分析之Model</a></p>
 <p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
       
@@ -520,7 +519,7 @@ b_2 <span class="token operator">=</span> dense<span class="token punctuation">(
 <span class="token keyword">assert</span> dense<span class="token punctuation">.</span>inbound_nodes<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>outbound_layer <span class="token operator">==</span> dense
 <span class="token keyword">assert</span> dense<span class="token punctuation">.</span>inbound_nodes<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>input_tensors <span class="token operator">==</span> <span class="token punctuation">[</span>b<span class="token punctuation">]</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>keras利用<code>Node</code>对象描述<code>Layer</code>之间的连接关系，并在<code>Tensor</code>中记录其来源信息。在<a href="">下篇</a>中，我们将看到keras如何利用这些抽象和增强属性构建DAG，并实现前向传播和反向训练的。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>keras利用<code>Node</code>对象描述<code>Layer</code>之间的连接关系，并在<code>Tensor</code>中记录其来源信息。在<a href="https://blog.ddlee.cn/2017/07/25/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BContainer/">下篇</a>中，我们将看到keras如何利用这些抽象和增强属性构建DAG，并实现前向传播和反向训练的。</p>
 <p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
       
