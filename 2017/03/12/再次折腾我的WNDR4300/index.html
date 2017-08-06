@@ -418,17 +418,17 @@
 <h3 id="U盘挂载，文件共享"><a href="#U盘挂载，文件共享" class="headerlink" title="U盘挂载，文件共享"></a>U盘挂载，文件共享</h3><p>安装好OpenWrt后，就可以从网页端访问路由器，设置PPPoE拨号，设置WIFI等等。</p>
 <h4 id="U盘挂载"><a href="#U盘挂载" class="headerlink" title="U盘挂载"></a>U盘挂载</h4><p>U盘挂载部分主要参考了<a href="https://my.oschina.net/umu618/blog/282984" target="_blank" rel="external">跟 UMU 一起玩 OpenWRT（入门篇6）：挂接 U 盘</a>。</p>
 <p>首先是安装相应的包：</p>
-<pre class="line-numbers language-bash"><code class="language-bash">opkg update
+<pre class="line-numbers language-lang-bash"><code class="language-lang-bash">opkg update
 
-<span class="token comment" spellcheck="true"># 核心包</span>
-opkg <span class="token function">install</span> kmod-usb-storage
-opkg <span class="token function">install</span> kmod-scsi-generic
+# 核心包
+opkg install kmod-usb-storage
+opkg install kmod-scsi-generic
 
-<span class="token comment" spellcheck="true"># 文件系统</span>
-opkg <span class="token function">install</span> kmod-fs-ext4
+# 文件系统
+opkg install kmod-fs-ext4
 
-<span class="token comment" spellcheck="true"># 辅助工具</span>
-opkg <span class="token function">install</span> usbutils <span class="token function">fdisk</span> e2fsprogs
+# 辅助工具
+opkg install usbutils fdisk e2fsprogs
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>利用<code>lsusb</code>命令查看U盘是否已经被路由器识别。</p>
 <p>这时可以选择用fdisk进行重新分区，不需要分区的话，可以用命令<code>ls /dev | grep sd</code>查看/dev分区中是否已经出现U盘。</p>
@@ -444,23 +444,23 @@ chmod 444 /mnt/usb/USB_DISK_NOT_PRESENT
 mount /dev/sda1 /mnt/usb
 </code></pre><p>这时可以测试一下，如果U盘里面存储了文件，可以通过<code>/mnt/usb</code>访问的到。</p>
 <p>下面是开机自动挂载U盘的命令。</p>
-<pre class="line-numbers language-bash"><code class="language-bash"><span class="token comment" spellcheck="true"># block-mount blkid用于查看U盘的UUID</span>
-opkg <span class="token function">install</span> block-mount blkid
+<pre class="line-numbers language-lang-bash"><code class="language-lang-bash"># block-mount blkid用于查看U盘的UUID
+opkg install block-mount blkid
 
-<span class="token comment" spellcheck="true"># 实际上要操作的是fstab的配置文件/etc/config/fstab，要将enabled值改成1</span>
-block detect <span class="token operator">></span> /etc/config/fstab
-uci <span class="token keyword">set</span> fstab.@mount<span class="token punctuation">[</span>-1<span class="token punctuation">]</span>.target<span class="token operator">=</span><span class="token string">'/mnt/usb'</span> u
-ci <span class="token keyword">set</span> fstab.@mount<span class="token punctuation">[</span>-1<span class="token punctuation">]</span>.enabled<span class="token operator">=</span>1
+# 实际上要操作的是fstab的配置文件/etc/config/fstab，要将enabled值改成1
+block detect > /etc/config/fstab
+uci set fstab.@mount[-1].target='/mnt/usb' u
+ci set fstab.@mount[-1].enabled=1
 uci commit fstab
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>更详细的信息可以参见<a href="http://wiki.openwrt.org/doc/uci/fstab" target="_blank" rel="external">这里</a></p>
 <h4 id="文件共享"><a href="#文件共享" class="headerlink" title="文件共享"></a>文件共享</h4><p>文件共享可以通过FTP和SAMBA，推荐的方式是SAMBA。</p>
 <h5 id="SAMBA"><a href="#SAMBA" class="headerlink" title="SAMBA"></a>SAMBA</h5><p>安转SAMBA：</p>
-<pre class="line-numbers language-bash"><code class="language-bash">opkg update
-opkg <span class="token function">install</span> samba36-server
+<pre class="line-numbers language-lang-bash"><code class="language-lang-bash">opkg update
+opkg install samba36-server
 
-<span class="token comment" spellcheck="true"># luci程序，可选</span>
-opkg <span class="token function">install</span> luci-app-samba
+# luci程序，可选
+opkg install luci-app-samba
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>安装好SAMBA后，主要配置两个参数，一是共享文件夹的路径，如<code>/mnt/usb/sambashare</code>，可以通过更改配置文件<code>/etc/samba/smb.conf</code>实现，也可以通过luci实现。</p>
 <p>示例：</p>
@@ -473,8 +473,8 @@ create mask = 0750
 directory mask = 0750
 </code></pre><p>第二个参数是访问账户，可以通过命令<code>sambpasswd -a</code>将你的当前用户加入到SAMBA的组中，需要设置一个密码。另外，可能需要将配置文件<code>/etc/samba/smb.conf</code>的[global]中的<code>invalid users = root</code>注释掉。</p>
 <p>最后，设置SAMBA服务启动和开机自启</p>
-<pre class="line-numbers language-bash"><code class="language-bash">/etc/init.d/samba start
-/etc/init.d/samba <span class="token function">enable</span>
+<pre class="line-numbers language-lang-bash"><code class="language-lang-bash">/etc/init.d/samba start
+/etc/init.d/samba enable
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <h5 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h5><p>FTP可以用<code>vsftpd</code>包来设置，大致过程与SAMBA类似：设置路径、添加用户、设置自启。</p>
 <p>SAMBA服务可以在Windows文件资源管理器中自动检测的到，Linux下可以通过<code>smb://Host/sharepath</code>访问，在IOS系统中，类似Documents的应用也支持添加SAMBA的功能。</p>
@@ -680,7 +680,7 @@ directory mask = 0750
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -698,7 +698,7 @@ directory mask = 0750
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
+                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
             </ul>
         </li>
         

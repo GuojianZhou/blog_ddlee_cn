@@ -397,77 +397,77 @@
 <p>Hinton曾用生物学的观点解释这一点。神经网络的训练过程可以看做是生物种群逐渐适应环境的过程，在迭代中传递的模型参数可以看做种群的基因，Dropout以随机信号的方式给环境随机的干扰，使得传递的基因不得不适应更多的情况才能存活。</p>
 <p>另一个需要指出的地方是，Dropout给隐藏单元加入的噪声是乘性的，不像Bias那样加在隐藏单元上，这样在进行反向传播时，Dropout引入的噪声仍能够起作用。</p>
 <h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p>下面看在实践中，Dropout层是如何实现的。简单来说，就是生成一系列随机数作为mask，然后再用mask点乘原有的输入，达到引入噪声的效果。</p>
-<h4 id="From-Scratch"><a href="#From-Scratch" class="headerlink" title="From Scratch"></a>From Scratch</h4><pre class="line-numbers language-python"><code class="language-python"><span class="token comment" spellcheck="true"># forward pass</span>
-<span class="token keyword">def</span> <span class="token function">dropout_forward</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> dropout_param<span class="token punctuation">)</span><span class="token punctuation">:</span>
-  p<span class="token punctuation">,</span> mode <span class="token operator">=</span> dropout_param<span class="token punctuation">[</span><span class="token string">'p'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> dropout_param<span class="token punctuation">[</span><span class="token string">'mode'</span><span class="token punctuation">]</span>
-  <span class="token comment" spellcheck="true"># p: dropout rate; mode: train or test</span>
-  <span class="token keyword">if</span> <span class="token string">'seed'</span> <span class="token keyword">in</span> dropout_param<span class="token punctuation">:</span>
-    np<span class="token punctuation">.</span>random_seed<span class="token punctuation">(</span>dropout_param<span class="token punctuation">[</span><span class="token string">'seed'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-  <span class="token comment" spellcheck="true"># seed: random seed</span>
-  mask <span class="token operator">=</span> None
-  out <span class="token operator">=</span> None
-  <span class="token keyword">if</span> mode <span class="token operator">==</span> <span class="token string">'train'</span><span class="token punctuation">:</span>
-    mask <span class="token operator">=</span> <span class="token punctuation">(</span>np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>rand<span class="token punctuation">(</span><span class="token operator">*</span>x<span class="token punctuation">.</span>shape<span class="token punctuation">)</span> <span class="token operator">>=</span> p<span class="token punctuation">)</span><span class="token operator">/</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">-</span>p<span class="token punctuation">)</span>
-    <span class="token comment" spellcheck="true"># 1-p as normalization multiplier: to keep the size of input</span>
-    out <span class="token operator">=</span> x <span class="token operator">*</span> mask
-  <span class="token keyword">elif</span> mode <span class="token operator">==</span> <span class="token string">'test'</span><span class="token punctuation">:</span>
-    <span class="token comment" spellcheck="true"># do nothing when perform inference</span>
-    out <span class="token operator">=</span> x
-  cache <span class="token operator">=</span> <span class="token punctuation">(</span>dropout_param<span class="token punctuation">,</span> mask<span class="token punctuation">)</span>
-  out <span class="token operator">=</span> out<span class="token punctuation">.</span>astype<span class="token punctuation">(</span>x<span class="token punctuation">.</span>dtype<span class="token punctuation">,</span> copy<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
-  <span class="token keyword">return</span> out<span class="token punctuation">,</span> cache
+<h4 id="From-Scratch"><a href="#From-Scratch" class="headerlink" title="From Scratch"></a>From Scratch</h4><pre class="line-numbers language-lang-python"><code class="language-lang-python"># forward pass
+def dropout_forward(x, dropout_param):
+  p, mode = dropout_param['p'], dropout_param['mode']
+  # p: dropout rate; mode: train or test
+  if 'seed' in dropout_param:
+    np.random_seed(dropout_param['seed'])
+  # seed: random seed
+  mask = None
+  out = None
+  if mode == 'train':
+    mask = (np.random.rand(*x.shape) >= p)/(1-p)
+    # 1-p as normalization multiplier: to keep the size of input
+    out = x * mask
+  elif mode == 'test':
+    # do nothing when perform inference
+    out = x
+  cache = (dropout_param, mask)
+  out = out.astype(x.dtype, copy=False)
+  return out, cache
 
-<span class="token comment" spellcheck="true"># backward pass</span>
-<span class="token keyword">def</span> <span class="token function">dropout_backward</span><span class="token punctuation">(</span>dout<span class="token punctuation">,</span> cache<span class="token punctuation">)</span><span class="token punctuation">:</span>
-  dropout_param<span class="token punctuation">,</span> mask <span class="token operator">=</span> cache
-  mode <span class="token operator">=</span> dropout_param<span class="token punctuation">[</span><span class="token string">'mode'</span><span class="token punctuation">]</span>
+# backward pass
+def dropout_backward(dout, cache):
+  dropout_param, mask = cache
+  mode = dropout_param['mode']
 
-  dx <span class="token operator">=</span> None
-  <span class="token keyword">if</span> mode <span class="token operator">==</span> <span class="token string">'train'</span><span class="token punctuation">:</span>
-    dx <span class="token operator">=</span> dout <span class="token operator">*</span> mask
-  <span class="token keyword">elif</span> mode <span class="token operator">==</span> <span class="token string">'test'</span><span class="token punctuation">:</span>
-    dx <span class="token operator">=</span> dout
-  <span class="token keyword">return</span> dx
+  dx = None
+  if mode == 'train':
+    dx = dout * mask
+  elif mode == 'test':
+    dx = dout
+  return dx
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="Pytorch实现"><a href="#Pytorch实现" class="headerlink" title="Pytorch实现"></a>Pytorch实现</h3><p>file: <a href="https://github.com/pytorch/pytorch/blob/master/torch/nn/_functions/dropout.py" target="_blank" rel="external">/torch/nn/_functions/dropout.py</a></p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Dropout</span><span class="token punctuation">(</span>InplaceFunction<span class="token punctuation">)</span><span class="token punctuation">:</span>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">class Dropout(InplaceFunction):
 
-    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> p<span class="token operator">=</span><span class="token number">0.5</span><span class="token punctuation">,</span> train<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">,</span> inplace<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        super<span class="token punctuation">(</span>Dropout<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
-        <span class="token keyword">if</span> p <span class="token operator">&lt;</span> <span class="token number">0</span> <span class="token operator">or</span> p <span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">:</span>
-            <span class="token keyword">raise</span> ValueError<span class="token punctuation">(</span><span class="token string">"dropout probability has to be between 0 and 1, "</span>
-                             <span class="token string">"but got {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">)</span>
-        self<span class="token punctuation">.</span>p <span class="token operator">=</span> p
-        self<span class="token punctuation">.</span>train <span class="token operator">=</span> train
-        self<span class="token punctuation">.</span>inplace <span class="token operator">=</span> inplace
+    def __init__(self, p=0.5, train=False, inplace=False):
+        super(Dropout, self).__init__()
+        if p < 0 or p > 1:
+            raise ValueError("dropout probability has to be between 0 and 1, "
+                             "but got {}".format(p))
+        self.p = p
+        self.train = train
+        self.inplace = inplace
 
-    <span class="token keyword">def</span> <span class="token function">_make_noise</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> input<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment" spellcheck="true"># generate random signal</span>
-        <span class="token keyword">return</span> input<span class="token punctuation">.</span>new<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>resize_as_<span class="token punctuation">(</span>input<span class="token punctuation">)</span>
+    def _make_noise(self, input):
+    # generate random signal
+        return input.new().resize_as_(input)
 
-    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> input<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token keyword">if</span> self<span class="token punctuation">.</span>inplace<span class="token punctuation">:</span>
-            self<span class="token punctuation">.</span>mark_dirty<span class="token punctuation">(</span>input<span class="token punctuation">)</span>
-            output <span class="token operator">=</span> input
-        <span class="token keyword">else</span><span class="token punctuation">:</span>
-            output <span class="token operator">=</span> input<span class="token punctuation">.</span>clone<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    def forward(self, input):
+        if self.inplace:
+            self.mark_dirty(input)
+            output = input
+        else:
+            output = input.clone()
 
-        <span class="token keyword">if</span> self<span class="token punctuation">.</span>p <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">and</span> self<span class="token punctuation">.</span>train<span class="token punctuation">:</span>
-            self<span class="token punctuation">.</span>noise <span class="token operator">=</span> self<span class="token punctuation">.</span>_make_noise<span class="token punctuation">(</span>input<span class="token punctuation">)</span>
-            <span class="token comment" spellcheck="true"># multiply mask to input</span>
-            self<span class="token punctuation">.</span>noise<span class="token punctuation">.</span>bernoulli_<span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">-</span> self<span class="token punctuation">.</span>p<span class="token punctuation">)</span><span class="token punctuation">.</span>div_<span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">-</span> self<span class="token punctuation">.</span>p<span class="token punctuation">)</span>
-            <span class="token keyword">if</span> self<span class="token punctuation">.</span>p <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">:</span>
-                self<span class="token punctuation">.</span>noise<span class="token punctuation">.</span>fill_<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
-            self<span class="token punctuation">.</span>noise <span class="token operator">=</span> self<span class="token punctuation">.</span>noise<span class="token punctuation">.</span>expand_as<span class="token punctuation">(</span>input<span class="token punctuation">)</span>
-            output<span class="token punctuation">.</span>mul_<span class="token punctuation">(</span>self<span class="token punctuation">.</span>noise<span class="token punctuation">)</span>
+        if self.p > 0 and self.train:
+            self.noise = self._make_noise(input)
+            # multiply mask to input
+            self.noise.bernoulli_(1 - self.p).div_(1 - self.p)
+            if self.p == 1:
+                self.noise.fill_(0)
+            self.noise = self.noise.expand_as(input)
+            output.mul_(self.noise)
 
-        <span class="token keyword">return</span> output
+        return output
 
-    <span class="token keyword">def</span> <span class="token function">backward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> grad_output<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        <span class="token keyword">if</span> self<span class="token punctuation">.</span>p <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">and</span> self<span class="token punctuation">.</span>train<span class="token punctuation">:</span>
-            <span class="token keyword">return</span> grad_output<span class="token punctuation">.</span>mul<span class="token punctuation">(</span>self<span class="token punctuation">.</span>noise<span class="token punctuation">)</span>
-        <span class="token keyword">else</span><span class="token punctuation">:</span>
-            <span class="token keyword">return</span> grad_output
+    def backward(self, grad_output):
+        if self.p > 0 and self.train:
+            return grad_output.mul(self.noise)
+        else:
+            return grad_output
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
     
@@ -667,7 +667,7 @@
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -685,7 +685,7 @@
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
+                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
             </ul>
         </li>
         

@@ -393,13 +393,13 @@
         <h4 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h4><p>Generator能保存自己的状态，进入一种“Paused”状态，再次调用时会继续执行。</p>
 <p>Generator的好处之一是节省了存储空间开销，带一些”流处理”的思想。</p>
 <p>其实，我们也可以对Generator进行传入数据的操作：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">coro</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    hello <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token string">"Hello"</span>
-    <span class="token keyword">yield</span> hello
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">def coro():
+    hello = yield "Hello"
+    yield hello
 
-c <span class="token operator">=</span> coro<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>next<span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>c<span class="token punctuation">.</span>send<span class="token punctuation">(</span><span class="token string">"World"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+c = coro()
+print(next(c))
+print(c.send("World"))
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="Coroutine"><a href="#Coroutine" class="headerlink" title="Coroutine"></a>Coroutine</h4><p>coroutine可以认为是generator思想的泛化：</p>
 <ul>
@@ -416,65 +416,65 @@ c <span class="token operator">=</span> coro<span class="token punctuation">(</s
 <li>支持计划任务（暂停、恢复执行）</li>
 <li>与其他Task通信</li>
 </ul>
-<pre class="line-numbers language-python"><code class="language-python">@coroutine
-<span class="token keyword">def</span> <span class="token function">grep</span><span class="token punctuation">(</span>pattern<span class="token punctuation">)</span><span class="token punctuation">:</span>  <span class="token comment" spellcheck="true">#正则匹配</span>
-    <span class="token keyword">print</span> <span class="token string">"Looking for %s"</span> <span class="token operator">%</span> pattern    
-    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
-        line <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">yield</span><span class="token punctuation">)</span>
-        <span class="token keyword">if</span> pattern <span class="token keyword">in</span> line<span class="token punctuation">:</span>
-            <span class="token keyword">print</span> line<span class="token punctuation">,</span>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">@coroutine
+def grep(pattern):  #正则匹配
+    print "Looking for %s" % pattern    
+    while True:
+        line = (yield)
+        if pattern in line:
+            print line,
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>conroutine有自己的控制流（while/if），有局部变量（pattern, line），能暂停和恢复（yield()/send()），能相互通信（send()）</p>
 <p>====》coroutine就是一种Task！</p>
 <p>Python Docs中提供了一个例子：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> asyncio
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">import asyncio
 
-<span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">compute</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Compute %s + %s ..."</span> <span class="token operator">%</span> <span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token keyword">await</span> asyncio<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span> x <span class="token operator">+</span> y
+async def compute(x, y):
+    print("Compute %s + %s ..." % (x, y))
+    await asyncio.sleep(1.0)
+    return x + y
 
-<span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">print_sum</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    result <span class="token operator">=</span> <span class="token keyword">await</span> compute<span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"%s + %s = %s"</span> <span class="token operator">%</span> <span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> result<span class="token punctuation">)</span><span class="token punctuation">)</span>
+async def print_sum(x, y):
+    result = await compute(x, y)
+    print("%s + %s = %s" % (x, y, result))
 
-loop <span class="token operator">=</span> asyncio<span class="token punctuation">.</span>get_event_loop<span class="token punctuation">(</span><span class="token punctuation">)</span>
-loop<span class="token punctuation">.</span>run_until_complete<span class="token punctuation">(</span>print_sum<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-loop<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+loop = asyncio.get_event_loop()
+loop.run_until_complete(print_sum(1, 2))
+loop.close()
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>执行方式如下图：</p>
 <p><img src="http://static.ddlee.cn/static/img/coroutine/tulip_coro.png" alt="Chaining coroutines"></p>
 <p>利用coroutine，可以在一个线程(Task)上实现异步。</p>
 <h4 id="Impletation"><a href="#Impletation" class="headerlink" title="Impletation"></a>Impletation</h4><p>coroutine有两种实现方式，基于generator和原生async, awati关键字。</p>
-<h5 id="generator-based-coroutine"><a href="#generator-based-coroutine" class="headerlink" title="generator based coroutine"></a>generator based coroutine</h5><pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> asyncio
-<span class="token keyword">import</span> datetime
-<span class="token keyword">import</span> random
+<h5 id="generator-based-coroutine"><a href="#generator-based-coroutine" class="headerlink" title="generator based coroutine"></a>generator based coroutine</h5><pre class="line-numbers language-lang-python"><code class="language-lang-python">import asyncio
+import datetime
+import random
 
-@asyncio<span class="token punctuation">.</span>coroutine
-<span class="token keyword">def</span> <span class="token function">display_date</span><span class="token punctuation">(</span>num<span class="token punctuation">,</span> loop<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    end_time <span class="token operator">=</span> loop<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">50.0</span>
-    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
-        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Loop: {} Time: {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>num<span class="token punctuation">,</span> datetime<span class="token punctuation">.</span>datetime<span class="token punctuation">.</span>now<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>loop<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1.0</span><span class="token punctuation">)</span> <span class="token operator">>=</span> end_time<span class="token punctuation">:</span>
-            <span class="token keyword">break</span>
-        <span class="token keyword">yield</span> <span class="token keyword">from</span> asyncio<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+@asyncio.coroutine
+def display_date(num, loop):
+    end_time = loop.time() + 50.0
+    while True:
+        print("Loop: {} Time: {}".format(num, datetime.datetime.now()))
+        if (loop.time() + 1.0) >= end_time:
+            break
+        yield from asyncio.sleep(random.randint(0, 5))
 
-loop <span class="token operator">=</span> asyncio<span class="token punctuation">.</span>get_event_loop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+loop = asyncio.get_event_loop()
 
-asyncio<span class="token punctuation">.</span>ensure_future<span class="token punctuation">(</span>display_date<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> loop<span class="token punctuation">)</span><span class="token punctuation">)</span>
-asyncio<span class="token punctuation">.</span>ensure_future<span class="token punctuation">(</span>display_date<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> loop<span class="token punctuation">)</span><span class="token punctuation">)</span>
+asyncio.ensure_future(display_date(1, loop))
+asyncio.ensure_future(display_date(2, loop))
 
-loop<span class="token punctuation">.</span>run_forever<span class="token punctuation">(</span><span class="token punctuation">)</span>
+loop.run_forever()
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>上面的程序实现了在同一个线程里交互执行两个函数（sleep），而又能保持各自的状态</p>
 <h5 id="Native-support-python-3-5"><a href="#Native-support-python-3-5" class="headerlink" title="Native support(python 3.5+)"></a>Native support(python 3.5+)</h5><p>只需要修改函数定义头和<code>yield from</code>为关键字<code>await</code>即可。</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">display_date</span><span class="token punctuation">(</span>num<span class="token punctuation">,</span> loop<span class="token punctuation">,</span> <span class="token punctuation">)</span><span class="token punctuation">:</span>
-    end_time <span class="token operator">=</span> loop<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">50.0</span>
-    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
-        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Loop: {} Time: {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>num<span class="token punctuation">,</span> datetime<span class="token punctuation">.</span>datetime<span class="token punctuation">.</span>now<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>loop<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1.0</span><span class="token punctuation">)</span> <span class="token operator">>=</span> end_time<span class="token punctuation">:</span>
-            <span class="token keyword">break</span>
-        <span class="token keyword">await</span> asyncio<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<pre class="line-numbers language-lang-python"><code class="language-lang-python">async def display_date(num, loop, ):
+    end_time = loop.time() + 50.0
+    while True:
+        print("Loop: {} Time: {}".format(num, datetime.datetime.now()))
+        if (loop.time() + 1.0) >= end_time:
+            break
+        await asyncio.sleep(random.randint(0, 5))
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h4 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h4><p>Coroutine常翻译成“协程”。</p>
 <h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h4><ul>
@@ -681,7 +681,7 @@ loop<span class="token punctuation">.</span>run_forever<span class="token punctu
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -699,7 +699,7 @@ loop<span class="token punctuation">.</span>run_forever<span class="token punctu
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
+                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
             </ul>
         </li>
         
