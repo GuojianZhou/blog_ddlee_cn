@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.ddlee.cn/"/>
-  <updated>2017-08-06T10:17:48.963Z</updated>
+  <updated>2017-11-18T16:57:35.300Z</updated>
   <id>http://blog.ddlee.cn/</id>
   
   <author>
@@ -14,6 +14,47 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[论文笔记]Rich feature hierarchies for accurate object detection and semantic segmentation</title>
+    <link href="http://blog.ddlee.cn/2017/11/19/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Rich-feature-hierarchies-for-accurate-object-detection-and-semantic-segmentation/"/>
+    <id>http://blog.ddlee.cn/2017/11/19/论文笔记-Rich-feature-hierarchies-for-accurate-object-detection-and-semantic-segmentation/</id>
+    <published>2017-11-18T16:57:35.000Z</published>
+    <updated>2017-11-18T16:57:35.300Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1311.2524" target="_blank" rel="external">https://arxiv.org/abs/1311.2524</a></p>
+<h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><p>R-CNN系列的开山之作，2-stage的想法至今仍是精确度优先方法的主流。而且，本文中的众多做法也成为检测任务pipeline的标准配置。</p>
+<p>摘要中提到的两大贡献：1）CNN可用于基于区域的定位和分割物体；2）监督训练样本数紧缺时，在额外的数据上预训练的模型经过fine-tuning可以取得很好的效果。</p>
+<p>第一个贡献影响了之后几乎所有2-stage方法，而第二个贡献中用分类任务（Imagenet）中训练好的模型作为基网络，在检测问题上fine-tuning的做法也在之后的工作中一直沿用。</p>
+<h3 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h3><p>Features Matter. Traditional hand-design feature(SIFT, HOG) -&gt; Learned feature(CNN). 从图像识别的经验来看，CNN网络自动习得的特征已经超出了手工设计的特征。</p>
+<p>解决检测任务中的定位问题：”recognition using regions”，即基于区域的识别（分类）。</p>
+<p>检测任务中样本不足的问题（对大型网络）：在大数据集上预训练分类模型，在小数据集上fine-tuning检测任务。</p>
+<h3 id="Object-Detection-with-R-CNN"><a href="#Object-Detection-with-R-CNN" class="headerlink" title="Object Detection with R-CNN"></a>Object Detection with R-CNN</h3><p>Region Proposal: Selective Search</p>
+<p>Feature Extraction: AlexNet(NIPS 2012), 4096-dim feature vector from every region proposal</p>
+<h4 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h4><p>现在ILSVRC2012上预训练达到STOA，再在Pascal VOC上fine-tuning。根据IOU来给region proposal打标签，在每个batch中保持一定的正样本比例（背景类非常多）。这些都已成为标准做法，后续很多工作也是对这些细节进行改进（OHEM等）。</p>
+<p>文章中特别提到，IOU的选择（即正负样例的标签准备）对结果影响显著，这里要谈两个threshold，一个用来识别正样本（IOU跟ground truth较高），另一个用来标记负样本（即背景类），而介于两者之间的则为hard negatives，若标为正类，则包含了过多的背景信息，反之又包含了要检测物体的特征，因而这些proposal便被忽略掉。</p>
+<p>另一个重要的问题是bounding-box regression，这一过程是proposal向ground truth调整，实现时加入了log/exp变换来使loss保持在合理的量级上。</p>
+<h4 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h4><p>R-CNN的想法直接明了，即是将CNN在分类上取得的成就运用在检测上，是深度学习方法在检测任务上的试水。模型本身存在的问题也很多，如需要训练三个不同的模型（proposal, classification, regression）、重复计算过多导致的性能问题等。尽管如此，这篇论文的很多做法仍然广泛地影响着检测任务上的深度模型革命，后续的很多工作也都是针对改进文章中的pipeline而展开，此篇可以称得上”the first paper”。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://arxiv.org/abs/1311.2524&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://arxiv.org/abs/1311.2524&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;Overview&quot;&gt;&lt;a hre
+    
+    </summary>
+    
+      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+    
+    
+      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
+    
+      <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+  </entry>
   
   <entry>
     <title>墓畔哀歌</title>
@@ -1955,67 +1996,6 @@ def dropout_backward(dout, cache):
       <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
     
       <category term="Pytorch" scheme="http://blog.ddlee.cn/tags/Pytorch/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[论文笔记]Visualizing and Understanding Recurrent Networks</title>
-    <link href="http://blog.ddlee.cn/2017/05/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Visualizing-and-Understanding-Recurrent-Networks/"/>
-    <id>http://blog.ddlee.cn/2017/05/13/论文笔记-Visualizing-and-Understanding-Recurrent-Networks/</id>
-    <published>2017-05-13T06:06:51.000Z</published>
-    <updated>2017-06-03T04:35:10.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>论文： <a href="http://arxiv.org/abs/1506.02078" target="_blank" rel="external">Visualizing and Understanding Recurrent Networks</a></p>
-<h2 id="实验设定"><a href="#实验设定" class="headerlink" title="实验设定"></a>实验设定</h2><p>字母级的循环神经网络，用Torch实现，代码见<a href="http://github.com/karpathy/char-rnn" target="_blank" rel="external">GitHub</a>。字母嵌入成One-hot向量。优化方面，采用了RMSProp算法，加入了学习速率的decay和early stopping。</p>
-<p>数据集采用了托尔斯泰的《战争与和平》和Linux核心的代码。</p>
-<h2 id="可解释性激活的例子"><a href="#可解释性激活的例子" class="headerlink" title="可解释性激活的例子"></a>可解释性激活的例子</h2><p>$tanh$函数激活的例子，$-1$为红色，$+1$为蓝色。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Visualizing-and-Understanding-Recurrent-Networks/pane1.png" alt="pane1"></p>
-<p>上图分别是记录了行位置、引文和if语句特征的例子和失败的例子。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Visualizing-and-Understanding-Recurrent-Networks/pane2.png" alt="pane2"></p>
-<p>上图分别是记录代码中注释、代码嵌套深度和行末标记特征的例子。</p>
-<h2 id="Gates数值的统计"><a href="#Gates数值的统计" class="headerlink" title="Gates数值的统计"></a>Gates数值的统计</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-Visualizing-and-Understanding-Recurrent-Networks/gates.png" alt="gates"></p>
-<p>此图信息量很大。</p>
-<ol>
-<li>left-saturated和right-saturated表示各个Gates激活函数（$sigmoid$）小于0.1和大于0.9，即总是阻止信息流过和总是允许信息流过。</li>
-<li>横轴和纵轴表示该Gate处于这两种状态的时间比例，即有多少时间是阻塞状态，有多少时间是畅通状态。</li>
-<li>三种颜色表示不同的层。</li>
-</ol>
-<p>有以下几个观察：</p>
-<ol>
-<li>第一层的门总是比较中庸，既不阻塞，也不畅通</li>
-<li>第二三层的门在这两种状态间比较分散，经常处于畅通状态的门可能记录了长期的依赖信息，而经常处于阻塞状态的门则负责了短期信息的控制。</li>
-</ol>
-<h2 id="错误来源分析"><a href="#错误来源分析" class="headerlink" title="错误来源分析"></a>错误来源分析</h2><p>在这一节，作者用了“剥洋葱”的方法，建立了不同的模型将错误进行分解。此处错误指LSTM预测下一个字母产生的错误，数据集为托尔斯泰的《战争与和平》。</p>
-<ol>
-<li>n-gram</li>
-<li>Dynamic n-long memory，即对已经出现过得单词的复现。如句子”Jon yelled at<br>Mary but Mary couldn’t hear him.”中的Mary。</li>
-<li>Rare words，不常见单词</li>
-<li>Word model，单词首字母、新行、空格之后出现的错误</li>
-<li>Punctuation，标点之后</li>
-<li>Boost，其他错误</li>
-</ol>
-<p>根据作者的实验，错误的来源有如下分解：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Visualizing-and-Understanding-Recurrent-Networks/error.png" alt="error"></p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>这篇文章是打开LSTM黑箱的尝试，提供了序列维度上共享权值的合理性证据，对Gates状态的可视化也非常值得关注，最后对误差的分解可能对新的网络结构有所启发（比如，如何将单词级别和字母级别的LSTM嵌套起来，解决首字母预测的问题？）。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;论文： &lt;a href=&quot;http://arxiv.org/abs/1506.02078&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Visualizing and Understanding Recurrent Networks&lt;/a&gt;&lt;/p&gt;
-&lt;h2
-    
-    </summary>
-    
-      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
-    
-    
-      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
-    
-      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
-    
-      <category term="Machine Learning" scheme="http://blog.ddlee.cn/tags/Machine-Learning/"/>
-    
-      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
     
   </entry>
   
