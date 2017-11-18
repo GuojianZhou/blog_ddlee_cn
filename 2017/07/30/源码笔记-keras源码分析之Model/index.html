@@ -393,134 +393,134 @@
         <p>本篇是keras源码笔记系列的第三篇。在前两篇中，我们分析了keras对Tensor和Layer等概念的处理，并说明了它们是如何作用别弄个构成有向无环图的。本篇着眼于多层网络模型层面的抽象，即与用户距离最近的接口，源代码文件是<a href="https://github.com/fchollet/keras/blob/master/keras/engine/training.py" target="_blank" rel="external">/keras/engine/training.py</a>和<a href="https://github.com/fchollet/keras/blob/master/keras/models.py" target="_blank" rel="external">/keras/model.py</a>，要观察的类是<code>Model</code>和<code>Sequential</code>。</p>
 <p>本系列第一篇：<a href="https://blog.ddlee.cn/2017/07/15/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BLayer%E3%80%81Tensor%E5%92%8CNode/">【源码笔记】keras源码分析之Tensor, Node和Layer</a><br>第二篇：<a href="https://blog.ddlee.cn/2017/07/25/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BContainer/">【源码笔记】keras源码分析之Container</a></p>
 <h3 id="Model：添加了训练信息的Container"><a href="#Model：添加了训练信息的Container" class="headerlink" title="Model：添加了训练信息的Container"></a><code>Model</code>：添加了训练信息的<code>Container</code></h3><p><code>Model.compile()</code>主要完成了配置<code>optimizer</code>, <code>loss</code>, <code>metrics</code>等操作，而要执行的<code>fit</code>, <code>evaluate</code>等则不在<code>compile</code>过程中配置。</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">def compile(self, optimizer, loss, metrics=None, loss_weights=None,
-            sample_weight_mode=None, **kwargs):
-    loss = loss or {}
-    self.optimizer = optimizers.get(optimizer)
-    self.sample_weight_mode = sample_weight_mode
-    self.loss = loss
-    self.loss_weights = loss_weights
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">compile</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> optimizer<span class="token punctuation">,</span> loss<span class="token punctuation">,</span> metrics<span class="token operator">=</span>None<span class="token punctuation">,</span> loss_weights<span class="token operator">=</span>None<span class="token punctuation">,</span>
+            sample_weight_mode<span class="token operator">=</span>None<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    loss <span class="token operator">=</span> loss <span class="token operator">or</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+    self<span class="token punctuation">.</span>optimizer <span class="token operator">=</span> optimizers<span class="token punctuation">.</span>get<span class="token punctuation">(</span>optimizer<span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>sample_weight_mode <span class="token operator">=</span> sample_weight_mode
+    self<span class="token punctuation">.</span>loss <span class="token operator">=</span> loss
+    self<span class="token punctuation">.</span>loss_weights <span class="token operator">=</span> loss_weights
 
-    loss_function = losses.get(loss)
-    loss_functions = [loss_function for _ in range(len(self.outputs))]
-    self.loss_functions = loss_functions
+    loss_function <span class="token operator">=</span> losses<span class="token punctuation">.</span>get<span class="token punctuation">(</span>loss<span class="token punctuation">)</span>
+    loss_functions <span class="token operator">=</span> <span class="token punctuation">[</span>loss_function <span class="token keyword">for</span> _ <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>self<span class="token punctuation">.</span>outputs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+    self<span class="token punctuation">.</span>loss_functions <span class="token operator">=</span> loss_functions
 
-    # Prepare targets of model.
-    self.targets = []
-    self._feed_targets = []
-    for i in range(len(self.outputs)):
-        shape = self.internal_output_shapes[i]
-        name = self.output_names[i]
-        target = K.placeholder(ndim=len(shape),
-                               name=name + '_target',
-                               sparse=K.is_sparse(self.outputs[i]),
-                               dtype=K.dtype(self.outputs[i]))
-        self.targets.append(target)
-        self._feed_targets.append(target)
+    <span class="token comment" spellcheck="true"># Prepare targets of model.</span>
+    self<span class="token punctuation">.</span>targets <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    self<span class="token punctuation">.</span>_feed_targets <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>self<span class="token punctuation">.</span>outputs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        shape <span class="token operator">=</span> self<span class="token punctuation">.</span>internal_output_shapes<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+        name <span class="token operator">=</span> self<span class="token punctuation">.</span>output_names<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+        target <span class="token operator">=</span> K<span class="token punctuation">.</span>placeholder<span class="token punctuation">(</span>ndim<span class="token operator">=</span>len<span class="token punctuation">(</span>shape<span class="token punctuation">)</span><span class="token punctuation">,</span>
+                               name<span class="token operator">=</span>name <span class="token operator">+</span> <span class="token string">'_target'</span><span class="token punctuation">,</span>
+                               sparse<span class="token operator">=</span>K<span class="token punctuation">.</span>is_sparse<span class="token punctuation">(</span>self<span class="token punctuation">.</span>outputs<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                               dtype<span class="token operator">=</span>K<span class="token punctuation">.</span>dtype<span class="token punctuation">(</span>self<span class="token punctuation">.</span>outputs<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>targets<span class="token punctuation">.</span>append<span class="token punctuation">(</span>target<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>_feed_targets<span class="token punctuation">.</span>append<span class="token punctuation">(</span>target<span class="token punctuation">)</span>
 
-    # Prepare metrics.
-    self.metrics = metrics
-    self.metrics_names = ['loss']
-    self.metrics_tensors = []
+    <span class="token comment" spellcheck="true"># Prepare metrics.</span>
+    self<span class="token punctuation">.</span>metrics <span class="token operator">=</span> metrics
+    self<span class="token punctuation">.</span>metrics_names <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'loss'</span><span class="token punctuation">]</span>
+    self<span class="token punctuation">.</span>metrics_tensors <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
 
-    # Compute total loss.
-    total_loss = None
-    for i in range(len(self.outputs)):
-        y_true = self.targets[i]
-        y_pred = self.outputs[i]
-        loss_weight = loss_weights_list[i]
-        if total_loss is None:
-            total_loss = loss_weight * output_loss
-        else:
-            total_loss += loss_weight * output_loss
+    <span class="token comment" spellcheck="true"># Compute total loss.</span>
+    total_loss <span class="token operator">=</span> None
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>self<span class="token punctuation">.</span>outputs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        y_true <span class="token operator">=</span> self<span class="token punctuation">.</span>targets<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+        y_pred <span class="token operator">=</span> self<span class="token punctuation">.</span>outputs<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+        loss_weight <span class="token operator">=</span> loss_weights_list<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+        <span class="token keyword">if</span> total_loss <span class="token keyword">is</span> None<span class="token punctuation">:</span>
+            total_loss <span class="token operator">=</span> loss_weight <span class="token operator">*</span> output_loss
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            total_loss <span class="token operator">+=</span> loss_weight <span class="token operator">*</span> output_loss
 
-    for loss_tensor in self.losses:
-        total_loss += loss_tensor
+    <span class="token keyword">for</span> loss_tensor <span class="token keyword">in</span> self<span class="token punctuation">.</span>losses<span class="token punctuation">:</span>
+        total_loss <span class="token operator">+=</span> loss_tensor
 
-    self.total_loss = total_loss
-    self.sample_weights = sample_weights
+    self<span class="token punctuation">.</span>total_loss <span class="token operator">=</span> total_loss
+    self<span class="token punctuation">.</span>sample_weights <span class="token operator">=</span> sample_weights
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>Model</code>对象的<code>fit()</code>方法封装了<code>_fit_loop()</code>内部方法，而<code>_fit_loop()</code>方法的关键步骤由<code>_make_train_function()</code>方法完成，返回<code>history</code>对象，用于回调函数的处理。</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">def fit(self, x=None, y=None, ...)：
-      self._make_train_function()
-      f = self.train_function
-      return self._fit_loop(f, ins, ...)
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">fit</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> x<span class="token operator">=</span>None<span class="token punctuation">,</span> y<span class="token operator">=</span>None<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>：
+      self<span class="token punctuation">.</span>_make_train_function<span class="token punctuation">(</span><span class="token punctuation">)</span>
+      f <span class="token operator">=</span> self<span class="token punctuation">.</span>train_function
+      <span class="token keyword">return</span> self<span class="token punctuation">.</span>_fit_loop<span class="token punctuation">(</span>f<span class="token punctuation">,</span> ins<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>在<code>_fit_loop()</code>方法中，回调函数完成了对训练过程的监控记录等任务，<code>train_function</code>也被应用于传入的数据：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">def _fit_loop(self, f, ins, out_labels=None, batch_size=32,
-              epochs=100, verbose=1, callbacks=None,
-              val_f=None, val_ins=None, shuffle=True,
-              callback_metrics=None, initial_epoch=0):
-    self.history = cbks.History()
-    callbacks = [cbks.BaseLogger()] + (callbacks or []) + [self.history]
-    callbacks = cbks.CallbackList(callbacks)
-    out_labels = out_labels or []
-    callbacks.set_model(callback_model)
-    callbacks.set_params({
-        'batch_size': batch_size,
-        'epochs': epochs,
-        'samples': num_train_samples,
-        'verbose': verbose,
-        'do_validation': do_validation,
-        'metrics': callback_metrics or [],
-    })
-    callbacks.on_train_begin()
-    callback_model.stop_training = False
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">_fit_loop</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> f<span class="token punctuation">,</span> ins<span class="token punctuation">,</span> out_labels<span class="token operator">=</span>None<span class="token punctuation">,</span> batch_size<span class="token operator">=</span><span class="token number">32</span><span class="token punctuation">,</span>
+              epochs<span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">,</span> verbose<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> callbacks<span class="token operator">=</span>None<span class="token punctuation">,</span>
+              val_f<span class="token operator">=</span>None<span class="token punctuation">,</span> val_ins<span class="token operator">=</span>None<span class="token punctuation">,</span> shuffle<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span>
+              callback_metrics<span class="token operator">=</span>None<span class="token punctuation">,</span> initial_epoch<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    self<span class="token punctuation">.</span>history <span class="token operator">=</span> cbks<span class="token punctuation">.</span>History<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    callbacks <span class="token operator">=</span> <span class="token punctuation">[</span>cbks<span class="token punctuation">.</span>BaseLogger<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token punctuation">(</span>callbacks <span class="token operator">or</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token punctuation">[</span>self<span class="token punctuation">.</span>history<span class="token punctuation">]</span>
+    callbacks <span class="token operator">=</span> cbks<span class="token punctuation">.</span>CallbackList<span class="token punctuation">(</span>callbacks<span class="token punctuation">)</span>
+    out_labels <span class="token operator">=</span> out_labels <span class="token operator">or</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    callbacks<span class="token punctuation">.</span>set_model<span class="token punctuation">(</span>callback_model<span class="token punctuation">)</span>
+    callbacks<span class="token punctuation">.</span>set_params<span class="token punctuation">(</span><span class="token punctuation">{</span>
+        <span class="token string">'batch_size'</span><span class="token punctuation">:</span> batch_size<span class="token punctuation">,</span>
+        <span class="token string">'epochs'</span><span class="token punctuation">:</span> epochs<span class="token punctuation">,</span>
+        <span class="token string">'samples'</span><span class="token punctuation">:</span> num_train_samples<span class="token punctuation">,</span>
+        <span class="token string">'verbose'</span><span class="token punctuation">:</span> verbose<span class="token punctuation">,</span>
+        <span class="token string">'do_validation'</span><span class="token punctuation">:</span> do_validation<span class="token punctuation">,</span>
+        <span class="token string">'metrics'</span><span class="token punctuation">:</span> callback_metrics <span class="token operator">or</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+    callbacks<span class="token punctuation">.</span>on_train_begin<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    callback_model<span class="token punctuation">.</span>stop_training <span class="token operator">=</span> <span class="token boolean">False</span>
 
-    for epoch in range(initial_epoch, epochs):
-        callbacks.on_epoch_begin(epoch)
-        batches = _make_batches(num_train_samples, batch_size)
-        epoch_logs = {}
-        for batch_index, (batch_start, batch_end) in enumerate(batches):
-            batch_ids = index_array[batch_start:batch_end]
-            batch_logs = {}
-            batch_logs['batch'] = batch_index
-            batch_logs['size'] = len(batch_ids)
-            callbacks.on_batch_begin(batch_index, batch_logs)
-            # 应用传入的train_function
-            outs = f(ins_batch)
-            callbacks.on_batch_end(batch_index, batch_logs)
-        callbacks.on_epoch_end(epoch, epoch_logs)
-    callbacks.on_train_end()
-    return self.history
+    <span class="token keyword">for</span> epoch <span class="token keyword">in</span> range<span class="token punctuation">(</span>initial_epoch<span class="token punctuation">,</span> epochs<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        callbacks<span class="token punctuation">.</span>on_epoch_begin<span class="token punctuation">(</span>epoch<span class="token punctuation">)</span>
+        batches <span class="token operator">=</span> _make_batches<span class="token punctuation">(</span>num_train_samples<span class="token punctuation">,</span> batch_size<span class="token punctuation">)</span>
+        epoch_logs <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+        <span class="token keyword">for</span> batch_index<span class="token punctuation">,</span> <span class="token punctuation">(</span>batch_start<span class="token punctuation">,</span> batch_end<span class="token punctuation">)</span> <span class="token keyword">in</span> enumerate<span class="token punctuation">(</span>batches<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            batch_ids <span class="token operator">=</span> index_array<span class="token punctuation">[</span>batch_start<span class="token punctuation">:</span>batch_end<span class="token punctuation">]</span>
+            batch_logs <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+            batch_logs<span class="token punctuation">[</span><span class="token string">'batch'</span><span class="token punctuation">]</span> <span class="token operator">=</span> batch_index
+            batch_logs<span class="token punctuation">[</span><span class="token string">'size'</span><span class="token punctuation">]</span> <span class="token operator">=</span> len<span class="token punctuation">(</span>batch_ids<span class="token punctuation">)</span>
+            callbacks<span class="token punctuation">.</span>on_batch_begin<span class="token punctuation">(</span>batch_index<span class="token punctuation">,</span> batch_logs<span class="token punctuation">)</span>
+            <span class="token comment" spellcheck="true"># 应用传入的train_function</span>
+            outs <span class="token operator">=</span> f<span class="token punctuation">(</span>ins_batch<span class="token punctuation">)</span>
+            callbacks<span class="token punctuation">.</span>on_batch_end<span class="token punctuation">(</span>batch_index<span class="token punctuation">,</span> batch_logs<span class="token punctuation">)</span>
+        callbacks<span class="token punctuation">.</span>on_epoch_end<span class="token punctuation">(</span>epoch<span class="token punctuation">,</span> epoch_logs<span class="token punctuation">)</span>
+    callbacks<span class="token punctuation">.</span>on_train_end<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> self<span class="token punctuation">.</span>history
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>_make_train_function()</code>方法从<code>optimizer</code>获取要更新的参数信息，并传入来自<code>backend</code>的<code>function</code>对象：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">def _make_train_function(self):
-    if self.train_function is None:
-        inputs = self._feed_inputs + self._feed_targets + self._feed_sample_weights
-        training_updates = self.optimizer.get_updates(
-            self._collected_trainable_weights,
-            self.constraints,
-            self.total_loss)
-        updates = self.updates + training_updates
-        # Gets loss and metrics. Updates weights at each call.
-        self.train_function = K.function(inputs,
-                                         [self.total_loss] + self.metrics_tensors,
-                                         updates=updates,
-                                         name='train_function',
-                                         **self._function_kwargs)
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">_make_train_function</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> self<span class="token punctuation">.</span>train_function <span class="token keyword">is</span> None<span class="token punctuation">:</span>
+        inputs <span class="token operator">=</span> self<span class="token punctuation">.</span>_feed_inputs <span class="token operator">+</span> self<span class="token punctuation">.</span>_feed_targets <span class="token operator">+</span> self<span class="token punctuation">.</span>_feed_sample_weights
+        training_updates <span class="token operator">=</span> self<span class="token punctuation">.</span>optimizer<span class="token punctuation">.</span>get_updates<span class="token punctuation">(</span>
+            self<span class="token punctuation">.</span>_collected_trainable_weights<span class="token punctuation">,</span>
+            self<span class="token punctuation">.</span>constraints<span class="token punctuation">,</span>
+            self<span class="token punctuation">.</span>total_loss<span class="token punctuation">)</span>
+        updates <span class="token operator">=</span> self<span class="token punctuation">.</span>updates <span class="token operator">+</span> training_updates
+        <span class="token comment" spellcheck="true"># Gets loss and metrics. Updates weights at each call.</span>
+        self<span class="token punctuation">.</span>train_function <span class="token operator">=</span> K<span class="token punctuation">.</span>function<span class="token punctuation">(</span>inputs<span class="token punctuation">,</span>
+                                         <span class="token punctuation">[</span>self<span class="token punctuation">.</span>total_loss<span class="token punctuation">]</span> <span class="token operator">+</span> self<span class="token punctuation">.</span>metrics_tensors<span class="token punctuation">,</span>
+                                         updates<span class="token operator">=</span>updates<span class="token punctuation">,</span>
+                                         name<span class="token operator">=</span><span class="token string">'train_function'</span><span class="token punctuation">,</span>
+                                         <span class="token operator">**</span>self<span class="token punctuation">.</span>_function_kwargs<span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>Model</code>的其他方法<code>evaluate()</code>等，与<code>fit()</code>的结构类似。</p>
 <h3 id="Sequential-构建模型的外层接口"><a href="#Sequential-构建模型的外层接口" class="headerlink" title="Sequential:构建模型的外层接口"></a><code>Sequential</code>:构建模型的外层接口</h3><p><code>Sequential</code>对象是<code>Model</code>对象的进一步封装，也是用户直接面对的接口，其<code>compile()</code>, <code>fit()</code>, <code>predict()</code>等方法与<code>Model</code>几乎一致，所不同的是添加了<code>add()</code>方法，也是我们用于构建网络的最基本操作。</p>
 <p><code>Sequential.add()</code>方法的源码如下：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">def add(self, layer):
-    # 第一层必须是InputLayer对象
-    if not self.outputs:
-        if not layer.inbound_nodes:
-            x = Input(batch_shape=layer.batch_input_shape,
-                      dtype=layer.dtype, name=layer.name + '_input')
-            layer(x)
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">add</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> layer<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment" spellcheck="true"># 第一层必须是InputLayer对象</span>
+    <span class="token keyword">if</span> <span class="token operator">not</span> self<span class="token punctuation">.</span>outputs<span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token operator">not</span> layer<span class="token punctuation">.</span>inbound_nodes<span class="token punctuation">:</span>
+            x <span class="token operator">=</span> Input<span class="token punctuation">(</span>batch_shape<span class="token operator">=</span>layer<span class="token punctuation">.</span>batch_input_shape<span class="token punctuation">,</span>
+                      dtype<span class="token operator">=</span>layer<span class="token punctuation">.</span>dtype<span class="token punctuation">,</span> name<span class="token operator">=</span>layer<span class="token punctuation">.</span>name <span class="token operator">+</span> <span class="token string">'_input'</span><span class="token punctuation">)</span>
+            layer<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
 
-        self.outputs = [layer.inbound_nodes[0].output_tensors[0]]
-        self.inputs = topology.get_source_inputs(self.outputs[0])
+        self<span class="token punctuation">.</span>outputs <span class="token operator">=</span> <span class="token punctuation">[</span>layer<span class="token punctuation">.</span>inbound_nodes<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>output_tensors<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+        self<span class="token punctuation">.</span>inputs <span class="token operator">=</span> topology<span class="token punctuation">.</span>get_source_inputs<span class="token punctuation">(</span>self<span class="token punctuation">.</span>outputs<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
 
-        topology.Node(outbound_layer=self, ...)
-    else:
-        output_tensor = layer(self.outputs[0])
-        self.outputs = [output_tensor]
-        self.inbound_nodes[0].output_tensors = self.outputs
+        topology<span class="token punctuation">.</span>Node<span class="token punctuation">(</span>outbound_layer<span class="token operator">=</span>self<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        output_tensor <span class="token operator">=</span> layer<span class="token punctuation">(</span>self<span class="token punctuation">.</span>outputs<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>outputs <span class="token operator">=</span> <span class="token punctuation">[</span>output_tensor<span class="token punctuation">]</span>
+        self<span class="token punctuation">.</span>inbound_nodes<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>output_tensors <span class="token operator">=</span> self<span class="token punctuation">.</span>outputs
 
-    self.layers.append(layer)
+    self<span class="token punctuation">.</span>layers<span class="token punctuation">.</span>append<span class="token punctuation">(</span>layer<span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>可以看到，<code>add()</code>方法总是确保网络的第一层为<code>InputLayer</code>对象，并将新加入的层应用于<code>outputs</code>，使之更新。因此，从本质上讲，在<code>Model</code>中添加新层还是在更新模型的<code>outputs</code>。</p>
 <p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
@@ -769,7 +769,7 @@
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -787,7 +787,7 @@
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
+                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
             </ul>
         </li>
         

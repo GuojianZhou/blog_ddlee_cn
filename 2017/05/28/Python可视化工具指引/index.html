@@ -419,29 +419,29 @@
 <p>下面是几个比较受欢迎的包：</p>
 <h3 id="pandas"><a href="#pandas" class="headerlink" title="pandas"></a>pandas</h3><p>pandas的DataFrame对象是有plot()方法的，如：<br><code>iris.plot.scatter(&#39;petalLength&#39;, &#39;petalWidth&#39;)</code>生成二维散点图，只需指明两个轴取自哪一列数据即可。</p>
 <h3 id="seaborn"><a href="#seaborn" class="headerlink" title="seaborn"></a>seaborn</h3><p>seaborn(<a href="http://seaborn.pydata.org/examples/" target="_blank" rel="external">gallery</a>)专注于统计数据可视化，默认配色也还可以。语法示例：</p>
-<pre class="line-numbers language-lang-Python"><code class="language-lang-Python">import seaborn as sns
+<pre class="line-numbers language-Python"><code class="language-Python">import seaborn as sns
 sns.lmplot('petalLength', 'sepalWidth', iris, hue='species', fit_reg=False)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <h3 id="类ggplot"><a href="#类ggplot" class="headerlink" title="类ggplot"></a>类ggplot</h3><p>对于R用户，最熟悉的可视化包可能是ggplot2，在python中可以考虑ggpy(<a href="https://github.com/yhat/ggpy)和近期上了Github" target="_blank" rel="external">https://github.com/yhat/ggpy)和近期上了Github</a> Trends的plotnie(<a href="https://github.com/has2k1/plotnine)。" target="_blank" rel="external">https://github.com/has2k1/plotnine)。</a></p>
 <h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p>基于JS的包常常具有非常好的交互性，其共同点是将图形格式化为json文件，再由JS完成渲染。</p>
 <p><img src="http://static.ddlee.cn/static/img/./Python可视化工具指引/js.png" alt="js"></p>
 <h3 id="Bokeh"><a href="#Bokeh" class="headerlink" title="Bokeh"></a>Bokeh</h3><p>Bokeh(<a href="http://bokeh.pydata.org/en/latest/docs/gallery.html" target="_blank" rel="external">Gallery</a>)定位于绘制用于浏览器展示的交互式图形。其优点是交互性、能够处理大量数据和流数据。语法示例：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">p = figure()
-p.circle(iris.petalLength, iris.sepalWidth)
-show(p)
+<pre class="line-numbers language-python"><code class="language-python">p <span class="token operator">=</span> figure<span class="token punctuation">(</span><span class="token punctuation">)</span>
+p<span class="token punctuation">.</span>circle<span class="token punctuation">(</span>iris<span class="token punctuation">.</span>petalLength<span class="token punctuation">,</span> iris<span class="token punctuation">.</span>sepalWidth<span class="token punctuation">)</span>
+show<span class="token punctuation">(</span>p<span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <h3 id="Plotly"><a href="#Plotly" class="headerlink" title="Plotly"></a>Plotly</h3><p>Plotly(<a href="https://plot.ly/python/" target="_blank" rel="external">Gallery</a>)跟Bokeh类似。但其提供了多种语言接口(JS, R, Python, MATLAB)，并且支持3D和动画效果，缺点是有些功能需要付费。<br>语法示例：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">from plotly.graph_objs import Scatter
-from plotly.offline import iplot
-p = Scatter(x=iris.petalLength,
-            y=iris.sepalWidth,
-            mode='markers')
-iplot(p)
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">from</span> plotly<span class="token punctuation">.</span>graph_objs <span class="token keyword">import</span> Scatter
+<span class="token keyword">from</span> plotly<span class="token punctuation">.</span>offline <span class="token keyword">import</span> iplot
+p <span class="token operator">=</span> Scatter<span class="token punctuation">(</span>x<span class="token operator">=</span>iris<span class="token punctuation">.</span>petalLength<span class="token punctuation">,</span>
+            y<span class="token operator">=</span>iris<span class="token punctuation">.</span>sepalWidth<span class="token punctuation">,</span>
+            mode<span class="token operator">=</span><span class="token string">'markers'</span><span class="token punctuation">)</span>
+iplot<span class="token punctuation">(</span>p<span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="处理大型数据集"><a href="#处理大型数据集" class="headerlink" title="处理大型数据集"></a>处理大型数据集</h2><p>对于大型数据集，可以考虑的包包括datashader, Vaex, 基于OpenGL的Vispy和Glumpy，GlueViz等。这里介绍datashader。</p>
 <h3 id="datashader"><a href="#datashader" class="headerlink" title="datashader"></a>datashader</h3><p><a href="https://github.com/bokeh/datashader" target="_blank" rel="external">datashader</a>是Bokeh的子项目，为处理大型数据集而生。</p>
 <p>示例语法：</p>
-<pre class="line-numbers language-lang-Python"><code class="language-lang-Python">from colorcet import fire
+<pre class="line-numbers language-Python"><code class="language-Python">from colorcet import fire
 export(tf.shade(agg, cmap=cm(fire, 0.2), how='eq_hist'), 'census_ds_fier_eq_hist')
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p><img src="http://static.ddlee.cn/static/img/./Python可视化工具指引/fire.jpg" alt="fire"></p>
@@ -696,7 +696,7 @@ export(tf.shade(agg, cmap=cm(fire, 0.2), how='eq_hist'), 'census_ds_fier_eq_hist
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -714,7 +714,7 @@ export(tf.shade(agg, cmap=cm(fire, 0.2), how='eq_hist'), 'census_ds_fier_eq_hist
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
+                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
             </ul>
         </li>
         

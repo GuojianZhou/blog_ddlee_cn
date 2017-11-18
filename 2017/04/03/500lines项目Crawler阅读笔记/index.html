@@ -401,49 +401,49 @@
 <h3 id="Crawler类"><a href="#Crawler类" class="headerlink" title="Crawler类"></a>Crawler类</h3><p>Crawler类实现了解析网址，抓取内容等基本功能，利用<code>asyncio</code>库构建<code>coroutine</code>（parse_lings(), fetch(), work()）。</p>
 <p><img src="http://static.ddlee.cn/static/img/500lines_crawler/500lines_crawler_class.png" alt="Class Crawler"></p>
 <p>核心之处是组织管理异步的抓取任务，代码块结构如下：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">class Crawler:
-  def __init__(self, roots, ....., loop):
-    self.q = Queue(loop=self.loop) # 建立队列
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Crawler</span><span class="token punctuation">:</span>
+  <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> roots<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">,</span> loop<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    self<span class="token punctuation">.</span>q <span class="token operator">=</span> Queue<span class="token punctuation">(</span>loop<span class="token operator">=</span>self<span class="token punctuation">.</span>loop<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># 建立队列</span>
 
-  @asyncio.coroutine
-  def parse_links(self, response):
-    '''从返回内容中解析出要抓取的链接'''
-    body = yield from response.read()
-    if response.status == 200:
-      if content_type:
-        text = yield from response.text()
-        urls = set(re.findall())
-        for url in urls:
-          if self.url_allowed():
-            links.add()
-  @asynico.coroutine
-  def fetch(self, url):
-    '''访问链接，抓取返回结果'''
-    while tries:
-      try:
-        response = yield from self.session.get(url)
-    try:
-      if is_redirect():
-        pass
-      else:
-        links = yield from self.parse_links(response)
-    finally:
-      yield from response.releas()
-  @asyncio.coroutine
-  def work(self):
-    '''封装抓取过程，与队列交互'''
-    try:
-      while True:
-        url = yield from self.q.get()
-        assert url in self.seen_urls
-        yield from self.fetch(url)
-        self.q.task_done()
-  @asyncio.coroutine
-  def crawl(self):
-    '''建立Tasks，启动Task'''
-    workers = [asyncio.Task(self.work(), loop=self.loop)
-                for _ in range(self.max_tasks)]
-    yield from self.q.join()
+  @asyncio<span class="token punctuation">.</span>coroutine
+  <span class="token keyword">def</span> <span class="token function">parse_links</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> response<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">'''从返回内容中解析出要抓取的链接'''</span>
+    body <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token keyword">from</span> response<span class="token punctuation">.</span>read<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> response<span class="token punctuation">.</span>status <span class="token operator">==</span> <span class="token number">200</span><span class="token punctuation">:</span>
+      <span class="token keyword">if</span> content_type<span class="token punctuation">:</span>
+        text <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token keyword">from</span> response<span class="token punctuation">.</span>text<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        urls <span class="token operator">=</span> set<span class="token punctuation">(</span>re<span class="token punctuation">.</span>findall<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span> url <span class="token keyword">in</span> urls<span class="token punctuation">:</span>
+          <span class="token keyword">if</span> self<span class="token punctuation">.</span>url_allowed<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            links<span class="token punctuation">.</span>add<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  @asynico<span class="token punctuation">.</span>coroutine
+  <span class="token keyword">def</span> <span class="token function">fetch</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> url<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">'''访问链接，抓取返回结果'''</span>
+    <span class="token keyword">while</span> tries<span class="token punctuation">:</span>
+      <span class="token keyword">try</span><span class="token punctuation">:</span>
+        response <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token keyword">from</span> self<span class="token punctuation">.</span>session<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+      <span class="token keyword">if</span> is_redirect<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">pass</span>
+      <span class="token keyword">else</span><span class="token punctuation">:</span>
+        links <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token keyword">from</span> self<span class="token punctuation">.</span>parse_links<span class="token punctuation">(</span>response<span class="token punctuation">)</span>
+    <span class="token keyword">finally</span><span class="token punctuation">:</span>
+      <span class="token keyword">yield</span> <span class="token keyword">from</span> response<span class="token punctuation">.</span>releas<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  @asyncio<span class="token punctuation">.</span>coroutine
+  <span class="token keyword">def</span> <span class="token function">work</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">'''封装抓取过程，与队列交互'''</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+      <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+        url <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token keyword">from</span> self<span class="token punctuation">.</span>q<span class="token punctuation">.</span>get<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">assert</span> url <span class="token keyword">in</span> self<span class="token punctuation">.</span>seen_urls
+        <span class="token keyword">yield</span> <span class="token keyword">from</span> self<span class="token punctuation">.</span>fetch<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>q<span class="token punctuation">.</span>task_done<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  @asyncio<span class="token punctuation">.</span>coroutine
+  <span class="token keyword">def</span> <span class="token function">crawl</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">'''建立Tasks，启动Task'''</span>
+    workers <span class="token operator">=</span> <span class="token punctuation">[</span>asyncio<span class="token punctuation">.</span>Task<span class="token punctuation">(</span>self<span class="token punctuation">.</span>work<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> loop<span class="token operator">=</span>self<span class="token punctuation">.</span>loop<span class="token punctuation">)</span>
+                <span class="token keyword">for</span> _ <span class="token keyword">in</span> range<span class="token punctuation">(</span>self<span class="token punctuation">.</span>max_tasks<span class="token punctuation">)</span><span class="token punctuation">]</span>
+    <span class="token keyword">yield</span> <span class="token keyword">from</span> self<span class="token punctuation">.</span>q<span class="token punctuation">.</span>join<span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>下图是我对上述代码结构的理解：</p>
 <p><img src="http://static.ddlee.cn/static/img/500lines_crawler/coroutine.JPG" alt="coroutines"></p>
@@ -748,7 +748,7 @@
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -766,7 +766,7 @@
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
+                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
             </ul>
         </li>
         

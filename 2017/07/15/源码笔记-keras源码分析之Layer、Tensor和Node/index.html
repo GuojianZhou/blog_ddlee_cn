@@ -403,35 +403,35 @@
 </ul>
 <p>当使用Keras建立深度网络时，传入的数据首先要经过<code>Input()</code>函数。在<code>Input()</code>函数中，实例化一个<code>InputLayer()</code>对象，并将此<code>Layer()</code>对象作为第一个应用于传入张量的Layer，置于<code>_keras_history</code>属性中。此外，<code>InputLayer()</code>和<code>Input()</code>还会对传入的数据进行规模检查和变换等，使之符合后续操作的要求。</p>
 <p>代码上实现如下：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">def Input():
-  input_layer = InputLayer()
-  outputs = InputLayer.inbound_nodes[0].output_tensor
-  return outputs
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">Input</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+  input_layer <span class="token operator">=</span> InputLayer<span class="token punctuation">(</span><span class="token punctuation">)</span>
+  outputs <span class="token operator">=</span> InputLayer<span class="token punctuation">.</span>inbound_nodes<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>output_tensor
+  <span class="token keyword">return</span> outputs
 
-class InputLayer():
-  def __init__():
-    input_tensor._keras_history = (self, 0, 0)
-    Node(self, ...)
+<span class="token keyword">class</span> <span class="token class-name">InputLayer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+  <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    input_tensor<span class="token punctuation">.</span>_keras_history <span class="token operator">=</span> <span class="token punctuation">(</span>self<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    Node<span class="token punctuation">(</span>self<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>在下面我们将看到，加入的<code>_keras_history</code>属性在计算图的构建上所起的作用是关键的。仅通过输入和输出的Tensor，我们可以构建出整张计算图。但这样的代价是Tensor对象太重了，包含了Layer的信息。</p>
 <h3 id="Node对象：层与层之间链接的抽象"><a href="#Node对象：层与层之间链接的抽象" class="headerlink" title="Node对象：层与层之间链接的抽象"></a><code>Node</code>对象：层与层之间链接的抽象</h3><p>若考虑<code>Layer</code>对象抽象的是完成计算的神经元胞体，则<code>Node</code>对象是对神经元树突结构的抽象。其内聚的主要信息是：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">class Node():
-  def __init__(self, outbound_layer,
-              inbound_layers, node_indices, tensor_indices,
-              input_tensors, output_tensors, ...)
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">Node</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+  <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> outbound_layer<span class="token punctuation">,</span>
+              inbound_layers<span class="token punctuation">,</span> node_indices<span class="token punctuation">,</span> tensor_indices<span class="token punctuation">,</span>
+              input_tensors<span class="token punctuation">,</span> output_tensors<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <p>其中<code>outbound_layer</code>是施加计算（使<code>input_tensors</code>变为<code>output_tensors</code>）的层，<code>inbound_layers</code>对应了<code>input_tensors</code>来源的层，而<code>node_indices</code>和<code>tensor_indices</code>则记录了<code>Node</code>和<code>Layer</code>之间的标定信息。</p>
 <p><code>Node</code>对象总在<code>outbound_layer</code>被执行时创建，并加入<code>outbound_layer</code>的<code>inbound_nodes</code>属性中。在<code>Node</code>对象的表述下，A和B两个层产生连接关系时，<code>Node</code>对象被建立，并被加入<code>A.outbound_nodes</code>和<code>B.inbound_nodes</code>。</p>
 <h3 id="Layer对象：计算层的抽象"><a href="#Layer对象：计算层的抽象" class="headerlink" title="Layer对象：计算层的抽象"></a><code>Layer</code>对象：计算层的抽象</h3><p><code>Layer</code>对象是对网络中神经元计算层的抽象，实例化需要如下参数：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">allowed_kwargs = {'input_shape',
-                  'batch_input_shape',
-                  'batch_size',
-                  'dtype',
-                  'name',
-                  'trainable',
-                  'weights',
-                  'input_dtype',  # legacy
-                  }
+<pre class="line-numbers language-python"><code class="language-python">allowed_kwargs <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">'input_shape'</span><span class="token punctuation">,</span>
+                  <span class="token string">'batch_input_shape'</span><span class="token punctuation">,</span>
+                  <span class="token string">'batch_size'</span><span class="token punctuation">,</span>
+                  <span class="token string">'dtype'</span><span class="token punctuation">,</span>
+                  <span class="token string">'name'</span><span class="token punctuation">,</span>
+                  <span class="token string">'trainable'</span><span class="token punctuation">,</span>
+                  <span class="token string">'weights'</span><span class="token punctuation">,</span>
+                  <span class="token string">'input_dtype'</span><span class="token punctuation">,</span>  <span class="token comment" spellcheck="true"># legacy</span>
+                  <span class="token punctuation">}</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>大部分与传入数据的类型和规模相关，<code>trainable</code>表征该层是否需要更新权重。此外，还有<code>inbound_nodes</code>和<code>outbound_nodes</code>属性来标定与<code>Node</code>对象的链接。</p>
 <p><code>Layer</code>对象最重要的方法是<code>__call__()</code>，主要完成如下三件事情：</p>
@@ -444,54 +444,54 @@ class InputLayer():
 </li>
 </ol>
 <p>方法<code>_add_inbound_nodes()</code>对Tensor的更新是构建<code>Layer</code>之间关系的关键操作，其主要代码如下：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">for x in input_tensors:
-    if hasattr(x, '_keras_history'):
-        inbound_layer, node_index, tensor_index = x._keras_history
-        inbound_layers.append(inbound_layer)
-        node_indices.append(node_index)
-        tensor_indices.append(tensor_index)
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">for</span> x <span class="token keyword">in</span> input_tensors<span class="token punctuation">:</span>
+    <span class="token keyword">if</span> hasattr<span class="token punctuation">(</span>x<span class="token punctuation">,</span> <span class="token string">'_keras_history'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        inbound_layer<span class="token punctuation">,</span> node_index<span class="token punctuation">,</span> tensor_index <span class="token operator">=</span> x<span class="token punctuation">.</span>_keras_history
+        inbound_layers<span class="token punctuation">.</span>append<span class="token punctuation">(</span>inbound_layer<span class="token punctuation">)</span>
+        node_indices<span class="token punctuation">.</span>append<span class="token punctuation">(</span>node_index<span class="token punctuation">)</span>
+        tensor_indices<span class="token punctuation">.</span>append<span class="token punctuation">(</span>tensor_index<span class="token punctuation">)</span>
 
-# Node对象的建立过程中将更新self的inbound_nodes属性
-Node(self,
-    inbound_layers=inbound_layers,
-    node_indices=node_indices,
-    tensor_indices=tensor_indices,
-    ...)
+<span class="token comment" spellcheck="true"># Node对象的建立过程中将更新self的inbound_nodes属性</span>
+Node<span class="token punctuation">(</span>self<span class="token punctuation">,</span>
+    inbound_layers<span class="token operator">=</span>inbound_layers<span class="token punctuation">,</span>
+    node_indices<span class="token operator">=</span>node_indices<span class="token punctuation">,</span>
+    tensor_indices<span class="token operator">=</span>tensor_indices<span class="token punctuation">,</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
 
-for i in range(len(output_tensors)):
-     output_tensors[i]._keras_history = (self, len(self.inbound_nodes) - 1, i)
+<span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>output_tensors<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+     output_tensors<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>_keras_history <span class="token operator">=</span> <span class="token punctuation">(</span>self<span class="token punctuation">,</span> len<span class="token punctuation">(</span>self<span class="token punctuation">.</span>inbound_nodes<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>上段代码取出<code>input_tensor</code>的<code>_keras_history</code>属性，建立新的<code>Node</code>，并将当前<code>Layer</code>的信息更新到计算得到的<code>output_tensor</code>中。</p>
 <h3 id="实例：Node-Tensor和Layer间连接关系的表征"><a href="#实例：Node-Tensor和Layer间连接关系的表征" class="headerlink" title="实例：Node,Tensor和Layer间连接关系的表征"></a>实例：<code>Node</code>,<code>Tensor</code>和<code>Layer</code>间连接关系的表征</h3><p>下面通过代码来说明三者之间的关系，来自于测试代码：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python"># 建立新的keras Tensor
-a = Input(shape=(32,), name='input_a')
-b = Input(shape=(32,), name='input_b')
+<pre class="line-numbers language-python"><code class="language-python"><span class="token comment" spellcheck="true"># 建立新的keras Tensor</span>
+a <span class="token operator">=</span> Input<span class="token punctuation">(</span>shape<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">,</span> name<span class="token operator">=</span><span class="token string">'input_a'</span><span class="token punctuation">)</span>
+b <span class="token operator">=</span> Input<span class="token punctuation">(</span>shape<span class="token operator">=</span><span class="token punctuation">(</span><span class="token number">32</span><span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">,</span> name<span class="token operator">=</span><span class="token string">'input_b'</span><span class="token punctuation">)</span>
 
-a_layer, a_node_index, a_tensor_index = a._keras_history
-assert len(a_layer.inbound_nodes) == 1
-assert a_tensor_index is 0
+a_layer<span class="token punctuation">,</span> a_node_index<span class="token punctuation">,</span> a_tensor_index <span class="token operator">=</span> a<span class="token punctuation">.</span>_keras_history
+<span class="token keyword">assert</span> len<span class="token punctuation">(</span>a_layer<span class="token punctuation">.</span>inbound_nodes<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span>
+<span class="token keyword">assert</span> a_tensor_index <span class="token keyword">is</span> <span class="token number">0</span>
 
-# node和layer之间的关系
-node = a_layer.inbound_nodes[a_node_index]
-assert node.outbound_layer == a_layer
+<span class="token comment" spellcheck="true"># node和layer之间的关系</span>
+node <span class="token operator">=</span> a_layer<span class="token punctuation">.</span>inbound_nodes<span class="token punctuation">[</span>a_node_index<span class="token punctuation">]</span>
+<span class="token keyword">assert</span> node<span class="token punctuation">.</span>outbound_layer <span class="token operator">==</span> a_layer
 
-# 建立连接层，将Tensor传入
-dense = Dense(16, name='dense_1')
-a_2 = dense(a)
-b_2 = dense(b)
+<span class="token comment" spellcheck="true"># 建立连接层，将Tensor传入</span>
+dense <span class="token operator">=</span> Dense<span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">,</span> name<span class="token operator">=</span><span class="token string">'dense_1'</span><span class="token punctuation">)</span>
+a_2 <span class="token operator">=</span> dense<span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+b_2 <span class="token operator">=</span> dense<span class="token punctuation">(</span>b<span class="token punctuation">)</span>
 
-assert len(dense.inbound_nodes) == 2
-assert len(dense.outbound_nodes) == 0
+<span class="token keyword">assert</span> len<span class="token punctuation">(</span>dense<span class="token punctuation">.</span>inbound_nodes<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">2</span>
+<span class="token keyword">assert</span> len<span class="token punctuation">(</span>dense<span class="token punctuation">.</span>outbound_nodes<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span>
 
-# 与张量a关联的Node
-assert dense.inbound_nodes[0].inbound_layers == [a_layer]
-assert dense.inbound_nodes[0].outbound_layer == dense
-assert dense.inbound_nodes[0].input_tensors == [a]
+<span class="token comment" spellcheck="true"># 与张量a关联的Node</span>
+<span class="token keyword">assert</span> dense<span class="token punctuation">.</span>inbound_nodes<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>inbound_layers <span class="token operator">==</span> <span class="token punctuation">[</span>a_layer<span class="token punctuation">]</span>
+<span class="token keyword">assert</span> dense<span class="token punctuation">.</span>inbound_nodes<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>outbound_layer <span class="token operator">==</span> dense
+<span class="token keyword">assert</span> dense<span class="token punctuation">.</span>inbound_nodes<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>input_tensors <span class="token operator">==</span> <span class="token punctuation">[</span>a<span class="token punctuation">]</span>
 
-# 与张量b关联的Node
-assert dense.inbound_nodes[1].inbound_layers == [b_layer]
-assert dense.inbound_nodes[1].outbound_layer == dense
-assert dense.inbound_nodes[1].input_tensors == [b]
+<span class="token comment" spellcheck="true"># 与张量b关联的Node</span>
+<span class="token keyword">assert</span> dense<span class="token punctuation">.</span>inbound_nodes<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>inbound_layers <span class="token operator">==</span> <span class="token punctuation">[</span>b_layer<span class="token punctuation">]</span>
+<span class="token keyword">assert</span> dense<span class="token punctuation">.</span>inbound_nodes<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>outbound_layer <span class="token operator">==</span> dense
+<span class="token keyword">assert</span> dense<span class="token punctuation">.</span>inbound_nodes<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>input_tensors <span class="token operator">==</span> <span class="token punctuation">[</span>b<span class="token punctuation">]</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>keras利用<code>Node</code>对象描述<code>Layer</code>之间的连接关系，并在<code>Tensor</code>中记录其来源信息。在<a href="https://blog.ddlee.cn/2017/07/25/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BContainer/">下篇</a>中，我们将看到keras如何利用这些抽象和增强属性构建DAG，并实现前向传播和反向训练的。</p>
 <p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
@@ -740,7 +740,7 @@ assert dense.inbound_nodes[1].input_tensors == [b]
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -758,7 +758,7 @@ assert dense.inbound_nodes[1].input_tensors == [b]
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
+                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
             </ul>
         </li>
         

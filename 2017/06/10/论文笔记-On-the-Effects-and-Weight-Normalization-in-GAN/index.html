@@ -400,8 +400,8 @@ $$y=\frac{{w}^{T}x}{\|w\|}$$
 $$y=\frac{{w}^{T}x}{\|w\|} \gamma + \beta$$
 
 <p>用于恢复网络的表达能力。</p>
-<p>将上述变换带入ReLU，简化后可以得到如下T-ReLu:</p>
-<script type="math/tex; mode=display">TReLU_\alpha (x) = ReLU(x-\alpha) + \alpha</script><p>文章的一个重要结论是，在网络的最后一层加入affine transformation层之后，堆叠的“线性层+ReLU”与“strict weight-normalized layer + T-ReLU”表达能力相同（在附录中给出证明）。</p>
+<p>将上述变换带入ReLU，简化后可以得到如下T-ReLu:<br>$$TReLU_\alpha (x) = ReLU(x-\alpha) + \alpha$$</p>
+<p>文章的一个重要结论是，在网络的最后一层加入affine transformation层之后，堆叠的“线性层+ReLU”与“strict weight-normalized layer + T-ReLU”表达能力相同（在附录中给出证明）。</p>
 <p>下面L表示线性层，R表示ReLU，TR表示TReLU，A表示affine transformation，S表示上述的strict weight-normalized layer。</p>
 <p>证明的大致思路是，在ReLU与线性层之间加入affine transformation层，由于线性层的存在，affine transformation带来的效果会被吸收（相当于多个线性层叠在一起还是线性层），网络表达能力不变。而”L+R+A”的结构可以等价于”S+TR+A”。如此递归下去，即可得到结论。个人认为相当于把线性层中的bias转嫁成了TReLU中的threshold（即$\alpha$）。</p>
 <h3 id="2-提出对生成图形的评估指标"><a href="#2-提出对生成图形的评估指标" class="headerlink" title="2. 提出对生成图形的评估指标"></a>2. 提出对生成图形的评估指标</h3><p>生成式模型的生成效果常常难以评价。DcGAN给出的结果也是生成图片的对比。本文中提出一个评价生成效果的指标，且与人的主观评价一致。</p>
@@ -412,55 +412,55 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
 <p>其中的$min$指使用梯度下降方法等使生成图片的效果最好。但事实上这样做开销很高。</p>
 <h3 id="PyTorch实现"><a href="#PyTorch实现" class="headerlink" title="PyTorch实现"></a>PyTorch实现</h3><p>作者将他们的实现代码公布在了<a href="https://github.com/stormraiser/GAN-weight-norm" target="_blank" rel="external">GitHub</a>上。</p>
 <p>下面是利用PyTorch对T-ReLU的实现：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">class TPReLU(Module):
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">TPReLU</span><span class="token punctuation">(</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
 
-    def __init__(self, num_parameters=1, init=0.25):
-        self.num_parameters = num_parameters
-        super(TPReLU, self).__init__()
-        self.weight = Parameter(torch.Tensor(num_parameters).fill_(init))
-        self.bias = Parameter(torch.zeros(num_parameters))
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> num_parameters<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> init<span class="token operator">=</span><span class="token number">0.25</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>num_parameters <span class="token operator">=</span> num_parameters
+        super<span class="token punctuation">(</span>TPReLU<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>weight <span class="token operator">=</span> Parameter<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">(</span>num_parameters<span class="token punctuation">)</span><span class="token punctuation">.</span>fill_<span class="token punctuation">(</span>init<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>bias <span class="token operator">=</span> Parameter<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>num_parameters<span class="token punctuation">)</span><span class="token punctuation">)</span>
 
-    def forward(self, input):
-        bias_resize = self.bias.view(1, self.num_parameters, *((1,) * (input.dim() - 2))).expand_as(input)
-        return F.prelu(input - bias_resize, self.weight.clamp(0, 1)) + bias_resize
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> input<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        bias_resize <span class="token operator">=</span> self<span class="token punctuation">.</span>bias<span class="token punctuation">.</span>view<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> self<span class="token punctuation">.</span>num_parameters<span class="token punctuation">,</span> <span class="token operator">*</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span>input<span class="token punctuation">.</span>dim<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>expand_as<span class="token punctuation">(</span>input<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> F<span class="token punctuation">.</span>prelu<span class="token punctuation">(</span>input <span class="token operator">-</span> bias_resize<span class="token punctuation">,</span> self<span class="token punctuation">.</span>weight<span class="token punctuation">.</span>clamp<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> bias_resize
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>对 Weigh-normalized layer 的实现：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">class WeightNormalizedLinear(Module):
+<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">class</span> <span class="token class-name">WeightNormalizedLinear</span><span class="token punctuation">(</span>Module<span class="token punctuation">)</span><span class="token punctuation">:</span>
 
-    def __init__(self, in_features, out_features, scale=True, bias=True, init_factor=1, init_scale=1):
-        super(WeightNormalizedLinear, self).__init__()
-        self.in_features = in_features
-        self.out_features = out_features
-        self.weight = Parameter(torch.Tensor(out_features, in_features))
-        if bias:
-            self.bias = Parameter(torch.zeros(1, out_features))
-        else:
-            self.register_parameter('bias', None)
-        if scale:
-            self.scale = Parameter(torch.Tensor(1, out_features).fill_(init_scale))
-        else:
-            self.register_parameter('scale', None)
-        self.reset_parameters(init_factor)
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> in_features<span class="token punctuation">,</span> out_features<span class="token punctuation">,</span> scale<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> bias<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> init_factor<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> init_scale<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        super<span class="token punctuation">(</span>WeightNormalizedLinear<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>in_features <span class="token operator">=</span> in_features
+        self<span class="token punctuation">.</span>out_features <span class="token operator">=</span> out_features
+        self<span class="token punctuation">.</span>weight <span class="token operator">=</span> Parameter<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">(</span>out_features<span class="token punctuation">,</span> in_features<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> bias<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>bias <span class="token operator">=</span> Parameter<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> out_features<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>register_parameter<span class="token punctuation">(</span><span class="token string">'bias'</span><span class="token punctuation">,</span> None<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> scale<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>scale <span class="token operator">=</span> Parameter<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> out_features<span class="token punctuation">)</span><span class="token punctuation">.</span>fill_<span class="token punctuation">(</span>init_scale<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>register_parameter<span class="token punctuation">(</span><span class="token string">'scale'</span><span class="token punctuation">,</span> None<span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>reset_parameters<span class="token punctuation">(</span>init_factor<span class="token punctuation">)</span>
 
-    def reset_parameters(self, factor):
-        stdv = 1. * factor / math.sqrt(self.weight.size(1))
-        self.weight.data.uniform_(-stdv, stdv)
-        if self.bias is not None:
-            self.bias.data.uniform_(-stdv, stdv)
+    <span class="token keyword">def</span> <span class="token function">reset_parameters</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> factor<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        stdv <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">.</span> <span class="token operator">*</span> factor <span class="token operator">/</span> math<span class="token punctuation">.</span>sqrt<span class="token punctuation">(</span>self<span class="token punctuation">.</span>weight<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>weight<span class="token punctuation">.</span>data<span class="token punctuation">.</span>uniform_<span class="token punctuation">(</span><span class="token operator">-</span>stdv<span class="token punctuation">,</span> stdv<span class="token punctuation">)</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>bias <span class="token keyword">is</span> <span class="token operator">not</span> None<span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>bias<span class="token punctuation">.</span>data<span class="token punctuation">.</span>uniform_<span class="token punctuation">(</span><span class="token operator">-</span>stdv<span class="token punctuation">,</span> stdv<span class="token punctuation">)</span>
 
-    def weight_norm(self):
-        return self.weight.pow(2).sum(1).add(1e-6).sqrt()
+    <span class="token keyword">def</span> <span class="token function">weight_norm</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>weight<span class="token punctuation">.</span>pow<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">.</span>sum<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span>add<span class="token punctuation">(</span><span class="token number">1e</span><span class="token operator">-</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">.</span>sqrt<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
-    def norm_scale_bias(self, input):
-        output = input.div(self.weight_norm().transpose(0, 1).expand_as(input))
-        if self.scale is not None:
-            output = output.mul(self.scale.expand_as(input))
-        if self.bias is not None:
-            output = output.add(self.bias.expand_as(input))
-        return output
+    <span class="token keyword">def</span> <span class="token function">norm_scale_bias</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> input<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        output <span class="token operator">=</span> input<span class="token punctuation">.</span>div<span class="token punctuation">(</span>self<span class="token punctuation">.</span>weight_norm<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>transpose<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">.</span>expand_as<span class="token punctuation">(</span>input<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>scale <span class="token keyword">is</span> <span class="token operator">not</span> None<span class="token punctuation">:</span>
+            output <span class="token operator">=</span> output<span class="token punctuation">.</span>mul<span class="token punctuation">(</span>self<span class="token punctuation">.</span>scale<span class="token punctuation">.</span>expand_as<span class="token punctuation">(</span>input<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>bias <span class="token keyword">is</span> <span class="token operator">not</span> None<span class="token punctuation">:</span>
+            output <span class="token operator">=</span> output<span class="token punctuation">.</span>add<span class="token punctuation">(</span>self<span class="token punctuation">.</span>bias<span class="token punctuation">.</span>expand_as<span class="token punctuation">(</span>input<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span> output
 
-    def forward(self, input):
-        return self.norm_scale_bias(F.linear(input, self.weight))
+    <span class="token keyword">def</span> <span class="token function">forward</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> input<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>norm_scale_bias<span class="token punctuation">(</span>F<span class="token punctuation">.</span>linear<span class="token punctuation">(</span>input<span class="token punctuation">,</span> self<span class="token punctuation">.</span>weight<span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>观察上面的forward函数可以发现，TReLU添加bias这一习得参数，而weight-normalized layer中则对传入的weight进行了标准化。</p>
 
@@ -708,7 +708,7 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -726,7 +726,7 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
+                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
             </ul>
         </li>
         

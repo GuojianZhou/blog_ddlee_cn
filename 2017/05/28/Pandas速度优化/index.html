@@ -391,8 +391,7 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <p>本文主要内容取自Sofia Heisler在PyCon 2017上的演讲<a href="https://www.youtube.com/watch?v=HN5d490_KKk" target="_blank" rel="external">No More Sad Pandas Optimizing Pandas Code for Speed and Efficiency</a>，讲稿代码和幻灯片见<a href="https://github.com/sversh/pycon2017-optimizing-pandas" target="_blank" rel="external">GitHub</a>。</p>
-<h2 id="Set-Up"><a href="#Set-Up" class="headerlink" title="Set Up"></a>Set Up</h2><h4 id="示例数据"><a href="#示例数据" class="headerlink" title="示例数据"></a>示例数据</h4><div class="table-container">
-<table>
+<h2 id="Set-Up"><a href="#Set-Up" class="headerlink" title="Set Up"></a>Set Up</h2><h4 id="示例数据"><a href="#示例数据" class="headerlink" title="示例数据"></a>示例数据</h4><table>
 <thead>
 <tr>
 <th></th>
@@ -454,8 +453,7 @@
 </tr>
 </tbody>
 </table>
-</div>
-<h4 id="示例函数：Haversine-Distance"><a href="#示例函数：Haversine-Distance" class="headerlink" title="示例函数：Haversine Distance"></a>示例函数：Haversine Distance</h4><pre class="line-numbers language-lang-Python"><code class="language-lang-Python">def haversine(lat1, lon1, lat2, lon2):
+<h4 id="示例函数：Haversine-Distance"><a href="#示例函数：Haversine-Distance" class="headerlink" title="示例函数：Haversine Distance"></a>示例函数：Haversine Distance</h4><pre class="line-numbers language-Python"><code class="language-Python">def haversine(lat1, lon1, lat2, lon2):
     miles_constant = 3959
     lat1, lon1, lat2, lon2 = map(np.deg2rad, [lat1, lon1, lat2, lon2])
     dlat = lat2 - lat1
@@ -468,18 +466,18 @@
 <h2 id="优化它之前，先测量它"><a href="#优化它之前，先测量它" class="headerlink" title="优化它之前，先测量它"></a>优化它之前，先测量它</h2><h4 id="IPython-Notebook的Magic-Command-timeit"><a href="#IPython-Notebook的Magic-Command-timeit" class="headerlink" title="IPython Notebook的Magic Command: %timeit"></a>IPython Notebook的Magic Command: <code>%timeit</code></h4><p>既可以测量某一行代码的执行时间，又可以测量整个单元格里代码快的执行时间。</p>
 <h4 id="Package-line-profiler"><a href="#Package-line-profiler" class="headerlink" title="Package: line_profiler"></a>Package: line_profiler</h4><p>记录每行代码的执行次数和执行时间。</p>
 <p>在IPython Notebook中使用时，先运行<code>%load_ext line_profiler</code>， 之后可以用<code>%lprun -f [function name]</code>命令记录指定函数的执行情况。</p>
-<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><h4 id="对行做循环-Baseline"><a href="#对行做循环-Baseline" class="headerlink" title="对行做循环(Baseline)"></a>对行做循环(Baseline)</h4><pre class="line-numbers language-lang-python"><code class="language-lang-python">%%timeit
-haversine_series = []
-for index, row in df.iterrows():
-    haversine_series.append(haversine(40.671, -73.985,\
-                                      row['latitude'], row['longitude']))
-df['distance'] = haversine_series
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><h4 id="对行做循环-Baseline"><a href="#对行做循环-Baseline" class="headerlink" title="对行做循环(Baseline)"></a>对行做循环(Baseline)</h4><pre class="line-numbers language-python"><code class="language-python"><span class="token operator">%</span><span class="token operator">%</span>timeit
+haversine_series <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token keyword">for</span> index<span class="token punctuation">,</span> row <span class="token keyword">in</span> df<span class="token punctuation">.</span>iterrows<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    haversine_series<span class="token punctuation">.</span>append<span class="token punctuation">(</span>haversine<span class="token punctuation">(</span><span class="token number">40.671</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">73.985</span><span class="token punctuation">,</span>\
+                                      row<span class="token punctuation">[</span><span class="token string">'latitude'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> row<span class="token punctuation">[</span><span class="token string">'longitude'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+df<span class="token punctuation">[</span><span class="token string">'distance'</span><span class="token punctuation">]</span> <span class="token operator">=</span> haversine_series
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>Output:</p>
 <pre><code>197 ms ± 6.65 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
-</code></pre><h4 id="pd-DataFrame-apply-方法"><a href="#pd-DataFrame-apply-方法" class="headerlink" title="pd.DataFrame.apply()方法"></a>pd.DataFrame.apply()方法</h4><pre class="line-numbers language-lang-python"><code class="language-lang-python">%lprun -f haversine \
-df.apply(lambda row: haversine(40.671, -73.985,\
-                               row['latitude'], row['longitude']), axis=1)
+</code></pre><h4 id="pd-DataFrame-apply-方法"><a href="#pd-DataFrame-apply-方法" class="headerlink" title="pd.DataFrame.apply()方法"></a>pd.DataFrame.apply()方法</h4><pre class="line-numbers language-python"><code class="language-python"><span class="token operator">%</span>lprun <span class="token operator">-</span>f haversine \
+df<span class="token punctuation">.</span>apply<span class="token punctuation">(</span><span class="token keyword">lambda</span> row<span class="token punctuation">:</span> haversine<span class="token punctuation">(</span><span class="token number">40.671</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">73.985</span><span class="token punctuation">,</span>\
+                               row<span class="token punctuation">[</span><span class="token string">'latitude'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> row<span class="token punctuation">[</span><span class="token string">'longitude'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>Output:</p>
 <pre><code>90.6 ms ± 7.55 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
@@ -523,8 +521,8 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
      8         1          496    496.0      5.8      mi = miles_constant * c
      9         1            2      2.0      0.0      return mi
 </code></pre><p>向量化之后，函数内的每行操作只被访问一次，达到了行结构上的并行。</p>
-<h3 id="向量化：将np-array传入函数"><a href="#向量化：将np-array传入函数" class="headerlink" title="向量化：将np.array传入函数"></a>向量化：将np.array传入函数</h3><pre class="line-numbers language-lang-python"><code class="language-lang-python">%lprun -f haversine df['distance'] = haversine(40.671, -73.985,\
-                        df['latitude'].values, df['longitude'].values)
+<h3 id="向量化：将np-array传入函数"><a href="#向量化：将np-array传入函数" class="headerlink" title="向量化：将np.array传入函数"></a>向量化：将np.array传入函数</h3><pre class="line-numbers language-python"><code class="language-python"><span class="token operator">%</span>lprun <span class="token operator">-</span>f haversine df<span class="token punctuation">[</span><span class="token string">'distance'</span><span class="token punctuation">]</span> <span class="token operator">=</span> haversine<span class="token punctuation">(</span><span class="token number">40.671</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">73.985</span><span class="token punctuation">,</span>\
+                        df<span class="token punctuation">[</span><span class="token string">'latitude'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>values<span class="token punctuation">,</span> df<span class="token punctuation">[</span><span class="token string">'longitude'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>values<span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>Output：</p>
 <pre><code>370 µs ± 18 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
@@ -546,8 +544,7 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
      8         1           18     18.0      1.3      mi = miles_constant * c
      9         1            2      2.0      0.1      return mi
 </code></pre><p>相比<code>pd.Series</code>，<code>np.array</code>不含索引等额外信息，因而更加高效。</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><div class="table-container">
-<table>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><table>
 <thead>
 <tr>
 <th>Methodology</th>
@@ -579,40 +576,39 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
 </tr>
 </tbody>
 </table>
-</div>
 <p>通过上面的对比，我们比最初的baseline快了近500倍。最大的提升来自于向量化。因而，实现的函数能够很方便地向量化是高效处理的关键。</p>
 <h2 id="用Cython优化"><a href="#用Cython优化" class="headerlink" title="用Cython优化"></a>用<code>Cython</code>优化</h2><p><code>Cython</code>可以将<code>python</code>代码转化为<code>C</code>代码来执行，可以进行如下优化（静态化变量类型，调用C函数库）</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">%load_ext cython
+<pre class="line-numbers language-python"><code class="language-python"><span class="token operator">%</span>load_ext cython
 
-%%cython -a
-# Haversine cythonized
-from libc.math cimport sin, cos, acos, asin, sqrt
+<span class="token operator">%</span><span class="token operator">%</span>cython <span class="token operator">-</span>a
+<span class="token comment" spellcheck="true"># Haversine cythonized</span>
+<span class="token keyword">from</span> libc<span class="token punctuation">.</span>math cimport sin<span class="token punctuation">,</span> cos<span class="token punctuation">,</span> acos<span class="token punctuation">,</span> asin<span class="token punctuation">,</span> sqrt
 
-cdef deg2rad_cy(float deg):
+cdef deg2rad_cy<span class="token punctuation">(</span>float deg<span class="token punctuation">)</span><span class="token punctuation">:</span>
     cdef float rad
-    rad = 0.01745329252*deg
-    return rad
+    rad <span class="token operator">=</span> <span class="token number">0.01745329252</span><span class="token operator">*</span>deg
+    <span class="token keyword">return</span> rad
 
-cpdef haversine_cy_dtyped(float lat1, float lon1, float lat2, float lon2):
-    cdef:
+cpdef haversine_cy_dtyped<span class="token punctuation">(</span>float lat1<span class="token punctuation">,</span> float lon1<span class="token punctuation">,</span> float lat2<span class="token punctuation">,</span> float lon2<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    cdef<span class="token punctuation">:</span>
         float dlon
         float dlat
         float a
         float c
         float mi
 
-    lat1, lon1, lat2, lon2 = map(deg2rad_cy, [lat1, lon1, lat2, lon2])
-    dlat = lat2 - lat1
-    dlon = lon2 - lon1
-    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
-    c = 2 * asin(sqrt(a))
-    mi = 3959 * c
-    return mi
+    lat1<span class="token punctuation">,</span> lon1<span class="token punctuation">,</span> lat2<span class="token punctuation">,</span> lon2 <span class="token operator">=</span> map<span class="token punctuation">(</span>deg2rad_cy<span class="token punctuation">,</span> <span class="token punctuation">[</span>lat1<span class="token punctuation">,</span> lon1<span class="token punctuation">,</span> lat2<span class="token punctuation">,</span> lon2<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    dlat <span class="token operator">=</span> lat2 <span class="token operator">-</span> lat1
+    dlon <span class="token operator">=</span> lon2 <span class="token operator">-</span> lon1
+    a <span class="token operator">=</span> sin<span class="token punctuation">(</span>dlat<span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">**</span><span class="token number">2</span> <span class="token operator">+</span> cos<span class="token punctuation">(</span>lat1<span class="token punctuation">)</span> <span class="token operator">*</span> cos<span class="token punctuation">(</span>lat2<span class="token punctuation">)</span> <span class="token operator">*</span> sin<span class="token punctuation">(</span>dlon<span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">**</span><span class="token number">2</span>
+    c <span class="token operator">=</span> <span class="token number">2</span> <span class="token operator">*</span> asin<span class="token punctuation">(</span>sqrt<span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    mi <span class="token operator">=</span> <span class="token number">3959</span> <span class="token operator">*</span> c
+    <span class="token keyword">return</span> mi
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>嵌套于循坏中：</p>
-<pre class="line-numbers language-lang-python"><code class="language-lang-python">%timeit df['distance'] =\
-df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
-                              row['latitude'], row['longitude']), axis=1)
+<pre class="line-numbers language-python"><code class="language-python"><span class="token operator">%</span>timeit df<span class="token punctuation">[</span><span class="token string">'distance'</span><span class="token punctuation">]</span> <span class="token operator">=</span>\
+df<span class="token punctuation">.</span>apply<span class="token punctuation">(</span><span class="token keyword">lambda</span> row<span class="token punctuation">:</span> haversine_cy_dtyped<span class="token punctuation">(</span><span class="token number">40.671</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">73.985</span><span class="token punctuation">,</span>\
+                              row<span class="token punctuation">[</span><span class="token string">'latitude'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> row<span class="token punctuation">[</span><span class="token string">'longitude'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>Output:</p>
 <pre><code>10 loops, best of 3: 68.4 ms per loop
@@ -862,7 +858,7 @@ df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
             </ul>
         </li>
         
@@ -880,7 +876,7 @@ df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
+                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
             </ul>
         </li>
         
