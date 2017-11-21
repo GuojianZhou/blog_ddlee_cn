@@ -7,8 +7,64 @@
     </url>
 
     <url>
-        <loc>http://blog.ddlee.cn/2017/11/19/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Rich-feature-hierarchies-for-accurate-object-detection-and-semantic-segmentation/</loc>
-        <lastmod>2017-11-18T16:57:35.300Z</lastmod>
+        <loc>http://blog.ddlee.cn/2017/09/02/IOS-Reborn-%E4%B8%AA%E4%BA%BAAPP%E5%AD%98%E6%A1%A3/</loc>
+        <lastmod>2017-11-21T16:08:28.096Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/2017/08/31/Android-Reborn-%E4%B8%AA%E4%BA%BAAPP%E5%AD%98%E6%A1%A3/</loc>
+        <lastmod>2017-11-21T16:07:31.431Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/2017/09/19/Linux%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/</loc>
+        <lastmod>2017-11-21T16:07:26.292Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/2017/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/</loc>
+        <lastmod>2017-11-21T15:52:19.330Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/2017/10/15/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Fast-R-CNN/</loc>
+        <lastmod>2017-11-21T15:47:15.805Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/2017/10/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Rich-feature-hierarchies-for-accurate-object-detection-and-semantic-segmentation/</loc>
+        <lastmod>2017-11-21T15:47:09.837Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/2017/11/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MegDet-A-Large-Mini-Batch-Object-Detector/</loc>
+        <lastmod>2017-11-21T15:44:58.572Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/2017/05/28/Python%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B7%A5%E5%85%B7%E6%8C%87%E5%BC%95/</loc>
+        <lastmod>2017-11-18T17:45:32.127Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -145,14 +201,6 @@
     <url>
         <loc>http://blog.ddlee.cn/2017/05/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Visualizing-and-Understanding-Recurrent-Networks/</loc>
         <lastmod>2017-06-03T04:35:10.000Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://blog.ddlee.cn/2017/05/28/Python%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B7%A5%E5%85%B7%E6%8C%87%E5%BC%95/</loc>
-        <lastmod>2017-06-03T04:27:24.000Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

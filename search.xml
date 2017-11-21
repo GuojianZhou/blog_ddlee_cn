@@ -4,8 +4,145 @@
   
     
     <entry>
+      <title><![CDATA[[论文笔记]MegDet: A Large Mini-Batch Object Detector]]></title>
+      <url>http://blog.ddlee.cn/2017/11/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MegDet-A-Large-Mini-Batch-Object-Detector/</url>
+      <content type="html"><![CDATA[<p>本篇论文介绍了旷视取得2017 MS COCO Detection chanllenge第一名的模型。提出大批量训练检测网络，并用多卡BN保证网络的收敛性。</p>
+<h2 id="Object-Detection-Progress-Summay"><a href="#Object-Detection-Progress-Summay" class="headerlink" title="Object Detection Progress Summay"></a>Object Detection Progress Summay</h2><p>检测方法回顾：R-CNN, Fast/Faster R-CNN, Mask RCNN, RetinaNet(Focal Loss), ResNet(backbone network),</p>
+<p>文章先指出前述方法大多是框架、loss等的更新，而均采用非常小的batch（2张图片）训练，有如下不足：</p>
+<ul>
+<li>training slow</li>
+<li>fails to provide accurate statistics for BN</li>
+</ul>
+<p>这里涉及一个问题，检测任务的源数据，到底应该是图片还是标注框。在Fast R-CNN中，RBG提到SPPNet等每个batch采样的标注框来自不同的图片，之间不能共享卷积运算（卷积运算是以图片为单位的）。为了共享这部分计算，Fast R-CNN采用了“先选图片，再选标注框”的策略来确定每个batch，文章提到这种操作会引入相关性，但在实际中却影响不大。之后的Faster R-CNN，每张图片经过RPN产生约300个Proposal，传入RCNN做法也成了通用做法。</p>
+<p>个人认为检测任务的数据，应该是以图片为单位的。物体在图片的背景中才会产生语义，而尽管每张图片有多个Proposal（近似分类任务中的batch大小），但它们共享的是同一个语义（场景），而单一的语义难以在同一个batch中提供多样性来供网络学习。</p>
+<h5 id="困境"><a href="#困境" class="headerlink" title="困境"></a>困境</h5><p>Increasing mini-batch size requires large learning rate, which may cause discovergence.</p>
+<h5 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h5><ul>
+<li>new explanation of linear scaling rule, introduce “warmup” trick to learning rate schedule</li>
+<li>Cross GPU Batch Normalization(CGBN)</li>
+</ul>
+<h2 id="Approach"><a href="#Approach" class="headerlink" title="Approach"></a>Approach</h2><h3 id="Variance-Equivalence-explanation-for-Linear-Scaling-Rule"><a href="#Variance-Equivalence-explanation-for-Linear-Scaling-Rule" class="headerlink" title="Variance Equivalence explanation for Linear Scaling Rule"></a>Variance Equivalence explanation for Linear Scaling Rule</h3><p>linear scaling rule 来自更改batch size 时，同时放缩learning rate，使得更改后的weight update相比之前小batch size， 多步的weight update类似。而本文用保持loss gradient的方差不变重新解释了linear scaling rule，并指出这一假定仅要求loss gradient是i.i.d，相比保持weight update所假设的不同batch size间loss gradient相似更弱。</p>
+<p>参见<a href="https://blog.ddlee.cn/2017/06/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Accurate-Large-Minibatch-SGD-Training-ImageNet-in-One-Hour/#Motivation">Accurate Large Minibatch SGD: Training ImageNet in One Hour</a>，近似时假设了求和项变化不大，这一条件在Object Detection中可能不成立，不同图片的标注框（大小、个数）差别很大。</p>
+<h3 id="WarmUp-Strategy"><a href="#WarmUp-Strategy" class="headerlink" title="WarmUp Strategy"></a>WarmUp Strategy</h3><p>在训练初期，weight抖动明显，引入warmup机制来使用较小的学习率，再逐渐增大到Linear scaling rule要求的学习率。</p>
+<h3 id="Cross-GPU-Batch-Normalization"><a href="#Cross-GPU-Batch-Normalization" class="headerlink" title="Cross-GPU Batch Normalization"></a>Cross-GPU Batch Normalization</h3><p>BN是使深度网络得以训练和收敛的关键技术之一，但在检测任务中，fine-tuning阶段常常固定了SOTA分类网络的BN部分参数，不进行更新。</p>
+<p>检测中常常需要较大分辨率的图片，而GPU内存限制了单卡上的图片个数，提高batch size意味着BN要在多卡（Cross-GPU）上进行。</p>
+<p>BN操作需要对每个batch计算均值和方差来进行标准化，对于多卡，具体做法是，单卡独立计算均值，聚合（类似Map-Reduce中的Reduce）算均值，再将均值下发到每个卡，算差，再聚合起来，计算batch的方差，最后将方差下发到每个卡，结合之前下发的均值进行标准化。</p>
+<p>流程如图：</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-MegDet-A-Large-Mini-Batch-Object-Detector/cgbn.png" alt="cgbn"></p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>在COCO数据集上的架构用预训练ResNet-50作为基础网络，FPN用于提供feature map。</p>
+<p>结果显示，不使用BN时，较大的batch size（64,128）不能收敛。使用BN后，增大Batch size能够收敛但仅带来较小的精度提升，而BN的大小也不是越大越好，实验中，32是最好的选择。主要结果如下表：</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-MegDet-A-Large-Mini-Batch-Object-Detector/results.png" alt="results"></p>
+<p>按epoch，精度的变化如下图，小batch（16）在最初的几个epoch表现比大batch（32）要好。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-MegDet-A-Large-Mini-Batch-Object-Detector/byepoch.png" alt="accuracy-by-epoch"></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>这篇论文读起来总感觉少了些东西。对Linear scale rule的解释固然新颖，但没有引入新的trick（只是确认了检测仍是需要Linear scale rule的）。多卡的BN确实是非常厉害的工程实现（高效性），但实验的结果并没有支持到较大的batch size（128,256）比小batch精度更好的期望，而最后的COCO夺冠模型整合了多种trick，没有更进一步的错误分析，很难支撑说明CGBN带来的关键作用。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Papers </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> Papers </tag>
+            
+            <tag> Object Detection </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[[论文笔记]Faster R-CNN: Towards Real Time Object Detection with Region Proposal Networks]]></title>
+      <url>http://blog.ddlee.cn/2017/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/</url>
+      <content type="html"><![CDATA[<p>Faster R-CNN: Towards Real Time Object Detection with Region Proposal Networks</p>
+<p><a href="https://arxiv.org/abs/1506.01497" target="_blank" rel="external">https://arxiv.org/abs/1506.01497</a></p>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>Faster R-CNN是2-stage方法的主流方法，提出的RPN网络取代Selective Search算法使得检测任务可以由神经网络端到端地完成。粗略的讲，Faster R-CNN = RPN + Fast R-CNN，跟RCNN共享卷积计算的特性使得RPN引入的计算量很小，使得Faster R-CNN可以在单个GPU上以5fps的速度运行，而在精度方面达到SOTA。</p>
+<h2 id="Regional-Proposal-Networks"><a href="#Regional-Proposal-Networks" class="headerlink" title="Regional Proposal Networks"></a>Regional Proposal Networks</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/faster_rcnn_netwrok.png" alt="faster_rcnn_arch"></p>
+<p>RPN网络将Proposal这一任务建模为二分类的问题。</p>
+<p>第一步是在一个滑动窗口上生成不同大小和长宽比例的anchor box，取定IOU的阈值，按Ground Truth标定这些anchor box的正负。于是，传入RPN网络的样本即是anchor box和每个anchor box是否有物体。RPN网络将每个样本映射为一个概率值和四个坐标值，概率值反应这个anchor box有物体的概率，四个坐标值用于回归定义物体的位置。最后将二分类和坐标回归的Loss统一起来，作为RPN网络的目标训练。</p>
+<p>RPN网络可调的超参还是很多的，anchor box的大小和长宽比例、IoU的阈值、每张图片上Proposal正负样本的比例等。</p>
+<h2 id="Alternate-Training"><a href="#Alternate-Training" class="headerlink" title="Alternate Training"></a>Alternate Training</h2><p>RPN网络是在feature map上进行的，因而可以跟RCNN完全共享feature extractor部分的卷积运算。训练时，RPN和RCNN的训练可以交替进行，即交替地固定RPN和RCNN部分的参数，更新另一部分。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>Faster R-CNN的成功之处在于用RPN网络完成了检测任务的“深度化”。使用滑动窗口生成anchor box的思想也在后来的工作中越来越多地被采用（YOLO v2等）。RPN网络也成为检测2-stage方法的标准部件。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Papers </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> Computer Vision </tag>
+            
+            <tag> Object Detection </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[[论文笔记]Fast R-CNN]]></title>
+      <url>http://blog.ddlee.cn/2017/10/15/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Fast-R-CNN/</url>
+      <content type="html"><![CDATA[<p>Fast R-CNN <a href="https://arxiv.org/abs/1504.08083" target="_blank" rel="external">https://arxiv.org/abs/1504.08083</a></p>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>Fast R-CNN 是对R-CNN的改进，作者栏只有RBG一人。文章先指出了R-CNN存在的问题，再介绍了自己的改进思路。文章结构堪称典范，从现存问题，到解决方案、实验细节，再到结果分析、拓展讨论，条分缕析，值得借鉴。而且，RBG开源的代码也影响了后来大部分这一领域的工作。</p>
+<h2 id="R-CNN的问题"><a href="#R-CNN的问题" class="headerlink" title="R-CNN的问题"></a>R-CNN的问题</h2><ul>
+<li>训练是一个多阶段的过程（Proposal, Classification, Regression）</li>
+<li>训练耗时耗力</li>
+<li>推断耗时</li>
+</ul>
+<p>而耗时的原因是CNN是在每一个Proposal上单独进行的，没有共享计算。</p>
+<h2 id="Fast-R-CNN-Architecture"><a href="#Fast-R-CNN-Architecture" class="headerlink" title="Fast R-CNN Architecture"></a>Fast R-CNN Architecture</h2><h3 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h3><p><img src="http://static.ddlee.cn/static/img/论文笔记-Fast-R-CNN/fast-rcnn-arch.png" alt="arch"></p>
+<p>上图是Fast R-CNN的架构。图片经过feature extractor产生feature map, 原图上运行Selective Search算法将RoI（Region of Interset）对应到feature map上，再对每个RoI进行RoI Pooling操作便得到等长的feature vector，最后通过FC后并行地进行Classifaction和BBox Regression。</p>
+<p>Fast R-CNN的这一结构正是检测任务主流2-stage方法所采用的元结构的雏形。整个系统由Proposal, Feature Extractor, Object Recognition&amp;Localization几个部件组成。Proposal部分被替换成RPN(Faster R-CNN)，Feature Extractor部分使用SOTA的分类CNN网络(ResNet等），而最后的部分常常是并行的多任务结构（Mask R-CNN等）。</p>
+<h3 id="RoI-Pooling"><a href="#RoI-Pooling" class="headerlink" title="RoI Pooling"></a>RoI Pooling</h3><p>这一操作是将不同大小的RoI（feature map上）统一的过程，具体做法是将RoI等分成目标个数的网格，在每个网格上进行max pooling，就得到等长的RoI feature vector。</p>
+<h3 id="Mini-batch-Sampling"><a href="#Mini-batch-Sampling" class="headerlink" title="Mini-batch Sampling"></a>Mini-batch Sampling</h3><p>文章指出SPPNet训练较慢的原因在于来自不同图片的RoI不能共享计算，因而Fast R-CNN采用这样的mini-batch采样策略：先采样N张图片，再在每张图片上采样R/N个RoI，构成R大小的mini-batch。</p>
+<p>采样时，总是保持25%比例正样本（iou大于0.5），iou在0.1到0.5的作为hard example。</p>
+<h3 id="Multi-task-Loss"><a href="#Multi-task-Loss" class="headerlink" title="Multi-task Loss"></a>Multi-task Loss</h3><p>得到RoI feature vector后，后续的操作是一个并行的结构，Fast R-CNN将Classification和Regression的损失统一起来，并且在Regression中用更鲁棒的Smooth L1 Loss代替L2 Loss。</p>
+<h3 id="Fine-Tuning"><a href="#Fine-Tuning" class="headerlink" title="Fine Tuning"></a>Fine Tuning</h3><p>文章还发现，对于预训练的VGG网络，开放Conv部分的参数更新有助于性能的提升，而不是只更新FC层。<br>将proposal, classification, regression统一在一个框架</p>
+<h2 id="Design-Evaluation"><a href="#Design-Evaluation" class="headerlink" title="Design Evaluation"></a>Design Evaluation</h2><p>文章最后还对系统结构进行了讨论：</p>
+<ul>
+<li>multi-loss traing相比单独训练Classification确有提升</li>
+<li>Scale invariance方面，multi-scale相比single-scale精度略有提升，但带来的时间开销更大。一定程度上说明CNN结构可以内在地学习scale invariance</li>
+<li>在更多的数据(VOC)上训练后，mAP是有进一步提升的</li>
+<li>Softmax分类器比”one vs rest”型的SVM表现略好，引入了类间的竞争</li>
+<li>更多的Proposal并不一定带来性能的提升</li>
+</ul>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>Fast R-CNN是对R-CNN的改进，也是对2-stage方法的系统化、架构化。文章将Proposal, Feature Extractor, Object Recognition&amp;Localization统一在一个整体的结构中，并推进共享卷积计算以提高效率的想法演进，是最有贡献的地方。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Papers </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> Computer Vision </tag>
+            
+            <tag> Object Detection </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[[论文笔记]Rich feature hierarchies for accurate object detection and semantic segmentation]]></title>
-      <url>http://blog.ddlee.cn/2017/11/19/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Rich-feature-hierarchies-for-accurate-object-detection-and-semantic-segmentation/</url>
+      <url>http://blog.ddlee.cn/2017/10/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Rich-feature-hierarchies-for-accurate-object-detection-and-semantic-segmentation/</url>
       <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1311.2524" target="_blank" rel="external">https://arxiv.org/abs/1311.2524</a></p>
 <h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><p>R-CNN系列的开山之作，2-stage的想法至今仍是精确度优先方法的主流。而且，本文中的众多做法也成为检测任务pipeline的标准配置。</p>
 <p>摘要中提到的两大贡献：1）CNN可用于基于区域的定位和分割物体；2）监督训练样本数紧缺时，在额外的数据上预训练的模型经过fine-tuning可以取得很好的效果。</p>
@@ -42,7 +179,7 @@
     </entry>
     
     <entry>
-      <title><![CDATA[Linux软件推荐]]></title>
+      <title><![CDATA[Linux Reborn: 个人存档]]></title>
       <url>http://blog.ddlee.cn/2017/09/19/Linux%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/</url>
       <content type="html"><![CDATA[<h3 id="个人的需求与应用场景"><a href="#个人的需求与应用场景" class="headerlink" title="个人的需求与应用场景"></a>个人的需求与应用场景</h3><p>我是（几乎）完全使用Linux的，它也满足了我的大部分需求，主要以下几块：</p>
 <ol>
@@ -59,7 +196,8 @@
 </ol>
 <h5 id="Tmux"><a href="#Tmux" class="headerlink" title="Tmux"></a>Tmux</h5><p>tmux是一个终端多窗口管理器，可以打开多个终端窗口、挂起和挂载终端回话等，利器。</p>
 <pre><code>sudo apt install tmux
-</code></pre><h4 id="效率类"><a href="#效率类" class="headerlink" title="效率类"></a>效率类</h4><h5 id="Whatever-Evernote-alternative"><a href="#Whatever-Evernote-alternative" class="headerlink" title="Whatever- Evernote alternative"></a><a href="https://cellard0-0r.github.io/whatever/" target="_blank" rel="external">Whatever- Evernote alternative</a></h5><p>Evernote的第三方客户端，调用网页API，不占用免费版的客户端限制个数</p>
+</code></pre><h5 id="GitKraken"><a href="#GitKraken" class="headerlink" title="GitKraken"></a>GitKraken</h5><p>Git图形客户端</p>
+<h4 id="效率类"><a href="#效率类" class="headerlink" title="效率类"></a>效率类</h4><h5 id="Whatever-Evernote-alternative"><a href="#Whatever-Evernote-alternative" class="headerlink" title="Whatever- Evernote alternative"></a><a href="https://cellard0-0r.github.io/whatever/" target="_blank" rel="external">Whatever- Evernote alternative</a></h5><p>Evernote的第三方客户端，调用网页API，不占用免费版的客户端限制个数</p>
 <h5 id="Stacer-System-Cleaner"><a href="#Stacer-System-Cleaner" class="headerlink" title="Stacer- System Cleaner"></a><a href="https://github.com/oguzhaninan/Stacer/releases" target="_blank" rel="external">Stacer- System Cleaner</a></h5><p>提供系统监视器和清理功能，也可以卸载包</p>
 <h5 id="synapse-App-Launcher"><a href="#synapse-App-Launcher" class="headerlink" title="synapse- App Launcher"></a>synapse- App Launcher</h5><p>一个类似lauchy的应用启动器，可以直接用apt安装</p>
 <pre><code>sudo apt install synapse
@@ -81,14 +219,141 @@
       
         <categories>
             
-            <category> Linux </category>
+            <category> Individual Development </category>
             
         </categories>
         
         
         <tags>
             
+            <tag> Software </tag>
+            
             <tag> Linux </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[IOS Reborn: 个人APP存档]]></title>
+      <url>http://blog.ddlee.cn/2017/09/02/IOS-Reborn-%E4%B8%AA%E4%BA%BAAPP%E5%AD%98%E6%A1%A3/</url>
+      <content type="html"><![CDATA[<p>IOS系统个人应用列表备份，iPad主要为阅读、娱乐功能，iPod用于听歌、播客。</p>
+<h3 id="iPad-mini-4"><a href="#iPad-mini-4" class="headerlink" title="iPad mini 4"></a>iPad mini 4</h3><h4 id="Productivity"><a href="#Productivity" class="headerlink" title="Productivity"></a>Productivity</h4><ul>
+<li>Documents，文件中转中心，连接云服务、私有云。PDF文档中心</li>
+<li>Google Keep，记录琐事、备忘</li>
+<li>Pushbullet，多客户端跨平台文字、链接转发</li>
+<li>PDF Expert，为Documents提供PDF标注编辑等功能</li>
+<li>Git2Go，GitHub客户端，读代码</li>
+<li>百度网盘，转存文件、电子书</li>
+</ul>
+<h4 id="Reading"><a href="#Reading" class="headerlink" title="Reading"></a>Reading</h4><ul>
+<li>Reeder 3，Feedly客户端，咨讯中心</li>
+<li>Pocket，稍后再读，配合Reeder 3</li>
+<li>知乎，内容索引</li>
+<li>多看阅读，电子书中心</li>
+<li>Quora，内容索引</li>
+<li>kindle，电子书，Amazon内容</li>
+<li>Medium，高质量的写作社区</li>
+<li>iBooks，少部分电子书</li>
+</ul>
+<h4 id="LifeStyle"><a href="#LifeStyle" class="headerlink" title="LifeStyle"></a>LifeStyle</h4><ul>
+<li>导航犬离线地图，地图备查</li>
+<li>Bilibili HD</li>
+<li>AVPlayer HD，本地视频，私有云视频</li>
+<li>网易云音乐</li>
+</ul>
+<h3 id="iPod"><a href="#iPod" class="headerlink" title="iPod"></a>iPod</h3><h4 id="Music"><a href="#Music" class="headerlink" title="Music"></a>Music</h4><ul>
+<li>网易云音乐</li>
+<li>QQ音乐</li>
+<li>KUSC，南加州古典音乐电台</li>
+<li>overcast，Podcast客户端</li>
+</ul>
+<h4 id="LifeStyle-1"><a href="#LifeStyle-1" class="headerlink" title="LifeStyle"></a>LifeStyle</h4><ul>
+<li>Bilibili</li>
+<li>地铁通</li>
+</ul>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Individual Development </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Software </tag>
+            
+            <tag> IOS </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Android Reborn: 个人APP存档]]></title>
+      <url>http://blog.ddlee.cn/2017/08/31/Android-Reborn-%E4%B8%AA%E4%BA%BAAPP%E5%AD%98%E6%A1%A3/</url>
+      <content type="html"><![CDATA[<p>个人使用Android的应用列表备份。</p>
+<h3 id="GApps"><a href="#GApps" class="headerlink" title="GApps"></a>GApps</h3><ul>
+<li>Google Photos</li>
+<li>Google Chrome</li>
+<li>YouTube</li>
+<li>Google Keep</li>
+<li>Inbox by Gmail</li>
+<li>Google Pinyin Keyboard</li>
+<li>Google Now</li>
+</ul>
+<h3 id="Productivity"><a href="#Productivity" class="headerlink" title="Productivity"></a>Productivity</h3><ul>
+<li>Solid File Explorer， 文件管理，云服务等中转</li>
+<li>Steam，Steam二次验证工具</li>
+<li>Evernote，笔记同步</li>
+<li>WPS Office，文档阅读与编辑</li>
+<li>Pushbullet，多端文字链接通信</li>
+<li>Pulse Secure，学校指定VPN工具</li>
+<li>Google Authenticator(Nutstore Rvoked)，二次验证工具</li>
+<li>CamScanner，文档扫描</li>
+<li>FeedMe，RSS阅读，配合feedly</li>
+</ul>
+<h3 id="System-Optimization"><a href="#System-Optimization" class="headerlink" title="System Optimization"></a>System Optimization</h3><ul>
+<li>Nova LancherI(config)，桌面（已备份）</li>
+<li>SD Maid，系统清理，APP管理</li>
+<li>Tasker，自动化任务编排</li>
+<li>Ice Box，流氓应用管理（已备份）</li>
+<li>SMS Backup，通话记录和短信备份</li>
+<li>SuperSU，ROOT权限管理</li>
+<li>MyAndroidTools，系统级的应用活动、服务管理（已备份）</li>
+<li>Titanium Backup，系统备份</li>
+<li>Brevent，系统进程管理</li>
+<li>Greenify，系统进程管理</li>
+</ul>
+<h3 id="LifeStyle"><a href="#LifeStyle" class="headerlink" title="LifeStyle"></a>LifeStyle</h3><ul>
+<li>Wechat，微信</li>
+<li>Mobike，共享单车</li>
+<li>Resplash，高质量图片，壁纸图库</li>
+<li>Prisma，智能风格转换，滤镜</li>
+<li>Photo Scan，旧实体照片数字化</li>
+<li>Snapseed，图片处理</li>
+<li>AliPay，支付宝</li>
+<li>Max+，DOTA2资讯</li>
+<li>C5Game，DOTA2饰品</li>
+<li>TIM，工作版QQ</li>
+<li>Retrorika，图标包</li>
+</ul>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Individual Development </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Android </tag>
             
             <tag> Software </tag>
             
@@ -1787,7 +2052,7 @@ df<span class="token punctuation">.</span>apply<span class="token punctuation">(
 <pre class="line-numbers language-Python"><code class="language-Python">import seaborn as sns
 sns.lmplot('petalLength', 'sepalWidth', iris, hue='species', fit_reg=False)
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h3 id="类ggplot"><a href="#类ggplot" class="headerlink" title="类ggplot"></a>类ggplot</h3><p>对于R用户，最熟悉的可视化包可能是ggplot2，在python中可以考虑ggpy(<a href="https://github.com/yhat/ggpy)和近期上了Github" target="_blank" rel="external">https://github.com/yhat/ggpy)和近期上了Github</a> Trends的plotnie(<a href="https://github.com/has2k1/plotnine)。" target="_blank" rel="external">https://github.com/has2k1/plotnine)。</a></p>
+<h3 id="类ggplot"><a href="#类ggplot" class="headerlink" title="类ggplot"></a>类ggplot</h3><p>对于R用户，最熟悉的可视化包可能是ggplot2，在python中可以考虑<a href="https://github.com/yhat/ggpy" target="_blank" rel="external">ggpy</a>和近期上了Github Trends的<a href="https://github.com/has2k1/plotnine" target="_blank" rel="external">plotnie</a>。</p>
 <h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p>基于JS的包常常具有非常好的交互性，其共同点是将图形格式化为json文件，再由JS完成渲染。</p>
 <p><img src="http://static.ddlee.cn/static/img/./Python可视化工具指引/js.png" alt="js"></p>
 <h3 id="Bokeh"><a href="#Bokeh" class="headerlink" title="Bokeh"></a>Bokeh</h3><p>Bokeh(<a href="http://bokeh.pydata.org/en/latest/docs/gallery.html" target="_blank" rel="external">Gallery</a>)定位于绘制用于浏览器展示的交互式图形。其优点是交互性、能够处理大量数据和流数据。语法示例：</p>
