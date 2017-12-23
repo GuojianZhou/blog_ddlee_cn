@@ -194,7 +194,7 @@
 <li>利用<code>sshfs</code>把服务器的文件挂在到本地用编辑器编辑，然后远程终端运行</li>
 <li><code>ssh -L localhost:8888:localhost:8888 user@host</code>命令可以将远程端口映射到本地，这样可以在服务器端开启<code>jupyter notebook</code>，再在本地用浏览器访问</li>
 </ol>
-<h5 id="Tmux"><a href="#Tmux" class="headerlink" title="Tmux"></a>Tmux</h5><p>tmux是一个终端多窗口管理器，可以打开多个终端窗口、挂起和挂载终端回话等，利器。</p>
+<h5 id="tmux-amp-zsh"><a href="#tmux-amp-zsh" class="headerlink" title="tmux&amp;zsh"></a>tmux&amp;zsh</h5><p>tmux是一个终端多窗口管理器，可以打开多个终端窗口、挂起和挂载终端回话等，利器。</p>
 <pre><code>sudo apt install tmux
 </code></pre><h5 id="GitKraken"><a href="#GitKraken" class="headerlink" title="GitKraken"></a>GitKraken</h5><p>Git图形客户端</p>
 <h4 id="效率类"><a href="#效率类" class="headerlink" title="效率类"></a>效率类</h4><h5 id="Whatever-Evernote-alternative"><a href="#Whatever-Evernote-alternative" class="headerlink" title="Whatever- Evernote alternative"></a><a href="https://cellard0-0r.github.io/whatever/" target="_blank" rel="external">Whatever- Evernote alternative</a></h5><p>Evernote的第三方客户端，调用网页API，不占用免费版的客户端限制个数</p>
