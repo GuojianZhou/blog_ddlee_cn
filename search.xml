@@ -4,6 +4,272 @@
   
     
     <entry>
+      <title><![CDATA[[论文笔记]Speed/accuracy trade-offs for modern convolutional object detectors]]></title>
+      <url>http://blog.ddlee.cn/2017/12/24/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/</url>
+      <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1611.10012" target="_blank" rel="external">https://arxiv.org/abs/1611.10012</a></p>
+<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>这篇文章偏综述和实验报告的性质，前几个部分对检测模型有不错的概括，重头在实验结果部分，实验细节也描述的比较清楚，可以用来参考。</p>
+<p>文章将检测模型分为三种元结构：Faster-RCNN、R-FCN和SSD，将特征提取网络网络独立出来作为元结构的一个部件，并松动了Proposal个数、输入图片尺寸，生成Feature map的大小等作为超参，并行实验，探索精度和速度方面的trade-off。</p>
+<p>文章也将源码公开，作为Tensorflow的Object Detection API。</p>
+<p>下图是三种元结构的图示：</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/meta-arch.png" alt="meta-arch"></p>
+<h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig2.png" alt="meta-arch"></p>
+<p>信息量非常大的一张图。</p>
+<ul>
+<li>横纵两个维度分别代表速度和准确度，横轴越靠左说明用时越少，纵轴越靠上说明mAP表现越好，因而，sweet spot应分布在左上角</li>
+<li>两个超维是元结构和特征提取网络，元结构由形状代表，特征提取网络由颜色代表</li>
+<li>虚线代表理想中的trade-off边界</li>
+</ul>
+<p>分析：</p>
+<ul>
+<li>准确度最高的由Faster-RCNN元结构、Inception-ResNet提取网络，高分图片，使用较大的feature map达到，如图右上角</li>
+<li>较快的网络中准确度表现最好的由使用Inception和Mobilenet的SSD达到</li>
+<li>sweet spot区特征提取网络由ResNet统治，较少Proposal的Faster-RCNN可以跟R-FCN相当</li>
+<li>特征提取网络方面，Inception V2和MobileNet在高速度区，Incep-ResNet和ResNet在sweet spot和高精度区，Inception V3和VGG则远离理想边界（虚线）</li>
+</ul>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig3.png" alt="meta-arch"></p>
+<p>上图是特征提取网络对三种元结构的影响，横轴是特征提取网络的分类准确率，纵轴是检测任务上的mAP表现，可以看到，SSD在纵轴方向上方差最小，而Faster-RCNN和R-FCN对特征提取网络更为敏感。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig4.png" alt="meta-arch"></p>
+<p>上图的横轴是不同的特征提取网络，组内是三种元结构的对比，纵轴是不同尺寸物体的mAP。</p>
+<p>可以看到，在大物体的检测上，使用较小的网络时，SSD的效果跟两阶段方法相当，更深的特征提取网络则对两阶段方法的中型和小型物体的检测提升较大（ResNet101和Incep-ResNet都显现了两阶段方法在小物体上的提升）</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig5.png" alt="meta-arch"></p>
+<p>上图显示了输入图片尺寸对mAP的影响。高分的图片对小物体检测帮助明显，因而拥有更高的精度，但相对运行速度会变慢。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig6.png" alt="meta-arch"></p>
+<p>上图探究了两阶段方法中Proposal个数的影响，左边是Faster-RCNN，右边是R-FCN，实线是mAP，虚线是推断时间。<br>分析：</p>
+<ul>
+<li>相比R-FCN，Faster-RCNN推断时间对Proposal个数相当敏感（因为有per ROI的计算）</li>
+<li>减少Proposal的个数，并不会给精度带来致命的下降</li>
+</ul>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig7.png" alt="meta-arch"></p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig8.png" alt="meta-arch"></p>
+<p>上面两图是对FLOPS的记录，相对GPU时间更为中立，在图8中，GPU部分显现了ResNet跟Inception的分野（关于45度线，此时FLOPS跟GPU时间相当），文章认为分解操作(Factorization)减少了FLOPs，但增加了内存的IO时间，或者是GPU指令集更适合密集的卷积计算。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig9.png" alt="meta-arch"></p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig10.png" alt="meta-arch"></p>
+<p>上两图是对内存占用的分析，总体来说，特征提取网络越精简、feature map尺寸越小，占用内存越少，运行时间也越短。</p>
+<p>最后，文章描述了他们ensemble的思路，在一系列不同stride、loss和配置的Faster-RCNN中（ResNet和Incep-ResNet为特征提取网络），贪心地选择验证集上AP较高的，并且去除类AP相似的模型。选择的5个用于ensemble的模型如下：</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/table5.png" alt="meta-arch"></p>
+<h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>这篇文章是不错的实验结果报告，测试了足够多的模型，也得出了合理的和有启发的结论。几点想法：</p>
+<ul>
+<li>RFCN并没有很好的解决定位跟分类的矛盾，per ROI的子网络最好还是要有，但要限制Proposal的个数（实际大部分都是负样本）来减少冗余</li>
+<li>小物体的检测仍然是最大的难点，增大分辨率和更深的网络确有帮助，但不是实质的。</li>
+</ul>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Papers </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> Computer Vision </tag>
+            
+            <tag> Object Detection </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[[论文笔记]Light-Head R-CNN: In Defense of Two-Stage Object Detector]]></title>
+      <url>http://blog.ddlee.cn/2017/12/22/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/</url>
+      <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1711.07264" target="_blank" rel="external">https://arxiv.org/abs/1711.07264</a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>文章指出两阶段检测器通常在生成Proposal后进行分类的“头”(head)部分进行密集的计算，如ResNet为基础网络的Faster-RCNN将整个stage5（或两个FC）放在RCNN部分， RFCN要生成一个具有随类别数线性增长的channel数的Score map，这些密集计算正是两阶段方法在精度上领先而在推断速度上难以满足实时要求的原因。</p>
+<p>针对这两种元结构(Faster-RCNN和RFCN)，文章提出了“头”轻量化方法，试图在保持精度的同时又能减少冗余的计算量，从而实现精度和速度的Trade-off。</p>
+<h2 id="Light-Head-R-CNN"><a href="#Light-Head-R-CNN" class="headerlink" title="Light-Head R-CNN"></a>Light-Head R-CNN</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/arch.png" alt="arch"></p>
+<p>如上图，虚线框出的部分是三种结构的RCNN子网络（在每个RoI上进行的计算），light-head R-CNN中，在生成Score map前，ResNet的stage5中卷积被替换为sperable convolution，产生的Score map也减少至10×p×p（相比原先的#class×p×p）。</p>
+<p>一个可能的解释是，“瘦”（channel数较少）的score map使用于分类的特征信息更加紧凑，原先较“厚”的score map在经过PSROIPooling的操作时，大部分信息并没有提取（只提取了特定类和特定位置的信息，与这一信息处在同一score map上的其他数据都被忽略了）。</p>
+<p>进一步地，位置敏感的思路将位置性在channel上表达出来，同时隐含地使用了更类别数相同长度的向量表达了分类性（这一长度相同带来的好处即是RCNN子网络可以免去参数）。</p>
+<p>light-head在这里的改进则是把这一个隐藏的嵌入空间压缩到较小的值，而在RCNN子网络中加入FC层再使这个空间扩展到类别数的规模，相当于是把计算量分担到了RCNN子网络中。</p>
+<p>粗看来，light-head将原来RFCN的score map的职责两步化了：thin score map主攻位置信息，RCNN子网络中的FC主攻分类信息。另外，global average pool的操作被去掉，用于保持精度。</p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>实验部分，文章验证了较“瘦”的Score map不会对精度产生太大损害，也展现了ROI Align, Multiscale train等技巧对基线的提升过程。</p>
+<p>文章的主要结果如下面两图（第一个为高精度，第二个为高速度）：</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/result1.png" alt="result1"></p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/result2.png" alt="result2"></p>
+<p>只能说这样的对比比较诡异。</p>
+<p>第一张图中三个light-head结果并不能跟上面的其他结构构成多少有效的对照组，要么scale不同，要么FPN, multi-scale, ROI Align不同。唯一的有效对照是跟Mask-RCNN。</p>
+<p>在高精度方面，基础网络不同，采用的scale也不同，没有有效的对照组。</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>我并不觉得这是对两阶段方法的Defense。文章对两阶段方法在精度和速度方面的分析比较有见地，但实验的结果并不能可靠地支撑light-head的有效性。相比之下Google的那篇trade-off可能更有参考价值。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Papers </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> Computer Vision </tag>
+            
+            <tag> Object Detection </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[[论文笔记]You Only Look Once: Unified, Real Time Object Detection]]></title>
+      <url>http://blog.ddlee.cn/2017/12/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-You-Only-Look-Once-Unified-Real-Time-Object-Detection/</url>
+      <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1506.02640" target="_blank" rel="external">https://arxiv.org/abs/1506.02640</a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>YOLO是单阶段方法的开山之作。它将检测任务表述成一个统一的、端到端的回归问题，并且以只处理一次图片同时得到位置和分类而得名。</p>
+<p>YOLO的主要优点：</p>
+<ul>
+<li>快。</li>
+<li>全局处理使得背景错误相对少，相比基于局部（区域）的方法， 如Fast RCNN。</li>
+<li>泛化性能好，在艺术作品上做检测时，YOLO表现好。</li>
+</ul>
+<h3 id="Design"><a href="#Design" class="headerlink" title="Design"></a>Design</h3><p>YOLO的大致工作流程如下：<br>1.准备数据：将图片缩放，划分为等分的网格，每个网格按跟ground truth的IOU分配到所要预测的样本。<br>2.卷积网络：由GoogLeNet更改而来，每个网格对每个类别预测一个条件概率值，并在网格基础上生成B个box，每个box预测五个回归值，四个表征位置，第五个表征这个box含有物体（注意不是某一类物体）的概率和位置的准确程度（由IOU表示）。测试时，分数如下计算：</p>
+<p>等式左边第一项由网格预测，后两项由每个box预测，综合起来变得到每个box含有不同类别物体的分数。<br>因而，卷积网络共输出的预测值个数为S×S×(B×5+C)，S为网格数，B为每个网格生成box个数，C为类别数。<br>3.后处理：使用NMS过滤得到的box</p>
+<h4 id="Loss"><a href="#Loss" class="headerlink" title="Loss"></a>Loss</h4><p><img src="http://static.ddlee.cn/static/img/论文笔记-You-Only-Look-Once-Unified-Real-Time-Object-Detection/loss.jpg" alt="loss-function"></p>
+<p>图片来自<a href="https://zhuanlan.zhihu.com/p/24916786" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/24916786</a></p>
+<p>损失函数被分为三部分：坐标误差、物体误差、类别误差。为了平衡类别不均衡和大小物体等带来的影响，loss中添加了权重并将长宽取根号。</p>
+<h2 id="Error-Analysis"><a href="#Error-Analysis" class="headerlink" title="Error Analysis"></a>Error Analysis</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-You-Only-Look-Once-Unified-Real-Time-Object-Detection/error.png" alt="error"></p>
+<p>相比Fast-RCNN，YOLO的背景误检在错误中占比重小，而位置错误占比大（未采用log编码）。</p>
+<h2 id="Limitations"><a href="#Limitations" class="headerlink" title="Limitations"></a>Limitations</h2><p>YOLO划分网格的思路还是比较粗糙的，每个网格生成的box个数也限制了其对小物体和相近物体的检测。</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>YOLO提出了单阶段的新思路，相比两阶段方法，其速度优势明显，实时的特性令人印象深刻。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Papers </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> Computer Vision </tag>
+            
+            <tag> Object Detection </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[[论文笔记]SSD: Single Shot MultiBox Detector]]></title>
+      <url>http://blog.ddlee.cn/2017/12/12/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-SSD-Single-Shot-MultiBox-Detector/</url>
+      <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/151.023325" target="_blank" rel="external">https://arxiv.org/abs/151.023325</a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>SSD是对YOLO的改进，其达到跟两阶段方法相当的精度，又保持较快的运行速度。</p>
+<h2 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-SSD-Single-Shot-MultiBox-Detector/arch.jpn" alt="arch"></p>
+<ul>
+<li><p>多尺度的feature map：基于VGG的不同卷积段，输出feature map到回归器中。这一点试图提升小物体的检测精度。</p>
+</li>
+<li><p>更多的anchor box，每个网格点生成不同大小和长宽比例的box，并将类别预测概率基于box预测（YOLO是在网格上），得到的输出值个数为(C+4)×k×m×n，其中C为类别数，k为box个数，m×n为feature map的大小。</p>
+</li>
+</ul>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>SSD有点像多分类的RPN，生成anchor box，再对box预测分数和位置调整值。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Papers </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> Computer Vision </tag>
+            
+            <tag> Object Detection </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[[论文笔记]Feature Pyramid Networks for Object Detection]]></title>
+      <url>http://blog.ddlee.cn/2017/12/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Feature-Pyramid-Networks-for-Object-Detection/</url>
+      <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1612.03144" target="_blank" rel="external">https://arxiv.org/abs/1612.03144</a></p>
+<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>对图片信息的理解常常关系到对位置和规模上不变性的建模。在较为成功的图片分类模型中，Max-Pooling这一操作建模了位置上的不变性：从局部中挑选最大的响应，这一响应在局部的位置信息就被忽略掉了。而在规模不变性的方向上，添加不同大小感受野的卷积核（VGG），用小卷积核堆叠感受较大的范围（GoogLeNet），自动选择感受野的大小（Inception）等结构也展现了其合理的一面。</p>
+<p>回到检测任务，与分类任务不同的是，检测所面临的物体规模问题是跨类别的、处于同一语义场景中的。</p>
+<p>一个直观的思路是用不同大小的图片去生成相应大小的feature map，但这样带来巨大的参数，使本来就只能跑个位数图片的内存更加不够用。另一个思路是直接使用不同深度的卷积层生成的feature map，但较浅层的feature map上包含的低等级特征又会干扰分类的精度。</p>
+<p>本文提出的方法是在高等级feature map上将特征向下回传，反向构建特征金字塔。</p>
+<h3 id="Feature-Pyramid-Networks"><a href="#Feature-Pyramid-Networks" class="headerlink" title="Feature Pyramid Networks"></a>Feature Pyramid Networks</h3><p><img src="http://static.ddlee.cn/static/img/论文笔记-Feature-Pyramid-Networks-for-Object-Detection/arch.png" alt="arch"></p>
+<p>从图片开始，照常进行级联式的特征提取，再添加一条回传路径：从最高级的feature map开始，向下进行最近邻上采样得到与低等级的feature map相同大小的回传feature map，再进行元素位置上的叠加（lateral connection），构成这一深度上的特征。</p>
+<p>这种操作的信念是，低等级的feature map包含更多的位置信息，高等级的feature map则包含更好的分类信息，将这两者结合，力图达到检测任务的位置分类双要求。</p>
+<h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p>文章的主要实验结果如下：</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Feature-Pyramid-Networks-for-Object-Detection/result.png" alt="Experiments results"></p>
+<p>对比不同head部分，输入feature的变化对检测精度确实有提升，而且，lateral和top-down两个操作也是缺一不可。</p>
+<h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>特征金字塔本是很自然的想法，但如何构建金字塔同时平衡检测任务的定位和分类双目标，又能保证显存的有效利用，是本文做的比较好的地方。如今，FPN也几乎成为特征提取网络的标配，更说明了这种组合方式的有效性。</p>
+<p>个人方面，FPN跟multi-scale的区别在哪，还值得进一步探索。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Papers </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> Computer Vision </tag>
+            
+            <tag> Object Detection </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[[论文笔记]R-FCN: Object Detection via Region-based Fully Convolutinal Networks]]></title>
+      <url>http://blog.ddlee.cn/2017/12/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-R-FCN-Object-Detection-via-Region-based-Fully-Convolutinal-Networks/</url>
+      <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1605.06409" target="_blank" rel="external">https://arxiv.org/abs/1605.06409</a></p>
+<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>文章指出了检测任务之前的框架存在不自然的设计，即全卷积的特征提取部分+全连接的分类器，而表现最好的图像分类器都是全卷积的结构（ResNet等），这一点是由分类任务的平移不变性和检测任务的平移敏感性之间的矛盾导致的。换句话说，检测模型采用了分类模型的特征提取器，丢失了位置信息。这篇文章提出采用“位置敏感分数图”的方法解决这一问题。</p>
+<h3 id="Position-sensitive-score-maps-amp-Position-sensitive-RoI-Pooling"><a href="#Position-sensitive-score-maps-amp-Position-sensitive-RoI-Pooling" class="headerlink" title="Position-sensitive score maps &amp; Position-sensitive RoI Pooling"></a>Position-sensitive score maps &amp; Position-sensitive RoI Pooling</h3><p>位置敏感分数图的生成有两个重要操作，一是生成更“厚”的feature map，二是在RoI Pooling时选择性地输入feature map。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-R-FCN-Object-Detection-via-Region-based-Fully-Convolutinal-Networks/rfcn.png" alt="arch"></p>
+<p>Faster R-CNN中，经过RPN得到RoI，转化成分类任务，还加入了一定量的卷积操作（ResNet中的conv5部分），而这一部分卷积操作是不能共享的。R-FCN则着眼于全卷积结构，利用卷积操作在Channel这一维度上的自由性，赋予其位置敏感的意义。下面是具体的操作：</p>
+<ul>
+<li>在全卷积网络的最后一层，生成k^2(C+1)个Channel的Feature map，其中C为类别数，k^2代表k×k网格，用于分别检测目标物体的k×k个部分。即是用不同channel的feature map代表物体的不同局部（如左上部分，右下部分）。</li>
+<li>将RPN网络得到的Proposal映射到上一步得到的feature map（厚度为k×k×(C+1)，）后，相应的，将RoI等分为k×k个bin，对第(i,j)个bin，仅考虑对应(i,j)位置的(C+1)个feature map，进行如下计算：其中(x0,y0)是这个RoI的锚点，得到的即是(i,j)号bin对C类别的相应分数。</li>
+<li>经过上一步，每个RoI得到的结果是k^2(C+1)大小的分数张量，k×k编码着物体的局部分数信息，进行vote（平均）后得到(C+1)维的分数向量，再接入softmax得到每一类的概率。</li>
+</ul>
+<p>上面第二步操作中“仅选取第(i, j)号feature map”是位置信息产生意义的关键。</p>
+<p>这样设计的网络结构，所有可学习的参数都分布在可共享的卷积层，因而在训练和测试性能上均有提升。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>R-FCN是对Faster R-CNN结构上的改进，部分地解决了位置不变性和位置敏感性的矛盾。通过最大化地共享卷积参数，使得在精度相当的情况下训练和测试效率都有了很大的提升。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Papers </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> Computer Vision </tag>
+            
+            <tag> Object Detection </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[[论文笔记]MegDet: A Large Mini-Batch Object Detector]]></title>
       <url>http://blog.ddlee.cn/2017/11/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MegDet-A-Large-Mini-Batch-Object-Detector/</url>
       <content type="html"><![CDATA[<p>本篇论文介绍了旷视取得2017 MS COCO Detection chanllenge第一名的模型。提出大批量训练检测网络，并用多卡BN保证网络的收敛性。</p>
@@ -62,11 +328,12 @@
       <content type="html"><![CDATA[<p>Faster R-CNN: Towards Real Time Object Detection with Region Proposal Networks</p>
 <p><a href="https://arxiv.org/abs/1506.01497" target="_blank" rel="external">https://arxiv.org/abs/1506.01497</a></p>
 <h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>Faster R-CNN是2-stage方法的主流方法，提出的RPN网络取代Selective Search算法使得检测任务可以由神经网络端到端地完成。粗略的讲，Faster R-CNN = RPN + Fast R-CNN，跟RCNN共享卷积计算的特性使得RPN引入的计算量很小，使得Faster R-CNN可以在单个GPU上以5fps的速度运行，而在精度方面达到SOTA。</p>
-<h2 id="Regional-Proposal-Networks"><a href="#Regional-Proposal-Networks" class="headerlink" title="Regional Proposal Networks"></a>Regional Proposal Networks</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/faster_rcnn_netwrok.png" alt="faster_rcnn_arch"></p>
+<h2 id="Regional-Proposal-Networks"><a href="#Regional-Proposal-Networks" class="headerlink" title="Regional Proposal Networks"></a>Regional Proposal Networks</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/rpn.png" alt="faster_rcnn_arch"></p>
 <p>RPN网络将Proposal这一任务建模为二分类的问题。</p>
 <p>第一步是在一个滑动窗口上生成不同大小和长宽比例的anchor box，取定IOU的阈值，按Ground Truth标定这些anchor box的正负。于是，传入RPN网络的样本即是anchor box和每个anchor box是否有物体。RPN网络将每个样本映射为一个概率值和四个坐标值，概率值反应这个anchor box有物体的概率，四个坐标值用于回归定义物体的位置。最后将二分类和坐标回归的Loss统一起来，作为RPN网络的目标训练。</p>
 <p>RPN网络可调的超参还是很多的，anchor box的大小和长宽比例、IoU的阈值、每张图片上Proposal正负样本的比例等。</p>
-<h2 id="Alternate-Training"><a href="#Alternate-Training" class="headerlink" title="Alternate Training"></a>Alternate Training</h2><p>RPN网络是在feature map上进行的，因而可以跟RCNN完全共享feature extractor部分的卷积运算。训练时，RPN和RCNN的训练可以交替进行，即交替地固定RPN和RCNN部分的参数，更新另一部分。</p>
+<h2 id="Alternate-Training"><a href="#Alternate-Training" class="headerlink" title="Alternate Training"></a>Alternate Training</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/faster_rcnn_netwrok.png" alt="faster_rcnn_arch"></p>
+<p>RPN网络是在feature map上进行的，因而可以跟RCNN完全共享feature extractor部分的卷积运算。训练时，RPN和RCNN的训练可以交替进行，即交替地固定RPN和RCNN部分的参数，更新另一部分。</p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>Faster R-CNN的成功之处在于用RPN网络完成了检测任务的“深度化”。使用滑动窗口生成anchor box的思想也在后来的工作中越来越多地被采用（YOLO v2等）。RPN网络也成为检测2-stage方法的标准部件。</p>
 <p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
@@ -152,6 +419,7 @@
 <p>检测任务中样本不足的问题（对大型网络）：在大数据集上预训练分类模型，在小数据集上fine-tuning检测任务。</p>
 <h3 id="Object-Detection-with-R-CNN"><a href="#Object-Detection-with-R-CNN" class="headerlink" title="Object Detection with R-CNN"></a>Object Detection with R-CNN</h3><p>Region Proposal: Selective Search</p>
 <p>Feature Extraction: AlexNet(NIPS 2012), 4096-dim feature vector from every region proposal</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Fast-R-CNN/rcnn.png" alt="arch"></p>
 <h4 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h4><p>现在ILSVRC2012上预训练达到STOA，再在Pascal VOC上fine-tuning。根据IOU来给region proposal打标签，在每个batch中保持一定的正样本比例（背景类非常多）。这些都已成为标准做法，后续很多工作也是对这些细节进行改进（OHEM等）。</p>
 <p>文章中特别提到，IOU的选择（即正负样例的标签准备）对结果影响显著，这里要谈两个threshold，一个用来识别正样本（IOU跟ground truth较高），另一个用来标记负样本（即背景类），而介于两者之间的则为hard negatives，若标为正类，则包含了过多的背景信息，反之又包含了要检测物体的特征，因而这些proposal便被忽略掉。</p>
 <p>另一个重要的问题是bounding-box regression，这一过程是proposal向ground truth调整，实现时加入了log/exp变换来使loss保持在合理的量级上。</p>
@@ -2402,11 +2670,11 @@ export(tf.shade(agg, cmap=cm(fire, 0.2), how='eq_hist'), 'census_ds_fier_eq_hist
             
             <tag> Deep Learning </tag>
             
+            <tag> Tensorflow </tag>
+            
             <tag> Machine Learning </tag>
             
             <tag> Papers </tag>
-            
-            <tag> Tensorflow </tag>
             
         </tags>
         
