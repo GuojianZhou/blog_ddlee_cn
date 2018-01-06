@@ -54,6 +54,49 @@
   </entry>
   
   <entry>
+    <title>[论文笔记]MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications</title>
+    <link href="http://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/"/>
+    <id>http://blog.ddlee.cn/2018/01/06/论文笔记-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/</id>
+    <published>2018-01-06T13:10:09.000Z</published>
+    <updated>2018-01-06T13:10:09.450Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1704.04861" target="_blank" rel="external">https://arxiv.org/abs/1704.04861</a></p>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>MobileNets系列可以看做是继Xception之后对Depthwise Separable Convolution的又一推动。利用深度可分离的特征，MobileNets系列引入两个模型精度和大小的超参，在保持相当精度的同时享有非常小的计算消耗，适用于移动端情形，因而被命名为”MobileNets”。</p>
+<h3 id="Depthwise-Separable-Convolution"><a href="#Depthwise-Separable-Convolution" class="headerlink" title="Depthwise Separable Convolution"></a>Depthwise Separable Convolution</h3><p>深度可分离卷积是近期深度网络设计的重要趋势。最早见于L. Sifre的PhD论文Rigid-motion scattering for image classification，其1×1卷积在Inception, ResNet, SqueezeNet等网络中作为降维bottleneck使用。Xception指出，Inception单元本质上假设了跨通道和跨空间相关性的解耦关系，并将这一解耦关系推向极端，用Depthwise Separable Convolution改造了Inception结构。</p>
+<p>深度可分离卷积受欢迎的另一重要原因是其参数高效性。将原有卷积换成深度可分离卷积后，可以享受到模型压缩的增益。</p>
+<p>标准的卷积操作，可以认为是大小为DK的窗口在DF大小的特征图上滑动计算，计算复杂性为：</p>
+<p>DK×DK × M×N × DF×DF</p>
+<p>其中，M和N分别代表输入channel数和输出channel数。</p>
+<p>替换为深度可分离卷积后，先进行Depthwise Convolution，再进行1×1 Pointwise Convolution，计算复杂性为：</p>
+<p>DK×DK × M × DF×DF + M×N × DF×DF</p>
+<p>相比下，深度可分离卷积的计算复杂性约为原来的(1/N+1/DK^2)。</p>
+<p>进一步地，MobileNet添加两个超参来控制这一压缩程度，alpha为channel数压缩系数，rho为分辨率压缩系数：</p>
+<p>DK×DK × alpha×M × rho×DF× rho×DF + alpha×M × alpha×N × rho×DF × rho×DF</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/depthwise-seperable.png" alt="depthwise-seperable"></p>
+<h3 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h3><p>MobileNet的基本结构如下：</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/arch.png" alt="arch"></p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://arxiv.org/abs/1704.04861&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://arxiv.org/abs/1704.04861&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;Overview&quot;&gt;&lt;a h
+    
+    </summary>
+    
+      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+    
+    
+      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
+    
+      <category term="Neural Network" scheme="http://blog.ddlee.cn/tags/Neural-Network/"/>
+    
+  </entry>
+  
+  <entry>
     <title>[论文笔记]Xception: Deep Learning with Depthwise Seperable Convolutions</title>
     <link href="http://blog.ddlee.cn/2018/01/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/"/>
     <id>http://blog.ddlee.cn/2018/01/02/论文笔记-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/</id>
@@ -1087,156 +1130,6 @@
     <summary type="html">
     
       &lt;p&gt;本篇是keras源码笔记系列的第三篇。在前两篇中，我们分析了keras对Tensor和Layer等概念的处理，并说明了它们是如何作用别弄个构成有向无环图的。本篇着眼于多层网络模型层面的抽象，即与用户距离最近的接口，源代码文件是&lt;a href=&quot;https://github.
-    
-    </summary>
-    
-      <category term="AI" scheme="http://blog.ddlee.cn/categories/AI/"/>
-    
-    
-      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
-    
-      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
-    
-      <category term="Programming" scheme="http://blog.ddlee.cn/tags/Programming/"/>
-    
-      <category term="Keras" scheme="http://blog.ddlee.cn/tags/Keras/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[源码笔记]keras源码分析之Container</title>
-    <link href="http://blog.ddlee.cn/2017/07/25/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BContainer/"/>
-    <id>http://blog.ddlee.cn/2017/07/25/源码笔记-keras源码分析之Container/</id>
-    <published>2017-07-25T14:08:44.000Z</published>
-    <updated>2017-08-03T14:17:13.948Z</updated>
-    
-    <content type="html"><![CDATA[<p>本篇继续讨论keras的源码结构。</p>
-<p><a href="https://blog.ddlee.cn/2017/07/15/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BLayer%E3%80%81Tensor%E5%92%8CNode/">第一篇源码笔记</a>中我们观察了<code>Layer</code>, <code>Tensor</code>和<code>Node</code>是如何耦合在一起的，而本篇的重点是观察多层网络构成的有向无环图（DAG）。主要涉及的文件为<a href="https://github.com/fchollet/keras/blob/master/keras/engine/topology.py" target="_blank" rel="external">keras/engine/topology.py</a>， 要观察的类是<code>Container</code>。</p>
-<h3 id="Container对象：DAG的拓扑原型"><a href="#Container对象：DAG的拓扑原型" class="headerlink" title="Container对象：DAG的拓扑原型"></a><code>Container</code>对象：DAG的拓扑原型</h3><p>在第一篇中我们提到，Keras Tensor中增强的<code>\_keras_history</code>属性使得我们仅通过输入和输出的Tensor，就可以构建出整张计算图。而<code>Container</code>对象正是实现了这样的过程。</p>
-<h4 id="计算图的构建"><a href="#计算图的构建" class="headerlink" title="计算图的构建"></a>计算图的构建</h4><p>DAG计算图的构建在<code>Container</code>对象实例化时完成，主要包括如下几个操作：</p>
-<p>1） 记录<code>Container</code>的首尾连接信息</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> inputs<span class="token punctuation">,</span> outputs<span class="token punctuation">,</span> name<span class="token operator">=</span>None<span class="token punctuation">)</span><span class="token punctuation">:</span>
-  <span class="token keyword">for</span> x <span class="token keyword">in</span> self<span class="token punctuation">.</span>outputs<span class="token punctuation">:</span>
-      layer<span class="token punctuation">,</span> node_index<span class="token punctuation">,</span> tensor_index <span class="token operator">=</span> x<span class="token punctuation">.</span>_keras_history
-      self<span class="token punctuation">.</span>output_layers<span class="token punctuation">.</span>append<span class="token punctuation">(</span>layer<span class="token punctuation">)</span>
-      self<span class="token punctuation">.</span>output_layers_node_indices<span class="token punctuation">.</span>append<span class="token punctuation">(</span>node_index<span class="token punctuation">)</span>
-      self<span class="token punctuation">.</span>output_layers_tensor_indices<span class="token punctuation">.</span>append<span class="token punctuation">(</span>tensor_index<span class="token punctuation">)</span>
-
-  <span class="token keyword">for</span> x <span class="token keyword">in</span> self<span class="token punctuation">.</span>inputs<span class="token punctuation">:</span>
-      layer<span class="token punctuation">,</span> node_index<span class="token punctuation">,</span> tensor_index <span class="token operator">=</span> x<span class="token punctuation">.</span>_keras_history
-      self<span class="token punctuation">.</span>input_layers<span class="token punctuation">.</span>append<span class="token punctuation">(</span>layer<span class="token punctuation">)</span>
-      self<span class="token punctuation">.</span>input_layers_node_indices<span class="token punctuation">.</span>append<span class="token punctuation">(</span>node_index<span class="token punctuation">)</span>
-      self<span class="token punctuation">.</span>input_layers_tensor_indices<span class="token punctuation">.</span>append<span class="token punctuation">(</span>tensor_index<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>2） 从<code>output_tensors</code>开始反向递归构建计算图，采用广度优先的准则，本步的关键是构建<code>nodes_in_decreasing_depth</code>这一队列，这些<code>Node</code>包含的连接信息和深度信息将是后续正向传播和反向训练计算执行顺序的依据。</p>
-<pre class="line-numbers language-python"><code class="language-python">  <span class="token keyword">def</span> <span class="token function">build_map_of_graph</span><span class="token punctuation">(</span>tensor<span class="token punctuation">,</span> finished_nodes<span class="token punctuation">,</span> nodes_in_progress<span class="token punctuation">)</span><span class="token punctuation">:</span>
-      layer<span class="token punctuation">,</span> node_index<span class="token punctuation">,</span> tensor_index <span class="token operator">=</span> tensor<span class="token punctuation">.</span>_keras_history
-      node <span class="token operator">=</span> layer<span class="token punctuation">.</span>inbound_nodes<span class="token punctuation">[</span>node_index<span class="token punctuation">]</span>
-      nodes_in_progress<span class="token punctuation">.</span>add<span class="token punctuation">(</span>node<span class="token punctuation">)</span>
-
-      <span class="token comment" spellcheck="true"># 广度优先搜索</span>
-      <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>node<span class="token punctuation">.</span>inbound_layers<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-          x <span class="token operator">=</span> node<span class="token punctuation">.</span>input_tensors<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-          layer <span class="token operator">=</span> node<span class="token punctuation">.</span>inbound_layers<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-          node_index <span class="token operator">=</span> node<span class="token punctuation">.</span>node_indices<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-          tensor_index <span class="token operator">=</span> node<span class="token punctuation">.</span>tensor_indices<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-          <span class="token comment" spellcheck="true"># 递归调用</span>
-          build_map_of_graph<span class="token punctuation">(</span>x<span class="token punctuation">,</span> finished_nodes<span class="token punctuation">,</span> nodes_in_progress<span class="token punctuation">,</span>
-                             layer<span class="token punctuation">,</span> node_index<span class="token punctuation">,</span> tensor_index<span class="token punctuation">)</span>
-
-      <span class="token comment" spellcheck="true"># 维护两个队列</span>
-      finished_nodes<span class="token punctuation">.</span>add<span class="token punctuation">(</span>node<span class="token punctuation">)</span>
-      nodes_in_progress<span class="token punctuation">.</span>remove<span class="token punctuation">(</span>node<span class="token punctuation">)</span>
-      nodes_in_decreasing_depth<span class="token punctuation">.</span>append<span class="token punctuation">(</span>node<span class="token punctuation">)</span>
-
-  <span class="token comment" spellcheck="true"># 反向构建DAG</span>
-  <span class="token keyword">for</span> x <span class="token keyword">in</span> self<span class="token punctuation">.</span>outputs<span class="token punctuation">:</span>
-      build_map_of_graph<span class="token punctuation">(</span>x<span class="token punctuation">,</span> finished_nodes<span class="token punctuation">,</span> nodes_in_progress<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>3） 计算各节点的深度并按深度标定节点在DAG中的位置</p>
-<pre class="line-numbers language-python"><code class="language-python">  <span class="token comment" spellcheck="true"># 根据队列标定各节点的深度</span>
-  <span class="token keyword">for</span> node <span class="token keyword">in</span> reversed<span class="token punctuation">(</span>nodes_in_decreasing_depth<span class="token punctuation">)</span><span class="token punctuation">:</span>
-      depth <span class="token operator">=</span> nodes_depths<span class="token punctuation">.</span>setdefault<span class="token punctuation">(</span>node<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
-      previous_depth <span class="token operator">=</span> layers_depths<span class="token punctuation">.</span>get<span class="token punctuation">(</span>node<span class="token punctuation">.</span>outbound_layer<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
-      depth <span class="token operator">=</span> max<span class="token punctuation">(</span>depth<span class="token punctuation">,</span> previous_depth<span class="token punctuation">)</span>
-      layers_depths<span class="token punctuation">[</span>node<span class="token punctuation">.</span>outbound_layer<span class="token punctuation">]</span> <span class="token operator">=</span> depth
-      nodes_depths<span class="token punctuation">[</span>node<span class="token punctuation">]</span> <span class="token operator">=</span> depth
-
-      <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>node<span class="token punctuation">.</span>inbound_layers<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-          inbound_layer <span class="token operator">=</span> node<span class="token punctuation">.</span>inbound_layers<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-          node_index <span class="token operator">=</span> node<span class="token punctuation">.</span>node_indices<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-          inbound_node <span class="token operator">=</span> inbound_layer<span class="token punctuation">.</span>inbound_nodes<span class="token punctuation">[</span>node_index<span class="token punctuation">]</span>
-          previous_depth <span class="token operator">=</span> nodes_depths<span class="token punctuation">.</span>get<span class="token punctuation">(</span>inbound_node<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
-          nodes_depths<span class="token punctuation">[</span>inbound_node<span class="token punctuation">]</span> <span class="token operator">=</span> max<span class="token punctuation">(</span>depth <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> previous_depth<span class="token punctuation">)</span>
-
-  <span class="token comment" spellcheck="true"># 按深度标定各节点的位置</span>
-  nodes_by_depth <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
-  <span class="token keyword">for</span> node<span class="token punctuation">,</span> depth <span class="token keyword">in</span> nodes_depths<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-      <span class="token keyword">if</span> depth <span class="token operator">not</span> <span class="token keyword">in</span> nodes_by_depth<span class="token punctuation">:</span>
-          nodes_by_depth<span class="token punctuation">[</span>depth<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-      nodes_by_depth<span class="token punctuation">[</span>depth<span class="token punctuation">]</span><span class="token punctuation">.</span>append<span class="token punctuation">(</span>node<span class="token punctuation">)</span>
-
-  <span class="token comment" spellcheck="true"># 按深度标定各层的位置</span>
-  layers_by_depth <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
-  <span class="token keyword">for</span> layer<span class="token punctuation">,</span> depth <span class="token keyword">in</span> layers_depths<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-      <span class="token keyword">if</span> depth <span class="token operator">not</span> <span class="token keyword">in</span> layers_by_depth<span class="token punctuation">:</span>
-          layers_by_depth<span class="token punctuation">[</span>depth<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-      layers_by_depth<span class="token punctuation">[</span>depth<span class="token punctuation">]</span><span class="token punctuation">.</span>append<span class="token punctuation">(</span>layer<span class="token punctuation">)</span>
-
-  self<span class="token punctuation">.</span>layers_by_depth <span class="token operator">=</span> layers_by_depth
-  self<span class="token punctuation">.</span>nodes_by_depth <span class="token operator">=</span> nodes_by_depth
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>4）将整个<code>Container</code>并入<code>Node</code>以保持兼容性</p>
-<pre class="line-numbers language-python"><code class="language-python">  self<span class="token punctuation">.</span>outbound_nodes <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-  self<span class="token punctuation">.</span>inbound_nodes <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>  
-  Node<span class="token punctuation">(</span>outbound_layer<span class="token operator">=</span>self<span class="token punctuation">,</span>
-       inbound_layers<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-       node_indices<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-       tensor_indices<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-       input_tensors<span class="token operator">=</span>self<span class="token punctuation">.</span>inputs<span class="token punctuation">,</span>
-       output_tensors<span class="token operator">=</span>self<span class="token punctuation">.</span>outputs<span class="token punctuation">,</span>
-       <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h3 id="计算图中的计算"><a href="#计算图中的计算" class="headerlink" title="计算图中的计算"></a>计算图中的计算</h3><p>计算在<code>Container</code>对象的<code>call()</code>方法完成，其实现又依靠内部方法<code>run_internal_graph()</code>。</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">run_internal_graph</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> inputs<span class="token punctuation">,</span> masks<span class="token operator">=</span>None<span class="token punctuation">)</span><span class="token punctuation">:</span>
-       depth_keys <span class="token operator">=</span> list<span class="token punctuation">(</span>self<span class="token punctuation">.</span>nodes_by_depth<span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-       depth_keys<span class="token punctuation">.</span>sort<span class="token punctuation">(</span>reverse<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
-       <span class="token comment" spellcheck="true"># 依据深度</span>
-       <span class="token keyword">for</span> depth <span class="token keyword">in</span> depth_keys<span class="token punctuation">:</span>
-           nodes <span class="token operator">=</span> self<span class="token punctuation">.</span>nodes_by_depth<span class="token punctuation">[</span>depth<span class="token punctuation">]</span>
-           <span class="token comment" spellcheck="true"># 对同一深度上的Node进行计算</span>
-           <span class="token keyword">for</span> node <span class="token keyword">in</span> nodes<span class="token punctuation">:</span>
-               layer <span class="token operator">=</span> node<span class="token punctuation">.</span>outbound_layer <span class="token comment" spellcheck="true"># Node对应的layer</span>
-               reference_input_tensors <span class="token operator">=</span> node<span class="token punctuation">.</span>input_tensors
-               reference_output_tensors <span class="token operator">=</span> node<span class="token punctuation">.</span>output_tensors
-               computed_data <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>  
-               <span class="token keyword">if</span> len<span class="token punctuation">(</span>computed_data<span class="token punctuation">)</span> <span class="token operator">==</span> len<span class="token punctuation">(</span>reference_input_tensors<span class="token punctuation">)</span><span class="token punctuation">:</span>
-                   <span class="token comment" spellcheck="true"># 在Layer中进行计算</span>
-                   <span class="token keyword">with</span> K<span class="token punctuation">.</span>name_scope<span class="token punctuation">(</span>layer<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">:</span>
-                       <span class="token keyword">if</span> len<span class="token punctuation">(</span>computed_data<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">:</span>
-                           computed_tensor<span class="token punctuation">,</span> computed_mask <span class="token operator">=</span> computed_data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
-                           output_tensors <span class="token operator">=</span> _to_list<span class="token punctuation">(</span>layer<span class="token punctuation">.</span>call<span class="token punctuation">(</span>computed_tensor<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">)</span>
-                           computed_tensors <span class="token operator">=</span> <span class="token punctuation">[</span>computed_tensor<span class="token punctuation">]</span>
-                       <span class="token keyword">else</span><span class="token punctuation">:</span>
-                           computed_tensors <span class="token operator">=</span> <span class="token punctuation">[</span>x<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token keyword">for</span> x <span class="token keyword">in</span> computed_data<span class="token punctuation">]</span>
-                           output_tensors <span class="token operator">=</span> _to_list<span class="token punctuation">(</span>layer<span class="token punctuation">.</span>call<span class="token punctuation">(</span>computed_tensors<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">)</span>
-       output_tensors <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-       output_masks <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-       <span class="token keyword">for</span> x <span class="token keyword">in</span> self<span class="token punctuation">.</span>outputs<span class="token punctuation">:</span>
-           tensor<span class="token punctuation">,</span> mask <span class="token operator">=</span> tensor_map<span class="token punctuation">[</span>str<span class="token punctuation">(</span>id<span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
-           output_tensors<span class="token punctuation">.</span>append<span class="token punctuation">(</span>tensor<span class="token punctuation">)</span>
-           output_masks<span class="token punctuation">.</span>append<span class="token punctuation">(</span>mask<span class="token punctuation">)</span>
-       <span class="token keyword">return</span> output_tensors<span class="token punctuation">,</span> output_masks
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>从上面的代码可以看到计算是依据深度进行的，并通过更新<code>computed_data</code>和<code>output_tensor</code>等变量完成整张图的遍历计算。</p>
-<p>继续阅读系列第三篇：<a href="https://blog.ddlee.cn/2017/07/30/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BModel/">【源码笔记】keras源码分析之Model</a></p>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;本篇继续讨论keras的源码结构。&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://blog.ddlee.cn/2017/07/15/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%
     
     </summary>
     

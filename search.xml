@@ -39,6 +39,46 @@
     </entry>
     
     <entry>
+      <title><![CDATA[[论文笔记]MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications]]></title>
+      <url>http://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/</url>
+      <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1704.04861" target="_blank" rel="external">https://arxiv.org/abs/1704.04861</a></p>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>MobileNets系列可以看做是继Xception之后对Depthwise Separable Convolution的又一推动。利用深度可分离的特征，MobileNets系列引入两个模型精度和大小的超参，在保持相当精度的同时享有非常小的计算消耗，适用于移动端情形，因而被命名为”MobileNets”。</p>
+<h3 id="Depthwise-Separable-Convolution"><a href="#Depthwise-Separable-Convolution" class="headerlink" title="Depthwise Separable Convolution"></a>Depthwise Separable Convolution</h3><p>深度可分离卷积是近期深度网络设计的重要趋势。最早见于L. Sifre的PhD论文Rigid-motion scattering for image classification，其1×1卷积在Inception, ResNet, SqueezeNet等网络中作为降维bottleneck使用。Xception指出，Inception单元本质上假设了跨通道和跨空间相关性的解耦关系，并将这一解耦关系推向极端，用Depthwise Separable Convolution改造了Inception结构。</p>
+<p>深度可分离卷积受欢迎的另一重要原因是其参数高效性。将原有卷积换成深度可分离卷积后，可以享受到模型压缩的增益。</p>
+<p>标准的卷积操作，可以认为是大小为DK的窗口在DF大小的特征图上滑动计算，计算复杂性为：</p>
+<p>DK×DK × M×N × DF×DF</p>
+<p>其中，M和N分别代表输入channel数和输出channel数。</p>
+<p>替换为深度可分离卷积后，先进行Depthwise Convolution，再进行1×1 Pointwise Convolution，计算复杂性为：</p>
+<p>DK×DK × M × DF×DF + M×N × DF×DF</p>
+<p>相比下，深度可分离卷积的计算复杂性约为原来的(1/N+1/DK^2)。</p>
+<p>进一步地，MobileNet添加两个超参来控制这一压缩程度，alpha为channel数压缩系数，rho为分辨率压缩系数：</p>
+<p>DK×DK × alpha×M × rho×DF× rho×DF + alpha×M × alpha×N × rho×DF × rho×DF</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/depthwise-seperable.png" alt="depthwise-seperable"></p>
+<h3 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h3><p>MobileNet的基本结构如下：</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/arch.png" alt="arch"></p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Papers </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> Papers </tag>
+            
+            <tag> Neural Network </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[[论文笔记]Xception: Deep Learning with Depthwise Seperable Convolutions]]></title>
       <url>http://blog.ddlee.cn/2018/01/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/</url>
       <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1610.02357" target="_blank" rel="external">https://arxiv.org/abs/1610.02357</a></p>
