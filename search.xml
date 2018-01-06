@@ -39,6 +39,48 @@
     </entry>
     
     <entry>
+      <title><![CDATA[[论文笔记]Xception: Deep Learning with Depthwise Seperable Convolutions]]></title>
+      <url>http://blog.ddlee.cn/2018/01/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/</url>
+      <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1610.02357" target="_blank" rel="external">https://arxiv.org/abs/1610.02357</a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>本篇是keras库作者的文章，对Inception结构进行了改进：用Depth-wise seperable convolution替换了Inception单元中的1×1卷积和3×3卷积。</p>
+<p>文章对Inception结构的评论非常有见地。</p>
+<h3 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h3><p>文章指出，Inception单元背后的假设是跨Channel和跨空间的相关性可以充分解耦，类似的还有长度和高度方向上的卷积结构（在Inception-v3里的3×3卷积被1×3和3×1卷积替代）。</p>
+<p>进一步的，Xception基于更强的假设：跨channel和跨空间的相关性完全解耦。这也是Depthwise Separable Convolution所建模的理念。</p>
+<p>一个简化的Inception单元：</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/inception.png" alt="inception"></p>
+<p>等价于：</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/inception2.png" alt="inception"></p>
+<p>将channel推向极端，即每个channel都由独立的3×3卷积处理：</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/inception3.png" alt="inception"></p>
+<p>这样就得到了Depthwise Separable Convolution。</p>
+<h3 id="Architectrue"><a href="#Architectrue" class="headerlink" title="Architectrue"></a>Architectrue</h3><p>简单讲，Xception是线性堆叠的Depthwise Separable卷积，附加了Skip-connection。</p>
+<p>NetScope Vis请参见<a href="http://ethereon.github.io/netscope/#gist/931d7c91b22109f83bbbb7ff1a215f5f" target="_blank" rel="external">这里</a>，源文件位于<a href="https://github.com/ddlee96/NN_structures/tree/master/caffe_vis" target="_blank" rel="external">NN_Structures/caffe_vis/</a>。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/arch.png" alt="inception"></p>
+<h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p>本文的实验部分并没有像其他论文那样集成一个在ImageNet上SOTA的结果，而是以Inception-v3为基线，对比了参数数量和性能，认为提升正来自于更合理的参数利用。文章还对比了Residual的作用，在Xception网络中，Skip-connection不仅能提高训练速度，还能增强模型的性能。</p>
+<h3 id="Concolusion"><a href="#Concolusion" class="headerlink" title="Concolusion"></a>Concolusion</h3><p>本文贡献主要对Inception单元的解读和引入Depthwise Seperable Convolution。更多对于Depthwise Seperable Convolution的描述，请参考<a href="">MobileNets</a>的笔记。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Papers </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> AI </tag>
+            
+            <tag> Papers </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[[论文笔记]Speed/accuracy trade-offs for modern convolutional object detectors]]></title>
       <url>http://blog.ddlee.cn/2017/12/24/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/</url>
       <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1611.10012" target="_blank" rel="external">https://arxiv.org/abs/1611.10012</a></p>
@@ -101,9 +143,9 @@
             
             <tag> Deep Learning </tag>
             
-            <tag> Computer Vision </tag>
-            
             <tag> Object Detection </tag>
+            
+            <tag> Computer Vision </tag>
             
         </tags>
         
@@ -143,9 +185,9 @@
             
             <tag> Deep Learning </tag>
             
-            <tag> Computer Vision </tag>
-            
             <tag> Object Detection </tag>
+            
+            <tag> Computer Vision </tag>
             
         </tags>
         
@@ -185,9 +227,9 @@
             
             <tag> Deep Learning </tag>
             
-            <tag> Computer Vision </tag>
-            
             <tag> Object Detection </tag>
+            
+            <tag> Computer Vision </tag>
             
         </tags>
         
@@ -280,9 +322,9 @@
             
             <tag> Deep Learning </tag>
             
-            <tag> Computer Vision </tag>
-            
             <tag> Object Detection </tag>
+            
+            <tag> Computer Vision </tag>
             
         </tags>
         
@@ -318,9 +360,9 @@
             
             <tag> Deep Learning </tag>
             
-            <tag> Computer Vision </tag>
-            
             <tag> Object Detection </tag>
+            
+            <tag> Computer Vision </tag>
             
         </tags>
         
@@ -356,9 +398,9 @@
             
             <tag> Deep Learning </tag>
             
-            <tag> Computer Vision </tag>
-            
             <tag> Object Detection </tag>
+            
+            <tag> Computer Vision </tag>
             
         </tags>
         
@@ -489,9 +531,9 @@
             
             <tag> Deep Learning </tag>
             
-            <tag> Computer Vision </tag>
-            
             <tag> Object Detection </tag>
+            
+            <tag> Computer Vision </tag>
             
         </tags>
         
@@ -539,9 +581,9 @@
             
             <tag> Deep Learning </tag>
             
-            <tag> Computer Vision </tag>
-            
             <tag> Object Detection </tag>
+            
+            <tag> Computer Vision </tag>
             
         </tags>
         
