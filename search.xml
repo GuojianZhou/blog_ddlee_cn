@@ -417,7 +417,7 @@
       <url>http://blog.ddlee.cn/2017/12/12/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-SSD-Single-Shot-MultiBox-Detector/</url>
       <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/151.023325" target="_blank" rel="external">https://arxiv.org/abs/151.023325</a></p>
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>SSD是对YOLO的改进，其达到跟两阶段方法相当的精度，又保持较快的运行速度。</p>
-<h2 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-SSD-Single-Shot-MultiBox-Detector/arch.jpn" alt="arch"></p>
+<h2 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-SSD-Single-Shot-MultiBox-Detector/arch.jpg" alt="arch"></p>
 <ul>
 <li><p>多尺度的feature map：基于VGG的不同卷积段，输出feature map到回归器中。这一点试图提升小物体的检测精度。</p>
 </li>
