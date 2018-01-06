@@ -4,6 +4,39 @@
   
     
     <entry>
+      <title><![CDATA[[论文笔记]Densely Connected Convolutional Networks]]></title>
+      <url>http://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Densely-Connected-Convolutional-Networks/</url>
+      <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1608.06993" target="_blank" rel="external">https://arxiv.org/abs/1608.06993</a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>DenseNet将shortcut-connection的思路发挥到极致。在一个DenseBlock内部，每一层的输出均跟后面的层建立shortcut，特别需要注意的是，不同于ResNet中的相加，DenseNet连接shortcut的方式是Concat，这样越深的层则输入channel数越大。</p>
+<h3 id="DenseNet"><a href="#DenseNet" class="headerlink" title="DenseNet"></a>DenseNet</h3><p><img src="http://static.ddlee.cn/static/img/论文笔记-Densely-Connected-Convolutional-Networks/arch.png" alt="arch"></p>
+<p>整个网络被分为Dense Block和Transition Layer，前者内部进行密集连接，保持同样大小的feature map，后者为DenseBlock之间的连接层，完成下采样操作。</p>
+<p>在每个DenseBlock内部，接受的数据维度会随层数加深而变大（因为不断拼接了之前层的输出），增长的速率即为初始的channel数，文章称这一channel数为growth rate，作为模型的一个超参数。初始的growth rate为32时，在DenseNet121架构下，最后一层的channel数将增长到1024。</p>
+<p><a href="http://ethereon.github.io/netscope/#/gist/56cb18697f42eb0374d933446f45b151" target="_blank" rel="external">Netscope Vis</a>，源文件位于<a href="https://github.com/ddlee96/NN_structures/tree/master/caffe_vis" target="_blank" rel="external">NN_Structures/caffe_vis/</a>。</p>
+<h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p>作者在CIFAR和ImageNet上都做了实验，DenseNet取得了跟ResNet相当的表现，加入Bottleneck和一部分压缩技巧后，用较少的参数就能达到跟ResNet相当的效果：</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Densely-Connected-Convolutional-Networks/result.png" alt="arch"></p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Papers </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> Papers </tag>
+            
+            <tag> Neural Network </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[[论文笔记]Aggregated Residual Transformations for Deep Neural Networks]]></title>
       <url>http://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/</url>
       <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1611.05431" target="_blank" rel="external">https://arxiv.org/abs/1611.05431</a></p>
