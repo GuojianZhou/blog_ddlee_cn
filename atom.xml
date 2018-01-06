@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.ddlee.cn/"/>
-  <updated>2017-12-27T14:02:35.092Z</updated>
+  <updated>2018-01-06T12:39:58.055Z</updated>
   <id>http://blog.ddlee.cn/</id>
   
   <author>
@@ -14,6 +14,53 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[论文笔记]Going deeper with convolutions</title>
+    <link href="http://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Going-deeper-with-convolutions/"/>
+    <id>http://blog.ddlee.cn/2018/01/06/论文笔记-Going-deeper-with-convolutions/</id>
+    <published>2018-01-06T12:39:58.000Z</published>
+    <updated>2018-01-06T12:39:58.055Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>本作是Inception系列网络的第一篇，提出了Inception单元结构，基于这一结构的GoogLeNet拿下了ILSVRC14分类任务的头名。文章也探讨了网络在不断加深的情况下如何更好地利用计算资源，这一理念也是Inception系列网络的核心。</p>
+<h3 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h3><p>Inception单元的启发主要来自Network in Network结构和Arora等人在神经科学方面的工作。</p>
+<p>提高深度模型的一个简单想法是增加深度，但这样带来过拟合的风险和巨大的计算资源消耗，对数据量和计算力的要求可能会超过网络加深带来的收益。</p>
+<p>解决这些问题的基本思路是使用稀疏连接的网络，而这也跟Arora等人工作中的Hebbian principle吻合：共同激活的神经元常常集聚在一起。换句话说，某一层激活的神经元只向下一层中特定的几个神经元传递激活信号，而向其他神经元几乎不传递信息，即仅有少部分连接是真正有效的，这也是稀疏的含义。</p>
+<p>然而另一方面，现代计算架构对稀疏的计算非常低效，更适合的是密集的计算，这样便产生了矛盾。而Inception单元的提出就是为了用密集的结构来近似稀疏结构，在建模稀疏连接的同时又能利用密集计算的优势。</p>
+<p>很多文章认为inception结构的意义在于将不同大小核的卷积并行连接，然后让网络自行决定采用哪种卷积来提取特征，有些无监督的意味，然后将1×1的卷积解释为降维操作。这种想法有待验证，是否在5×5卷积有较强激活的时候，3×3卷积大部分没有激活，还是两者能够同时有较强的激活？不同的处理阶段这两种卷积核的选择有没有规律？</p>
+<p>在此提出一个个人的理解，欢迎讨论。</p>
+<p>首先是channel的意义。我们知道，卷积之所以有效，是因为它建模了张量数据在空间上的局部相关性，加之Pooling操作，将这些相关性赋予平移不变性（即泛化能力）。而channel则是第三维，它实际上是卷积结构中的隐藏单元，是中间神经元的个数。卷积层在事实上是全连接的：每个Input channel都会和output channel互动，互动的信息只不过从全连接层的weight和bias变成了卷积核的weight。</p>
+<p>这种全连接是冗余的，本质上应是一个稀疏的结构。Inception单元便在channel这个维度上做文章，采用的是类似矩阵分块的思想。</p>
+<p>根据Hebbian principle，跨channel的这些神经元，应是高度相关的，于是有信息压缩的空间，因而使用跨channel的1×1的卷积将它们嵌入到低维的空间里（比如，Inception4a单元的输入channel是512，不同分支的1×1卷积输出channel则是192,96,16和64，见下面GoogLeNet结构表），在这个低维空间里，用密集的全连接建模（即3×5和5×5卷积），它们的输出channel相加也再恢复到原来的输入channel维度（Inception4a分别是192+208+48+64），最后的连接由Concat操作完成（分块矩阵的合并），这样就完成了分块密集矩阵对稀疏矩阵的近似。</p>
+<p>这样来看，3×3和5×5大小的选择并不是本质的，本质的是分块低维嵌入和concat的分治思路。而在ResNeXt的工作中，这里的分块被认为是新的维度（称为cardinality），采用相同的拓扑结构。</p>
+<h3 id="Stacked-Inception-Module"><a href="#Stacked-Inception-Module" class="headerlink" title="Stacked Inception Module"></a>Stacked Inception Module</h3><p>在GoogLeNet中，借鉴了AlexNet和VGG的stack(repeat)策略，将Inception单元重复串联起来，构成基本的特征提取结构。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/arch.png" alt="arch"></p>
+<h4 id="Dimension-Reduction"><a href="#Dimension-Reduction" class="headerlink" title="Dimension Reduction"></a>Dimension Reduction</h4><p>朴素版本的Inception单元会带来Channel维数的不断增长，加入的1×1卷积则起到低维嵌入的作用，使Inception单元前后channel数保持稳定。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/inception.png" alt="arch"></p>
+<h3 id="Auxililary-Classifier"><a href="#Auxililary-Classifier" class="headerlink" title="Auxililary Classifier"></a>Auxililary Classifier</h3><p>这里是本文的另一个贡献，将监督信息传入中间的feature map，构成一个整合loss，作者认为这样有助于浅层特征的学习。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/auxililary.png" alt="arch"></p>
+<h3 id="Architecture-of-GoogLeNet"><a href="#Architecture-of-GoogLeNet" class="headerlink" title="Architecture of GoogLeNet"></a>Architecture of GoogLeNet</h3><p>下面的表显示了GoogLeNet的整体架构，可以留意到Inception单元的堆叠和Channel数在子路径中的变化。NetScope可视化可参见<br><a href="http://ethereon.github.io/netscope/#/gist/db8754ee4b239920b3df5ab93220a84b" target="_blank" rel="external">GoogLeNet Vis</a>。源文件位于<a href="https://github.com/ddlee96/NN_structures/tree/master/caffe_vis" target="_blank" rel="external">NN_Structures/caffe_vis/</a>。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/table.png" alt="arch"></p>
+<h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>文章是对NiN思想的继承和推进，不同于AlexNet和VGG，网络的模块化更加凸显，多路径的结构也成为新的网络设计范本，启发了众多后续网络结构的设计。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Overview&quot;&gt;&lt;a href=&quot;#Overview&quot; class=&quot;headerlink&quot; title=&quot;Overview&quot;&gt;&lt;/a&gt;Overview&lt;/h2&gt;&lt;p&gt;本作是Inception系列网络的第一篇，提出了Inception单元结构，基于这一结构的G
+    
+    </summary>
+    
+      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+    
+    
+      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
+    
+      <category term="Neural Network" scheme="http://blog.ddlee.cn/tags/Neural-Network/"/>
+    
+  </entry>
   
   <entry>
     <title>[论文笔记]Speed/accuracy trade-offs for modern convolutional object detectors</title>
@@ -83,9 +130,9 @@
     
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
       <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
@@ -128,9 +175,9 @@
     
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
       <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
@@ -173,9 +220,9 @@
     
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
       <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
@@ -211,9 +258,9 @@
     
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
       <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
@@ -252,9 +299,9 @@
     
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
       <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
@@ -293,9 +340,9 @@
     
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
       <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
@@ -387,9 +434,9 @@
     
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
       <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
@@ -440,9 +487,9 @@
     
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
       <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
@@ -1422,64 +1469,7 @@ d ​<span class="token operator">=</span>​ tf​<span class="token punctuatio
     
       <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
     
-      <category term="best practice" scheme="http://blog.ddlee.cn/tags/best-practice/"/>
-    
       <category term="Tensorflow" scheme="http://blog.ddlee.cn/tags/Tensorflow/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python最佳实践：遍历列表</title>
-    <link href="http://blog.ddlee.cn/2017/06/29/Python%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%EF%BC%9A%E9%81%8D%E5%8E%86%E5%88%97%E8%A1%A8/"/>
-    <id>http://blog.ddlee.cn/2017/06/29/Python最佳实践：遍历列表/</id>
-    <published>2017-06-29T14:12:50.000Z</published>
-    <updated>2017-08-01T13:00:37.746Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="enumerate-遍历索引和值"><a href="#enumerate-遍历索引和值" class="headerlink" title="enumerate(): 遍历索引和值"></a>enumerate(): 遍历索引和值</h3><p>对列表进行遍历操作时，常也要用到当前遍历项的索引值：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>flavor_list<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-  flavor <span class="token operator">=</span> flaver<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-  <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'%d: %s'</span> <span class="token operator">%</span> <span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> flavor<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>这种写法既要取出列表长度，又要根据索引取列表值。但要改用<code>enumerate()</code>函数，则可同时取出索引值和遍历项值：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">for</span> i<span class="token punctuation">,</span> flavor <span class="token keyword">in</span> enumerate<span class="token punctuation">(</span>flavor_list<span class="token punctuation">)</span><span class="token punctuation">:</span>
-  <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'%d: %s'</span> <span class="token operator">%</span> <span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> flavor<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h3 id="zip-并行遍历多个列表"><a href="#zip-并行遍历多个列表" class="headerlink" title="zip(): 并行遍历多个列表"></a>zip(): 并行遍历多个列表</h3><p>我们有多个长度相同的列表，需要在同一索引下对遍历项值进行操作：</p>
-<pre class="line-numbers language-python"><code class="language-python">names <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'Cecilia'</span><span class="token punctuation">,</span> <span class="token string">'Lise'</span><span class="token punctuation">,</span> <span class="token string">'Marie'</span><span class="token punctuation">]</span>
-letters <span class="token operator">=</span> <span class="token punctuation">[</span>len<span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token keyword">for</span> n <span class="token keyword">in</span> names<span class="token punctuation">]</span>
-
-longest_name <span class="token operator">=</span> None
-max_letters <span class="token operator">=</span> <span class="token number">0</span>
-
-<span class="token keyword">for</span> i<span class="token punctuation">,</span> name <span class="token keyword">in</span> enumerate<span class="token punctuation">(</span>names<span class="token punctuation">)</span><span class="token punctuation">:</span>
-  count <span class="token operator">=</span> letters<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-  <span class="token keyword">if</span> count <span class="token operator">></span> max_letters<span class="token punctuation">:</span>
-    longest_name <span class="token operator">=</span> name
-    max_letters <span class="token operator">=</span> count
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>由上可见，name和letter通过索引值关联起来，而使用<code>zip()</code>函数，可免去根据索引取值的过程：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">for</span> name<span class="token punctuation">,</span> count <span class="token keyword">in</span> zip<span class="token punctuation">(</span>names<span class="token punctuation">,</span> letters<span class="token punctuation">)</span><span class="token punctuation">:</span>
-  <span class="token keyword">if</span> count <span class="token operator">></span> max_letters<span class="token punctuation">:</span>
-    longest_name <span class="token operator">=</span> name
-    max_letters <span class="token operator">=</span> count
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>要注意的是，当多个列表长度不一时，到达最短列表的末尾时，遍历停止。</p>
-<p>而且，<code>enumerate()</code>和<code>zip()</code>返回的对象都是lazy generator，相对来说更加高效。</p>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;enumerate-遍历索引和值&quot;&gt;&lt;a href=&quot;#enumerate-遍历索引和值&quot; class=&quot;headerlink&quot; title=&quot;enumerate(): 遍历索引和值&quot;&gt;&lt;/a&gt;enumerate(): 遍历索引和值&lt;/h3&gt;&lt;p&gt;对列表进行遍历操
-    
-    </summary>
-    
-      <category term="Programming" scheme="http://blog.ddlee.cn/categories/Programming/"/>
-    
-    
-      <category term="Python" scheme="http://blog.ddlee.cn/tags/Python/"/>
-    
-      <category term="Programming" scheme="http://blog.ddlee.cn/tags/Programming/"/>
     
       <category term="best practice" scheme="http://blog.ddlee.cn/tags/best-practice/"/>
     

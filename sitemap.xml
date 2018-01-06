@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Going-deeper-with-convolutions/</loc>
+    
+    <lastmod>2018-01-06T12:39:58.055Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.ddlee.cn/2017/10/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Rich-feature-hierarchies-for-accurate-object-detection-and-semantic-segmentation/</loc>
     
     <lastmod>2017-12-27T14:10:01.998Z</lastmod>
