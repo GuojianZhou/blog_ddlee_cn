@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.ddlee.cn/"/>
-  <updated>2018-01-06T13:00:38.247Z</updated>
+  <updated>2018-01-06T13:19:34.300Z</updated>
   <id>http://blog.ddlee.cn/</id>
   
   <author>
@@ -16,29 +16,38 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>[论文笔记]Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning</title>
-    <link href="http://blog.ddlee.cn/2018/12/26/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/"/>
-    <id>http://blog.ddlee.cn/2018/12/26/论文笔记-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/</id>
-    <published>2018-12-26T12:59:02.000Z</published>
-    <updated>2018-01-06T13:00:38.247Z</updated>
+    <title>[论文笔记]Aggregated Residual Transformations for Deep Neural Networks</title>
+    <link href="http://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/"/>
+    <id>http://blog.ddlee.cn/2018/01/06/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/</id>
+    <published>2018-01-06T13:19:34.000Z</published>
+    <updated>2018-01-06T13:19:34.300Z</updated>
     
-    <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1602.07261" target="_blank" rel="external">https://arxiv.org/abs/1602.07261</a></p>
-<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>在15年，ResNet成为那年最耀眼的卷积网络结构，skip-connection的结构也成为避不开的考虑选项。Inception系列也参考ResNet更新了自己的结构。同时推出了第四代和跟ResNet的结合版：Inception-v4和Inception-ResNet。</p>
-<p>然而，这是一篇几乎都是图的论文。</p>
-<p>所以，上图。</p>
-<h3 id="Inception-v4-Architecture"><a href="#Inception-v4-Architecture" class="headerlink" title="Inception-v4 Architecture"></a>Inception-v4 Architecture</h3><p>NetScope Vis请参见<a href="http://ethereon.github.io/netscope/#gist/e0ac64013b167844053184d97b380978" target="_blank" rel="external">这里</a>，源文件位于<a href="https://github.com/ddlee96/NN_structures/tree/master/caffe_vis" target="_blank" rel="external">NN_Structures/caffe_vis/</a>。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/arch1.jpg" alt="arch1"></p>
-<h3 id="Inception-ResNet-v2-Architecture"><a href="#Inception-ResNet-v2-Architecture" class="headerlink" title="Inception-ResNet(v2) Architecture"></a>Inception-ResNet(v2) Architecture</h3><p>NetScope Vis请参见<a href="http://ethereon.github.io/netscope/#gist/aadd97383baccabb8b827ba507c24162" target="_blank" rel="external">这里</a>，源文件位于<a href="https://github.com/ddlee96/NN_structures/tree/master/caffe_vis" target="_blank" rel="external">NN_Structures/caffe_vis/</a>。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/arch2.jpg" alt="arch1"></p>
-<h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p>文章在实验部分提到，不借助Skip-connection的结构也可以将Inception网络提升到SOTA的水准，但加入Skip-connection可以有效增加训练速度。</p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>卷积网络结构的演进遇到了瓶颈，在ImageNet上的提升边界似乎碰到天花板，且更多来自训练技巧和集成。</p>
+    <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1611.05431" target="_blank" rel="external">https://arxiv.org/abs/1611.05431</a></p>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>本文提出了深度网络的新维度，除了深度、宽度（Channel数）外，作者将在某一层并行transform的路径数提取为第三维度，称为”cardinality”。跟Inception单元不同的是，这些并行路径均共享同一拓扑结构，而非精心设计的卷积核并联。除了并行相同的路径外，也添加了层与层间的shortcut connection。但由于其多路径的设计特征，我将其归为Inception系网络。</p>
+<h3 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h3><p>深度网络结构上的设计已经有三种经典的范式：</p>
+<ul>
+<li>Repeat. 由AlexNet和VGG等开拓，几乎被之后所有的网络采用。即堆叠相同的拓扑结构，整个网络成为模块化的结构。</li>
+<li>Multi-path. 由Inception系列发扬，将前一层的输入分割到不同的路径上进行变换，最后拼接结果。</li>
+<li>Skip-connection. 最初出现于Highway Network，由ResNet发扬并成为标配。即建立浅层信息与深层信息的传递通道，改变原有的单一线性结构。</li>
+</ul>
+<h3 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h3><p>文章将残差函数表示为：</p>
+<p>其中，C为本层进行的变换数目，即”cardinality”。</p>
+<p>相比Inception-ResNet，ResNeXt相当于将其Inception Module的每条路径规范化了，并将规范后的路径数目作为新的超参数。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/multi-path.png" alt="multi-path"></p>
+<p>上图中，路径被扩展为多条，而每条路径的宽度（channel数）也变窄了（64-&gt;4）。</p>
+<p><a href="http://ethereon.github.io/netscope/#/gist/c2ba521fcb60520abb0b0da0e9c0f2ef" target="_blank" rel="external">NetScope Vis</a>，源文件位于<a href="https://github.com/ddlee96/NN_structures/tree/master/caffe_vis" target="_blank" rel="external">NN_Structures/caffe_vis/</a>。</p>
+<h3 id="Experiements"><a href="#Experiements" class="headerlink" title="Experiements"></a>Experiements</h3><p>ResNeXt试图在保持参数数目的情况下提高网络性能，提升cardinality的同时使每条路径的宽度变窄。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/setting.png" alt="setting"></p>
+<p>对比其他网络的结果：</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/result.png" alt="result"></p>
+<h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>ResNeXt较为突出的是把Inception单元规范化了，摆脱了需要精心设计Inception单元中卷积结构的问题，更好地组织了参数。</p>
 <p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;&lt;a href=&quot;https://arxiv.org/abs/1602.07261&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://arxiv.org/abs/1602.07261&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;Introduction&quot;&gt;
+      &lt;p&gt;&lt;a href=&quot;https://arxiv.org/abs/1611.05431&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://arxiv.org/abs/1611.05431&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;Overview&quot;&gt;&lt;a h
     
     </summary>
     
@@ -47,18 +56,18 @@
     
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
+      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
     
-      <category term="Neural Network" scheme="http://blog.ddlee.cn/tags/Neural-Network/"/>
+      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
     
   </entry>
   
   <entry>
     <title>[论文笔记]MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications</title>
-    <link href="http://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/"/>
-    <id>http://blog.ddlee.cn/2018/01/06/论文笔记-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/</id>
-    <published>2018-01-06T13:10:09.000Z</published>
-    <updated>2018-01-06T13:10:09.450Z</updated>
+    <link href="http://blog.ddlee.cn/2018/01/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/"/>
+    <id>http://blog.ddlee.cn/2018/01/04/论文笔记-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/</id>
+    <published>2018-01-04T13:10:09.000Z</published>
+    <updated>2018-01-06T13:19:20.261Z</updated>
     
     <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1704.04861" target="_blank" rel="external">https://arxiv.org/abs/1704.04861</a></p>
 <h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>MobileNets系列可以看做是继Xception之后对Depthwise Separable Convolution的又一推动。利用深度可分离的特征，MobileNets系列引入两个模型精度和大小的超参，在保持相当精度的同时享有非常小的计算消耗，适用于移动端情形，因而被命名为”MobileNets”。</p>
@@ -138,6 +147,44 @@
       <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
     
       <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[论文笔记]Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning</title>
+    <link href="http://blog.ddlee.cn/2017/12/26/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/"/>
+    <id>http://blog.ddlee.cn/2017/12/26/论文笔记-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/</id>
+    <published>2017-12-26T12:59:02.000Z</published>
+    <updated>2018-01-06T13:18:43.158Z</updated>
+    
+    <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1602.07261" target="_blank" rel="external">https://arxiv.org/abs/1602.07261</a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>在15年，ResNet成为那年最耀眼的卷积网络结构，skip-connection的结构也成为避不开的考虑选项。Inception系列也参考ResNet更新了自己的结构。同时推出了第四代和跟ResNet的结合版：Inception-v4和Inception-ResNet。</p>
+<p>然而，这是一篇几乎都是图的论文。</p>
+<p>所以，上图。</p>
+<h3 id="Inception-v4-Architecture"><a href="#Inception-v4-Architecture" class="headerlink" title="Inception-v4 Architecture"></a>Inception-v4 Architecture</h3><p>NetScope Vis请参见<a href="http://ethereon.github.io/netscope/#gist/e0ac64013b167844053184d97b380978" target="_blank" rel="external">这里</a>，源文件位于<a href="https://github.com/ddlee96/NN_structures/tree/master/caffe_vis" target="_blank" rel="external">NN_Structures/caffe_vis/</a>。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/arch1.jpg" alt="arch1"></p>
+<h3 id="Inception-ResNet-v2-Architecture"><a href="#Inception-ResNet-v2-Architecture" class="headerlink" title="Inception-ResNet(v2) Architecture"></a>Inception-ResNet(v2) Architecture</h3><p>NetScope Vis请参见<a href="http://ethereon.github.io/netscope/#gist/aadd97383baccabb8b827ba507c24162" target="_blank" rel="external">这里</a>，源文件位于<a href="https://github.com/ddlee96/NN_structures/tree/master/caffe_vis" target="_blank" rel="external">NN_Structures/caffe_vis/</a>。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/arch2.jpg" alt="arch1"></p>
+<h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p>文章在实验部分提到，不借助Skip-connection的结构也可以将Inception网络提升到SOTA的水准，但加入Skip-connection可以有效增加训练速度。</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>卷积网络结构的演进遇到了瓶颈，在ImageNet上的提升边界似乎碰到天花板，且更多来自训练技巧和集成。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;a href=&quot;https://arxiv.org/abs/1602.07261&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://arxiv.org/abs/1602.07261&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;Introduction&quot;&gt;
+    
+    </summary>
+    
+      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+    
+    
+      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+    
+      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
+    
+      <category term="Neural Network" scheme="http://blog.ddlee.cn/tags/Neural-Network/"/>
     
   </entry>
   
@@ -981,168 +1028,6 @@
     
     
       <category term="Reading" scheme="http://blog.ddlee.cn/tags/Reading/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[源码笔记]keras源码分析之Model</title>
-    <link href="http://blog.ddlee.cn/2017/07/30/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BModel/"/>
-    <id>http://blog.ddlee.cn/2017/07/30/源码笔记-keras源码分析之Model/</id>
-    <published>2017-07-30T15:19:42.000Z</published>
-    <updated>2017-08-03T14:15:45.668Z</updated>
-    
-    <content type="html"><![CDATA[<p>本篇是keras源码笔记系列的第三篇。在前两篇中，我们分析了keras对Tensor和Layer等概念的处理，并说明了它们是如何作用别弄个构成有向无环图的。本篇着眼于多层网络模型层面的抽象，即与用户距离最近的接口，源代码文件是<a href="https://github.com/fchollet/keras/blob/master/keras/engine/training.py" target="_blank" rel="external">/keras/engine/training.py</a>和<a href="https://github.com/fchollet/keras/blob/master/keras/models.py" target="_blank" rel="external">/keras/model.py</a>，要观察的类是<code>Model</code>和<code>Sequential</code>。</p>
-<p>本系列第一篇：<a href="https://blog.ddlee.cn/2017/07/15/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BLayer%E3%80%81Tensor%E5%92%8CNode/">【源码笔记】keras源码分析之Tensor, Node和Layer</a><br>第二篇：<a href="https://blog.ddlee.cn/2017/07/25/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BContainer/">【源码笔记】keras源码分析之Container</a></p>
-<h3 id="Model：添加了训练信息的Container"><a href="#Model：添加了训练信息的Container" class="headerlink" title="Model：添加了训练信息的Container"></a><code>Model</code>：添加了训练信息的<code>Container</code></h3><p><code>Model.compile()</code>主要完成了配置<code>optimizer</code>, <code>loss</code>, <code>metrics</code>等操作，而要执行的<code>fit</code>, <code>evaluate</code>等则不在<code>compile</code>过程中配置。</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">compile</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> optimizer<span class="token punctuation">,</span> loss<span class="token punctuation">,</span> metrics<span class="token operator">=</span>None<span class="token punctuation">,</span> loss_weights<span class="token operator">=</span>None<span class="token punctuation">,</span>
-            sample_weight_mode<span class="token operator">=</span>None<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    loss <span class="token operator">=</span> loss <span class="token operator">or</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
-    self<span class="token punctuation">.</span>optimizer <span class="token operator">=</span> optimizers<span class="token punctuation">.</span>get<span class="token punctuation">(</span>optimizer<span class="token punctuation">)</span>
-    self<span class="token punctuation">.</span>sample_weight_mode <span class="token operator">=</span> sample_weight_mode
-    self<span class="token punctuation">.</span>loss <span class="token operator">=</span> loss
-    self<span class="token punctuation">.</span>loss_weights <span class="token operator">=</span> loss_weights
-
-    loss_function <span class="token operator">=</span> losses<span class="token punctuation">.</span>get<span class="token punctuation">(</span>loss<span class="token punctuation">)</span>
-    loss_functions <span class="token operator">=</span> <span class="token punctuation">[</span>loss_function <span class="token keyword">for</span> _ <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>self<span class="token punctuation">.</span>outputs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
-    self<span class="token punctuation">.</span>loss_functions <span class="token operator">=</span> loss_functions
-
-    <span class="token comment" spellcheck="true"># Prepare targets of model.</span>
-    self<span class="token punctuation">.</span>targets <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-    self<span class="token punctuation">.</span>_feed_targets <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-    <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>self<span class="token punctuation">.</span>outputs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        shape <span class="token operator">=</span> self<span class="token punctuation">.</span>internal_output_shapes<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-        name <span class="token operator">=</span> self<span class="token punctuation">.</span>output_names<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-        target <span class="token operator">=</span> K<span class="token punctuation">.</span>placeholder<span class="token punctuation">(</span>ndim<span class="token operator">=</span>len<span class="token punctuation">(</span>shape<span class="token punctuation">)</span><span class="token punctuation">,</span>
-                               name<span class="token operator">=</span>name <span class="token operator">+</span> <span class="token string">'_target'</span><span class="token punctuation">,</span>
-                               sparse<span class="token operator">=</span>K<span class="token punctuation">.</span>is_sparse<span class="token punctuation">(</span>self<span class="token punctuation">.</span>outputs<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-                               dtype<span class="token operator">=</span>K<span class="token punctuation">.</span>dtype<span class="token punctuation">(</span>self<span class="token punctuation">.</span>outputs<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        self<span class="token punctuation">.</span>targets<span class="token punctuation">.</span>append<span class="token punctuation">(</span>target<span class="token punctuation">)</span>
-        self<span class="token punctuation">.</span>_feed_targets<span class="token punctuation">.</span>append<span class="token punctuation">(</span>target<span class="token punctuation">)</span>
-
-    <span class="token comment" spellcheck="true"># Prepare metrics.</span>
-    self<span class="token punctuation">.</span>metrics <span class="token operator">=</span> metrics
-    self<span class="token punctuation">.</span>metrics_names <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'loss'</span><span class="token punctuation">]</span>
-    self<span class="token punctuation">.</span>metrics_tensors <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-
-    <span class="token comment" spellcheck="true"># Compute total loss.</span>
-    total_loss <span class="token operator">=</span> None
-    <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>self<span class="token punctuation">.</span>outputs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        y_true <span class="token operator">=</span> self<span class="token punctuation">.</span>targets<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-        y_pred <span class="token operator">=</span> self<span class="token punctuation">.</span>outputs<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-        loss_weight <span class="token operator">=</span> loss_weights_list<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-        <span class="token keyword">if</span> total_loss <span class="token keyword">is</span> None<span class="token punctuation">:</span>
-            total_loss <span class="token operator">=</span> loss_weight <span class="token operator">*</span> output_loss
-        <span class="token keyword">else</span><span class="token punctuation">:</span>
-            total_loss <span class="token operator">+=</span> loss_weight <span class="token operator">*</span> output_loss
-
-    <span class="token keyword">for</span> loss_tensor <span class="token keyword">in</span> self<span class="token punctuation">.</span>losses<span class="token punctuation">:</span>
-        total_loss <span class="token operator">+=</span> loss_tensor
-
-    self<span class="token punctuation">.</span>total_loss <span class="token operator">=</span> total_loss
-    self<span class="token punctuation">.</span>sample_weights <span class="token operator">=</span> sample_weights
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>Model</code>对象的<code>fit()</code>方法封装了<code>_fit_loop()</code>内部方法，而<code>_fit_loop()</code>方法的关键步骤由<code>_make_train_function()</code>方法完成，返回<code>history</code>对象，用于回调函数的处理。</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">fit</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> x<span class="token operator">=</span>None<span class="token punctuation">,</span> y<span class="token operator">=</span>None<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>：
-      self<span class="token punctuation">.</span>_make_train_function<span class="token punctuation">(</span><span class="token punctuation">)</span>
-      f <span class="token operator">=</span> self<span class="token punctuation">.</span>train_function
-      <span class="token keyword">return</span> self<span class="token punctuation">.</span>_fit_loop<span class="token punctuation">(</span>f<span class="token punctuation">,</span> ins<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>在<code>_fit_loop()</code>方法中，回调函数完成了对训练过程的监控记录等任务，<code>train_function</code>也被应用于传入的数据：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">_fit_loop</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> f<span class="token punctuation">,</span> ins<span class="token punctuation">,</span> out_labels<span class="token operator">=</span>None<span class="token punctuation">,</span> batch_size<span class="token operator">=</span><span class="token number">32</span><span class="token punctuation">,</span>
-              epochs<span class="token operator">=</span><span class="token number">100</span><span class="token punctuation">,</span> verbose<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> callbacks<span class="token operator">=</span>None<span class="token punctuation">,</span>
-              val_f<span class="token operator">=</span>None<span class="token punctuation">,</span> val_ins<span class="token operator">=</span>None<span class="token punctuation">,</span> shuffle<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span>
-              callback_metrics<span class="token operator">=</span>None<span class="token punctuation">,</span> initial_epoch<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    self<span class="token punctuation">.</span>history <span class="token operator">=</span> cbks<span class="token punctuation">.</span>History<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    callbacks <span class="token operator">=</span> <span class="token punctuation">[</span>cbks<span class="token punctuation">.</span>BaseLogger<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token punctuation">(</span>callbacks <span class="token operator">or</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token punctuation">[</span>self<span class="token punctuation">.</span>history<span class="token punctuation">]</span>
-    callbacks <span class="token operator">=</span> cbks<span class="token punctuation">.</span>CallbackList<span class="token punctuation">(</span>callbacks<span class="token punctuation">)</span>
-    out_labels <span class="token operator">=</span> out_labels <span class="token operator">or</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-    callbacks<span class="token punctuation">.</span>set_model<span class="token punctuation">(</span>callback_model<span class="token punctuation">)</span>
-    callbacks<span class="token punctuation">.</span>set_params<span class="token punctuation">(</span><span class="token punctuation">{</span>
-        <span class="token string">'batch_size'</span><span class="token punctuation">:</span> batch_size<span class="token punctuation">,</span>
-        <span class="token string">'epochs'</span><span class="token punctuation">:</span> epochs<span class="token punctuation">,</span>
-        <span class="token string">'samples'</span><span class="token punctuation">:</span> num_train_samples<span class="token punctuation">,</span>
-        <span class="token string">'verbose'</span><span class="token punctuation">:</span> verbose<span class="token punctuation">,</span>
-        <span class="token string">'do_validation'</span><span class="token punctuation">:</span> do_validation<span class="token punctuation">,</span>
-        <span class="token string">'metrics'</span><span class="token punctuation">:</span> callback_metrics <span class="token operator">or</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-    <span class="token punctuation">}</span><span class="token punctuation">)</span>
-    callbacks<span class="token punctuation">.</span>on_train_begin<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    callback_model<span class="token punctuation">.</span>stop_training <span class="token operator">=</span> <span class="token boolean">False</span>
-
-    <span class="token keyword">for</span> epoch <span class="token keyword">in</span> range<span class="token punctuation">(</span>initial_epoch<span class="token punctuation">,</span> epochs<span class="token punctuation">)</span><span class="token punctuation">:</span>
-        callbacks<span class="token punctuation">.</span>on_epoch_begin<span class="token punctuation">(</span>epoch<span class="token punctuation">)</span>
-        batches <span class="token operator">=</span> _make_batches<span class="token punctuation">(</span>num_train_samples<span class="token punctuation">,</span> batch_size<span class="token punctuation">)</span>
-        epoch_logs <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
-        <span class="token keyword">for</span> batch_index<span class="token punctuation">,</span> <span class="token punctuation">(</span>batch_start<span class="token punctuation">,</span> batch_end<span class="token punctuation">)</span> <span class="token keyword">in</span> enumerate<span class="token punctuation">(</span>batches<span class="token punctuation">)</span><span class="token punctuation">:</span>
-            batch_ids <span class="token operator">=</span> index_array<span class="token punctuation">[</span>batch_start<span class="token punctuation">:</span>batch_end<span class="token punctuation">]</span>
-            batch_logs <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
-            batch_logs<span class="token punctuation">[</span><span class="token string">'batch'</span><span class="token punctuation">]</span> <span class="token operator">=</span> batch_index
-            batch_logs<span class="token punctuation">[</span><span class="token string">'size'</span><span class="token punctuation">]</span> <span class="token operator">=</span> len<span class="token punctuation">(</span>batch_ids<span class="token punctuation">)</span>
-            callbacks<span class="token punctuation">.</span>on_batch_begin<span class="token punctuation">(</span>batch_index<span class="token punctuation">,</span> batch_logs<span class="token punctuation">)</span>
-            <span class="token comment" spellcheck="true"># 应用传入的train_function</span>
-            outs <span class="token operator">=</span> f<span class="token punctuation">(</span>ins_batch<span class="token punctuation">)</span>
-            callbacks<span class="token punctuation">.</span>on_batch_end<span class="token punctuation">(</span>batch_index<span class="token punctuation">,</span> batch_logs<span class="token punctuation">)</span>
-        callbacks<span class="token punctuation">.</span>on_epoch_end<span class="token punctuation">(</span>epoch<span class="token punctuation">,</span> epoch_logs<span class="token punctuation">)</span>
-    callbacks<span class="token punctuation">.</span>on_train_end<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span> self<span class="token punctuation">.</span>history
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>_make_train_function()</code>方法从<code>optimizer</code>获取要更新的参数信息，并传入来自<code>backend</code>的<code>function</code>对象：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">_make_train_function</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">if</span> self<span class="token punctuation">.</span>train_function <span class="token keyword">is</span> None<span class="token punctuation">:</span>
-        inputs <span class="token operator">=</span> self<span class="token punctuation">.</span>_feed_inputs <span class="token operator">+</span> self<span class="token punctuation">.</span>_feed_targets <span class="token operator">+</span> self<span class="token punctuation">.</span>_feed_sample_weights
-        training_updates <span class="token operator">=</span> self<span class="token punctuation">.</span>optimizer<span class="token punctuation">.</span>get_updates<span class="token punctuation">(</span>
-            self<span class="token punctuation">.</span>_collected_trainable_weights<span class="token punctuation">,</span>
-            self<span class="token punctuation">.</span>constraints<span class="token punctuation">,</span>
-            self<span class="token punctuation">.</span>total_loss<span class="token punctuation">)</span>
-        updates <span class="token operator">=</span> self<span class="token punctuation">.</span>updates <span class="token operator">+</span> training_updates
-        <span class="token comment" spellcheck="true"># Gets loss and metrics. Updates weights at each call.</span>
-        self<span class="token punctuation">.</span>train_function <span class="token operator">=</span> K<span class="token punctuation">.</span>function<span class="token punctuation">(</span>inputs<span class="token punctuation">,</span>
-                                         <span class="token punctuation">[</span>self<span class="token punctuation">.</span>total_loss<span class="token punctuation">]</span> <span class="token operator">+</span> self<span class="token punctuation">.</span>metrics_tensors<span class="token punctuation">,</span>
-                                         updates<span class="token operator">=</span>updates<span class="token punctuation">,</span>
-                                         name<span class="token operator">=</span><span class="token string">'train_function'</span><span class="token punctuation">,</span>
-                                         <span class="token operator">**</span>self<span class="token punctuation">.</span>_function_kwargs<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>Model</code>的其他方法<code>evaluate()</code>等，与<code>fit()</code>的结构类似。</p>
-<h3 id="Sequential-构建模型的外层接口"><a href="#Sequential-构建模型的外层接口" class="headerlink" title="Sequential:构建模型的外层接口"></a><code>Sequential</code>:构建模型的外层接口</h3><p><code>Sequential</code>对象是<code>Model</code>对象的进一步封装，也是用户直接面对的接口，其<code>compile()</code>, <code>fit()</code>, <code>predict()</code>等方法与<code>Model</code>几乎一致，所不同的是添加了<code>add()</code>方法，也是我们用于构建网络的最基本操作。</p>
-<p><code>Sequential.add()</code>方法的源码如下：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">add</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> layer<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token comment" spellcheck="true"># 第一层必须是InputLayer对象</span>
-    <span class="token keyword">if</span> <span class="token operator">not</span> self<span class="token punctuation">.</span>outputs<span class="token punctuation">:</span>
-        <span class="token keyword">if</span> <span class="token operator">not</span> layer<span class="token punctuation">.</span>inbound_nodes<span class="token punctuation">:</span>
-            x <span class="token operator">=</span> Input<span class="token punctuation">(</span>batch_shape<span class="token operator">=</span>layer<span class="token punctuation">.</span>batch_input_shape<span class="token punctuation">,</span>
-                      dtype<span class="token operator">=</span>layer<span class="token punctuation">.</span>dtype<span class="token punctuation">,</span> name<span class="token operator">=</span>layer<span class="token punctuation">.</span>name <span class="token operator">+</span> <span class="token string">'_input'</span><span class="token punctuation">)</span>
-            layer<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
-
-        self<span class="token punctuation">.</span>outputs <span class="token operator">=</span> <span class="token punctuation">[</span>layer<span class="token punctuation">.</span>inbound_nodes<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>output_tensors<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
-        self<span class="token punctuation">.</span>inputs <span class="token operator">=</span> topology<span class="token punctuation">.</span>get_source_inputs<span class="token punctuation">(</span>self<span class="token punctuation">.</span>outputs<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-
-        topology<span class="token punctuation">.</span>Node<span class="token punctuation">(</span>outbound_layer<span class="token operator">=</span>self<span class="token punctuation">,</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
-    <span class="token keyword">else</span><span class="token punctuation">:</span>
-        output_tensor <span class="token operator">=</span> layer<span class="token punctuation">(</span>self<span class="token punctuation">.</span>outputs<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-        self<span class="token punctuation">.</span>outputs <span class="token operator">=</span> <span class="token punctuation">[</span>output_tensor<span class="token punctuation">]</span>
-        self<span class="token punctuation">.</span>inbound_nodes<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>output_tensors <span class="token operator">=</span> self<span class="token punctuation">.</span>outputs
-
-    self<span class="token punctuation">.</span>layers<span class="token punctuation">.</span>append<span class="token punctuation">(</span>layer<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>可以看到，<code>add()</code>方法总是确保网络的第一层为<code>InputLayer</code>对象，并将新加入的层应用于<code>outputs</code>，使之更新。因此，从本质上讲，在<code>Model</code>中添加新层还是在更新模型的<code>outputs</code>。</p>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;本篇是keras源码笔记系列的第三篇。在前两篇中，我们分析了keras对Tensor和Layer等概念的处理，并说明了它们是如何作用别弄个构成有向无环图的。本篇着眼于多层网络模型层面的抽象，即与用户距离最近的接口，源代码文件是&lt;a href=&quot;https://github.
-    
-    </summary>
-    
-      <category term="AI" scheme="http://blog.ddlee.cn/categories/AI/"/>
-    
-    
-      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
-    
-      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
-    
-      <category term="Programming" scheme="http://blog.ddlee.cn/tags/Programming/"/>
-    
-      <category term="Keras" scheme="http://blog.ddlee.cn/tags/Keras/"/>
     
   </entry>
   

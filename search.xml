@@ -4,18 +4,27 @@
   
     
     <entry>
-      <title><![CDATA[[论文笔记]Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning]]></title>
-      <url>http://blog.ddlee.cn/2018/12/26/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/</url>
-      <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1602.07261" target="_blank" rel="external">https://arxiv.org/abs/1602.07261</a></p>
-<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>在15年，ResNet成为那年最耀眼的卷积网络结构，skip-connection的结构也成为避不开的考虑选项。Inception系列也参考ResNet更新了自己的结构。同时推出了第四代和跟ResNet的结合版：Inception-v4和Inception-ResNet。</p>
-<p>然而，这是一篇几乎都是图的论文。</p>
-<p>所以，上图。</p>
-<h3 id="Inception-v4-Architecture"><a href="#Inception-v4-Architecture" class="headerlink" title="Inception-v4 Architecture"></a>Inception-v4 Architecture</h3><p>NetScope Vis请参见<a href="http://ethereon.github.io/netscope/#gist/e0ac64013b167844053184d97b380978" target="_blank" rel="external">这里</a>，源文件位于<a href="https://github.com/ddlee96/NN_structures/tree/master/caffe_vis" target="_blank" rel="external">NN_Structures/caffe_vis/</a>。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/arch1.jpg" alt="arch1"></p>
-<h3 id="Inception-ResNet-v2-Architecture"><a href="#Inception-ResNet-v2-Architecture" class="headerlink" title="Inception-ResNet(v2) Architecture"></a>Inception-ResNet(v2) Architecture</h3><p>NetScope Vis请参见<a href="http://ethereon.github.io/netscope/#gist/aadd97383baccabb8b827ba507c24162" target="_blank" rel="external">这里</a>，源文件位于<a href="https://github.com/ddlee96/NN_structures/tree/master/caffe_vis" target="_blank" rel="external">NN_Structures/caffe_vis/</a>。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/arch2.jpg" alt="arch1"></p>
-<h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p>文章在实验部分提到，不借助Skip-connection的结构也可以将Inception网络提升到SOTA的水准，但加入Skip-connection可以有效增加训练速度。</p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>卷积网络结构的演进遇到了瓶颈，在ImageNet上的提升边界似乎碰到天花板，且更多来自训练技巧和集成。</p>
+      <title><![CDATA[[论文笔记]Aggregated Residual Transformations for Deep Neural Networks]]></title>
+      <url>http://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/</url>
+      <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1611.05431" target="_blank" rel="external">https://arxiv.org/abs/1611.05431</a></p>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>本文提出了深度网络的新维度，除了深度、宽度（Channel数）外，作者将在某一层并行transform的路径数提取为第三维度，称为”cardinality”。跟Inception单元不同的是，这些并行路径均共享同一拓扑结构，而非精心设计的卷积核并联。除了并行相同的路径外，也添加了层与层间的shortcut connection。但由于其多路径的设计特征，我将其归为Inception系网络。</p>
+<h3 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h3><p>深度网络结构上的设计已经有三种经典的范式：</p>
+<ul>
+<li>Repeat. 由AlexNet和VGG等开拓，几乎被之后所有的网络采用。即堆叠相同的拓扑结构，整个网络成为模块化的结构。</li>
+<li>Multi-path. 由Inception系列发扬，将前一层的输入分割到不同的路径上进行变换，最后拼接结果。</li>
+<li>Skip-connection. 最初出现于Highway Network，由ResNet发扬并成为标配。即建立浅层信息与深层信息的传递通道，改变原有的单一线性结构。</li>
+</ul>
+<h3 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h3><p>文章将残差函数表示为：</p>
+<p>其中，C为本层进行的变换数目，即”cardinality”。</p>
+<p>相比Inception-ResNet，ResNeXt相当于将其Inception Module的每条路径规范化了，并将规范后的路径数目作为新的超参数。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/multi-path.png" alt="multi-path"></p>
+<p>上图中，路径被扩展为多条，而每条路径的宽度（channel数）也变窄了（64-&gt;4）。</p>
+<p><a href="http://ethereon.github.io/netscope/#/gist/c2ba521fcb60520abb0b0da0e9c0f2ef" target="_blank" rel="external">NetScope Vis</a>，源文件位于<a href="https://github.com/ddlee96/NN_structures/tree/master/caffe_vis" target="_blank" rel="external">NN_Structures/caffe_vis/</a>。</p>
+<h3 id="Experiements"><a href="#Experiements" class="headerlink" title="Experiements"></a>Experiements</h3><p>ResNeXt试图在保持参数数目的情况下提高网络性能，提升cardinality的同时使每条路径的宽度变窄。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/setting.png" alt="setting"></p>
+<p>对比其他网络的结果：</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/result.png" alt="result"></p>
+<h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>ResNeXt较为突出的是把Inception单元规范化了，摆脱了需要精心设计Inception单元中卷积结构的问题，更好地组织了参数。</p>
 <p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
       
@@ -30,9 +39,9 @@
             
             <tag> Deep Learning </tag>
             
-            <tag> Papers </tag>
+            <tag> AI </tag>
             
-            <tag> Neural Network </tag>
+            <tag> Papers </tag>
             
         </tags>
         
@@ -40,7 +49,7 @@
     
     <entry>
       <title><![CDATA[[论文笔记]MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications]]></title>
-      <url>http://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/</url>
+      <url>http://blog.ddlee.cn/2018/01/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/</url>
       <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1704.04861" target="_blank" rel="external">https://arxiv.org/abs/1704.04861</a></p>
 <h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>MobileNets系列可以看做是继Xception之后对Depthwise Separable Convolution的又一推动。利用深度可分离的特征，MobileNets系列引入两个模型精度和大小的超参，在保持相当精度的同时享有非常小的计算消耗，适用于移动端情形，因而被命名为”MobileNets”。</p>
 <h3 id="Depthwise-Separable-Convolution"><a href="#Depthwise-Separable-Convolution" class="headerlink" title="Depthwise Separable Convolution"></a>Depthwise Separable Convolution</h3><p>深度可分离卷积是近期深度网络设计的重要趋势。最早见于L. Sifre的PhD论文Rigid-motion scattering for image classification，其1×1卷积在Inception, ResNet, SqueezeNet等网络中作为降维bottleneck使用。Xception指出，Inception单元本质上假设了跨通道和跨空间相关性的解耦关系，并将这一解耦关系推向极端，用Depthwise Separable Convolution改造了Inception结构。</p>
@@ -115,6 +124,41 @@
             <tag> AI </tag>
             
             <tag> Papers </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[[论文笔记]Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning]]></title>
+      <url>http://blog.ddlee.cn/2017/12/26/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/</url>
+      <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1602.07261" target="_blank" rel="external">https://arxiv.org/abs/1602.07261</a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>在15年，ResNet成为那年最耀眼的卷积网络结构，skip-connection的结构也成为避不开的考虑选项。Inception系列也参考ResNet更新了自己的结构。同时推出了第四代和跟ResNet的结合版：Inception-v4和Inception-ResNet。</p>
+<p>然而，这是一篇几乎都是图的论文。</p>
+<p>所以，上图。</p>
+<h3 id="Inception-v4-Architecture"><a href="#Inception-v4-Architecture" class="headerlink" title="Inception-v4 Architecture"></a>Inception-v4 Architecture</h3><p>NetScope Vis请参见<a href="http://ethereon.github.io/netscope/#gist/e0ac64013b167844053184d97b380978" target="_blank" rel="external">这里</a>，源文件位于<a href="https://github.com/ddlee96/NN_structures/tree/master/caffe_vis" target="_blank" rel="external">NN_Structures/caffe_vis/</a>。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/arch1.jpg" alt="arch1"></p>
+<h3 id="Inception-ResNet-v2-Architecture"><a href="#Inception-ResNet-v2-Architecture" class="headerlink" title="Inception-ResNet(v2) Architecture"></a>Inception-ResNet(v2) Architecture</h3><p>NetScope Vis请参见<a href="http://ethereon.github.io/netscope/#gist/aadd97383baccabb8b827ba507c24162" target="_blank" rel="external">这里</a>，源文件位于<a href="https://github.com/ddlee96/NN_structures/tree/master/caffe_vis" target="_blank" rel="external">NN_Structures/caffe_vis/</a>。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/arch2.jpg" alt="arch1"></p>
+<h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p>文章在实验部分提到，不借助Skip-connection的结构也可以将Inception网络提升到SOTA的水准，但加入Skip-connection可以有效增加训练速度。</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>卷积网络结构的演进遇到了瓶颈，在ImageNet上的提升边界似乎碰到天花板，且更多来自训练技巧和集成。</p>
+<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+]]></content>
+      
+        <categories>
+            
+            <category> Papers </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> Papers </tag>
+            
+            <tag> Neural Network </tag>
             
         </tags>
         
