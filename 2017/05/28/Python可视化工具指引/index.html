@@ -83,6 +83,11 @@
         <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
 
         
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/atelier-dune-light.min.css?ZfnESUNClnkZBE6Ec0djTA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
 
     
 
@@ -295,11 +300,10 @@
     
     
 
-    <!-- Custom Head -->
+    <!-- Custom Head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 
-<link rel="stylesheet" href="/css/prism.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+</head>
 
 
     
@@ -415,6 +419,18 @@
 
     <!-- Qrcode -->
     
+        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">devices other</i>
+    <span class="visuallyhidden">devices other</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
+    <li class="mdl-menu__item">在其它设备中阅读本文章</li>
+    
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAAC2klEQVR42u3aQXIbMQwEQP//08k1h0ieAaJYIntPKkneZdNVhoHh168rry9sbGxsbGxsbGzst2R/xdef3390h0f3fP7Evyzxwd1ma8bGxsa+gf3Nn/4H7GTpOeD5O5s1Y2NjY9/DTorW87KUb0dSDttnfXNnbGxsbOynJaptSDYbjY2NjY29L2Atuy1g7WtsbGxs7HpAU2KiIHa0Bf9ploaNjY399uxZ0Puzr38s38bGxsZ+M/bmmrUlbTy8KYrY2NjYN7DzqLUd9CdB7/7T4tAnNjY29gXs9qbt0clki9sYuAiVsbGxsY9mt2Vs1pw835q27NXfx8bGxj6UnY9y8ri3LXtt4zEcS2FjY2Nfw54dbWxHS8kgaVYChwUMGxsb+8PZ++KxWVy76XlDgo2NjX0ne3YcMx85JdvXrqSOB7CxsbEPYrdhajJyevWRneGmY2NjY1/AnpWQVxzNye9chBnY2NjYF7CTotUOktoB1iaKKIZK2NjY2Eez94Oetji1gGErhY2NjX0oe3NQpn2/DW5nvxJsbGzs29ibADUPFdrvbCLnVSuCjY2N/bHsPKBtS9rm6M9sPUUBw8bGxj6CvTkWky+ubTlmTc43T8TGxsY+mp0Hq8mCnrcc+dNnMXPUimBjY2Mfzc7BRchaBsD5yClZMzY2NvbZ7GIoUz4mCY9n46221GFjY2PfwN60EG2DkW9WsnHFKAobGxv7aHZbZtoIYUZtm6JV3cbGxsY+lL2Pcmfvv+IgJjY2Nvap7FkJaQ/T/INGIt7E4UklbGxs7I9lbw67t6FssmVtGJAf3MHGxsY+mz0b5bRjoDyWeEUjhI2NjX0DOxnQbA5NbtqS2cALGxsbG7v9178d/WwanrwcYmNjY2PPFr2JHBLYf21FsLGxsT+E3Q6G2p/KA4B8sFVsEDY2NvbR7FnQO2wJgnLYhrjDAoaNjY19BPueCxsbGxsbGxsbG/ttrt/tJeKVf1g7+QAAAABJRU5ErkJggg==">
+    
+</ul>
+
+    
 
     <!-- Tags (bookmark) -->
     
@@ -527,31 +543,31 @@
 <p>下面是几个比较受欢迎的包：</p>
 <h3 id="pandas"><a href="#pandas" class="headerlink" title="pandas"></a>pandas</h3><p>pandas的DataFrame对象是有plot()方法的，如：<br><code>iris.plot.scatter(&#39;petalLength&#39;, &#39;petalWidth&#39;)</code>生成二维散点图，只需指明两个轴取自哪一列数据即可。</p>
 <h3 id="seaborn"><a href="#seaborn" class="headerlink" title="seaborn"></a>seaborn</h3><p>seaborn(<a href="http://seaborn.pydata.org/examples/" target="_blank" rel="external">gallery</a>)专注于统计数据可视化，默认配色也还可以。语法示例：</p>
-<pre class="line-numbers language-Python"><code class="language-Python">import seaborn as sns
-sns.lmplot('petalLength', 'sepalWidth', iris, hue='species', fit_reg=False)
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre><code class="Python">import seaborn as sns
+sns.lmplot(&#39;petalLength&#39;, &#39;sepalWidth&#39;, iris, hue=&#39;species&#39;, fit_reg=False)
+</code></pre>
 <h3 id="类ggplot"><a href="#类ggplot" class="headerlink" title="类ggplot"></a>类ggplot</h3><p>对于R用户，最熟悉的可视化包可能是ggplot2，在python中可以考虑<a href="https://github.com/yhat/ggpy" target="_blank" rel="external">ggpy</a>和近期上了Github Trends的<a href="https://github.com/has2k1/plotnine" target="_blank" rel="external">plotnie</a>。</p>
 <h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p>基于JS的包常常具有非常好的交互性，其共同点是将图形格式化为json文件，再由JS完成渲染。</p>
 <p><img src="http://static.ddlee.cn/static/img/./Python可视化工具指引/js.png" alt="js"></p>
 <h3 id="Bokeh"><a href="#Bokeh" class="headerlink" title="Bokeh"></a>Bokeh</h3><p>Bokeh(<a href="http://bokeh.pydata.org/en/latest/docs/gallery.html" target="_blank" rel="external">Gallery</a>)定位于绘制用于浏览器展示的交互式图形。其优点是交互性、能够处理大量数据和流数据。语法示例：</p>
-<pre class="line-numbers language-python"><code class="language-python">p <span class="token operator">=</span> figure<span class="token punctuation">(</span><span class="token punctuation">)</span>
-p<span class="token punctuation">.</span>circle<span class="token punctuation">(</span>iris<span class="token punctuation">.</span>petalLength<span class="token punctuation">,</span> iris<span class="token punctuation">.</span>sepalWidth<span class="token punctuation">)</span>
-show<span class="token punctuation">(</span>p<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre><code class="python">p = figure()
+p.circle(iris.petalLength, iris.sepalWidth)
+show(p)
+</code></pre>
 <h3 id="Plotly"><a href="#Plotly" class="headerlink" title="Plotly"></a>Plotly</h3><p>Plotly(<a href="https://plot.ly/python/" target="_blank" rel="external">Gallery</a>)跟Bokeh类似。但其提供了多种语言接口(JS, R, Python, MATLAB)，并且支持3D和动画效果，缺点是有些功能需要付费。<br>语法示例：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">from</span> plotly<span class="token punctuation">.</span>graph_objs <span class="token keyword">import</span> Scatter
-<span class="token keyword">from</span> plotly<span class="token punctuation">.</span>offline <span class="token keyword">import</span> iplot
-p <span class="token operator">=</span> Scatter<span class="token punctuation">(</span>x<span class="token operator">=</span>iris<span class="token punctuation">.</span>petalLength<span class="token punctuation">,</span>
-            y<span class="token operator">=</span>iris<span class="token punctuation">.</span>sepalWidth<span class="token punctuation">,</span>
-            mode<span class="token operator">=</span><span class="token string">'markers'</span><span class="token punctuation">)</span>
-iplot<span class="token punctuation">(</span>p<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code class="python">from plotly.graph_objs import Scatter
+from plotly.offline import iplot
+p = Scatter(x=iris.petalLength,
+            y=iris.sepalWidth,
+            mode=&#39;markers&#39;)
+iplot(p)
+</code></pre>
 <h2 id="处理大型数据集"><a href="#处理大型数据集" class="headerlink" title="处理大型数据集"></a>处理大型数据集</h2><p>对于大型数据集，可以考虑的包包括datashader, Vaex, 基于OpenGL的Vispy和Glumpy，GlueViz等。这里介绍datashader。</p>
 <h3 id="datashader"><a href="#datashader" class="headerlink" title="datashader"></a>datashader</h3><p><a href="https://github.com/bokeh/datashader" target="_blank" rel="external">datashader</a>是Bokeh的子项目，为处理大型数据集而生。</p>
 <p>示例语法：</p>
-<pre class="line-numbers language-Python"><code class="language-Python">from colorcet import fire
-export(tf.shade(agg, cmap=cm(fire, 0.2), how='eq_hist'), 'census_ds_fier_eq_hist')
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre><code class="Python">from colorcet import fire
+export(tf.shade(agg, cmap=cm(fire, 0.2), how=&#39;eq_hist&#39;), &#39;census_ds_fier_eq_hist&#39;)
+</code></pre>
 <p><img src="http://static.ddlee.cn/static/img/./Python可视化工具指引/fire.jpg" alt="fire"></p>
 <h2 id="最终的建议"><a href="#最终的建议" class="headerlink" title="最终的建议"></a>最终的建议</h2><p>上车忠告：</p>
 <ol>
@@ -809,21 +825,6 @@ export(tf.shade(agg, cmap=cm(fire, 0.2), how='eq_hist'), 'census_ds_fier_eq_hist
 
     <!-- Archives  -->
     
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
-            </ul>
-        </li>
-        
-    
 
     <!-- Categories  -->
     
@@ -850,7 +851,7 @@ export(tf.shade(agg, cmap=cm(fire, 0.2), how='eq_hist'), 'census_ds_fier_eq_hist
         <li>
             <a href="/timeline" title="Timeline">
                 
-                    <i class="material-icons sidebar-material-icons">bookmark</i>
+                    <i class="material-icons sidebar-material-icons">timeline</i>
                 
                 Timeline
             </a>
@@ -1097,6 +1098,12 @@ It will not impact the appearance and can give developers a lot of support :)
 
 <!-- Import prettify js  -->
 
+    
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
 
 
 <!-- Window Load -->
@@ -1107,6 +1114,13 @@ It will not impact the appearance and can give developers a lot of support :)
         $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
     });
 
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
     
     
 </script>

@@ -83,6 +83,11 @@
         <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
 
         
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/atelier-dune-light.min.css?ZfnESUNClnkZBE6Ec0djTA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
 
     
 
@@ -295,11 +300,10 @@
     
     
 
-    <!-- Custom Head -->
+    <!-- Custom Head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 
-<link rel="stylesheet" href="/css/prism.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+</head>
 
 
     
@@ -405,6 +409,18 @@
     -->
 
     <!-- Qrcode -->
+    
+        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">devices other</i>
+    <span class="visuallyhidden">devices other</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
+    <li class="mdl-menu__item">在其它设备中阅读本文章</li>
+    
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAADfElEQVR42u3aO3bjQAwEQN3/0nbqRGTjMxJ3XzFyQJMzxaCFAV4/rj/XCwEOHDhw4MCBAwcOHA/meMXXu/vfPa16/7t7/t757i29veDAgQMHjnMcN1EULyX5r/zOyXOSveDAgQMHjtMc1+Gab34SutUoXdgLDhw4cOD4Kke1eEsiMP8AOHDgwIHj/+NItlqlqZZkOHDgwIHjX+EoHKjFLaLrzVSvhOmjZ6U4cODAgWNpoOHJf39hvgMHDhw4cAyuPPAmY3D5oEMSrjc7woEDBw4cqxz5K3ttoepYwxZroWGGAwcOHDgOc0yCNm8I9Y4Uq/TRUSYOHDhw4DjGUS2rErhqSdajGY1T4MCBAweOYxx5WZVDVAfa5m8v/wjAgQMHDhzHOLYWMWk47Y7KRWvAgQMHDhyrHL0CbKtsy4EmxdvCqBwOHDhw4GgNYefBubWgfKDh+o09UBw4cODAcYIjL3Wq7Z980fPSrvezAAcOHDhwnOOollLJxiZD270QXWg74cCBAweOpQ5+dZS5V7zlxWGOOxmqw4EDBw4c5ziqC+2NVl8z9d6brGQ034EDBw4cOFoc+SDa9TZ6R4fVkmz3iBAHDhw4cOxy5MHZi8BJ8Va9M/94OHDgwIHjMxx53PbaVJOycBL2N+/FgQMHDhyrHL2Q6zWo8idUG1rVJ+DAgQMHjtMc17GXLKsa2Mm7qttrfjwcOHDgwHGMozcckBdOveZWr7TDgQMHDhzf5cgPAfOIrd45p+l9Bhw4cODAcZojj7etdlRzEKE4ZhGNyuHAgQMHjjFHb+nVhc7HJpIQzcs8HDhw4MBxjqP60EnUJc/Jxx3you7m7Thw4MCBY5UjCchJSZYvbrK9pCxslnA4cODAgaPI0Wv/TIKzF7HVpyU/AnDgwIEDxwmOBKK3pWr05iVlr4zEgQMHDhyf5HgVr7y9lC90chzZWycOHDhw4DjHUY3erQG43jOrTambQ0kcOHDgwLHKMQmt3cGFSayOWmI4cODAgeMAR/WIMG8aVWO4Vxz2Dg1x4MCBA8dpjt5RXTXkkpDO43wSxjhw4MCB4wkc1ZfliJNhhQQdBw4cOHA8maPXmpqPQcyBcODAgQPHJzmSaKwWVNdlW17sJWMQydqWz0px4MCBA8exgYZmyBWfU72abSccOHDgwDHgcOHAgQMHDhw4cODAgeNh1y+TVmKDHoGzXgAAAABJRU5ErkJggg==">
+    
+</ul>
+
     
 
     <!-- Tags (bookmark) -->
@@ -790,21 +806,6 @@ sudo apt-get update &amp;&amp; sudo apt-get install gnome-shell-theme-elegance-c
 
     <!-- Archives  -->
     
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
-            </ul>
-        </li>
-        
-    
 
     <!-- Categories  -->
     
@@ -831,7 +832,7 @@ sudo apt-get update &amp;&amp; sudo apt-get install gnome-shell-theme-elegance-c
         <li>
             <a href="/timeline" title="Timeline">
                 
-                    <i class="material-icons sidebar-material-icons">bookmark</i>
+                    <i class="material-icons sidebar-material-icons">timeline</i>
                 
                 Timeline
             </a>
@@ -1078,6 +1079,12 @@ It will not impact the appearance and can give developers a lot of support :)
 
 <!-- Import prettify js  -->
 
+    
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
 
 
 <!-- Window Load -->
@@ -1088,6 +1095,13 @@ It will not impact the appearance and can give developers a lot of support :)
         $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
     });
 
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
     
     
 </script>

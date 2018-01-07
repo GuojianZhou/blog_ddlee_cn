@@ -56,7 +56,7 @@
     <link href="http://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/"/>
     <id>http://blog.ddlee.cn/2018/01/06/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/</id>
     <published>2018-01-06T13:19:34.000Z</published>
-    <updated>2018-01-06T13:19:34.300Z</updated>
+    <updated>2018-01-07T08:54:40.638Z</updated>
     
     <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1611.05431" target="_blank" rel="external">https://arxiv.org/abs/1611.05431</a></p>
 <h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>本文提出了深度网络的新维度，除了深度、宽度（Channel数）外，作者将在某一层并行transform的路径数提取为第三维度，称为”cardinality”。跟Inception单元不同的是，这些并行路径均共享同一拓扑结构，而非精心设计的卷积核并联。除了并行相同的路径外，也添加了层与层间的shortcut connection。但由于其多路径的设计特征，我将其归为Inception系网络。</p>
@@ -82,8 +82,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;&lt;a href=&quot;https://arxiv.org/abs/1611.05431&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://arxiv.org/abs/1611.05431&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;Overview&quot;&gt;&lt;a h
+      本文提出了深度网络的新维度，除了深度、宽度（Channel数）外，作者将在某一层并行transform的路径数提取为第三维度，称为&quot;cardinality&quot;。跟Inception单元不同的是，这些并行路径均共享同一拓扑结构，而非精心设计的卷积核并联。除了并行相同的路径外，也添加了层与层间的shortcut connection。但由于其多路径的设计特征，我将其归为Inception系网络。
     
     </summary>
     

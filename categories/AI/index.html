@@ -83,6 +83,8 @@
         <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
 
         
+            
+        
 
     
 
@@ -262,11 +264,10 @@
     
     
 
-    <!-- Custom Head -->
+    <!-- Custom Head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 
-<link rel="stylesheet" href="/css/prism.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+</head>
 
 
     
@@ -300,7 +301,7 @@
         
             
                 <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
+                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
     <!-- Post Thumbnail -->
     
         
@@ -316,7 +317,7 @@
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            本篇是keras源码笔记系列的第三篇。在前两篇中，我们分析了keras对Tensor和Layer等概念的处理，并说明了它们是如何作用别弄个构成有向无...
+            本篇是keras源码笔记系列的第三篇。在前两篇中，我们分析了keras对Tensor和Layer等概念的处理，并说明了它们是如何作用别弄个构成有向无环图的。本篇着眼于多层网络模型层面的抽象，即与用户距离最近的接口，源代码文件是/keras/engine/training.py和
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -361,7 +362,7 @@
         
             
                 <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
+                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
     <!-- Post Thumbnail -->
     
         
@@ -378,7 +379,7 @@
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
             本篇继续讨论keras的源码结构。
-
+第一篇源码笔记中我们观察了Layer, Tensor和Node是如何耦合在一起的，而本篇的重点是观察多层网络构成的有向无环...
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -423,7 +424,7 @@
         
             
                 <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
+                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
     <!-- Post Thumbnail -->
     
         
@@ -439,7 +440,8 @@
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            权重衰减（weight dacay），即L^2范数惩罚，是最常见的正则化技术之一。本文将介绍它是如何起作用的。主要材料来自
+            权重衰减（weight dacay），即L^2范数惩罚，是最常见的正则化技术之一。本文将介绍它是如何起作用的。主要材料来自The Deep Learning Book。
+为什么要引入权重衰减机器学习的逻辑与我们最初解决问题的思维方式恰恰相反：要解决...
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -484,7 +486,7 @@
         
             
                 <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
+                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
     <!-- Post Thumbnail -->
     
         
@@ -500,7 +502,9 @@
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            Keras架构的主要逻辑实现在
+            Keras架构的主要逻辑实现在/keras/engine/topology.py中，主要有两个基类Node()和Layer()，一个重要函数Input()。具体地，
+
+Layer()是一个计算层的抽象，完成网络中对Tensor的...
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -545,7 +549,7 @@
         
             
                 <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
+                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
     <!-- Post Thumbnail -->
     
         
@@ -561,7 +565,8 @@
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            本文主要记录使用TensorFlow训练模型中与试验管理相关的最佳实践，主要包括模型训练的大致代码框架、模型的保存与恢复、训练过程的监测、随机性的控...
+            本文主要记录使用TensorFlow训练模型中与试验管理相关的最佳实践，主要包括模型训练的大致代码框架、模型的保存与恢复、训练过程的监测、随机性的控制等。主要材料来自CS 20SI: Tensorflow for Deep Learning Research。
+
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -606,7 +611,7 @@
         
             
                 <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
+                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
     <!-- Post Thumbnail -->
     
         
@@ -624,7 +629,8 @@
         
             本文的两个主要参考资料：
 
-Yoshua Bengio在2016年九月
+Yoshua Bengio在2016年九月Deep Learning School的演讲Foundations and Challenges of Deep Learning。YouTube
+...
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -669,7 +675,7 @@ Yoshua Bengio在2016年九月
         
             
                 <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
+                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
     <!-- Post Thumbnail -->
     
         
@@ -686,7 +692,7 @@ Yoshua Bengio在2016年九月
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
             本文讨论LSTM网络的Pytorch实现，兼论Pytorch库的代码组织方式和架构设计。
-
+LSTMLSTM是一种循环神经网络，适用于对序列化的输入建模。Chris Olah的这篇文章细致地解释了一个LSTM单元的运作方式，建议...
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -731,7 +737,7 @@ Yoshua Bengio在2016年九月
         
             
                 <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
+                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
     <!-- Post Thumbnail -->
     
         
@@ -747,7 +753,8 @@ Yoshua Bengio在2016年九月
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            Dropout技术是Srivastava等人在2012年提出的技术，现在已然成为各种深度模型的标配。其中心思想是随机地冻结一部分模型参数，用于提高模...
+            Dropout技术是Srivastava等人在2012年提出的技术，现在已然成为各种深度模型的标配。其中心思想是随机地冻结一部分模型参数，用于提高模型的泛化性能。
+Dropout的洞察关于Dropout，一个流行的解释是，通过随机行为训练网络，并平均多个随机决定的结果，实现了参数共享的Bagging。如下图，通过随机地冻结/抛弃某些隐藏单元，我们得到了新的子网络，而参数共享是说，与Baggin...
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -792,7 +799,7 @@ Yoshua Bengio在2016年九月
         
             
                 <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
+                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
     <!-- Post Thumbnail -->
     
         
@@ -808,7 +815,8 @@ Yoshua Bengio在2016年九月
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            
+            HDFS: 分布式文件系统NameNode, DataNode: a MetaData-Data ModelStrategy: Block split, multi-copy, distribution
+NameNode: High Availabilitysolution 1: backup using NFSsolution 2: Two NameNo...
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -949,21 +957,6 @@ Yoshua Bengio在2016年九月
 
     <!-- Archives  -->
     
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
-            </ul>
-        </li>
-        
-    
 
     <!-- Categories  -->
     
@@ -990,7 +983,7 @@ Yoshua Bengio在2016年九月
         <li>
             <a href="/timeline" title="Timeline">
                 
-                    <i class="material-icons sidebar-material-icons">bookmark</i>
+                    <i class="material-icons sidebar-material-icons">timeline</i>
                 
                 Timeline
             </a>
@@ -1237,6 +1230,8 @@ It will not impact the appearance and can give developers a lot of support :)
 
 <!-- Import prettify js  -->
 
+    
+
 
 
 <!-- Window Load -->
@@ -1247,6 +1242,8 @@ It will not impact the appearance and can give developers a lot of support :)
         $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
     });
 
+    
+        
     
     
 </script>

@@ -83,6 +83,8 @@
         <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
 
         
+            
+        
 
     
 
@@ -262,11 +264,10 @@
     
     
 
-    <!-- Custom Head -->
+    <!-- Custom Head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 
-<link rel="stylesheet" href="/css/prism.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+</head>
 
 
     
@@ -300,7 +301,7 @@
         
             
                 <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
+                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
     <!-- Post Thumbnail -->
     
         
@@ -316,7 +317,11 @@
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            
+            enumerate(): 遍历索引和值对列表进行遍历操作时，常也要用到当前遍历项的索引值：
+for i in range(len(flavor_list)):
+  flavor = flaver[i]
+  print(&#39;%d: %s&#39; % (i + 1, flavor))
+
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -361,7 +366,7 @@
         
             
                 <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
+                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
     <!-- Post Thumbnail -->
     
         
@@ -377,7 +382,9 @@
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            论文：
+            论文：Accurate, Large Minibatch SGD: Training ImageNet in One Hour
+这篇文章在各处都有很广泛的讨论，作为实验经验并不多的小白，将文中tricks只做些记录。
+
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -422,7 +429,7 @@
         
             
                 <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
+                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
     <!-- Post Thumbnail -->
     
         
@@ -438,7 +445,9 @@
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            分享一套自用的LaTeX中英文简历模板，改编自Alessandro Plasmati在
+            分享一套自用的LaTeX中英文简历模板，改编自Alessandro Plasmati在ShareLaTeX上分享的模板。
+使用
+Github仓库：
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -483,7 +492,7 @@
         
             
                 <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
+                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
     <!-- Post Thumbnail -->
     
         
@@ -499,7 +508,10 @@
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            论文：
+            论文：On the Effects and Weight Normalization in GAN
+本文探索了参数标准化(Weight Normalization)这一技术在GAN中的应用。BN在mini-batch的层级上计算均值和方差，容易引入噪声，并不适用于GAN这种生成模型，而WN对参数进行重写，引入噪声更少。
+我觉得本文的亮点有二：
+
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -544,7 +556,7 @@
         
             
                 <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
+                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
     <!-- Post Thumbnail -->
     
         
@@ -560,7 +572,8 @@
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            论文：
+            论文：Large-Scale Evolution of Image, Classifiers
+Abstract深层网络在图片分类问题上表现优异，但网络结构的设计上并没有统一的指导。进化是构建深度网络架构的一种方式。利用本文的自动化方法得出的深度网络结构...
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -605,7 +618,7 @@
         
             
                 <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
+                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
     <!-- Post Thumbnail -->
     
         
@@ -621,7 +634,14 @@
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            论文：
+            论文：An Analysis of Deep Neural Network Models for Practical Applications
+本文是对现有（论文发表于2016年5月）深度网络的比较，从以下方面入手：
+
+accuracy
+memory footprint
+parameters
+operations count
+
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -666,7 +686,7 @@
         
             
                 <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
+                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
     <!-- Post Thumbnail -->
     
         
@@ -684,7 +704,8 @@
         
             本文的两个主要参考资料：
 
-Yoshua Bengio在2016年九月
+Yoshua Bengio在2016年九月Deep Learning School的演讲Foundations and Challenges of Deep Learning。YouTube
+...
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -825,21 +846,6 @@ Yoshua Bengio在2016年九月
 
     <!-- Archives  -->
     
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
-            </ul>
-        </li>
-        
-    
 
     <!-- Categories  -->
     
@@ -866,7 +872,7 @@ Yoshua Bengio在2016年九月
         <li>
             <a href="/timeline" title="Timeline">
                 
-                    <i class="material-icons sidebar-material-icons">bookmark</i>
+                    <i class="material-icons sidebar-material-icons">timeline</i>
                 
                 Timeline
             </a>
@@ -1113,6 +1119,8 @@ It will not impact the appearance and can give developers a lot of support :)
 
 <!-- Import prettify js  -->
 
+    
+
 
 
 <!-- Window Load -->
@@ -1123,6 +1131,8 @@ It will not impact the appearance and can give developers a lot of support :)
         $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
     });
 
+    
+        
     
     
 </script>

@@ -83,6 +83,11 @@
         <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
 
         
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/atelier-dune-light.min.css?ZfnESUNClnkZBE6Ec0djTA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
 
     
 
@@ -295,11 +300,10 @@
     
     
 
-    <!-- Custom Head -->
+    <!-- Custom Head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 
-<link rel="stylesheet" href="/css/prism.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+</head>
 
 
     
@@ -415,6 +419,18 @@
 
     <!-- Qrcode -->
     
+        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">devices other</i>
+    <span class="visuallyhidden">devices other</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
+    <li class="mdl-menu__item">在其它设备中阅读本文章</li>
+    
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAADj0lEQVR42u3ay5LaQBAEQP7/p+2rIwiJqp6ZRbZTJ8KsJSY5FP14/XL9cb0Q4MCBAwcOHDhw4MDxYI5XfF39/f193t+9/Fhv797f7eoO+Vlw4MCBA8c5jg9RdPFBkw/0/vf3NMm/J6+Ls+DAgQMHjmMcebC1sZeQ5Vg5WXQWHDhw4MDxVY68eGsLwpWAx4EDBw4c/xLHrAy7j8/7GMaBAwcOHH8LR/uY003GGcGP9kpx4MCBA8cFR1t0Pfn1F/Y7cODAgQPHwtUOk1rc2Yhr6UQ4cODAgWMrx2w5YH0Qldz5SKzOKlocOHDgwBFz3LftZgOn2SLdLJ7X25E4cODAgeMcR16Y5UeaLTS0SwmzpQccOHDgwHGaI3+dt/ZmQZg8Ny/nPnwZOHDgwIHjGEcbqHk7b6U5mB94ODDDgQMHDhxbOZIBUhtveWHWxnDbpox+LuDAgQMHjq0cs6Ctw6wcYuXBnMMdLOFw4MCBA0cZafkBZoVZ2y7MjxqVdjhw4MCB4xjHyodOUJI2X7uKt1K84cCBAweOExx5UTRblctXE5L7zFqZHwpUHDhw4MCxlSM/8Eozbr1UW/lZUO934MCBAweOBY5dI5x8jNQOq/by4cCBAweOn+FYb/PlZVUC3Q6TVlYxcODAgQPHCY52le3+eCsjoiRu24HWhxjGgQMHDhxbOXYFZNu2y0uvWclXNEBx4MCBA8dWjhYiL5byEM0LtnastfS7AwcOHDhwbOVoS6P8AG3c7lq5uIxtHDhw4MBxjCNfKWgfP4vG2aJeXTriwIEDB44DHO1CQ94EzFt1szJvw9IDDhw4cOA4wJE0B3OUNoD3Ngprbhw4cODAcZhj7yLCemDnT5yt9+HAgQMHjtMcs7XppZWCuCG4XkbiwIEDB47THG0Lr269xSXfyrJd+0QcOHDgwPEtjiR0Z6Oj9fW79t2oOYgDBw4cOJY5XuXVrg7sLfCO4OLAgQMHjq0c6+Vcu+LQ3jl/nZPhwIEDB45zHG1ozRbakvFS/vT2/kdKOBw4cODAccuxHoGzRYc8PnOg9mvDgQMHDhznOGaLBe2Ypx0dtat1yU8EHDhw4MDxHI72f7XxWTT1YugPXwwOHDhw4HgYRzsKWhlxtWEfYeHAgQMHjmMc66sGpyO8LdK+NnbCgQMHjv+eY9dCQ9IQbD9uPkxqlyFw4MCBA8cJDhcOHDhw4MCBAwcOHDgedv0Gw/ICKjQYh6sAAAAASUVORK5CYII=">
+    
+</ul>
+
+    
 
     <!-- Tags (bookmark) -->
     
@@ -503,119 +519,119 @@
 <h3 id="Container对象：DAG的拓扑原型"><a href="#Container对象：DAG的拓扑原型" class="headerlink" title="Container对象：DAG的拓扑原型"></a><code>Container</code>对象：DAG的拓扑原型</h3><p>在第一篇中我们提到，Keras Tensor中增强的<code>\_keras_history</code>属性使得我们仅通过输入和输出的Tensor，就可以构建出整张计算图。而<code>Container</code>对象正是实现了这样的过程。</p>
 <h4 id="计算图的构建"><a href="#计算图的构建" class="headerlink" title="计算图的构建"></a>计算图的构建</h4><p>DAG计算图的构建在<code>Container</code>对象实例化时完成，主要包括如下几个操作：</p>
 <p>1） 记录<code>Container</code>的首尾连接信息</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> inputs<span class="token punctuation">,</span> outputs<span class="token punctuation">,</span> name<span class="token operator">=</span>None<span class="token punctuation">)</span><span class="token punctuation">:</span>
-  <span class="token keyword">for</span> x <span class="token keyword">in</span> self<span class="token punctuation">.</span>outputs<span class="token punctuation">:</span>
-      layer<span class="token punctuation">,</span> node_index<span class="token punctuation">,</span> tensor_index <span class="token operator">=</span> x<span class="token punctuation">.</span>_keras_history
-      self<span class="token punctuation">.</span>output_layers<span class="token punctuation">.</span>append<span class="token punctuation">(</span>layer<span class="token punctuation">)</span>
-      self<span class="token punctuation">.</span>output_layers_node_indices<span class="token punctuation">.</span>append<span class="token punctuation">(</span>node_index<span class="token punctuation">)</span>
-      self<span class="token punctuation">.</span>output_layers_tensor_indices<span class="token punctuation">.</span>append<span class="token punctuation">(</span>tensor_index<span class="token punctuation">)</span>
+<pre><code class="python">def __init__(self, inputs, outputs, name=None):
+  for x in self.outputs:
+      layer, node_index, tensor_index = x._keras_history
+      self.output_layers.append(layer)
+      self.output_layers_node_indices.append(node_index)
+      self.output_layers_tensor_indices.append(tensor_index)
 
-  <span class="token keyword">for</span> x <span class="token keyword">in</span> self<span class="token punctuation">.</span>inputs<span class="token punctuation">:</span>
-      layer<span class="token punctuation">,</span> node_index<span class="token punctuation">,</span> tensor_index <span class="token operator">=</span> x<span class="token punctuation">.</span>_keras_history
-      self<span class="token punctuation">.</span>input_layers<span class="token punctuation">.</span>append<span class="token punctuation">(</span>layer<span class="token punctuation">)</span>
-      self<span class="token punctuation">.</span>input_layers_node_indices<span class="token punctuation">.</span>append<span class="token punctuation">(</span>node_index<span class="token punctuation">)</span>
-      self<span class="token punctuation">.</span>input_layers_tensor_indices<span class="token punctuation">.</span>append<span class="token punctuation">(</span>tensor_index<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  for x in self.inputs:
+      layer, node_index, tensor_index = x._keras_history
+      self.input_layers.append(layer)
+      self.input_layers_node_indices.append(node_index)
+      self.input_layers_tensor_indices.append(tensor_index)
+</code></pre>
 <p>2） 从<code>output_tensors</code>开始反向递归构建计算图，采用广度优先的准则，本步的关键是构建<code>nodes_in_decreasing_depth</code>这一队列，这些<code>Node</code>包含的连接信息和深度信息将是后续正向传播和反向训练计算执行顺序的依据。</p>
-<pre class="line-numbers language-python"><code class="language-python">  <span class="token keyword">def</span> <span class="token function">build_map_of_graph</span><span class="token punctuation">(</span>tensor<span class="token punctuation">,</span> finished_nodes<span class="token punctuation">,</span> nodes_in_progress<span class="token punctuation">)</span><span class="token punctuation">:</span>
-      layer<span class="token punctuation">,</span> node_index<span class="token punctuation">,</span> tensor_index <span class="token operator">=</span> tensor<span class="token punctuation">.</span>_keras_history
-      node <span class="token operator">=</span> layer<span class="token punctuation">.</span>inbound_nodes<span class="token punctuation">[</span>node_index<span class="token punctuation">]</span>
-      nodes_in_progress<span class="token punctuation">.</span>add<span class="token punctuation">(</span>node<span class="token punctuation">)</span>
+<pre><code class="python">  def build_map_of_graph(tensor, finished_nodes, nodes_in_progress):
+      layer, node_index, tensor_index = tensor._keras_history
+      node = layer.inbound_nodes[node_index]
+      nodes_in_progress.add(node)
 
-      <span class="token comment" spellcheck="true"># 广度优先搜索</span>
-      <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>node<span class="token punctuation">.</span>inbound_layers<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-          x <span class="token operator">=</span> node<span class="token punctuation">.</span>input_tensors<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-          layer <span class="token operator">=</span> node<span class="token punctuation">.</span>inbound_layers<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-          node_index <span class="token operator">=</span> node<span class="token punctuation">.</span>node_indices<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-          tensor_index <span class="token operator">=</span> node<span class="token punctuation">.</span>tensor_indices<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-          <span class="token comment" spellcheck="true"># 递归调用</span>
-          build_map_of_graph<span class="token punctuation">(</span>x<span class="token punctuation">,</span> finished_nodes<span class="token punctuation">,</span> nodes_in_progress<span class="token punctuation">,</span>
-                             layer<span class="token punctuation">,</span> node_index<span class="token punctuation">,</span> tensor_index<span class="token punctuation">)</span>
+      # 广度优先搜索
+      for i in range(len(node.inbound_layers)):
+          x = node.input_tensors[i]
+          layer = node.inbound_layers[i]
+          node_index = node.node_indices[i]
+          tensor_index = node.tensor_indices[i]
+          # 递归调用
+          build_map_of_graph(x, finished_nodes, nodes_in_progress,
+                             layer, node_index, tensor_index)
 
-      <span class="token comment" spellcheck="true"># 维护两个队列</span>
-      finished_nodes<span class="token punctuation">.</span>add<span class="token punctuation">(</span>node<span class="token punctuation">)</span>
-      nodes_in_progress<span class="token punctuation">.</span>remove<span class="token punctuation">(</span>node<span class="token punctuation">)</span>
-      nodes_in_decreasing_depth<span class="token punctuation">.</span>append<span class="token punctuation">(</span>node<span class="token punctuation">)</span>
+      # 维护两个队列
+      finished_nodes.add(node)
+      nodes_in_progress.remove(node)
+      nodes_in_decreasing_depth.append(node)
 
-  <span class="token comment" spellcheck="true"># 反向构建DAG</span>
-  <span class="token keyword">for</span> x <span class="token keyword">in</span> self<span class="token punctuation">.</span>outputs<span class="token punctuation">:</span>
-      build_map_of_graph<span class="token punctuation">(</span>x<span class="token punctuation">,</span> finished_nodes<span class="token punctuation">,</span> nodes_in_progress<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  # 反向构建DAG
+  for x in self.outputs:
+      build_map_of_graph(x, finished_nodes, nodes_in_progress)
+</code></pre>
 <p>3） 计算各节点的深度并按深度标定节点在DAG中的位置</p>
-<pre class="line-numbers language-python"><code class="language-python">  <span class="token comment" spellcheck="true"># 根据队列标定各节点的深度</span>
-  <span class="token keyword">for</span> node <span class="token keyword">in</span> reversed<span class="token punctuation">(</span>nodes_in_decreasing_depth<span class="token punctuation">)</span><span class="token punctuation">:</span>
-      depth <span class="token operator">=</span> nodes_depths<span class="token punctuation">.</span>setdefault<span class="token punctuation">(</span>node<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
-      previous_depth <span class="token operator">=</span> layers_depths<span class="token punctuation">.</span>get<span class="token punctuation">(</span>node<span class="token punctuation">.</span>outbound_layer<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
-      depth <span class="token operator">=</span> max<span class="token punctuation">(</span>depth<span class="token punctuation">,</span> previous_depth<span class="token punctuation">)</span>
-      layers_depths<span class="token punctuation">[</span>node<span class="token punctuation">.</span>outbound_layer<span class="token punctuation">]</span> <span class="token operator">=</span> depth
-      nodes_depths<span class="token punctuation">[</span>node<span class="token punctuation">]</span> <span class="token operator">=</span> depth
+<pre><code class="python">  # 根据队列标定各节点的深度
+  for node in reversed(nodes_in_decreasing_depth):
+      depth = nodes_depths.setdefault(node, 0)
+      previous_depth = layers_depths.get(node.outbound_layer, 0)
+      depth = max(depth, previous_depth)
+      layers_depths[node.outbound_layer] = depth
+      nodes_depths[node] = depth
 
-      <span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>node<span class="token punctuation">.</span>inbound_layers<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-          inbound_layer <span class="token operator">=</span> node<span class="token punctuation">.</span>inbound_layers<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-          node_index <span class="token operator">=</span> node<span class="token punctuation">.</span>node_indices<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-          inbound_node <span class="token operator">=</span> inbound_layer<span class="token punctuation">.</span>inbound_nodes<span class="token punctuation">[</span>node_index<span class="token punctuation">]</span>
-          previous_depth <span class="token operator">=</span> nodes_depths<span class="token punctuation">.</span>get<span class="token punctuation">(</span>inbound_node<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span>
-          nodes_depths<span class="token punctuation">[</span>inbound_node<span class="token punctuation">]</span> <span class="token operator">=</span> max<span class="token punctuation">(</span>depth <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> previous_depth<span class="token punctuation">)</span>
+      for i in range(len(node.inbound_layers)):
+          inbound_layer = node.inbound_layers[i]
+          node_index = node.node_indices[i]
+          inbound_node = inbound_layer.inbound_nodes[node_index]
+          previous_depth = nodes_depths.get(inbound_node, 0)
+          nodes_depths[inbound_node] = max(depth + 1, previous_depth)
 
-  <span class="token comment" spellcheck="true"># 按深度标定各节点的位置</span>
-  nodes_by_depth <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
-  <span class="token keyword">for</span> node<span class="token punctuation">,</span> depth <span class="token keyword">in</span> nodes_depths<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-      <span class="token keyword">if</span> depth <span class="token operator">not</span> <span class="token keyword">in</span> nodes_by_depth<span class="token punctuation">:</span>
-          nodes_by_depth<span class="token punctuation">[</span>depth<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-      nodes_by_depth<span class="token punctuation">[</span>depth<span class="token punctuation">]</span><span class="token punctuation">.</span>append<span class="token punctuation">(</span>node<span class="token punctuation">)</span>
+  # 按深度标定各节点的位置
+  nodes_by_depth = {}
+  for node, depth in nodes_depths.items():
+      if depth not in nodes_by_depth:
+          nodes_by_depth[depth] = []
+      nodes_by_depth[depth].append(node)
 
-  <span class="token comment" spellcheck="true"># 按深度标定各层的位置</span>
-  layers_by_depth <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
-  <span class="token keyword">for</span> layer<span class="token punctuation">,</span> depth <span class="token keyword">in</span> layers_depths<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-      <span class="token keyword">if</span> depth <span class="token operator">not</span> <span class="token keyword">in</span> layers_by_depth<span class="token punctuation">:</span>
-          layers_by_depth<span class="token punctuation">[</span>depth<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-      layers_by_depth<span class="token punctuation">[</span>depth<span class="token punctuation">]</span><span class="token punctuation">.</span>append<span class="token punctuation">(</span>layer<span class="token punctuation">)</span>
+  # 按深度标定各层的位置
+  layers_by_depth = {}
+  for layer, depth in layers_depths.items():
+      if depth not in layers_by_depth:
+          layers_by_depth[depth] = []
+      layers_by_depth[depth].append(layer)
 
-  self<span class="token punctuation">.</span>layers_by_depth <span class="token operator">=</span> layers_by_depth
-  self<span class="token punctuation">.</span>nodes_by_depth <span class="token operator">=</span> nodes_by_depth
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  self.layers_by_depth = layers_by_depth
+  self.nodes_by_depth = nodes_by_depth
+</code></pre>
 <p>4）将整个<code>Container</code>并入<code>Node</code>以保持兼容性</p>
-<pre class="line-numbers language-python"><code class="language-python">  self<span class="token punctuation">.</span>outbound_nodes <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-  self<span class="token punctuation">.</span>inbound_nodes <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>  
-  Node<span class="token punctuation">(</span>outbound_layer<span class="token operator">=</span>self<span class="token punctuation">,</span>
-       inbound_layers<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-       node_indices<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-       tensor_indices<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
-       input_tensors<span class="token operator">=</span>self<span class="token punctuation">.</span>inputs<span class="token punctuation">,</span>
-       output_tensors<span class="token operator">=</span>self<span class="token punctuation">.</span>outputs<span class="token punctuation">,</span>
-       <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code class="python">  self.outbound_nodes = []
+  self.inbound_nodes = []  
+  Node(outbound_layer=self,
+       inbound_layers=[],
+       node_indices=[],
+       tensor_indices=[],
+       input_tensors=self.inputs,
+       output_tensors=self.outputs,
+       ...)
+</code></pre>
 <h3 id="计算图中的计算"><a href="#计算图中的计算" class="headerlink" title="计算图中的计算"></a>计算图中的计算</h3><p>计算在<code>Container</code>对象的<code>call()</code>方法完成，其实现又依靠内部方法<code>run_internal_graph()</code>。</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">run_internal_graph</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> inputs<span class="token punctuation">,</span> masks<span class="token operator">=</span>None<span class="token punctuation">)</span><span class="token punctuation">:</span>
-       depth_keys <span class="token operator">=</span> list<span class="token punctuation">(</span>self<span class="token punctuation">.</span>nodes_by_depth<span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-       depth_keys<span class="token punctuation">.</span>sort<span class="token punctuation">(</span>reverse<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
-       <span class="token comment" spellcheck="true"># 依据深度</span>
-       <span class="token keyword">for</span> depth <span class="token keyword">in</span> depth_keys<span class="token punctuation">:</span>
-           nodes <span class="token operator">=</span> self<span class="token punctuation">.</span>nodes_by_depth<span class="token punctuation">[</span>depth<span class="token punctuation">]</span>
-           <span class="token comment" spellcheck="true"># 对同一深度上的Node进行计算</span>
-           <span class="token keyword">for</span> node <span class="token keyword">in</span> nodes<span class="token punctuation">:</span>
-               layer <span class="token operator">=</span> node<span class="token punctuation">.</span>outbound_layer <span class="token comment" spellcheck="true"># Node对应的layer</span>
-               reference_input_tensors <span class="token operator">=</span> node<span class="token punctuation">.</span>input_tensors
-               reference_output_tensors <span class="token operator">=</span> node<span class="token punctuation">.</span>output_tensors
-               computed_data <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>  
-               <span class="token keyword">if</span> len<span class="token punctuation">(</span>computed_data<span class="token punctuation">)</span> <span class="token operator">==</span> len<span class="token punctuation">(</span>reference_input_tensors<span class="token punctuation">)</span><span class="token punctuation">:</span>
-                   <span class="token comment" spellcheck="true"># 在Layer中进行计算</span>
-                   <span class="token keyword">with</span> K<span class="token punctuation">.</span>name_scope<span class="token punctuation">(</span>layer<span class="token punctuation">.</span>name<span class="token punctuation">)</span><span class="token punctuation">:</span>
-                       <span class="token keyword">if</span> len<span class="token punctuation">(</span>computed_data<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">:</span>
-                           computed_tensor<span class="token punctuation">,</span> computed_mask <span class="token operator">=</span> computed_data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
-                           output_tensors <span class="token operator">=</span> _to_list<span class="token punctuation">(</span>layer<span class="token punctuation">.</span>call<span class="token punctuation">(</span>computed_tensor<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">)</span>
-                           computed_tensors <span class="token operator">=</span> <span class="token punctuation">[</span>computed_tensor<span class="token punctuation">]</span>
-                       <span class="token keyword">else</span><span class="token punctuation">:</span>
-                           computed_tensors <span class="token operator">=</span> <span class="token punctuation">[</span>x<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token keyword">for</span> x <span class="token keyword">in</span> computed_data<span class="token punctuation">]</span>
-                           output_tensors <span class="token operator">=</span> _to_list<span class="token punctuation">(</span>layer<span class="token punctuation">.</span>call<span class="token punctuation">(</span>computed_tensors<span class="token punctuation">,</span> <span class="token operator">**</span>kwargs<span class="token punctuation">)</span><span class="token punctuation">)</span>
-       output_tensors <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-       output_masks <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-       <span class="token keyword">for</span> x <span class="token keyword">in</span> self<span class="token punctuation">.</span>outputs<span class="token punctuation">:</span>
-           tensor<span class="token punctuation">,</span> mask <span class="token operator">=</span> tensor_map<span class="token punctuation">[</span>str<span class="token punctuation">(</span>id<span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
-           output_tensors<span class="token punctuation">.</span>append<span class="token punctuation">(</span>tensor<span class="token punctuation">)</span>
-           output_masks<span class="token punctuation">.</span>append<span class="token punctuation">(</span>mask<span class="token punctuation">)</span>
-       <span class="token keyword">return</span> output_tensors<span class="token punctuation">,</span> output_masks
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code class="python">def run_internal_graph(self, inputs, masks=None):
+       depth_keys = list(self.nodes_by_depth.keys())
+       depth_keys.sort(reverse=True)
+       # 依据深度
+       for depth in depth_keys:
+           nodes = self.nodes_by_depth[depth]
+           # 对同一深度上的Node进行计算
+           for node in nodes:
+               layer = node.outbound_layer # Node对应的layer
+               reference_input_tensors = node.input_tensors
+               reference_output_tensors = node.output_tensors
+               computed_data = []  
+               if len(computed_data) == len(reference_input_tensors):
+                   # 在Layer中进行计算
+                   with K.name_scope(layer.name):
+                       if len(computed_data) == 1:
+                           computed_tensor, computed_mask = computed_data[0]
+                           output_tensors = _to_list(layer.call(computed_tensor, **kwargs))
+                           computed_tensors = [computed_tensor]
+                       else:
+                           computed_tensors = [x[0] for x in computed_data]
+                           output_tensors = _to_list(layer.call(computed_tensors, **kwargs))
+       output_tensors = []
+       output_masks = []
+       for x in self.outputs:
+           tensor, mask = tensor_map[str(id(x))]
+           output_tensors.append(tensor)
+           output_masks.append(mask)
+       return output_tensors, output_masks
+</code></pre>
 <p>从上面的代码可以看到计算是依据深度进行的，并通过更新<code>computed_data</code>和<code>output_tensor</code>等变量完成整张图的遍历计算。</p>
 <p>继续阅读系列第三篇：<a href="https://blog.ddlee.cn/2017/07/30/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BModel/">【源码笔记】keras源码分析之Model</a></p>
 <p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
@@ -869,21 +885,6 @@
 
     <!-- Archives  -->
     
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
-            </ul>
-        </li>
-        
-    
 
     <!-- Categories  -->
     
@@ -910,7 +911,7 @@
         <li>
             <a href="/timeline" title="Timeline">
                 
-                    <i class="material-icons sidebar-material-icons">bookmark</i>
+                    <i class="material-icons sidebar-material-icons">timeline</i>
                 
                 Timeline
             </a>
@@ -1157,6 +1158,12 @@ It will not impact the appearance and can give developers a lot of support :)
 
 <!-- Import prettify js  -->
 
+    
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
 
 
 <!-- Window Load -->
@@ -1167,6 +1174,13 @@ It will not impact the appearance and can give developers a lot of support :)
         $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
     });
 
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
     
     
 </script>

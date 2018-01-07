@@ -83,6 +83,11 @@
         <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
 
         
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/atelier-dune-light.min.css?ZfnESUNClnkZBE6Ec0djTA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
 
     
 
@@ -295,11 +300,10 @@
     
     
 
-    <!-- Custom Head -->
+    <!-- Custom Head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 
-<link rel="stylesheet" href="/css/prism.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+</head>
 
 
     
@@ -414,6 +418,18 @@
     -->
 
     <!-- Qrcode -->
+    
+        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">devices other</i>
+    <span class="visuallyhidden">devices other</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
+    <li class="mdl-menu__item">在其它设备中阅读本文章</li>
+    
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT4AAAE+CAAAAAAxUyPsAAAE30lEQVR42u3aQW7bQBAEQP3/08k1QGKqZ3o3coLiyZBlcVk0oN4evn44iuOFAB8+fPgc+PDhw+fAh+8f4XvFx6/v/8OH/vae51feLPHxE/LX83Um144PHz58+PCd4ksuJj99DvqM+9Ur0UUWxG/WgA8fPnz48B3i6yGSIJLfgLOfll/X89Xhw4cPHz58f5Pv+Z35hn93rrNlBz58+PDhw/f9+ZKQkUSQ1/CYBp18Dfjw4cOHD9+n+PLCOl9uMz6fjr2n6//ArAMfPnz48OErNt7/x88HHlDDhw8fPnz4Yr7d0UeZfNt/KsrkY/g314UPHz58+PAVfLvxc062G5nfqOmT0X70Tnz48OHDh+8Q3/OHPnPklNMRdbSNL27DOJDhw4cPHz58NV+yrDzo5PS7347r9fhGRivBhw8fPnz4ar6klN9VBrtt/K44mFb/+b8RPnz48OHDd4NvtxXvUaZ1f07ZD/4PlPX48OHDhw9fHVB2p29G1wnl9DG45RgeHz58+PDhq/nyy949FrYbD+RB5wBKHpjw4cOHDx++C3wJ7u4xr3xjPy0OmgH/4K/w4cOHDx++gi8fRT9HmWawnQem/LfJLZ+GKnz48OHDh+8UX3IxybJ2QWcaaPKAcurRN3z48OHDh+8U37RS3xXoTUjaFQTJVUxvBj58+PDhw9fzJV/8TZUwLeV3A+ymLJjWEPjw4cOHD1/Pl3z9TwNKP/bePSS3K/oHjwjgw4cPHz58BV8eDqbD6VNAfTzKi4loOIEPHz58+PAVfMnlJcV9MzLPz7hb5/S8b3zw4cOHDx++mm8aR5IgkmzmT1UPgw3/8FxRcMGHDx8+fPhWlUE/OE/G0tPioB/Mn/oZHz58+PDhu8E3/YJvLnh3rmhjH9zmK8EFHz58+PDhC/gaiF2Vn59rV2H0g4Evz4gPHz58+PAd5ZvW7tMt/a6SOBWqkir/jQA+fPjw4cNX803DR7LEewHiVBh6dhiX9fjw4cOHD1/Ml3y151EmX8ruobcbTMdyHz58+PDhw/fIt1tifpFJrLlXFlwZ6uPDhw8fPnwFX16jJzX3NBzcqOCbSiJZFT58+PDhw3eKb7cJT7blu419Hi92wSj/GR8+fPjw4bvHl0ST6df/riifVhWnBu1v1o8PHz58+PAVfNPSfBc18sH5qYCSf840luHDhw8fPnwNX/5xOeWugMjPlUeN6bmWuQ8fPnz48OEr+PqHz6YD9elf5bcwKt+H68GHDx8+fPh6vvwxsmbk3ESTac2RX92VMTk+fPjw4cO3GpNPN/n9ACAZA+xu224AH5X1+PDhw4cP34qvDyvJJny3+Z/GqSbQjMfk+PDhw4cPX8y3GzYnsSMJItOyoNnwv4YHPnz48OHDd4OvGVfvcKcD7P7BuLwcScYV+PDhw4cPX8PX19m7inxXwed1RnOuwZgcHz58+PDhW/HlYSUfeDeFeH6uadjKg8uXn4YPHz58+PAd4mtK8Oay+wJ9V8fnEQ0fPnz48OH7LN/z13wzwN69nlcb+RhgXBngw4cPHz58F/jyAXleCuxq/d2apwXE4eCCDx8+fPjwDcv6HcquGsjXmZxlGqHGlQE+fPjw4cMX8zUV9u79u/Cxu5HTumEcXPDhw4cPH76YzzE98OHDhw+fAx8+fPgc+PB94+Mndix3ZcRbpaMAAAAASUVORK5CYII=">
+    
+</ul>
+
     
 
     <!-- Tags (bookmark) -->
@@ -774,21 +790,6 @@
 
     <!-- Archives  -->
     
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
-            </ul>
-        </li>
-        
-    
 
     <!-- Categories  -->
     
@@ -815,7 +816,7 @@
         <li>
             <a href="/timeline" title="Timeline">
                 
-                    <i class="material-icons sidebar-material-icons">bookmark</i>
+                    <i class="material-icons sidebar-material-icons">timeline</i>
                 
                 Timeline
             </a>
@@ -1062,6 +1063,12 @@ It will not impact the appearance and can give developers a lot of support :)
 
 <!-- Import prettify js  -->
 
+    
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
 
 
 <!-- Window Load -->
@@ -1072,6 +1079,13 @@ It will not impact the appearance and can give developers a lot of support :)
         $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
     });
 
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
     
     
 </script>

@@ -83,6 +83,11 @@
         <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
 
         
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/atelier-dune-light.min.css?ZfnESUNClnkZBE6Ec0djTA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
 
     
 
@@ -295,11 +300,10 @@
     
     
 
-    <!-- Custom Head -->
+    <!-- Custom Head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 
-<link rel="stylesheet" href="/css/prism.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+</head>
 
 
     
@@ -414,6 +418,18 @@
     -->
 
     <!-- Qrcode -->
+    
+        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">devices other</i>
+    <span class="visuallyhidden">devices other</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
+    <li class="mdl-menu__item">在其它设备中阅读本文章</li>
+    
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACaUlEQVR42u3aQXLDMAgF0Nz/0u0B2ng+IFM387zKZBxbTwtBgNfXR18vPDw8PDw8PDy8h/Fe8fXz/uhlb+589/zJ2vDw8PA2efkSrz//8rI3G1R9fr59eHh4eJu862CQH9aTbZqsDQ8PD++ZvF66nGxQHnjw8PDw/hdvfqDnpQ08PDy85/MKf/iPptTVe26steDh4eHFvGoDbPPzH/T38PDw8C55zcGmQXHhulV2eOgKDw8P7wZeNV2uDmDlCXcyghBtEx4eHt4KL1l6MjhVHcOaDK0WAgMeHh7eUd6kZZVsx93IqBiBh4eHd5SXPC5/QW9xSQKdly3w8PDwdni9Yz1vX+VFit6W4eHh4W3yksQ6H8NKlt4bXEjAeHh4eDu8Xpt/csT3QlGh5YaHh4d3My9v2B8oE8Ql3eom4uHh4e3zem2wfHgrX2K14HvgHwMeHh5ei1cdlsphvcR6VCDGw8PDu5lXbUFNDvfq0/Jgg4eHh7fJm7S1qq2pfKGTxBoPDw/vbl4vRa4Weatb0Csr4+Hh4e3zqoNWk++rYaBZxsXDw8Nb4VWP8l7h9XrRyZa9/S0eHh7eOi+B5d9XS7TVsYZR3MPDw8Mb99bzIYBmU3/wrlFKjYeHh3eUV72qJYZeY+xYYMDDw8O7gVc9jntDVNXfVksbeHh4ePu8/LAupLZjXrVYjIeHh7fPq5YbcmovqDTfgoeHh/dI3nx0IAkhyTbdEhjw8PDwjvLy4z5vhuVJfBIw8PDw8DZ51bJCLxhUw0A+xICHh4e3yes1wJIywSRIVMsQeHh4eDu8z7vw8PDw8PDw8PAecH0DE4aGks/9HIMAAAAASUVORK5CYII=">
+    
+</ul>
+
     
 
     <!-- Tags (bookmark) -->
@@ -561,7 +577,7 @@
 </tr>
 </tbody>
 </table>
-<h4 id="示例函数：Haversine-Distance"><a href="#示例函数：Haversine-Distance" class="headerlink" title="示例函数：Haversine Distance"></a>示例函数：Haversine Distance</h4><pre class="line-numbers language-Python"><code class="language-Python">def haversine(lat1, lon1, lat2, lon2):
+<h4 id="示例函数：Haversine-Distance"><a href="#示例函数：Haversine-Distance" class="headerlink" title="示例函数：Haversine Distance"></a>示例函数：Haversine Distance</h4><pre><code class="Python">def haversine(lat1, lon1, lat2, lon2):
     miles_constant = 3959
     lat1, lon1, lat2, lon2 = map(np.deg2rad, [lat1, lon1, lat2, lon2])
     dlat = lat2 - lat1
@@ -570,23 +586,23 @@
     c = 2 * np.arcsin(np.sqrt(a))
     mi = miles_constant * c
     return mi
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
 <h2 id="优化它之前，先测量它"><a href="#优化它之前，先测量它" class="headerlink" title="优化它之前，先测量它"></a>优化它之前，先测量它</h2><h4 id="IPython-Notebook的Magic-Command-timeit"><a href="#IPython-Notebook的Magic-Command-timeit" class="headerlink" title="IPython Notebook的Magic Command: %timeit"></a>IPython Notebook的Magic Command: <code>%timeit</code></h4><p>既可以测量某一行代码的执行时间，又可以测量整个单元格里代码快的执行时间。</p>
 <h4 id="Package-line-profiler"><a href="#Package-line-profiler" class="headerlink" title="Package: line_profiler"></a>Package: line_profiler</h4><p>记录每行代码的执行次数和执行时间。</p>
 <p>在IPython Notebook中使用时，先运行<code>%load_ext line_profiler</code>， 之后可以用<code>%lprun -f [function name]</code>命令记录指定函数的执行情况。</p>
-<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><h4 id="对行做循环-Baseline"><a href="#对行做循环-Baseline" class="headerlink" title="对行做循环(Baseline)"></a>对行做循环(Baseline)</h4><pre class="line-numbers language-python"><code class="language-python"><span class="token operator">%</span><span class="token operator">%</span>timeit
-haversine_series <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-<span class="token keyword">for</span> index<span class="token punctuation">,</span> row <span class="token keyword">in</span> df<span class="token punctuation">.</span>iterrows<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    haversine_series<span class="token punctuation">.</span>append<span class="token punctuation">(</span>haversine<span class="token punctuation">(</span><span class="token number">40.671</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">73.985</span><span class="token punctuation">,</span>\
-                                      row<span class="token punctuation">[</span><span class="token string">'latitude'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> row<span class="token punctuation">[</span><span class="token string">'longitude'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-df<span class="token punctuation">[</span><span class="token string">'distance'</span><span class="token punctuation">]</span> <span class="token operator">=</span> haversine_series
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><h4 id="对行做循环-Baseline"><a href="#对行做循环-Baseline" class="headerlink" title="对行做循环(Baseline)"></a>对行做循环(Baseline)</h4><pre><code class="python">%%timeit
+haversine_series = []
+for index, row in df.iterrows():
+    haversine_series.append(haversine(40.671, -73.985,\
+                                      row[&#39;latitude&#39;], row[&#39;longitude&#39;]))
+df[&#39;distance&#39;] = haversine_series
+</code></pre>
 <p>Output:</p>
 <pre><code>197 ms ± 6.65 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
-</code></pre><h4 id="pd-DataFrame-apply-方法"><a href="#pd-DataFrame-apply-方法" class="headerlink" title="pd.DataFrame.apply()方法"></a>pd.DataFrame.apply()方法</h4><pre class="line-numbers language-python"><code class="language-python"><span class="token operator">%</span>lprun <span class="token operator">-</span>f haversine \
-df<span class="token punctuation">.</span>apply<span class="token punctuation">(</span><span class="token keyword">lambda</span> row<span class="token punctuation">:</span> haversine<span class="token punctuation">(</span><span class="token number">40.671</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">73.985</span><span class="token punctuation">,</span>\
-                               row<span class="token punctuation">[</span><span class="token string">'latitude'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> row<span class="token punctuation">[</span><span class="token string">'longitude'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</code></pre><h4 id="pd-DataFrame-apply-方法"><a href="#pd-DataFrame-apply-方法" class="headerlink" title="pd.DataFrame.apply()方法"></a>pd.DataFrame.apply()方法</h4><pre><code class="python">%lprun -f haversine \
+df.apply(lambda row: haversine(40.671, -73.985,\
+                               row[&#39;latitude&#39;], row[&#39;longitude&#39;]), axis=1)
+</code></pre>
 <p>Output:</p>
 <pre><code>90.6 ms ± 7.55 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
 </code></pre><pre><code>Timer unit: 1e-06 s
@@ -629,9 +645,9 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
      8         1          496    496.0      5.8      mi = miles_constant * c
      9         1            2      2.0      0.0      return mi
 </code></pre><p>向量化之后，函数内的每行操作只被访问一次，达到了行结构上的并行。</p>
-<h3 id="向量化：将np-array传入函数"><a href="#向量化：将np-array传入函数" class="headerlink" title="向量化：将np.array传入函数"></a>向量化：将np.array传入函数</h3><pre class="line-numbers language-python"><code class="language-python"><span class="token operator">%</span>lprun <span class="token operator">-</span>f haversine df<span class="token punctuation">[</span><span class="token string">'distance'</span><span class="token punctuation">]</span> <span class="token operator">=</span> haversine<span class="token punctuation">(</span><span class="token number">40.671</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">73.985</span><span class="token punctuation">,</span>\
-                        df<span class="token punctuation">[</span><span class="token string">'latitude'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>values<span class="token punctuation">,</span> df<span class="token punctuation">[</span><span class="token string">'longitude'</span><span class="token punctuation">]</span><span class="token punctuation">.</span>values<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h3 id="向量化：将np-array传入函数"><a href="#向量化：将np-array传入函数" class="headerlink" title="向量化：将np.array传入函数"></a>向量化：将np.array传入函数</h3><pre><code class="python">%lprun -f haversine df[&#39;distance&#39;] = haversine(40.671, -73.985,\
+                        df[&#39;latitude&#39;].values, df[&#39;longitude&#39;].values)
+</code></pre>
 <p>Output：</p>
 <pre><code>370 µs ± 18 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
 </code></pre><pre><code>Timer unit: 1e-06 s
@@ -686,38 +702,38 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
 </table>
 <p>通过上面的对比，我们比最初的baseline快了近500倍。最大的提升来自于向量化。因而，实现的函数能够很方便地向量化是高效处理的关键。</p>
 <h2 id="用Cython优化"><a href="#用Cython优化" class="headerlink" title="用Cython优化"></a>用<code>Cython</code>优化</h2><p><code>Cython</code>可以将<code>python</code>代码转化为<code>C</code>代码来执行，可以进行如下优化（静态化变量类型，调用C函数库）</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token operator">%</span>load_ext cython
+<pre><code class="python">%load_ext cython
 
-<span class="token operator">%</span><span class="token operator">%</span>cython <span class="token operator">-</span>a
-<span class="token comment" spellcheck="true"># Haversine cythonized</span>
-<span class="token keyword">from</span> libc<span class="token punctuation">.</span>math cimport sin<span class="token punctuation">,</span> cos<span class="token punctuation">,</span> acos<span class="token punctuation">,</span> asin<span class="token punctuation">,</span> sqrt
+%%cython -a
+# Haversine cythonized
+from libc.math cimport sin, cos, acos, asin, sqrt
 
-cdef deg2rad_cy<span class="token punctuation">(</span>float deg<span class="token punctuation">)</span><span class="token punctuation">:</span>
+cdef deg2rad_cy(float deg):
     cdef float rad
-    rad <span class="token operator">=</span> <span class="token number">0.01745329252</span><span class="token operator">*</span>deg
-    <span class="token keyword">return</span> rad
+    rad = 0.01745329252*deg
+    return rad
 
-cpdef haversine_cy_dtyped<span class="token punctuation">(</span>float lat1<span class="token punctuation">,</span> float lon1<span class="token punctuation">,</span> float lat2<span class="token punctuation">,</span> float lon2<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    cdef<span class="token punctuation">:</span>
+cpdef haversine_cy_dtyped(float lat1, float lon1, float lat2, float lon2):
+    cdef:
         float dlon
         float dlat
         float a
         float c
         float mi
 
-    lat1<span class="token punctuation">,</span> lon1<span class="token punctuation">,</span> lat2<span class="token punctuation">,</span> lon2 <span class="token operator">=</span> map<span class="token punctuation">(</span>deg2rad_cy<span class="token punctuation">,</span> <span class="token punctuation">[</span>lat1<span class="token punctuation">,</span> lon1<span class="token punctuation">,</span> lat2<span class="token punctuation">,</span> lon2<span class="token punctuation">]</span><span class="token punctuation">)</span>
-    dlat <span class="token operator">=</span> lat2 <span class="token operator">-</span> lat1
-    dlon <span class="token operator">=</span> lon2 <span class="token operator">-</span> lon1
-    a <span class="token operator">=</span> sin<span class="token punctuation">(</span>dlat<span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">**</span><span class="token number">2</span> <span class="token operator">+</span> cos<span class="token punctuation">(</span>lat1<span class="token punctuation">)</span> <span class="token operator">*</span> cos<span class="token punctuation">(</span>lat2<span class="token punctuation">)</span> <span class="token operator">*</span> sin<span class="token punctuation">(</span>dlon<span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">**</span><span class="token number">2</span>
-    c <span class="token operator">=</span> <span class="token number">2</span> <span class="token operator">*</span> asin<span class="token punctuation">(</span>sqrt<span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    mi <span class="token operator">=</span> <span class="token number">3959</span> <span class="token operator">*</span> c
-    <span class="token keyword">return</span> mi
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    lat1, lon1, lat2, lon2 = map(deg2rad_cy, [lat1, lon1, lat2, lon2])
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+    a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+    c = 2 * asin(sqrt(a))
+    mi = 3959 * c
+    return mi
+</code></pre>
 <p>嵌套于循坏中：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token operator">%</span>timeit df<span class="token punctuation">[</span><span class="token string">'distance'</span><span class="token punctuation">]</span> <span class="token operator">=</span>\
-df<span class="token punctuation">.</span>apply<span class="token punctuation">(</span><span class="token keyword">lambda</span> row<span class="token punctuation">:</span> haversine_cy_dtyped<span class="token punctuation">(</span><span class="token number">40.671</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">73.985</span><span class="token punctuation">,</span>\
-                              row<span class="token punctuation">[</span><span class="token string">'latitude'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> row<span class="token punctuation">[</span><span class="token string">'longitude'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre><code class="python">%timeit df[&#39;distance&#39;] =\
+df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
+                              row[&#39;latitude&#39;], row[&#39;longitude&#39;]), axis=1)
+</code></pre>
 <p>Output:</p>
 <pre><code>10 loops, best of 3: 68.4 ms per loop
 </code></pre><p>可以看到，<code>Cython</code>确实带来速度上的提升，但效果不及向量化（并行化）。</p>
@@ -971,21 +987,6 @@ df<span class="token punctuation">.</span>apply<span class="token punctuation">(
 
     <!-- Archives  -->
     
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
-            </ul>
-        </li>
-        
-    
 
     <!-- Categories  -->
     
@@ -1012,7 +1013,7 @@ df<span class="token punctuation">.</span>apply<span class="token punctuation">(
         <li>
             <a href="/timeline" title="Timeline">
                 
-                    <i class="material-icons sidebar-material-icons">bookmark</i>
+                    <i class="material-icons sidebar-material-icons">timeline</i>
                 
                 Timeline
             </a>
@@ -1259,6 +1260,12 @@ It will not impact the appearance and can give developers a lot of support :)
 
 <!-- Import prettify js  -->
 
+    
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
 
 
 <!-- Window Load -->
@@ -1269,6 +1276,13 @@ It will not impact the appearance and can give developers a lot of support :)
         $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
     });
 
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
     
     
 </script>

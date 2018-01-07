@@ -55,7 +55,7 @@
     <link rel="icon" href="http://static.ddlee.cn/static/img/material-theme-img/favicon.png">
 
     <meta name="format-detection" content="telephone=no"/>
-    <meta name="description" itemprop="description" content="我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
+    <meta name="description" itemprop="description" content="本文提出了深度网络的新维度，除了深度、宽度（Channel数）外，作者将在某一层并行transform的路径数提取为第三维度，称为&quot;cardinality&quot;。跟Inception单元不同的是，这些并行路径均共享同一拓扑结构，而非精心设计的卷积核并联。除了并行相同的路径外，也添加了层与层间的shortcut connection。但由于其多路径的设计特征，我将其归为Inception系网络。">
     <meta name="keywords" content="萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee,Deep Learning,AI,Papers">
     <meta name="theme-color" content="#0097A7">
 
@@ -82,6 +82,11 @@
         <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
         <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
 
+        
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/atelier-dune-light.min.css?ZfnESUNClnkZBE6Ec0djTA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
         
 
     
@@ -236,12 +241,12 @@
     <meta property="og:type" content="blog">
     <meta property="og:title" content="[论文笔记]Aggregated Residual Transformations for Deep Neural Networks | 萧爽楼">
     <meta property="og:image" content="http://static.ddlee.cn/static/img/material-theme-img/favicon.png">
-    <meta property="og:description" content="我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
+    <meta property="og:description" content="本文提出了深度网络的新维度，除了深度、宽度（Channel数）外，作者将在某一层并行transform的路径数提取为第三维度，称为&quot;cardinality&quot;。跟Inception单元不同的是，这些并行路径均共享同一拓扑结构，而非精心设计的卷积核并联。除了并行相同的路径外，也添加了层与层间的shortcut connection。但由于其多路径的设计特征，我将其归为Inception系网络。">
     <meta property="og:article:tag" content="Deep Learning"> <meta property="og:article:tag" content="AI"> <meta property="og:article:tag" content="Papers"> 
 
     
         <meta property="article:published_time" content="Sat Jan 06 2018 21:19:34 GMT+0800">
-        <meta property="article:modified_time" content="Sat Jan 06 2018 21:19:34 GMT+0800">
+        <meta property="article:modified_time" content="Sun Jan 07 2018 16:54:40 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -264,7 +269,7 @@
     "mainEntityOfPage": "http://blog.ddlee.cn/2018/01/06/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/index.html",
     "headline": "[论文笔记]Aggregated Residual Transformations for Deep Neural Networks",
     "datePublished": "Sat Jan 06 2018 21:19:34 GMT+0800",
-    "dateModified": "Sat Jan 06 2018 21:19:34 GMT+0800",
+    "dateModified": "Sun Jan 07 2018 16:54:40 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -283,7 +288,7 @@
         }
     },
     "keywords": ",Deep Learning,AI,Papers萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee",
-    "description": "我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。",
+    "description": "本文提出了深度网络的新维度，除了深度、宽度（Channel数）外，作者将在某一层并行transform的路径数提取为第三维度，称为&quot;cardinality&quot;。跟Inception单元不同的是，这些并行路径均共享同一拓扑结构，而非精心设计的卷积核并联。除了并行相同的路径外，也添加了层与层间的shortcut connection。但由于其多路径的设计特征，我将其归为Inception系网络。",
 }
 </script>
 
@@ -295,11 +300,10 @@
     
     
 
-    <!-- Custom Head -->
+    <!-- Custom Head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 
-<link rel="stylesheet" href="/css/prism.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+</head>
 
 
     
@@ -414,6 +418,18 @@
     -->
 
     <!-- Qrcode -->
+    
+        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">devices other</i>
+    <span class="visuallyhidden">devices other</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
+    <li class="mdl-menu__item">在其它设备中阅读本文章</li>
+    
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASYAAAEmCAAAAADqr2IGAAAEG0lEQVR42u3aW5IaMRAEQO5/afsAG0BV96zNiNQXgXcGKeUI9UOPP0YwHggwYcKECRMmAxMmTJg+nukRj59///M9zz7nf9++M382XyMmTJgwYTqP6c3R+GSR+TKSaT373WSrXqMP14gJEyZMmI5jej2tZBIbvnaR+xm+eQoTJkyYMH0lU3Kgtot/DZFwbLYKEyZMmDBhep36vkZ8jEZ75LcBDSZMmDBh+k6mzWGffD9rYebhQl7A/fVaOCZMmDBh+jCmaw/pz/z8H+43YcKECROmD2CajfwiThI6bC7rzK4ERWvEhAkTJkxHMM3airNkdXU8jxLsN8ntphaOCRMmTJhuwtRelLn2GM7Lr/tmZxtGYMKECROmk5iSV18VQLTo7fdtuFMEBJgwYcKE6QimPPmctRKT7cnT1M3738BhwoQJE6YjmPJjuz1i2/ZkO4f2mlGyIkyYMGHCdB5TPrlVazAIMmaBQhs05CvFhAkTJkwnMbWNzNkRPgPNF9/i1hd3MGHChAnTbZnaVLYNHZJ/zfk2WBekvpgwYcKE6eZMbSMzZy2uhwZPzcrQebKNCRMmTJhOYrrqiues/Zkse3YVdbadmDBhwoTpJKbosmY89Vm4sGH6RwEBJkyYMGG6LdNsum2imxd823Bkhjgs8mLChAkTphsy5Zd18oLs/v37i0T5m4u4CRMmTJgw3ZDpN67atJ/bluom/caECRMmTN/MtF/eLOHMy7KzRHoY6GDChAkTpoOY9gfqvn24CTiK0u2+nYkJEyZMmG7FtCnCtpOeHcz7AKJ9PyZMmDBhOokpv86yT1/boGH267OgARMmTJgwncoUJYFxK3GfPCet1jxcmBWdMWHChAnT2UxXTTEPMvKLRHkqvmnNYsKECROmk5jydHH/88nCZuh5MbcIgzBhwoQJ0xFM7RWclnVW2L22eZk/hQkTJkyYzmNqE84oaYwT2k07My9Mt8ENJkyYMGE6iSk5OPPGYU48S2Vbjs2mYsKECROmk5jysCA/zvPmZU7ftiQ3jVVMmDBhwnQq06wp2BZ222Zk/v0sIMCECRMmTKcy5QRXLT5Jg/fl45YPEyZMmDCdzZRf8UwKu5tjOCn4tiHCcEswYcKECdMRTHkyuUk480ChbUm2gUhRksaECRMmTEcwtePaovBs2bNAId9gTJgwYcJ0EtPsYN6UevNwIQ9TXh/wbekZEyZMmDCdxzQLAvIQ4doicpJy5wHBsMiLCRMmTJhuyJQXWNsm4r68u2et25+YMGHChAnT+ti+Kvi4asMwYcKECROm9nNSxs1T4vypWREZEyZMmDCdzTQr8u5T3Fk7M9+ANqzBhAkTJkznMbXL2BRY84M/T1bb0nD0XwETJkyYMB3BZEQBgYEJEyZMmDBhMjBhwvQp4y9uqtObsEouJgAAAABJRU5ErkJggg==">
+    
+</ul>
+
     
 
     <!-- Tags (bookmark) -->
@@ -768,21 +784,6 @@
 
     <!-- Archives  -->
     
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
-            </ul>
-        </li>
-        
-    
 
     <!-- Categories  -->
     
@@ -809,7 +810,7 @@
         <li>
             <a href="/timeline" title="Timeline">
                 
-                    <i class="material-icons sidebar-material-icons">bookmark</i>
+                    <i class="material-icons sidebar-material-icons">timeline</i>
                 
                 Timeline
             </a>
@@ -1056,6 +1057,12 @@ It will not impact the appearance and can give developers a lot of support :)
 
 <!-- Import prettify js  -->
 
+    
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
 
 
 <!-- Window Load -->
@@ -1066,6 +1073,13 @@ It will not impact the appearance and can give developers a lot of support :)
         $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
     });
 
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
     
     
 </script>

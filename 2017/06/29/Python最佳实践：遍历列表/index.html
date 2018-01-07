@@ -83,6 +83,11 @@
         <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
 
         
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/atelier-dune-light.min.css?ZfnESUNClnkZBE6Ec0djTA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
 
     
 
@@ -295,11 +300,10 @@
     
     
 
-    <!-- Custom Head -->
+    <!-- Custom Head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 
-<link rel="stylesheet" href="/css/prism.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+</head>
 
 
     
@@ -415,6 +419,18 @@
 
     <!-- Qrcode -->
     
+        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">devices other</i>
+    <span class="visuallyhidden">devices other</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
+    <li class="mdl-menu__item">在其它设备中阅读本文章</li>
+    
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAAC10lEQVR42u3aQXLcMAwEwP3/p5NrqlyRZ0CtrSVbJx+0FJuHIMDw9efI54WNjY2NjY2NjY39SPYrfv59//rvfP2vb379Vbvmf9fHxsbG3pr9zT/9wRaT364cwQ17xsbGxj6AnRSt/PPXBSn5SvLdfM/Y2NjY2HlpuV4nWb/dAzY2Njb27JP5MGhWiu46JmxsbOxz2LOm4i5eEdn+/CwNGxsb+/Hse4Pen/n7cfk2NjY29i+x22f9ws31obdBcrFzbGxs7E3ZK2Fqi8kjhNng6YYODBsbG/vD2XlMux4G5M1G/v43X8fGxsbelJ0XoaQg5c1Jss718eXvY2NjY5/DLpZI/uv/5sNq8djY2Ni7svOhz6wxaEdXdx1lPUvDxsbG/lh2GwC8bwjVXsGpQ2VsbGzsrdntJhJ2Tm3L1awhwcbGxt6V3ZaN9SI0O9B21IWNjY19DjuPVNt4uG1j7mqKsLGxsU9mtx9bP4ikOWnLapFvY2NjY2/Bzsf6K8eUFMgkSMh3iI2NjX0Oux3Et79qLwYlJbPdJzY2Nvbe7PUrNW2BaUf/67EBNjY29mnsdhNtDHxvVJAUS2xsbOxz2O24J285ZtFsUj6LCAEbGxt7U/b7gt483M3LZEvFxsbGPofdRr/t6H/2raLNmN1UwsbGxt6CnWNmMW1+cPlqebCBjY2NfQK7LScrrUiOad8cXr7ExsbG3pTdju/bUX6+9SSiKAZV2NjY2JuyZ9di8hI1W7k90Ohb2NjY2Juy2ye5RrlSIK9JK6MlbGxs7F3Z7UXGdlQ0Cwbyw83LGDY2Nvbe7HbQ38a0efMwK2C3XdnBxsbG/nB2XjzyliPf4kqpi8IGbGxsbOzRQCePB1baj2S8hY2NjY09HMqXl35mhxiVVWxsbOwD2HlrMQt67x0b1etgY2Njb81eCVzz5mG9Fcnjhzfm29jY2NgPY5/zYGNjY2NjY2NjYz/m+Qvn85EDuXDnAgAAAABJRU5ErkJggg==">
+    
+</ul>
+
+    
 
     <!-- Tags (bookmark) -->
     
@@ -499,33 +515,33 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <h3 id="enumerate-遍历索引和值"><a href="#enumerate-遍历索引和值" class="headerlink" title="enumerate(): 遍历索引和值"></a>enumerate(): 遍历索引和值</h3><p>对列表进行遍历操作时，常也要用到当前遍历项的索引值：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span>len<span class="token punctuation">(</span>flavor_list<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-  flavor <span class="token operator">=</span> flaver<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-  <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'%d: %s'</span> <span class="token operator">%</span> <span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> flavor<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre><code class="python">for i in range(len(flavor_list)):
+  flavor = flaver[i]
+  print(&#39;%d: %s&#39; % (i + 1, flavor))
+</code></pre>
 <p>这种写法既要取出列表长度，又要根据索引取列表值。但要改用<code>enumerate()</code>函数，则可同时取出索引值和遍历项值：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">for</span> i<span class="token punctuation">,</span> flavor <span class="token keyword">in</span> enumerate<span class="token punctuation">(</span>flavor_list<span class="token punctuation">)</span><span class="token punctuation">:</span>
-  <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'%d: %s'</span> <span class="token operator">%</span> <span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> flavor<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre><code class="python">for i, flavor in enumerate(flavor_list):
+  print(&#39;%d: %s&#39; % (i+1, flavor))
+</code></pre>
 <h3 id="zip-并行遍历多个列表"><a href="#zip-并行遍历多个列表" class="headerlink" title="zip(): 并行遍历多个列表"></a>zip(): 并行遍历多个列表</h3><p>我们有多个长度相同的列表，需要在同一索引下对遍历项值进行操作：</p>
-<pre class="line-numbers language-python"><code class="language-python">names <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'Cecilia'</span><span class="token punctuation">,</span> <span class="token string">'Lise'</span><span class="token punctuation">,</span> <span class="token string">'Marie'</span><span class="token punctuation">]</span>
-letters <span class="token operator">=</span> <span class="token punctuation">[</span>len<span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token keyword">for</span> n <span class="token keyword">in</span> names<span class="token punctuation">]</span>
+<pre><code class="python">names = [&#39;Cecilia&#39;, &#39;Lise&#39;, &#39;Marie&#39;]
+letters = [len(n) for n in names]
 
-longest_name <span class="token operator">=</span> None
-max_letters <span class="token operator">=</span> <span class="token number">0</span>
+longest_name = None
+max_letters = 0
 
-<span class="token keyword">for</span> i<span class="token punctuation">,</span> name <span class="token keyword">in</span> enumerate<span class="token punctuation">(</span>names<span class="token punctuation">)</span><span class="token punctuation">:</span>
-  count <span class="token operator">=</span> letters<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
-  <span class="token keyword">if</span> count <span class="token operator">></span> max_letters<span class="token punctuation">:</span>
-    longest_name <span class="token operator">=</span> name
-    max_letters <span class="token operator">=</span> count
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+for i, name in enumerate(names):
+  count = letters[i]
+  if count &gt; max_letters:
+    longest_name = name
+    max_letters = count
+</code></pre>
 <p>由上可见，name和letter通过索引值关联起来，而使用<code>zip()</code>函数，可免去根据索引取值的过程：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">for</span> name<span class="token punctuation">,</span> count <span class="token keyword">in</span> zip<span class="token punctuation">(</span>names<span class="token punctuation">,</span> letters<span class="token punctuation">)</span><span class="token punctuation">:</span>
-  <span class="token keyword">if</span> count <span class="token operator">></span> max_letters<span class="token punctuation">:</span>
-    longest_name <span class="token operator">=</span> name
-    max_letters <span class="token operator">=</span> count
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code class="python">for name, count in zip(names, letters):
+  if count &gt; max_letters:
+    longest_name = name
+    max_letters = count
+</code></pre>
 <p>要注意的是，当多个列表长度不一时，到达最短列表的末尾时，遍历停止。</p>
 <p>而且，<code>enumerate()</code>和<code>zip()</code>返回的对象都是lazy generator，相对来说更加高效。</p>
 <p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
@@ -779,21 +795,6 @@ max_letters <span class="token operator">=</span> <span class="token number">0</
 
     <!-- Archives  -->
     
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
-            </ul>
-        </li>
-        
-    
 
     <!-- Categories  -->
     
@@ -820,7 +821,7 @@ max_letters <span class="token operator">=</span> <span class="token number">0</
         <li>
             <a href="/timeline" title="Timeline">
                 
-                    <i class="material-icons sidebar-material-icons">bookmark</i>
+                    <i class="material-icons sidebar-material-icons">timeline</i>
                 
                 Timeline
             </a>
@@ -1067,6 +1068,12 @@ It will not impact the appearance and can give developers a lot of support :)
 
 <!-- Import prettify js  -->
 
+    
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
 
 
 <!-- Window Load -->
@@ -1077,6 +1084,13 @@ It will not impact the appearance and can give developers a lot of support :)
         $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
     });
 
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
     
     
 </script>

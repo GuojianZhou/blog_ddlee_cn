@@ -83,6 +83,11 @@
         <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
 
         
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/atelier-dune-light.min.css?ZfnESUNClnkZBE6Ec0djTA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
 
     
 
@@ -295,11 +300,10 @@
     
     
 
-    <!-- Custom Head -->
+    <!-- Custom Head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 
-<link rel="stylesheet" href="/css/prism.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+</head>
 
 
     
@@ -415,6 +419,18 @@
 
     <!-- Qrcode -->
     
+        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">devices other</i>
+    <span class="visuallyhidden">devices other</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
+    <li class="mdl-menu__item">在其它设备中阅读本文章</li>
+    
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAACxklEQVR42u3a0U7kMAwF0Pn/n2ZfV2Jn9tpuUYlPnxAMqU+QuIqd19fK54WNjY2NjY2NjY39SPYrfr7/1j+W/uv71XWqbynXjI2NjX00+z//+j9+5l3pn0nVTZzXjI2Njb2B/S4A3n1mvln5uyafwcbGxsbODxj5CtVjzKRmbGxsbOw8wN6VmKzQaz9hY2NjY1cPFc2GTnEwUF3t9l4aNjY29uPZ+dD0OV//6HwbGxsb+8Hs6pO3iqqbWD26lCvHxsbGPpSdB0Pv+HHfUadaJzY2Nvap7GTpybC2NwBItjWpGRsbG3sDu7dcEhu95lQSrr0ww8bGxt7A/vyayfAgP/Ykf5KL59vY2NjYv5w92YK74+qqPwY2Njb2HnbvYJCPYKvXbpLxw2XzbWxsbOwj2L0LNJOLm/lqkwqxsbGxz2bnL8gHq0kUVYOqcDUHGxsbezE7H9bmg958myYtpGhDsbGxsQ9lV2Mgb/RUi8uDrbrd2NjY2BvY+Vg3v5TT+36vLVU+imBjY2Mfx87Bc1gekL0xwNsNxcbGxj6aPSH1GkzzwUMSqNjY2Njb2EkpedHVUOwNGwr1Y2NjYy9gj642xtRkSDBvPI2OItjY2Ni/kJ0Ew6TZlA93k5/mIwRsbGzsDexrX1MoYhBv+cEGGxsbexv77lFBvpW95lShqYSNjY19KLsZDMXmTt7Mmm8oNjY29jZ29blg+HpbaGFjY2PvZFcbTPNrOtUVqg0vbGxs7A3sSWjlgGpbqtrkiq7+YGNjYx/KHkVC3OiZb0EvaLGxsbH3sHuh1YucXtRVNwgbGxt7Jzu/XpkEWNKy70XpLb00bGxs7GXsSYxVW1HzYQM2NjY2dl7EtVd/em+58SiCjY2N/Xh2taxJ2OQD2t4RCBsbG3sbO2/TTJr41Ss41XVunG9jY2NjP5i958HGxsbGxsbGxsZ+zPMHcZ1oOr47RIQAAAAASUVORK5CYII=">
+    
+</ul>
+
+    
 
     <!-- Tags (bookmark) -->
     
@@ -501,14 +517,14 @@
         <h4 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h4><p>Generator能保存自己的状态，进入一种“Paused”状态，再次调用时会继续执行。</p>
 <p>Generator的好处之一是节省了存储空间开销，带一些”流处理”的思想。</p>
 <p>其实，我们也可以对Generator进行传入数据的操作：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">coro</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-    hello <span class="token operator">=</span> <span class="token keyword">yield</span> <span class="token string">"Hello"</span>
-    <span class="token keyword">yield</span> hello
+<pre><code class="python">def coro():
+    hello = yield &quot;Hello&quot;
+    yield hello
 
-c <span class="token operator">=</span> coro<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>next<span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">print</span><span class="token punctuation">(</span>c<span class="token punctuation">.</span>send<span class="token punctuation">(</span><span class="token string">"World"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+c = coro()
+print(next(c))
+print(c.send(&quot;World&quot;))
+</code></pre>
 <h4 id="Coroutine"><a href="#Coroutine" class="headerlink" title="Coroutine"></a>Coroutine</h4><p>coroutine可以认为是generator思想的泛化：</p>
 <ul>
 <li>generator一个一个地吐出数据（返回值）</li>
@@ -524,66 +540,66 @@ c <span class="token operator">=</span> coro<span class="token punctuation">(</s
 <li>支持计划任务（暂停、恢复执行）</li>
 <li>与其他Task通信</li>
 </ul>
-<pre class="line-numbers language-python"><code class="language-python">@coroutine
-<span class="token keyword">def</span> <span class="token function">grep</span><span class="token punctuation">(</span>pattern<span class="token punctuation">)</span><span class="token punctuation">:</span>  <span class="token comment" spellcheck="true">#正则匹配</span>
-    <span class="token keyword">print</span> <span class="token string">"Looking for %s"</span> <span class="token operator">%</span> pattern    
-    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
-        line <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">yield</span><span class="token punctuation">)</span>
-        <span class="token keyword">if</span> pattern <span class="token keyword">in</span> line<span class="token punctuation">:</span>
-            <span class="token keyword">print</span> line<span class="token punctuation">,</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code class="python">@coroutine
+def grep(pattern):  #正则匹配
+    print &quot;Looking for %s&quot; % pattern    
+    while True:
+        line = (yield)
+        if pattern in line:
+            print line,
+</code></pre>
 <p>conroutine有自己的控制流（while/if），有局部变量（pattern, line），能暂停和恢复（yield()/send()），能相互通信（send()）</p>
 <p>====》coroutine就是一种Task！</p>
 <p>Python Docs中提供了一个例子：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> asyncio
+<pre><code class="python">import asyncio
 
-<span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">compute</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Compute %s + %s ..."</span> <span class="token operator">%</span> <span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token keyword">await</span> asyncio<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span><span class="token number">1.0</span><span class="token punctuation">)</span>
-    <span class="token keyword">return</span> x <span class="token operator">+</span> y
+async def compute(x, y):
+    print(&quot;Compute %s + %s ...&quot; % (x, y))
+    await asyncio.sleep(1.0)
+    return x + y
 
-<span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">print_sum</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    result <span class="token operator">=</span> <span class="token keyword">await</span> compute<span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
-    <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"%s + %s = %s"</span> <span class="token operator">%</span> <span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> result<span class="token punctuation">)</span><span class="token punctuation">)</span>
+async def print_sum(x, y):
+    result = await compute(x, y)
+    print(&quot;%s + %s = %s&quot; % (x, y, result))
 
-loop <span class="token operator">=</span> asyncio<span class="token punctuation">.</span>get_event_loop<span class="token punctuation">(</span><span class="token punctuation">)</span>
-loop<span class="token punctuation">.</span>run_until_complete<span class="token punctuation">(</span>print_sum<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-loop<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+loop = asyncio.get_event_loop()
+loop.run_until_complete(print_sum(1, 2))
+loop.close()
+</code></pre>
 <p>执行方式如下图：</p>
 <p><img src="http://static.ddlee.cn/static/img/coroutine/tulip_coro.png" alt="Chaining coroutines"></p>
 <p>利用coroutine，可以在一个线程(Task)上实现异步。</p>
 <h4 id="Impletation"><a href="#Impletation" class="headerlink" title="Impletation"></a>Impletation</h4><p>coroutine有两种实现方式，基于generator和原生async, awati关键字。</p>
-<h5 id="generator-based-coroutine"><a href="#generator-based-coroutine" class="headerlink" title="generator based coroutine"></a>generator based coroutine</h5><pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> asyncio
-<span class="token keyword">import</span> datetime
-<span class="token keyword">import</span> random
+<h5 id="generator-based-coroutine"><a href="#generator-based-coroutine" class="headerlink" title="generator based coroutine"></a>generator based coroutine</h5><pre><code class="python">import asyncio
+import datetime
+import random
 
-@asyncio<span class="token punctuation">.</span>coroutine
-<span class="token keyword">def</span> <span class="token function">display_date</span><span class="token punctuation">(</span>num<span class="token punctuation">,</span> loop<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    end_time <span class="token operator">=</span> loop<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">50.0</span>
-    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
-        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Loop: {} Time: {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>num<span class="token punctuation">,</span> datetime<span class="token punctuation">.</span>datetime<span class="token punctuation">.</span>now<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>loop<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1.0</span><span class="token punctuation">)</span> <span class="token operator">>=</span> end_time<span class="token punctuation">:</span>
-            <span class="token keyword">break</span>
-        <span class="token keyword">yield</span> <span class="token keyword">from</span> asyncio<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+@asyncio.coroutine
+def display_date(num, loop):
+    end_time = loop.time() + 50.0
+    while True:
+        print(&quot;Loop: {} Time: {}&quot;.format(num, datetime.datetime.now()))
+        if (loop.time() + 1.0) &gt;= end_time:
+            break
+        yield from asyncio.sleep(random.randint(0, 5))
 
-loop <span class="token operator">=</span> asyncio<span class="token punctuation">.</span>get_event_loop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+loop = asyncio.get_event_loop()
 
-asyncio<span class="token punctuation">.</span>ensure_future<span class="token punctuation">(</span>display_date<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> loop<span class="token punctuation">)</span><span class="token punctuation">)</span>
-asyncio<span class="token punctuation">.</span>ensure_future<span class="token punctuation">(</span>display_date<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> loop<span class="token punctuation">)</span><span class="token punctuation">)</span>
+asyncio.ensure_future(display_date(1, loop))
+asyncio.ensure_future(display_date(2, loop))
 
-loop<span class="token punctuation">.</span>run_forever<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+loop.run_forever()
+</code></pre>
 <p>上面的程序实现了在同一个线程里交互执行两个函数（sleep），而又能保持各自的状态</p>
 <h5 id="Native-support-python-3-5"><a href="#Native-support-python-3-5" class="headerlink" title="Native support(python 3.5+)"></a>Native support(python 3.5+)</h5><p>只需要修改函数定义头和<code>yield from</code>为关键字<code>await</code>即可。</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">async</span> <span class="token keyword">def</span> <span class="token function">display_date</span><span class="token punctuation">(</span>num<span class="token punctuation">,</span> loop<span class="token punctuation">,</span> <span class="token punctuation">)</span><span class="token punctuation">:</span>
-    end_time <span class="token operator">=</span> loop<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">50.0</span>
-    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
-        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Loop: {} Time: {}"</span><span class="token punctuation">.</span>format<span class="token punctuation">(</span>num<span class="token punctuation">,</span> datetime<span class="token punctuation">.</span>datetime<span class="token punctuation">.</span>now<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        <span class="token keyword">if</span> <span class="token punctuation">(</span>loop<span class="token punctuation">.</span>time<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1.0</span><span class="token punctuation">)</span> <span class="token operator">>=</span> end_time<span class="token punctuation">:</span>
-            <span class="token keyword">break</span>
-        <span class="token keyword">await</span> asyncio<span class="token punctuation">.</span>sleep<span class="token punctuation">(</span>random<span class="token punctuation">.</span>randint<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code class="python">async def display_date(num, loop, ):
+    end_time = loop.time() + 50.0
+    while True:
+        print(&quot;Loop: {} Time: {}&quot;.format(num, datetime.datetime.now()))
+        if (loop.time() + 1.0) &gt;= end_time:
+            break
+        await asyncio.sleep(random.randint(0, 5))
+</code></pre>
 <h4 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h4><p>Coroutine常翻译成“协程”。</p>
 <h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h4><ul>
 <li><a href="http://www.dabeaz.com/coroutines/Coroutines.pdf" target="_blank" rel="external">David Beazley @ PyCon2009 Slides</a></li>
@@ -841,21 +857,6 @@ loop<span class="token punctuation">.</span>run_forever<span class="token punctu
 
     <!-- Archives  -->
     
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
-            </ul>
-        </li>
-        
-    
 
     <!-- Categories  -->
     
@@ -882,7 +883,7 @@ loop<span class="token punctuation">.</span>run_forever<span class="token punctu
         <li>
             <a href="/timeline" title="Timeline">
                 
-                    <i class="material-icons sidebar-material-icons">bookmark</i>
+                    <i class="material-icons sidebar-material-icons">timeline</i>
                 
                 Timeline
             </a>
@@ -1129,6 +1130,12 @@ It will not impact the appearance and can give developers a lot of support :)
 
 <!-- Import prettify js  -->
 
+    
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
 
 
 <!-- Window Load -->
@@ -1139,6 +1146,13 @@ It will not impact the appearance and can give developers a lot of support :)
         $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
     });
 
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
     
     
 </script>

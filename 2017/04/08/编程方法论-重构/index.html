@@ -83,6 +83,11 @@
         <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
 
         
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/atelier-dune-light.min.css?ZfnESUNClnkZBE6Ec0djTA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
 
     
 
@@ -295,11 +300,10 @@
     
     
 
-    <!-- Custom Head -->
+    <!-- Custom Head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 
-<link rel="stylesheet" href="/css/prism.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+</head>
 
 
     
@@ -414,6 +418,18 @@
     -->
 
     <!-- Qrcode -->
+    
+        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">devices other</i>
+    <span class="visuallyhidden">devices other</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
+    <li class="mdl-menu__item">在其它设备中阅读本文章</li>
+    
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAAC3ElEQVR42u3awW7bQAwEUP//T6fXAqntGa7SyLtPpyIQpH0KUIYcPr6OvB7Y2NjY2NjY2NjYt2Q/4uvv+5894R8ve/m078/Mz5CfGRsbG/sE9pv/+l+S2qc9O3r+nNmZsbGxsU9gX1W0Xt+z/pbhmbGxsbGxFwrPsyest0PY2NjY2DN2XqLy8oaNjY2Nvc5OBjRXxQB5s3GLWRo2Njb27dkrxeO3/v1r+TY2Njb2zdjtlSzozFqLWUtTnBwbGxt7U/YMkI/+Z8Ht7FNe0IFhY2NjfyC7He7kqzbJE2bB8LC4YmNjY2/Kbgc6K5FA8szkA+XNDDY2NvY57Fk7ka/LFHHsQlvy5peEjY2NvTW7hbXFbLguGSxo5k0ONjY29t7s2QrmbJQ/aznayKGu29jY2Ngfy06G/knpysPjtkCufDJsbGzsc9j5oVeOMhwGle8tChg2Njb2FuzZUCmPeNsjtoWzWMfExsbG3pr9E2uXeVORBwlL4ydsbGzsTdkryzE/F9y2b1yKB7CxsbE/nH1tHNtiZi3NLMzAxsbGPoHdFrCkdLUfK48H8tgAGxsbe292Hvq2IUH7KYejojiWwMbGxt6VPQt61yOBtlBd0NJgY2Njb81O/qxv71xf31mPfrGxsbHPYSdhQBus5rxktJSfEBsbG/tMdjumb3/Slr28FSkKITY2Nvam7Hwppx1CrTQ2swD4TcHDxsbGPoydj3j+ZzuRlDpsbGzs09hRRFqu4+RNSI5sI4FiqISNjY394ezZiH+21pO3NO1HieJkbGxs7E3Z7SLjynHbgVTeAkVjLGxsbOyt2UnRakdLeTlMzjNrVLCxsbFPY7fDmlkEm4+uWh42NjY29lXtR3LoOqYt2w9sbGxs7LZQtc3DbNCfD56ieAAbGxt7O3Y7+snbhiQMeE1NwuM392NjY2NvzV5fcGxXM9vgYRYVYGNjY5/APufCxsbGxsbGxsbGvs31B8UoKlyJC2osAAAAAElFTkSuQmCC">
+    
+</ul>
+
     
 
     <!-- Tags (bookmark) -->
@@ -537,15 +553,15 @@
 <li><em>Remove assignment to parameters</em>: 对参数默认值的设定，在函数内新建变量，初始化这个新变量</li>
 </ul>
 <p>Remove assignment to parameters的例子：</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//Before</span>
-<span class="token keyword">int</span> <span class="token function">discount</span> <span class="token punctuation">(</span><span class="token keyword">int</span> inputVal<span class="token punctuation">,</span> <span class="token keyword">int</span> quantity<span class="token punctuation">,</span> <span class="token keyword">int</span> yearToDate<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>inputVal <span class="token operator">></span> <span class="token number">50</span><span class="token punctuation">)</span> inputVal <span class="token operator">-=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+<pre><code class="java">//Before
+int discount (int inputVal, int quantity, int yearToDate) {
+  if (inputVal &gt; 50) inputVal -= 2;
 
-<span class="token comment" spellcheck="true">//After Refactoring</span>
-<span class="token keyword">int</span> <span class="token function">discount</span> <span class="token punctuation">(</span><span class="token keyword">int</span> inputVal<span class="token punctuation">,</span> <span class="token keyword">int</span> quantity<span class="token punctuation">,</span> <span class="token keyword">int</span> yearToDate<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">int</span> result <span class="token operator">=</span> inputVal<span class="token punctuation">;</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>inputVal <span class="token operator">></span> <span class="token number">50</span><span class="token punctuation">)</span> result <span class="token operator">-=</span> <span class="token number">2</span><span class="token punctuation">;</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+//After Refactoring
+int discount (int inputVal, int quantity, int yearToDate) {
+  int result = inputVal;
+  if (inputVal &gt; 50) result -= 2;
+</code></pre>
 <p>这一点基于的信念是，参数只能代表被传进来的变量，不应该在本地再赋予别的含义。</p>
 <h3 id="重构范例：类与方法"><a href="#重构范例：类与方法" class="headerlink" title="重构范例：类与方法"></a>重构范例：类与方法</h3><p><img src="http://static.ddlee.cn/static/img/编程方法论-重构/Refactoring-2.png" alt="class and method"></p>
 <h4 id="Move-Method"><a href="#Move-Method" class="headerlink" title="Move Method"></a><em>Move Method</em></h4><p>Code smell: feature envy（依恋情结）</p>
@@ -565,17 +581,17 @@
 <li><em>Replace type code with subclass*</em>: 针对有判断分支的类，替换为子类</li>
 </ul>
 <p>Consolidate conditional expression的例子：</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//Before</span>
-<span class="token keyword">double</span> <span class="token function">disabilityAmount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>_seniority <span class="token operator">&lt;</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>_monthsDisabled <span class="token operator">></span> <span class="token number">12</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>_isPartTime<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-  <span class="token comment" spellcheck="true">// compute the disability amount</span>
-<span class="token comment" spellcheck="true">//After Refactoring</span>
-<span class="token keyword">double</span> <span class="token function">disabilityAmount</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isNotEligableForDisability</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-  <span class="token comment" spellcheck="true">// compute the disability amount</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code class="java">//Before
+double disabilityAmount() {
+  if (_seniority &lt; 2) return 0;
+  if (_monthsDisabled &gt; 12) return 0;
+  if (_isPartTime) return 0;
+  // compute the disability amount
+//After Refactoring
+double disabilityAmount() {
+  if (isNotEligableForDisability()) return 0;
+  // compute the disability amount
+</code></pre>
 <h3 id="重构范例：数据相关"><a href="#重构范例：数据相关" class="headerlink" title="重构范例：数据相关"></a>重构范例：数据相关</h3><p><img src="http://static.ddlee.cn/static/img/编程方法论-重构/Refactoring-3.png" alt="class and method"></p>
 <h4 id="Move-field"><a href="#Move-field" class="headerlink" title="Move field"></a><em>Move field</em></h4><p>code smell: inverse feature envy（自造）</p>
 <p>某一个类使用某一数据比该数据所属的类还多。</p>
@@ -595,26 +611,26 @@
 <li><em>Separate queries form modifiers</em>: 将找到数据和更该数据两个操作拆成两个方法</li>
 </ul>
 <p>Replace parameter with explicit Method的例子：</p>
-<pre class="line-numbers language-java"><code class="language-java"><span class="token comment" spellcheck="true">//Before</span>
-<span class="token keyword">void</span> <span class="token function">setValue</span> <span class="token punctuation">(</span>String name<span class="token punctuation">,</span> <span class="token keyword">int</span> value<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>name<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"height"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    _height <span class="token operator">=</span> value<span class="token punctuation">;</span>
-    <span class="token keyword">return</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>name<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"width"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    _width <span class="token operator">=</span> value<span class="token punctuation">;</span>
-    <span class="token keyword">return</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
-  Assert<span class="token punctuation">.</span><span class="token function">shouldNeverReachHere</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token comment" spellcheck="true">//After Refactoring</span>
-<span class="token keyword">void</span> <span class="token function">setHeight</span><span class="token punctuation">(</span><span class="token keyword">int</span> arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  _height <span class="token operator">=</span> arg<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span class="token keyword">void</span> <span class="token function">setWidth</span> <span class="token punctuation">(</span><span class="token keyword">int</span> arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  _width <span class="token operator">=</span> arg<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code class="java">//Before
+void setValue (String name, int value) {
+  if (name.equals(&quot;height&quot;)) {
+    _height = value;
+    return;
+  }
+  if (name.equals(&quot;width&quot;)) {
+    _width = value;
+    return;
+  }
+  Assert.shouldNeverReachHere();
+}
+//After Refactoring
+void setHeight(int arg) {
+  _height = arg;
+}
+void setWidth (int arg) {
+  _width = arg;
+}
+</code></pre>
 <h4 id="Pulling-and-pushing-升级与降级"><a href="#Pulling-and-pushing-升级与降级" class="headerlink" title="Pulling and pushing(升级与降级)"></a>Pulling and pushing(升级与降级)</h4><ul>
 <li><em>Pull up method</em> and <em>pull up field</em></li>
 <li><em>Push down method</em> and <em>push down field</em></li>
@@ -874,21 +890,6 @@
 
     <!-- Archives  -->
     
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
-            </ul>
-        </li>
-        
-    
 
     <!-- Categories  -->
     
@@ -915,7 +916,7 @@
         <li>
             <a href="/timeline" title="Timeline">
                 
-                    <i class="material-icons sidebar-material-icons">bookmark</i>
+                    <i class="material-icons sidebar-material-icons">timeline</i>
                 
                 Timeline
             </a>
@@ -1162,6 +1163,12 @@ It will not impact the appearance and can give developers a lot of support :)
 
 <!-- Import prettify js  -->
 
+    
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
 
 
 <!-- Window Load -->
@@ -1172,6 +1179,13 @@ It will not impact the appearance and can give developers a lot of support :)
         $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
     });
 
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
     
     
 </script>

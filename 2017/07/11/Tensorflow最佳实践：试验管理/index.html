@@ -56,7 +56,7 @@
 
     <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
-    <meta name="keywords" content="萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee,Deep Learning,AI,best practice,Tensorflow">
+    <meta name="keywords" content="萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee,Deep Learning,AI,Tensorflow,best practice">
     <meta name="theme-color" content="#0097A7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
@@ -82,6 +82,11 @@
         <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","/css/material.min.css?Z7a72R1E4SxzBKR/WGctOA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
         <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","/css/style.min.css?MKetZV3cUTfDxvMffaOezg==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
 
+        
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","/css/prettify.min.css?zp8STOU9v89XWFEnN+6YmQ==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","/css/prettify/atelier-dune-light.min.css?ZfnESUNClnkZBE6Ec0djTA==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
         
 
     
@@ -237,7 +242,7 @@
     <meta property="og:title" content="Tensorflow最佳实践：试验管理 | 萧爽楼">
     <meta property="og:image" content="http://static.ddlee.cn/static/img/material-theme-img/favicon.png">
     <meta property="og:description" content="我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
-    <meta property="og:article:tag" content="Deep Learning"> <meta property="og:article:tag" content="AI"> <meta property="og:article:tag" content="best practice"> <meta property="og:article:tag" content="Tensorflow"> 
+    <meta property="og:article:tag" content="Deep Learning"> <meta property="og:article:tag" content="AI"> <meta property="og:article:tag" content="Tensorflow"> <meta property="og:article:tag" content="best practice"> 
 
     
         <meta property="article:published_time" content="Tue Jul 11 2017 20:53:27 GMT+0800">
@@ -282,7 +287,7 @@
             "url": "http://static.ddlee.cn/static/img/material-theme-img/favicon.png"
         }
     },
-    "keywords": ",Deep Learning,AI,best practice,Tensorflow萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee",
+    "keywords": ",Deep Learning,AI,Tensorflow,best practice萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee",
     "description": "我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。",
 }
 </script>
@@ -295,11 +300,10 @@
     
     
 
-    <!-- Custom Head -->
+    <!-- Custom Head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 
-<link rel="stylesheet" href="/css/prism.css" type="text/css">
-<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+</head>
 
 
     
@@ -415,6 +419,18 @@
 
     <!-- Qrcode -->
     
+        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">devices other</i>
+    <span class="visuallyhidden">devices other</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
+    <li class="mdl-menu__item">在其它设备中阅读本文章</li>
+    
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAACy0lEQVR42u3aQVLDMBAEwPz/0/AAwDWzcsBI7RNFYlntHKZ2V6+PI68XNjY2NjY2NjY29iPZr/j6etc3S//w/eRZ1yvfsGdsbGzsrdnJY5L/J4/PX1b+3Ghv2NjY2Aewk1C5/s56/LSvIw9CbGxsbOyftnJNXS82rsMJGxsbG3s9wHJ20k7KQwsbGxsbe9agaRtJyb3Jy/rjXho2Njb249ltzDzh71+db2NjY2M/mN1ebfGQh1k7PKh3jo2Njb0pOw+GvH0/a/TPhgdFewsbGxv7APZ6YdCuM9tJOxjAxsbGPoedt+PzYW07DG7jLT8Gio2NjX0mezYGnr2+lcZTFHjY2NjYW7NXCok8xvKGVAKuG2HY2NjYB7Bnrfm2nJgVLe0gARsbG/s0djusTTaXM9rBw3DkjI2Njb01Oz/a2G4iL1HyYGtbXdjY2Nh7s/NH5kcwkxbVeonSHgnFxsbG3pvdlhYrwZN/mg8nIgs2Njb2puw2bFrMO9ZpV8bGxsY+h71yFLKOk3LkMItDbGxs7BPYdxUkbfDMhsSzHwYbGxv7BHYUAHEj6X3fyQ/9RAGGjY2NvRG7bdDPtp5vOo/P/MgRNjY29q7s9uZ80zm+vWY7x8bGxt6VnUdIu6EW3w5u60NF2NjY2Juy82BYaQy1gZQPMIbjAWxsbOzt2Cstm7tWmIVosho2Njb2mey2RGkbPe1wty14sLGxsc9kt22aZPSbHwBqX2j9I2FjY2Nvym6v/DF5tOTNrPyu4qQSNjY29j9nt0PcNvbyiJqNAYpmEzY2NvbW7Da0Zi8oafq3pUsRkNjY2NgHsGfNmvVG0uwwUP0DYGNjY2PHJUfSHpoVG/mn2NjY2NjrTZy2hZQPcfNjQNjY2NinsZMCY6XFk5cNbSlSH9nBxsbG3o5929JxmZEXMCutJWxsbOwT2Odc2NjY2NjY2NjY2I+5PgEH0uxvI3s6LwAAAABJRU5ErkJggg==">
+    
+</ul>
+
+    
 
     <!-- Tags (bookmark) -->
     
@@ -500,113 +516,113 @@
     
         <p>本文主要记录使用TensorFlow训练模型中与试验管理相关的最佳实践，主要包括模型训练的大致代码框架、模型的保存与恢复、训练过程的监测、随机性的控制等。主要材料来自<a href="https://web.stanford.edu/class/cs20si/index.html" target="_blank" rel="external">CS 20SI: Tensorflow for Deep Learning Research</a>。</p>
 <h3 id="TensorFlow代码框架"><a href="#TensorFlow代码框架" class="headerlink" title="TensorFlow代码框架"></a>TensorFlow代码框架</h3><p>使用TensorFlow构建深度网络模型大致包括数据预处理、图的构建、模型训练、模型推断与评估等部分，大致的代码框架如下：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span> tensorflow <span class="token keyword">as</span> tf
-<span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<pre><code class="python">import tensorflow as tf
+import numpy as np
 
-<span class="token comment" spellcheck="true"># Data</span>
-X <span class="token operator">=</span> tf<span class="token punctuation">.</span>placeholder<span class="token punctuation">(</span><span class="token string">"float"</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>None<span class="token punctuation">,</span> n_input<span class="token punctuation">]</span><span class="token punctuation">)</span>
-Y <span class="token operator">=</span> tf<span class="token punctuation">.</span>placeholder<span class="token punctuation">(</span><span class="token string">"float"</span><span class="token punctuation">,</span> <span class="token punctuation">[</span>None<span class="token punctuation">,</span> n_output<span class="token punctuation">]</span><span class="token punctuation">)</span>
+# Data
+X = tf.placeholder(&quot;float&quot;, [None, n_input])
+Y = tf.placeholder(&quot;float&quot;, [None, n_output])
 
-<span class="token comment" spellcheck="true"># Parameters</span>
-W <span class="token operator">=</span> tf<span class="token punctuation">.</span>Variable<span class="token punctuation">(</span>tf<span class="token punctuation">.</span>random_normal<span class="token punctuation">(</span><span class="token punctuation">[</span>n_input<span class="token punctuation">,</span> n_output<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-b <span class="token operator">=</span> tf<span class="token punctuation">.</span>Variable<span class="token punctuation">(</span>tf<span class="token punctuation">.</span>random_normal<span class="token punctuation">(</span><span class="token punctuation">[</span>n_output<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+# Parameters
+W = tf.Variable(tf.random_normal([n_input, n_output]))
+b = tf.Variable(tf.random_normal([n_output]))
 
-<span class="token comment" spellcheck="true"># Define model</span>
-y <span class="token operator">=</span> tf<span class="token punctuation">.</span>matmul<span class="token punctuation">(</span>x<span class="token punctuation">,</span> W<span class="token punctuation">)</span> <span class="token operator">+</span> b
-y_pred <span class="token operator">=</span> tf<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>relu<span class="token punctuation">(</span>y<span class="token punctuation">)</span>
-cost <span class="token operator">=</span> tf<span class="token punctuation">.</span>reduce_mean<span class="token punctuation">(</span>tf<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>softmax_cross_entropy_with_logits<span class="token punctuation">(</span>y_pred<span class="token punctuation">,</span> y_true<span class="token punctuation">)</span><span class="token punctuation">)</span>
-optimizer <span class="token operator">=</span> tf<span class="token punctuation">.</span>train<span class="token punctuation">.</span>GradientDescentOptimizer<span class="token punctuation">(</span><span class="token number">0.05</span><span class="token punctuation">)</span><span class="token punctuation">.</span>minimize<span class="token punctuation">(</span>cost<span class="token punctuation">)</span>
+# Define model
+y = tf.matmul(x, W) + b
+y_pred = tf.nn.relu(y)
+cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(y_pred, y_true))
+optimizer = tf.train.GradientDescentOptimizer(0.05).minimize(cost)
 
-<span class="token comment" spellcheck="true"># Training</span>
-<span class="token keyword">with</span> tf<span class="token punctuation">.</span>Session<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">as</span> sess<span class="token punctuation">:</span>
-    tf<span class="token punctuation">.</span>initialize_all_variables<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>run<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    sess<span class="token punctuation">.</span>run<span class="token punctuation">(</span>optimizer<span class="token punctuation">,</span> feed_dict<span class="token operator">=</span><span class="token punctuation">{</span>X<span class="token punctuation">:</span> x_data<span class="token punctuation">,</span> Y<span class="token punctuation">:</span> y_data<span class="token punctuation">}</span><span class="token punctuation">)</span>
+# Training
+with tf.Session() as sess:
+    tf.initialize_all_variables().run()
+    sess.run(optimizer, feed_dict={X: x_data, Y: y_data})
 
-<span class="token comment" spellcheck="true"># Prediction</span>
-y_test <span class="token operator">=</span> tf<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>relu<span class="token punctuation">(</span>tf<span class="token punctuation">.</span>matmul<span class="token punctuation">(</span>x_test<span class="token punctuation">,</span> W<span class="token punctuation">)</span> <span class="token operator">+</span> b<span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+# Prediction
+y_test = tf.nn.relu(tf.matmul(x_test, W) + b))
+</code></pre>
 <h3 id="模型的保存与恢复"><a href="#模型的保存与恢复" class="headerlink" title="模型的保存与恢复"></a>模型的保存与恢复</h3><p>一个很深的网络训练成本是比较高的，因而将模型定期保存（写入硬盘）则有必要。这里的模型，实际上是有组织的一批数据，包括图的结构描述、参数当前值等。因而我们要保存的不仅是模型，还有模型当前的运行状态，实际上每一次保存可以作为一个还原点。</p>
 <h4 id="tf-train-Saver类"><a href="#tf-train-Saver类" class="headerlink" title="tf.train.Saver类"></a>tf.train.Saver类</h4><p>使用<code>tf.train.Saver</code>类需传入以下参数：<code>tf.train.Saver.save(sess, save_path, global_step=step)</code>。</p>
 <p>首先定义步数变量：<code>self​.​global_step ​=​ tf​.​Variable​(​0​,​ dtype​=​tf​.​int32​,​ trainable​=​False​,name​=​&#39;global_step&#39;)</code></p>
 <p>在模型训练的过程中插入还原点的保存：</p>
-<pre class="line-numbers language-python"><code class="language-python">self​<span class="token punctuation">.</span>​optimizer ​<span class="token operator">=</span>​ tf​<span class="token punctuation">.</span>​train​<span class="token punctuation">.</span>​GradientDescentOptimizer​<span class="token punctuation">(</span>​self​<span class="token punctuation">.</span>​lr​<span class="token punctuation">)</span><span class="token punctuation">.</span>​minimize​<span class="token punctuation">(</span>​self​<span class="token punctuation">.</span>​loss​<span class="token punctuation">,</span>global_step​<span class="token operator">=</span>​self​<span class="token punctuation">.</span>​global_step<span class="token punctuation">)</span>
-saver ​<span class="token operator">=</span>​ tf​<span class="token punctuation">.</span>​train​<span class="token punctuation">.</span>​Saver​<span class="token punctuation">(</span><span class="token punctuation">)</span>​​
-​<span class="token keyword">with</span>​ tf​<span class="token punctuation">.</span>​Session​<span class="token punctuation">(</span><span class="token punctuation">)</span>​​<span class="token keyword">as</span>​ sess<span class="token punctuation">:</span>
- sess​<span class="token punctuation">.</span>​run​<span class="token punctuation">(</span>​tf​<span class="token punctuation">.</span>​global_variables_initializer​<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>        
- average_loss ​<span class="token operator">=</span>​​<span class="token number">0.0</span>
- <span class="token keyword">for</span>​ index ​<span class="token keyword">in</span>​ range​<span class="token punctuation">(</span>​num_train_steps​<span class="token punctuation">)</span><span class="token punctuation">:</span>            
-    batch ​<span class="token operator">=</span>​ batch_gen​<span class="token punctuation">.</span>​next​<span class="token punctuation">(</span><span class="token punctuation">)</span>
-    loss_batch​<span class="token punctuation">,</span>​ _ ​<span class="token operator">=</span>​ sess​<span class="token punctuation">.</span>​run​<span class="token punctuation">(</span><span class="token punctuation">[</span>​model​<span class="token punctuation">.</span>​loss​<span class="token punctuation">,</span>​ model​<span class="token punctuation">.</span>​optimizer​<span class="token punctuation">]</span><span class="token punctuation">,</span> feed_dict​<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">}</span><span class="token punctuation">)</span>
-    average_loss ​<span class="token operator">+=</span>​ loss_batch
-    <span class="token comment" spellcheck="true"># Save model every 1000 steps</span>
-    ​<span class="token keyword">if</span>​​<span class="token punctuation">(</span>​index ​<span class="token operator">+</span>​​<span class="token number">1</span>​<span class="token punctuation">)</span>​​<span class="token operator">%</span>​​<span class="token number">1000</span>​​<span class="token operator">==</span>​​<span class="token number">0</span><span class="token punctuation">:</span>
-      saver​<span class="token punctuation">.</span>​save​<span class="token punctuation">(</span>​sess​<span class="token punctuation">,</span>​​<span class="token string">'checkpoints/model'</span>​<span class="token punctuation">,</span>​ global_step​<span class="token operator">=</span>​model​<span class="token punctuation">.</span>​global_step<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code class="python">self​.​optimizer ​=​ tf​.​train​.​GradientDescentOptimizer​(​self​.​lr​).​minimize​(​self​.​loss​,global_step​=​self​.​global_step)
+saver ​=​ tf​.​train​.​Saver​()​​
+​with​ tf​.​Session​()​​as​ sess:
+ sess​.​run​(​tf​.​global_variables_initializer​())        
+ average_loss ​=​​0.0
+ for​ index ​in​ range​(​num_train_steps​):            
+    batch ​=​ batch_gen​.​next​()
+    loss_batch​,​ _ ​=​ sess​.​run​([​model​.​loss​,​ model​.​optimizer​], feed_dict​={...})
+    average_loss ​+=​ loss_batch
+    # Save model every 1000 steps
+    ​if​​(​index ​+​​1​)​​%​​1000​​==​​0:
+      saver​.​save​(​sess​,​​&#39;checkpoints/model&#39;​,​ global_step​=​model​.​global_step)
+</code></pre>
 <p>在训练过程中，在<code>checkpoints</code>路径下会存储一系列的还原点文件，要恢复session到某个还原点，可使用如下代码：<code>saver.restore(sess, &#39;checkpoints/name_of_the_checkpoint&#39;)</code>。</p>
 <h4 id="Keras封装：keras-callbacks-ModelCheckpoint"><a href="#Keras封装：keras-callbacks-ModelCheckpoint" class="headerlink" title="Keras封装：keras.callbacks.ModelCheckpoint()"></a>Keras封装：<code>keras.callbacks.ModelCheckpoint()</code></h4><p>Keras对TensorFlow进行了高层的封装，使用一系列回调函数<code>keras.callbacks.Callback()</code>来进行试验管理。</p>
 <p>模型保存<code>ModelCheckpoint()</code>需要传入的参数：<br><code>keras.callbacks.ModelCheckpoint(filepath, monitor=&#39;val_loss&#39;, verbose=0, save_best_only=False, save_weights_only=False, mode=&#39;auto&#39;, period=1)</code></p>
 <p>实际的使用中，将上述回调函数类传入<code>model.fit()</code>过程即可：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">from</span> keras<span class="token punctuation">.</span>callbacks <span class="token keyword">import</span> ModelCheckpoint
+<pre><code class="python">from keras.callbacks import ModelCheckpoint
 
-model <span class="token operator">=</span> Sequential<span class="token punctuation">(</span><span class="token punctuation">)</span>
-model<span class="token punctuation">.</span>add<span class="token punctuation">(</span>Dense<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> input_dim<span class="token operator">=</span><span class="token number">784</span><span class="token punctuation">,</span> kernel_initializer<span class="token operator">=</span><span class="token string">'uniform'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-model<span class="token punctuation">.</span>add<span class="token punctuation">(</span>Activation<span class="token punctuation">(</span><span class="token string">'softmax'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-model<span class="token punctuation">.</span>compile<span class="token punctuation">(</span>loss<span class="token operator">=</span><span class="token string">'categorical_crossentropy'</span><span class="token punctuation">,</span> optimizer<span class="token operator">=</span><span class="token string">'rmsprop'</span><span class="token punctuation">)</span>
-checkpointer <span class="token operator">=</span> ModelCheckpoint<span class="token punctuation">(</span>filepath<span class="token operator">=</span><span class="token string">'/checkpoints/weights.hdf5'</span><span class="token punctuation">,</span> verbose<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">,</span> save_best_only<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
-model<span class="token punctuation">.</span>fit<span class="token punctuation">(</span>x_train<span class="token punctuation">,</span> y_train<span class="token punctuation">,</span> batch_size<span class="token operator">=</span><span class="token number">128</span><span class="token punctuation">,</span> epochs<span class="token operator">=</span><span class="token number">20</span><span class="token punctuation">,</span> verbose<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> validation_data<span class="token operator">=</span><span class="token punctuation">(</span>X_test<span class="token punctuation">,</span> Y_test<span class="token punctuation">)</span><span class="token punctuation">,</span> callbacks<span class="token operator">=</span><span class="token punctuation">[</span>checkpointer<span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+model = Sequential()
+model.add(Dense(10, input_dim=784, kernel_initializer=&#39;uniform&#39;))
+model.add(Activation(&#39;softmax&#39;))
+model.compile(loss=&#39;categorical_crossentropy&#39;, optimizer=&#39;rmsprop&#39;)
+checkpointer = ModelCheckpoint(filepath=&#39;/checkpoints/weights.hdf5&#39;, verbose=1, save_best_only=True)
+model.fit(x_train, y_train, batch_size=128, epochs=20, verbose=0, validation_data=(X_test, Y_test), callbacks=[checkpointer])
+</code></pre>
 <h3 id="模型训练过程的监测"><a href="#模型训练过程的监测" class="headerlink" title="模型训练过程的监测"></a>模型训练过程的监测</h3><p>训练过程中，我们常常需要提取阶段性的信息来评估模型是否符合预期效果。</p>
 <h4 id="tf-summary"><a href="#tf-summary" class="headerlink" title="tf.summary"></a><code>tf.summary</code></h4><p>首先创建想要观察指标的<code>tf.summary</code>对象：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">with</span> tf<span class="token punctuation">.</span>name_scope<span class="token punctuation">(</span><span class="token string">"summaries"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-  tf<span class="token punctuation">.</span>summary<span class="token punctuation">.</span>scalar<span class="token punctuation">(</span><span class="token string">"loss"</span><span class="token punctuation">,</span> self<span class="token punctuation">.</span>loss<span class="token punctuation">)</span>
-  tf<span class="token punctuation">.</span>summary<span class="token punctuation">.</span>scalar<span class="token punctuation">(</span><span class="token string">"accuracy"</span><span class="token punctuation">,</span> self<span class="token punctuation">.</span>accuracy<span class="token punctuation">)</span>
-  tf<span class="token punctuation">.</span>summary<span class="token punctuation">.</span>histogram<span class="token punctuation">(</span><span class="token string">"histogram loss"</span><span class="token punctuation">,</span> self<span class="token punctuation">.</span>loss<span class="token punctuation">)</span>
-  <span class="token comment" spellcheck="true"># merge them all</span>
-  self<span class="token punctuation">.</span>summary_op <span class="token operator">=</span> tf<span class="token punctuation">.</span>summary<span class="token punctuation">.</span>merge_all<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code class="python">with tf.name_scope(&quot;summaries&quot;):
+  tf.summary.scalar(&quot;loss&quot;, self.loss)
+  tf.summary.scalar(&quot;accuracy&quot;, self.accuracy)
+  tf.summary.histogram(&quot;histogram loss&quot;, self.loss)
+  # merge them all
+  self.summary_op = tf.summary.merge_all()
+</code></pre>
 <p><code>tf.summary</code>是一种operation，因而可以随训练过程一同运行：<br><code>loss_batch, _, summary = sess.run([model.loss, model.optimizer, model.summary_op], feed_dict=feed_dict)</code></p>
 <p>最后，将summary加入writer以写入文件：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">with</span> tf<span class="token punctuation">.</span>Session<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">as</span> sess<span class="token punctuation">:</span>
-  writer ​<span class="token operator">=</span>​ tf​<span class="token punctuation">.</span>​summary​<span class="token punctuation">.</span>​FileWriter​<span class="token punctuation">(</span>​<span class="token string">'./summary'</span>​<span class="token punctuation">,</span>​ sess​<span class="token punctuation">.</span>​graph<span class="token punctuation">)</span>
-  <span class="token keyword">for</span>​ index ​<span class="token keyword">in</span>​ range​<span class="token punctuation">(</span>​num_train_steps​<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    writer<span class="token punctuation">.</span>add_summary<span class="token punctuation">(</span>summary<span class="token punctuation">,</span> global_step<span class="token operator">=</span>step<span class="token punctuation">)</span>
-  writer<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code class="python">with tf.Session() as sess:
+  writer ​=​ tf​.​summary​.​FileWriter​(​&#39;./summary&#39;​,​ sess​.​graph)
+  for​ index ​in​ range​(​num_train_steps​):
+    writer.add_summary(summary, global_step=step)
+  writer.close()
+</code></pre>
 <p>这样，就可以用TensorBoard监测我们关心的指标在训练过程中的变化情况。</p>
 <h4 id="Keras封装：keras-callbacks-TensorBoard"><a href="#Keras封装：keras-callbacks-TensorBoard" class="headerlink" title="Keras封装：keras.callbacks.TensorBoard()"></a>Keras封装：<code>keras.callbacks.TensorBoard()</code></h4><p>Keras同样将TensorBoard封装成回调函数的形式，在模型训练时进行调用即可：</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">from</span> keras<span class="token punctuation">.</span>callbacks <span class="token keyword">import</span> TensorBoard
+<pre><code class="python">from keras.callbacks import TensorBoard
 
-tensorboard <span class="token operator">=</span> TensorBoard<span class="token punctuation">(</span>log_dir<span class="token operator">=</span><span class="token string">"./logs"</span><span class="token punctuation">)</span>
-model<span class="token punctuation">.</span>fit<span class="token punctuation">(</span>x_train<span class="token punctuation">,</span> y_train<span class="token punctuation">,</span> batch_size<span class="token operator">=</span><span class="token number">128</span><span class="token punctuation">,</span> epochs<span class="token operator">=</span><span class="token number">20</span><span class="token punctuation">,</span> verbose<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> validation_data<span class="token operator">=</span><span class="token punctuation">(</span>X_test<span class="token punctuation">,</span> Y_test<span class="token punctuation">)</span><span class="token punctuation">,</span> callbacks<span class="token operator">=</span><span class="token punctuation">[</span>tensorboard<span class="token punctuation">]</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+tensorboard = TensorBoard(log_dir=&quot;./logs&quot;)
+model.fit(x_train, y_train, batch_size=128, epochs=20, verbose=0, validation_data=(X_test, Y_test), callbacks=[tensorboard]
+</code></pre>
 <h3 id="随机性的控制"><a href="#随机性的控制" class="headerlink" title="随机性的控制"></a>随机性的控制</h3><p>TensorFlow中随机性的控制分为operation和graph两个层面。</p>
 <h4 id="Operation层面"><a href="#Operation层面" class="headerlink" title="Operation层面"></a>Operation层面</h4><p>在Operation层面中，建立随机seed之后，新建立的Session每一次调用<code>sess.run()</code>都会遵循同一随机状态：</p>
-<pre class="line-numbers language-python"><code class="language-python">c ​<span class="token operator">=</span>​ tf​<span class="token punctuation">.</span>​random_uniform​<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>​​<span class="token operator">-</span>​<span class="token number">10</span>​<span class="token punctuation">,</span>​​<span class="token number">10</span>​<span class="token punctuation">,</span>​ seed​<span class="token operator">=</span>​<span class="token number">2</span><span class="token punctuation">)</span>
+<pre><code class="python">c ​=​ tf​.​random_uniform​([],​​-​10​,​​10​,​ seed​=​2)
 
-<span class="token keyword">with</span>​ tf​<span class="token punctuation">.</span>​Session​<span class="token punctuation">(</span><span class="token punctuation">)</span>​​<span class="token keyword">as</span>​ sess<span class="token punctuation">:</span>
-  <span class="token keyword">print</span>​ sess​<span class="token punctuation">.</span>​run​<span class="token punctuation">(</span>​c<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># >> 3.57493</span>
+with​ tf​.​Session​()​​as​ sess:
+  print​ sess​.​run​(​c) # &gt;&gt; 3.57493
 
-<span class="token keyword">with</span>​ tf​<span class="token punctuation">.</span>​Session​<span class="token punctuation">(</span><span class="token punctuation">)</span>​​<span class="token keyword">as</span>​ sess<span class="token punctuation">:</span>
-  <span class="token keyword">print</span>​ sess​<span class="token punctuation">.</span>​run​<span class="token punctuation">(</span>​c<span class="token punctuation">)</span> <span class="token comment" spellcheck="true"># >> 3.57493</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+with​ tf​.​Session​()​​as​ sess:
+  print​ sess​.​run​(​c) # &gt;&gt; 3.57493
+</code></pre>
 <p>而且，不同的operation可以保存自己的seed:</p>
-<pre class="line-numbers language-python"><code class="language-python">c ​<span class="token operator">=</span>​ tf​<span class="token punctuation">.</span>​random_uniform​<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>​​<span class="token operator">-</span>​<span class="token number">10</span>​<span class="token punctuation">,</span>​​<span class="token number">10</span>​<span class="token punctuation">,</span>​ seed​<span class="token operator">=</span>​<span class="token number">1</span><span class="token punctuation">)</span>
-d ​<span class="token operator">=</span>​ tf​<span class="token punctuation">.</span>​random_uniform​<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>​​<span class="token operator">-</span>​<span class="token number">10</span>​<span class="token punctuation">,</span>​​<span class="token number">10</span>​<span class="token punctuation">,</span>​ seed​<span class="token operator">=</span>​<span class="token number">2</span><span class="token punctuation">)</span>
-<span class="token keyword">with</span>​ tf​<span class="token punctuation">.</span>​Session​<span class="token punctuation">(</span><span class="token punctuation">)</span> ​​<span class="token keyword">as</span>​ sess<span class="token punctuation">:</span>
-  sess​<span class="token punctuation">.</span>​run​<span class="token punctuation">(</span>​c<span class="token punctuation">)</span>
-  sess​<span class="token punctuation">.</span>​run​<span class="token punctuation">(</span>​d<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code class="python">c ​=​ tf​.​random_uniform​([],​​-​10​,​​10​,​ seed​=​1)
+d ​=​ tf​.​random_uniform​([],​​-​10​,​​10​,​ seed​=​2)
+with​ tf​.​Session​() ​​as​ sess:
+  sess​.​run​(​c)
+  sess​.​run​(​d)
+</code></pre>
 <h4 id="Graph层面"><a href="#Graph层面" class="headerlink" title="Graph层面"></a>Graph层面</h4><p>在Graph层面，整张图公用一个随机状态，多次运行同一图模型的计算，其随机状态保持一致。</p>
-<pre class="line-numbers language-python"><code class="language-python"><span class="token keyword">import</span>​ tensorflow ​<span class="token keyword">as</span>​ tf
+<pre><code class="python">import​ tensorflow ​as​ tf
 
-tf​<span class="token punctuation">.</span>​set_random_seed​<span class="token punctuation">(</span>​<span class="token number">2</span><span class="token punctuation">)</span>
+tf​.​set_random_seed​(​2)
 
-c ​<span class="token operator">=</span>​ tf​<span class="token punctuation">.</span>​random_uniform​<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>​​<span class="token operator">-</span>​<span class="token number">10</span>​<span class="token punctuation">,</span>​​<span class="token number">10</span><span class="token punctuation">)</span>
-d ​<span class="token operator">=</span>​ tf​<span class="token punctuation">.</span>​random_uniform​<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>​​<span class="token operator">-</span>​<span class="token number">10</span>​<span class="token punctuation">,</span>​​<span class="token number">10</span><span class="token punctuation">)</span>
-<span class="token keyword">with</span>​ tf​<span class="token punctuation">.</span>​Session​<span class="token punctuation">(</span><span class="token punctuation">)</span>​​ <span class="token keyword">as</span>​ sess<span class="token punctuation">:</span>
-  sess​<span class="token punctuation">.</span>​run​<span class="token punctuation">(</span>​c<span class="token punctuation">)</span>
-  sess​<span class="token punctuation">.</span>​run​<span class="token punctuation">(</span>​d<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+c ​=​ tf​.​random_uniform​([],​​-​10​,​​10)
+d ​=​ tf​.​random_uniform​([],​​-​10​,​​10)
+with​ tf​.​Session​()​​ as​ sess:
+  sess​.​run​(​c)
+  sess​.​run​(​d)
+</code></pre>
 <p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 
         
@@ -858,21 +874,6 @@ d ​<span class="token operator">=</span>​ tf​<span class="token punctuatio
 
     <!-- Archives  -->
     
-        <li class="dropdown">
-            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
-                
-                    <i class="material-icons sidebar-material-icons">inbox</i>
-                
-                    归档
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            <li>
-                <a class="sidebar_archives-link" href="/archives/2018/01/">一月 2018<span class="sidebar_archives-count">4</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/12/">十二月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/11/">十一月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/10/">十月 2017<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/09/">九月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/08/">八月 2017<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/07/">七月 2017<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/06/">六月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/05/">五月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/04/">四月 2017<span class="sidebar_archives-count">8</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/03/">三月 2017<span class="sidebar_archives-count">7</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/02/">二月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2017/01/">一月 2017<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/09/">九月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/08/">八月 2016<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/06/">六月 2016<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2016/05/">五月 2016<span class="sidebar_archives-count">1</span></a>
-            </ul>
-        </li>
-        
-    
 
     <!-- Categories  -->
     
@@ -899,7 +900,7 @@ d ​<span class="token operator">=</span>​ tf​<span class="token punctuatio
         <li>
             <a href="/timeline" title="Timeline">
                 
-                    <i class="material-icons sidebar-material-icons">bookmark</i>
+                    <i class="material-icons sidebar-material-icons">timeline</i>
                 
                 Timeline
             </a>
@@ -1146,6 +1147,12 @@ It will not impact the appearance and can give developers a lot of support :)
 
 <!-- Import prettify js  -->
 
+    
+        
+            <script>lsloader.load("prettify_js","/js/prettify.min.js?WN07fivHQSMKWy7BmHBB6w==", true)</script>
+        
+    
+
 
 
 <!-- Window Load -->
@@ -1156,6 +1163,13 @@ It will not impact the appearance and can give developers a lot of support :)
         $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
     });
 
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
     
     
 </script>
