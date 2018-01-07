@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Sat Dec 16 2017 20:53:29 GMT+0800">
-        <meta property="article:modified_time" content="Sat Jan 06 2018 20:54:12 GMT+0800">
+        <meta property="article:modified_time" content="Sun Jan 07 2018 17:37:42 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://blog.ddlee.cn/2017/12/16/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/index.html",
     "headline": "[论文笔记]Rethinking the Inception Architecture for Computer Vision",
     "datePublished": "Sat Dec 16 2017 20:53:29 GMT+0800",
-    "dateModified": "Sat Jan 06 2018 20:54:12 GMT+0800",
+    "dateModified": "Sun Jan 07 2018 17:37:42 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -353,7 +353,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Overview"><span class="post-toc-number">1.</span> <span class="post-toc-text">Overview</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#General-Design-Principles"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">General Design Principles</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Factorizing-Convolution"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Factorizing Convolution</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Utility-of-Auxiliary-Classifiers"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">Utility of Auxiliary Classifiers</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Efficient-Grid-Size-Reduction"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">Efficient Grid Size Reduction</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Inception-v2-amp-Inception-v3-Architecture"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">Inception-v2 & Inception-v3 Architecture</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Experiments"><span class="post-toc-number">1.6.</span> <span class="post-toc-text">Experiments</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Conclusion"><span class="post-toc-number">2.</span> <span class="post-toc-text">Conclusion</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#General-Design-Principles"><span class="post-toc-number">1.</span> <span class="post-toc-text">General Design Principles</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Factorizing-Convolution"><span class="post-toc-number">2.</span> <span class="post-toc-text">Factorizing Convolution</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Utility-of-Auxiliary-Classifiers"><span class="post-toc-number">3.</span> <span class="post-toc-text">Utility of Auxiliary Classifiers</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Efficient-Grid-Size-Reduction"><span class="post-toc-number">4.</span> <span class="post-toc-text">Efficient Grid Size Reduction</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Inception-v2-amp-Inception-v3-Architecture"><span class="post-toc-number">5.</span> <span class="post-toc-text">Inception-v2 & Inception-v3 Architecture</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Experiments"><span class="post-toc-number">6.</span> <span class="post-toc-text">Experiments</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Conclusion"><span class="post-toc-number"></span> <span class="post-toc-text">Conclusion</span></a>
     </ul>
     
 
@@ -514,8 +514,7 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p><a href="https://arxiv.org/abs/1512.00567" target="_blank" rel="external">https://arxiv.org/abs/1512.00567</a></p>
-<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>本文是作者推进inception结构的第2.5步。在更早的文章里，同一作者提出Batch Normalization并且用来改进了Inception结构，称为Inception-BN。而在这篇文章里，作者提出了Inception-v2和Inception-v3，两者共享同一网络结构，v3版本相比v2版本加入了RMSProp，Label Smoothing等技巧。</p>
+        <p>本文是作者推进inception结构的第2.5步。在更早的文章里，同一作者提出Batch Normalization并且用来改进了Inception结构，称为Inception-BN。而在这篇文章里，作者提出了Inception-v2和Inception-v3，两者共享同一网络结构，v3版本相比v2版本加入了RMSProp，Label Smoothing等技巧。</p>
 <p>文章表述了Inception系列的几个设计原则，并根据这些原则改进了GoogLeNet的结构。</p>
 <h3 id="General-Design-Principles"><a href="#General-Design-Principles" class="headerlink" title="General Design Principles"></a>General Design Principles</h3><ul>
 <li>Avoid representational bottlenecks, especially early in the network. 建议不要在过浅的阶段进行特征压缩，而维度只是一个表达复杂性的参考，并不能作为特征复杂性的绝对衡量标准。</li>
@@ -549,7 +548,7 @@
 <p><img src="http://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/experiment.png" alt="factor5"></p>
 <h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本篇是对Inception系网络的推进，其分解的思想成为又一网络设计的指导原则。</p>
 <p>对卷积的进一步理解，可以参考这个<a href="https://graphics.stanford.edu/courses/cs178-10/applets/convolution.html" target="_blank" rel="external">页面</a>，这一工具可视化了不同卷积核对输入的处理，给出的例子都是在早期人们手工设计的滤波器，而深度网络隐式地学习到了这些滤波器的卷积表达。</p>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+<p>论文链接：<a href="https://arxiv.org/abs/1512.00567" target="_blank" rel="external">https://arxiv.org/abs/1512.00567</a></p>
 
         
                 <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">

@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Fri Dec 22 2017 21:55:36 GMT+0800">
-        <meta property="article:modified_time" content="Wed Dec 27 2017 22:00:34 GMT+0800">
+        <meta property="article:modified_time" content="Sun Jan 07 2018 17:14:01 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://blog.ddlee.cn/2017/12/22/论文笔记-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/index.html",
     "headline": "[论文笔记]Light-Head R-CNN: In Defense of Two-Stage Object Detector",
     "datePublished": "Fri Dec 22 2017 21:55:36 GMT+0800",
-    "dateModified": "Wed Dec 27 2017 22:00:34 GMT+0800",
+    "dateModified": "Sun Jan 07 2018 17:14:01 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -353,7 +353,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Introduction"><span class="post-toc-number">1.</span> <span class="post-toc-text">Introduction</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Light-Head-R-CNN"><span class="post-toc-number">2.</span> <span class="post-toc-text">Light-Head R-CNN</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Experiments"><span class="post-toc-number">3.</span> <span class="post-toc-text">Experiments</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Conclusion"><span class="post-toc-number">4.</span> <span class="post-toc-text">Conclusion</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Light-Head-R-CNN"><span class="post-toc-number">1.</span> <span class="post-toc-text">Light-Head R-CNN</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Experiments"><span class="post-toc-number">2.</span> <span class="post-toc-text">Experiments</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Conclusion"><span class="post-toc-number">3.</span> <span class="post-toc-text">Conclusion</span></a></li></ol>
     </ul>
     
 
@@ -514,8 +514,7 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p><a href="https://arxiv.org/abs/1711.07264" target="_blank" rel="external">https://arxiv.org/abs/1711.07264</a></p>
-<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>文章指出两阶段检测器通常在生成Proposal后进行分类的“头”(head)部分进行密集的计算，如ResNet为基础网络的Faster-RCNN将整个stage5（或两个FC）放在RCNN部分， RFCN要生成一个具有随类别数线性增长的channel数的Score map，这些密集计算正是两阶段方法在精度上领先而在推断速度上难以满足实时要求的原因。</p>
+        <p>文章指出两阶段检测器通常在生成Proposal后进行分类的“头”(head)部分进行密集的计算，如ResNet为基础网络的Faster-RCNN将整个stage5（或两个FC）放在RCNN部分， RFCN要生成一个具有随类别数线性增长的channel数的Score map，这些密集计算正是两阶段方法在精度上领先而在推断速度上难以满足实时要求的原因。</p>
 <p>针对这两种元结构(Faster-RCNN和RFCN)，文章提出了“头”轻量化方法，试图在保持精度的同时又能减少冗余的计算量，从而实现精度和速度的Trade-off。</p>
 <h2 id="Light-Head-R-CNN"><a href="#Light-Head-R-CNN" class="headerlink" title="Light-Head R-CNN"></a>Light-Head R-CNN</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/arch.png" alt="arch"></p>
 <p>如上图，虚线框出的部分是三种结构的RCNN子网络（在每个RoI上进行的计算），light-head R-CNN中，在生成Score map前，ResNet的stage5中卷积被替换为sperable convolution，产生的Score map也减少至10×p×p（相比原先的#class×p×p）。</p>
@@ -531,7 +530,7 @@
 <p>第一张图中三个light-head结果并不能跟上面的其他结构构成多少有效的对照组，要么scale不同，要么FPN, multi-scale, ROI Align不同。唯一的有效对照是跟Mask-RCNN。</p>
 <p>在高精度方面，基础网络不同，采用的scale也不同，没有有效的对照组。</p>
 <h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>我并不觉得这是对两阶段方法的Defense。文章对两阶段方法在精度和速度方面的分析比较有见地，但实验的结果并不能可靠地支撑light-head的有效性。相比之下Google的那篇trade-off可能更有参考价值。</p>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+<p>论文链接：<a href="https://arxiv.org/abs/1711.07264" target="_blank" rel="external">https://arxiv.org/abs/1711.07264</a></p>
 
         
                 <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">

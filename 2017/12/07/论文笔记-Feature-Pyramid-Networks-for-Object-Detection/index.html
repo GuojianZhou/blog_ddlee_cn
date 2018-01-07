@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Thu Dec 07 2017 21:55:59 GMT+0800">
-        <meta property="article:modified_time" content="Wed Dec 27 2017 22:00:23 GMT+0800">
+        <meta property="article:modified_time" content="Sun Jan 07 2018 17:12:47 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://blog.ddlee.cn/2017/12/07/论文笔记-Feature-Pyramid-Networks-for-Object-Detection/index.html",
     "headline": "[论文笔记]Feature Pyramid Networks for Object Detection",
     "datePublished": "Thu Dec 07 2017 21:55:59 GMT+0800",
-    "dateModified": "Wed Dec 27 2017 22:00:23 GMT+0800",
+    "dateModified": "Sun Jan 07 2018 17:12:47 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -353,7 +353,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Introduction"><span class="post-toc-number">1.</span> <span class="post-toc-text">Introduction</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Feature-Pyramid-Networks"><span class="post-toc-number">2.</span> <span class="post-toc-text">Feature Pyramid Networks</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Experiments"><span class="post-toc-number">3.</span> <span class="post-toc-text">Experiments</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Conclusion"><span class="post-toc-number">4.</span> <span class="post-toc-text">Conclusion</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Feature-Pyramid-Networks"><span class="post-toc-number">1.</span> <span class="post-toc-text">Feature Pyramid Networks</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Experiments"><span class="post-toc-number">2.</span> <span class="post-toc-text">Experiments</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Conclusion"><span class="post-toc-number">3.</span> <span class="post-toc-text">Conclusion</span></a></li></ol>
     </ul>
     
 
@@ -514,8 +514,7 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p><a href="https://arxiv.org/abs/1612.03144" target="_blank" rel="external">https://arxiv.org/abs/1612.03144</a></p>
-<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>对图片信息的理解常常关系到对位置和规模上不变性的建模。在较为成功的图片分类模型中，Max-Pooling这一操作建模了位置上的不变性：从局部中挑选最大的响应，这一响应在局部的位置信息就被忽略掉了。而在规模不变性的方向上，添加不同大小感受野的卷积核（VGG），用小卷积核堆叠感受较大的范围（GoogLeNet），自动选择感受野的大小（Inception）等结构也展现了其合理的一面。</p>
+        <p>对图片信息的理解常常关系到对位置和规模上不变性的建模。在较为成功的图片分类模型中，Max-Pooling这一操作建模了位置上的不变性：从局部中挑选最大的响应，这一响应在局部的位置信息就被忽略掉了。而在规模不变性的方向上，添加不同大小感受野的卷积核（VGG），用小卷积核堆叠感受较大的范围（GoogLeNet），自动选择感受野的大小（Inception）等结构也展现了其合理的一面。</p>
 <p>回到检测任务，与分类任务不同的是，检测所面临的物体规模问题是跨类别的、处于同一语义场景中的。</p>
 <p>一个直观的思路是用不同大小的图片去生成相应大小的feature map，但这样带来巨大的参数，使本来就只能跑个位数图片的内存更加不够用。另一个思路是直接使用不同深度的卷积层生成的feature map，但较浅层的feature map上包含的低等级特征又会干扰分类的精度。</p>
 <p>本文提出的方法是在高等级feature map上将特征向下回传，反向构建特征金字塔。</p>
@@ -527,7 +526,7 @@
 <p>对比不同head部分，输入feature的变化对检测精度确实有提升，而且，lateral和top-down两个操作也是缺一不可。</p>
 <h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>特征金字塔本是很自然的想法，但如何构建金字塔同时平衡检测任务的定位和分类双目标，又能保证显存的有效利用，是本文做的比较好的地方。如今，FPN也几乎成为特征提取网络的标配，更说明了这种组合方式的有效性。</p>
 <p>个人方面，FPN跟multi-scale的区别在哪，还值得进一步探索。</p>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+<p>论文链接：<a href="https://arxiv.org/abs/1612.03144" target="_blank" rel="external">https://arxiv.org/abs/1612.03144</a></p>
 
         
                 <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">

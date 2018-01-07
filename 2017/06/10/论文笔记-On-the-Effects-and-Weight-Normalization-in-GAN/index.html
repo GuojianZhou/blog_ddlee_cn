@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Sat Jun 10 2017 22:01:21 GMT+0800">
-        <meta property="article:modified_time" content="Wed Jun 14 2017 22:57:42 GMT+0800">
+        <meta property="article:modified_time" content="Sun Jan 07 2018 17:15:49 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://blog.ddlee.cn/2017/06/10/论文笔记-On-the-Effects-and-Weight-Normalization-in-GAN/index.html",
     "headline": "[论文笔记]On the Effects and Weight Normalization in GAN",
     "datePublished": "Sat Jun 10 2017 22:01:21 GMT+0800",
-    "dateModified": "Wed Jun 14 2017 22:57:42 GMT+0800",
+    "dateModified": "Sun Jan 07 2018 17:15:49 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -514,8 +514,7 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>论文：<a href="https://arxiv.org/abs/1704.03971" target="_blank" rel="external">On the Effects and Weight Normalization in GAN</a></p>
-<p>本文探索了参数标准化(Weight Normalization)这一技术在GAN中的应用。BN在mini-batch的层级上计算均值和方差，容易引入噪声，并不适用于GAN这种生成模型，而WN对参数进行重写，引入噪声更少。</p>
+        <p>本文探索了参数标准化(Weight Normalization)这一技术在GAN中的应用。BN在mini-batch的层级上计算均值和方差，容易引入噪声，并不适用于GAN这种生成模型，而WN对参数进行重写，引入噪声更少。</p>
 <p>我觉得本文的亮点有二：</p>
 <h3 id="1-提出T-ReLU并配合Affine-Tranformation使在引入WN后网络的表达能力维持不变"><a href="#1-提出T-ReLU并配合Affine-Tranformation使在引入WN后网络的表达能力维持不变" class="headerlink" title="1. 提出T-ReLU并配合Affine Tranformation使在引入WN后网络的表达能力维持不变"></a>1. 提出T-ReLU并配合Affine Tranformation使在引入WN后网络的表达能力维持不变</h3><p>朴素的参数标准化层有如下的形式：<br>
 $$y=\frac{{w}^{T}x}{\|w\|}$$
@@ -587,6 +586,7 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
         return self.norm_scale_bias(F.linear(input, self.weight))
 </code></pre>
 <p>观察上面的forward函数可以发现，TReLU添加bias这一习得参数，而weight-normalized layer中则对传入的weight进行了标准化。</p>
+<p>论文链接：<a href="https://arxiv.org/abs/1704.03971" target="_blank" rel="external">On the Effects and Weight Normalization in GAN</a></p>
 
         
                 <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
@@ -1138,6 +1138,26 @@ It will not impact the appearance and can give developers a lot of support :)
 </script>
 
 <!-- MathJax Load-->
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+    <script type="text/javascript" src="/js/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
 
 
 <!-- Bing Background -->

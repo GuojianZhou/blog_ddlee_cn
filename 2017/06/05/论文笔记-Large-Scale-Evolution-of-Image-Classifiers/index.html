@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Mon Jun 05 2017 16:09:52 GMT+0800">
-        <meta property="article:modified_time" content="Mon Jun 05 2017 16:09:52 GMT+0800">
+        <meta property="article:modified_time" content="Sun Jan 07 2018 17:13:42 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://blog.ddlee.cn/2017/06/05/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/index.html",
     "headline": "[论文笔记]Large-Scale Evolution of Image Classifiers",
     "datePublished": "Mon Jun 05 2017 16:09:52 GMT+0800",
-    "dateModified": "Mon Jun 05 2017 16:09:52 GMT+0800",
+    "dateModified": "Sun Jan 07 2018 17:13:42 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -353,7 +353,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Abstract"><span class="post-toc-number">1.</span> <span class="post-toc-text">Abstract</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Methods"><span class="post-toc-number">2.</span> <span class="post-toc-text">Methods</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Evolution-Algorithm"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Evolution Algorithm</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Encoding-and-Mutation"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">Encoding and Mutation</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Computation"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">Computation</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Weight-Inheritance"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">Weight Inheritance</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Experiments-and-Results"><span class="post-toc-number">3.</span> <span class="post-toc-text">Experiments and Results</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Analysis"><span class="post-toc-number">4.</span> <span class="post-toc-text">Analysis</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#小结"><span class="post-toc-number">5.</span> <span class="post-toc-text">小结</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Methods"><span class="post-toc-number">1.</span> <span class="post-toc-text">Methods</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Evolution-Algorithm"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Evolution Algorithm</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Encoding-and-Mutation"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Encoding and Mutation</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Computation"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">Computation</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Weight-Inheritance"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">Weight Inheritance</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Experiments-and-Results"><span class="post-toc-number">2.</span> <span class="post-toc-text">Experiments and Results</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Analysis"><span class="post-toc-number">3.</span> <span class="post-toc-text">Analysis</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#小结"><span class="post-toc-number">4.</span> <span class="post-toc-text">小结</span></a></li></ol>
     </ul>
     
 
@@ -514,8 +514,7 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>论文：<a href="https://arxiv.org/abs/1703.01041" target="_blank" rel="external">Large-Scale Evolution of Image, Classifiers</a></p>
-<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>深层网络在图片分类问题上表现优异，但网络结构的设计上并没有统一的指导。进化是构建深度网络架构的一种方式。利用本文的自动化方法得出的深度网络结构，已经能在CIFAR-10上取得可以跟人工设计的网络相媲美的结果</p>
+        <p>深层网络在图片分类问题上表现优异，但网络结构的设计上并没有统一的指导。进化是构建深度网络架构的一种方式。利用本文的自动化方法得出的深度网络结构，已经能在CIFAR-10上取得可以跟人工设计的网络相媲美的结果</p>
 <h2 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h2><h3 id="Evolution-Algorithm"><a href="#Evolution-Algorithm" class="headerlink" title="Evolution Algorithm"></a>Evolution Algorithm</h3><p>整个算法的核心是如下的tournament selection:</p>
 <p><img src="http://static.ddlee.cn/static/img/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/tournament.jpg" alt="tournament"></p>
 <ul>
@@ -558,6 +557,7 @@
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>Google I/O时就提到了自动筛选最优网络结构，但没有公布论文。但将网络结构自动化，必定是未来的方向。个人认为，ResNet就相当于自动化网络深度（一些层实际上被跳过了），而Inception单元似乎包含了太多的先验，而且也没有逻辑上的证据说明这样的结构更有效。网络结构本身就是先验信息，而要达到通用的人工智能，这些先验也必须由模型自行发觉。</p>
 <p>强化学习本身也是一个进化过程，应该也有相关的工作将强化学习的框架应用于网络结构的学习上。</p>
 <p>更进一步地，若数据是一阶信息，深度网络的隐藏层学到的表示是二阶信息，深度网络的结构则是三阶信息，从一阶到二阶的框架是不是都可以移植到二阶到三阶上来？关键之处在于我们还没有描述好深度网络的结构空间，但就现在的发展看，深度网络的一些基本结构(conv, BN)等，已经被作为基本单元（离散的）来进行构建和筛选了，也就是说，所有深度网络构成的空间之性质如何，还有大量的工作可以做。</p>
+<p>论文链接：<a href="https://arxiv.org/abs/1703.01041" target="_blank" rel="external">Large-Scale Evolution of Image, Classifiers</a></p>
 
         
                 <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">

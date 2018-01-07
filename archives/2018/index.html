@@ -317,8 +317,8 @@
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1608.06993
-IntroductionDenseNet将shortcut-connection的思路发挥到极致。在一个DenseBlock内部，每一层的输出均跟后面的层建立sh...
+            DenseNet将shortcut-connection的思路发挥到极致。在一个DenseBlock内部，每一层的输出均跟后面的层建立shortcut，特别需要注意的是，不同于ResNet中的相加，DenseNet连接shortcut的方式是Concat，这样越深的层则输入channel数越大。
+DenseNet
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -379,8 +379,8 @@ IntroductionDenseNet将shortcut-connection的思路发挥到极致。在一个De
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1611.05431
-Overview本文提出了深度网络的新维度，除了深度、宽度（Channel数）外，作者将在某一层并行transform的路径数提取为第三维度，称为”cardinality”。跟Incep...
+            本文提出了深度网络的新维度，除了深度、宽度（Channel数）外，作者将在某一层并行transform的路径数提取为第三维度，称为”cardinality”。跟Inception单元不同的是，这些并行路径均共享同一拓扑结构，而非精心设计的卷积核并联。除了并行相同的路径外，也添加了层与层间的shortcut connection。但由于其多路径的设计特征，我将其归为Inception系网络。
+Motivatio...
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -441,8 +441,8 @@ Overview本文提出了深度网络的新维度，除了深度、宽度（Channe
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1704.04861
-OverviewMobileNets系列可以看做是继Xception之后对Depthwise Separable Convolution的又一推动。利用深度可分离的特征，MobileNe...
+            MobileNets系列可以看做是继Xception之后对Depthwise Separable Convolution的又一推动。利用深度可分离的特征，MobileNets系列引入两个模型精度和大小的超参，在保持相当精度的同时享有非常小的计算消耗，适用于移动端情形，因而被命名为”MobileNets”。
+
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -503,8 +503,9 @@ OverviewMobileNets系列可以看做是继Xception之后对Depthwise Separable C
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1610.02357
-Introduction本篇是keras库作者的文章，对Inception结构进行了改进：用Depth-wise seperable convolution替换了...
+            本篇是keras库作者的文章，对Inception结构进行了改进：用Depth-wise seperable convolution替换了Inception单元中的1×1卷积和3×3卷积。
+文章对Inception结构的评论非常有见地。
+Motivation文章指出，Inception单元背后的假设是跨Channel和跨空间的相关性可以充分解耦，类似的还有长度和高度方向上的卷积结...
         
         &nbsp;&nbsp;&nbsp;
         <span>

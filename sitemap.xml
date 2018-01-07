@@ -2,9 +2,177 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.ddlee.cn/2017/12/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-You-Only-Look-Once-Unified-Real-Time-Object-Detection/</loc>
+    
+    <lastmod>2018-01-07T09:39:20.444Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2018/01/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/</loc>
+    
+    <lastmod>2018-01-07T09:39:02.940Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/05/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Visualizing-and-Understanding-Recurrent-Networks/</loc>
+    
+    <lastmod>2018-01-07T09:38:45.631Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/12/12/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-SSD-Single-Shot-MultiBox-Detector/</loc>
+    
+    <lastmod>2018-01-07T09:38:35.099Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/12/24/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/</loc>
+    
+    <lastmod>2018-01-07T09:38:22.358Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/10/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Rich-feature-hierarchies-for-accurate-object-detection-and-semantic-segmentation/</loc>
+    
+    <lastmod>2018-01-07T09:38:01.717Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/12/16/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Rethinking-the-Inception-Architecture-for-Computer-Vision/</loc>
+    
+    <lastmod>2018-01-07T09:37:42.501Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/12/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-R-FCN-Object-Detection-via-Region-based-Fully-Convolutinal-Networks/</loc>
+    
+    <lastmod>2018-01-07T09:37:21.424Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/05/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-On-the-fly-Operation-Batching-in-Dynamic-Computation-Graphs/</loc>
+    
+    <lastmod>2018-01-07T09:36:58.795Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/07/22/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E6%9D%83%E9%87%8D%E8%A1%B0%E5%87%8F/</loc>
+    
+    <lastmod>2018-01-07T09:36:20.241Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/06/10/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-On-the-Effects-and-Weight-Normalization-in-GAN/</loc>
+    
+    <lastmod>2018-01-07T09:15:49.406Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2018/01/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/</loc>
+    
+    <lastmod>2018-01-07T09:15:21.106Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/12/22/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/</loc>
+    
+    <lastmod>2018-01-07T09:14:01.858Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/06/05/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Large-Scale-Evolution-of-Image-Classifiers/</loc>
+    
+    <lastmod>2018-01-07T09:13:42.742Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/12/26/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/</loc>
+    
+    <lastmod>2018-01-07T09:13:24.034Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/11/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Going-deeper-with-convolutions/</loc>
+    
+    <lastmod>2018-01-07T09:13:04.890Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/12/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Feature-Pyramid-Networks-for-Object-Detection/</loc>
+    
+    <lastmod>2018-01-07T09:12:47.414Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/</loc>
+    
+    <lastmod>2018-01-07T09:12:28.178Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/10/15/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Fast-R-CNN/</loc>
+    
+    <lastmod>2018-01-07T09:10:56.529Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Densely-Connected-Convolutional-Networks/</loc>
+    
+    <lastmod>2018-01-07T09:10:34.585Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/04/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Deep-Residual-Learning-for-Image-Recognition/</loc>
+    
+    <lastmod>2018-01-07T09:10:06.585Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/05/23/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Deep-Learning/</loc>
+    
+    <lastmod>2018-01-07T09:09:50.885Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/06/03/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/</loc>
+    
+    <lastmod>2018-01-07T09:09:33.137Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/</loc>
     
-    <lastmod>2018-01-07T08:54:40.638Z</lastmod>
+    <lastmod>2018-01-07T09:09:13.821Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/06/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Accurate-Large-Minibatch-SGD-Training-ImageNet-in-One-Hour/</loc>
+    
+    <lastmod>2018-01-07T09:08:48.369Z</lastmod>
     
   </url>
   
@@ -19,104 +187,6 @@
     <loc>http://blog.ddlee.cn/2016/06/11/%E4%B8%AA%E6%80%A7%E5%8C%96%E4%BD%A0%E7%9A%84Ubuntu-3%EF%BC%9A%E4%B8%BB%E9%A2%98%EF%BC%8C%E6%8F%92%E4%BB%B6%E4%BB%A5%E5%8F%8A%E6%A1%8C%E9%9D%A2%E5%B0%8F%E5%B7%A5%E5%85%B7/</loc>
     
     <lastmod>2018-01-06T15:08:54.432Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/12/12/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-SSD-Single-Shot-MultiBox-Detector/</loc>
-    
-    <lastmod>2018-01-06T14:58:03.601Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2018/01/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/</loc>
-    
-    <lastmod>2018-01-06T13:26:12.593Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Densely-Connected-Convolutional-Networks/</loc>
-    
-    <lastmod>2018-01-06T13:23:16.040Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2018/01/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/</loc>
-    
-    <lastmod>2018-01-06T13:19:20.261Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/12/26/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/</loc>
-    
-    <lastmod>2018-01-06T13:18:43.158Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/12/16/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Rethinking-the-Inception-Architecture-for-Computer-Vision/</loc>
-    
-    <lastmod>2018-01-06T12:54:12.429Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/11/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Going-deeper-with-convolutions/</loc>
-    
-    <lastmod>2018-01-06T12:46:06.285Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/10/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Rich-feature-hierarchies-for-accurate-object-detection-and-semantic-segmentation/</loc>
-    
-    <lastmod>2017-12-27T14:10:01.998Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/</loc>
-    
-    <lastmod>2017-12-27T14:08:20.395Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/12/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-R-FCN-Object-Detection-via-Region-based-Fully-Convolutinal-Networks/</loc>
-    
-    <lastmod>2017-12-27T14:04:15.263Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/12/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-You-Only-Look-Once-Unified-Real-Time-Object-Detection/</loc>
-    
-    <lastmod>2017-12-27T14:03:40.021Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/12/24/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/</loc>
-    
-    <lastmod>2017-12-27T14:02:35.092Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/12/22/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/</loc>
-    
-    <lastmod>2017-12-27T14:00:34.351Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/12/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Feature-Pyramid-Networks-for-Object-Detection/</loc>
-    
-    <lastmod>2017-12-27T14:00:23.112Z</lastmod>
     
   </url>
   
@@ -138,13 +208,6 @@
     <loc>http://blog.ddlee.cn/2017/08/31/Android-Reborn-%E4%B8%AA%E4%BA%BAAPP%E5%AD%98%E6%A1%A3/</loc>
     
     <lastmod>2017-11-21T16:07:31.431Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/10/15/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Fast-R-CNN/</loc>
-    
-    <lastmod>2017-11-21T15:47:15.805Z</lastmod>
     
   </url>
   
@@ -173,13 +236,6 @@
     <loc>http://blog.ddlee.cn/2017/08/06/%E5%A2%93%E7%95%94%E5%93%80%E6%AD%8C/</loc>
     
     <lastmod>2017-08-06T10:17:48.963Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/07/22/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E6%9D%83%E9%87%8D%E8%A1%B0%E5%87%8F/</loc>
-    
-    <lastmod>2017-08-03T14:18:06.028Z</lastmod>
     
   </url>
   
@@ -247,30 +303,9 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/06/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Accurate-Large-Minibatch-SGD-Training-ImageNet-in-One-Hour/</loc>
-    
-    <lastmod>2017-06-14T15:23:44.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/06/10/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-On-the-Effects-and-Weight-Normalization-in-GAN/</loc>
-    
-    <lastmod>2017-06-14T14:57:42.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.ddlee.cn/2017/06/14/%E8%87%AA%E7%94%A8LaTeX%E4%B8%AD%E8%8B%B1%E6%96%87%E5%BB%BA%E7%AB%8B%E6%A8%A1%E6%9D%BF/</loc>
     
     <lastmod>2017-06-14T10:58:42.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/06/05/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Large-Scale-Evolution-of-Image-Classifiers/</loc>
-    
-    <lastmod>2017-06-05T08:09:52.000Z</lastmod>
     
   </url>
   
@@ -282,44 +317,9 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/06/03/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/</loc>
-    
-    <lastmod>2017-06-03T06:27:08.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/05/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Visualizing-and-Understanding-Recurrent-Networks/</loc>
-    
-    <lastmod>2017-06-03T04:35:10.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/05/23/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Deep-Learning/</loc>
-    
-    <lastmod>2017-06-02T11:24:56.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/04/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Deep-Residual-Learning-for-Image-Recognition/</loc>
-    
-    <lastmod>2017-05-30T13:37:56.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.ddlee.cn/2017/04/20/Tensorflow-White-Paper/</loc>
     
     <lastmod>2017-05-30T13:33:20.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/05/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-On-the-fly-Operation-Batching-in-Dynamic-Computation-Graphs/</loc>
-    
-    <lastmod>2017-05-30T07:24:34.000Z</lastmod>
     
   </url>
   

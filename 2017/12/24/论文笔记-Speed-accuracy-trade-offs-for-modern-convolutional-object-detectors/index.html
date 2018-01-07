@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Sun Dec 24 2017 21:55:22 GMT+0800">
-        <meta property="article:modified_time" content="Wed Dec 27 2017 22:02:35 GMT+0800">
+        <meta property="article:modified_time" content="Sun Jan 07 2018 17:38:22 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://blog.ddlee.cn/2017/12/24/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/index.html",
     "headline": "[论文笔记]Speed/accuracy trade-offs for modern convolutional object detectors",
     "datePublished": "Sun Dec 24 2017 21:55:22 GMT+0800",
-    "dateModified": "Wed Dec 27 2017 22:02:35 GMT+0800",
+    "dateModified": "Sun Jan 07 2018 17:38:22 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -353,7 +353,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Introduction"><span class="post-toc-number">1.</span> <span class="post-toc-text">Introduction</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Experiments"><span class="post-toc-number">2.</span> <span class="post-toc-text">Experiments</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Conclusion"><span class="post-toc-number">3.</span> <span class="post-toc-text">Conclusion</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Experiments"><span class="post-toc-number">1.</span> <span class="post-toc-text">Experiments</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Conclusion"><span class="post-toc-number">2.</span> <span class="post-toc-text">Conclusion</span></a></li></ol>
     </ul>
     
 
@@ -514,8 +514,7 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p><a href="https://arxiv.org/abs/1611.10012" target="_blank" rel="external">https://arxiv.org/abs/1611.10012</a></p>
-<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>这篇文章偏综述和实验报告的性质，前几个部分对检测模型有不错的概括，重头在实验结果部分，实验细节也描述的比较清楚，可以用来参考。</p>
+        <p>这篇文章偏综述和实验报告的性质，前几个部分对检测模型有不错的概括，重头在实验结果部分，实验细节也描述的比较清楚，可以用来参考。</p>
 <p>文章将检测模型分为三种元结构：Faster-RCNN、R-FCN和SSD，将特征提取网络网络独立出来作为元结构的一个部件，并松动了Proposal个数、输入图片尺寸，生成Feature map的大小等作为超参，并行实验，探索精度和速度方面的trade-off。</p>
 <p>文章也将源码公开，作为Tensorflow的Object Detection API。</p>
 <p>下图是三种元结构的图示：</p>
@@ -560,7 +559,7 @@
 <li>RFCN并没有很好的解决定位跟分类的矛盾，per ROI的子网络最好还是要有，但要限制Proposal的个数（实际大部分都是负样本）来减少冗余</li>
 <li>小物体的检测仍然是最大的难点，增大分辨率和更深的网络确有帮助，但不是实质的。</li>
 </ul>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+<p>论文链接： <a href="https://arxiv.org/abs/1611.10012" target="_blank" rel="external">https://arxiv.org/abs/1611.10012</a></p>
 
         
                 <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">

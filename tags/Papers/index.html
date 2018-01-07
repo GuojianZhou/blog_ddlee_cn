@@ -317,8 +317,8 @@
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1608.06993
-IntroductionDenseNet将shortcut-connection的思路发挥到极致。在一个DenseBlock内部，每一层的输出均跟后面的层建立sh...
+            DenseNet将shortcut-connection的思路发挥到极致。在一个DenseBlock内部，每一层的输出均跟后面的层建立shortcut，特别需要注意的是，不同于ResNet中的相加，DenseNet连接shortcut的方式是Concat，这样越深的层则输入channel数越大。
+DenseNet
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -379,8 +379,8 @@ IntroductionDenseNet将shortcut-connection的思路发挥到极致。在一个De
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1611.05431
-Overview本文提出了深度网络的新维度，除了深度、宽度（Channel数）外，作者将在某一层并行transform的路径数提取为第三维度，称为”cardinality”。跟Incep...
+            本文提出了深度网络的新维度，除了深度、宽度（Channel数）外，作者将在某一层并行transform的路径数提取为第三维度，称为”cardinality”。跟Inception单元不同的是，这些并行路径均共享同一拓扑结构，而非精心设计的卷积核并联。除了并行相同的路径外，也添加了层与层间的shortcut connection。但由于其多路径的设计特征，我将其归为Inception系网络。
+Motivatio...
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -441,8 +441,8 @@ Overview本文提出了深度网络的新维度，除了深度、宽度（Channe
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1704.04861
-OverviewMobileNets系列可以看做是继Xception之后对Depthwise Separable Convolution的又一推动。利用深度可分离的特征，MobileNe...
+            MobileNets系列可以看做是继Xception之后对Depthwise Separable Convolution的又一推动。利用深度可分离的特征，MobileNets系列引入两个模型精度和大小的超参，在保持相当精度的同时享有非常小的计算消耗，适用于移动端情形，因而被命名为”MobileNets”。
+
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -503,8 +503,9 @@ OverviewMobileNets系列可以看做是继Xception之后对Depthwise Separable C
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1610.02357
-Introduction本篇是keras库作者的文章，对Inception结构进行了改进：用Depth-wise seperable convolution替换了...
+            本篇是keras库作者的文章，对Inception结构进行了改进：用Depth-wise seperable convolution替换了Inception单元中的1×1卷积和3×3卷积。
+文章对Inception结构的评论非常有见地。
+Motivation文章指出，Inception单元背后的假设是跨Channel和跨空间的相关性可以充分解耦，类似的还有长度和高度方向上的卷积结...
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -565,8 +566,10 @@ Introduction本篇是keras库作者的文章，对Inception结构进行了改进
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1602.07261
-Introduction在15年，ResNet成为那年最耀眼的卷积网络结构，skip-connection的结构也成为避不开的考虑选项。Inception系列也参...
+            在15年，ResNet成为那年最耀眼的卷积网络结构，skip-connection的结构也成为避不开的考虑选项。Inception系列也参考ResNet更新了自己的结构。同时推出了第四代和跟ResNet的结合版：Inception-v4和Inception-ResNet。
+然而，这是一篇几乎都是图的论文。
+所以，上图。
+
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -627,8 +630,9 @@ Introduction在15年，ResNet成为那年最耀眼的卷积网络结构，skip-c
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1512.00567
-Overview本文是作者推进inception结构的第2.5步。在更早的文章里，同一作者提出Batch Normalization并且用来改进了Inception结构，称为Incept...
+            本文是作者推进inception结构的第2.5步。在更早的文章里，同一作者提出Batch Normalization并且用来改进了Inception结构，称为Inception-BN。而在这篇文章里，作者提出了Inception-v2和Inception-v3，两者共享同一网络结构，v3版本相比v2版本加入了RMSProp，Label Smoothing等技巧。
+文章表述了Inception系列的几个设计原则，并根据这些原则改进了GoogLeNet的结构。
+
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -689,8 +693,9 @@ Overview本文是作者推进inception结构的第2.5步。在更早的文章里
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            Overview本作是Inception系列网络的第一篇，提出了Inception单元结构，基于这一结构的GoogLeNet拿下了ILSVRC14分类任务的头名。文章也探讨了网络在不断加深的情况下如何更好地利用计算资源，这一理念也是Inception系列网络的核心。
-
+            本作是Inception系列网络的第一篇，提出了Inception单元结构，基于这一结构的GoogLeNet拿下了ILSVRC14分类任务的头名。文章也探讨了网络在不断加深的情况下如何更好地利用计算资源，这一理念也是Inception系列网络的核心。
+MotivationInception单元的启发主要来自Network in Network结构和Arora等人在神经科学方面的工作。
+...
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -813,9 +818,10 @@ Object Detection Progress Summay检测方法回顾：R-CNN, Fast/Fa...
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1311.2524
-OverviewR-CNN系列的开山之作，2-stage的想法至今仍是精确度优先方法的主流。而且，本文中的众多做法也成为检测任务pipeline的标准配置。
-摘要中提到的两大贡...
+            R-CNN系列的开山之作，2-stage的想法至今仍是精确度优先方法的主流。而且，本文中的众多做法也成为检测任务pipeline的标准配置。
+摘要中提到的两大贡献：1）CNN可用于基于区域的定位和分割物体；2）监督训练样本数紧缺时，在额外的数据上预训练的模型经过fine-tuning可以取得很好的效果。
+第一个贡献影响了之后几乎所有2-stage方法，而第二个贡献中用分类任务（Imagenet）中训练好的模型作为基网络，在检测问题上fine-tuning的做法也在之后的工作中一直沿用。
+
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -876,8 +882,8 @@ OverviewR-CNN系列的开山之作，2-stage的想法至今仍是精确度优先
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            论文：Accurate, Large Minibatch SGD: Training ImageNet in One Hour
-这篇文章在各处都有很广泛的讨论，作为实验经验并不多的小白，将文中tricks只做些记录。
+            这篇文章在各处都有很广泛的讨论，作为实验经验并不多的小白，将文中tricks只做些记录。
+Linear Scaling Rule进行大批量的Minibatch SGD时会有批量越大，误差越大的问题。本文提出的Linear Scaling Rule正是试图解决这一问题。
 
         
         &nbsp;&nbsp;&nbsp;

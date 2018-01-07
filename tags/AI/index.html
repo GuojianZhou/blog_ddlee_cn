@@ -317,8 +317,8 @@
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1611.05431
-Overview本文提出了深度网络的新维度，除了深度、宽度（Channel数）外，作者将在某一层并行transform的路径数提取为第三维度，称为”cardinality”。跟Incep...
+            本文提出了深度网络的新维度，除了深度、宽度（Channel数）外，作者将在某一层并行transform的路径数提取为第三维度，称为”cardinality”。跟Inception单元不同的是，这些并行路径均共享同一拓扑结构，而非精心设计的卷积核并联。除了并行相同的路径外，也添加了层与层间的shortcut connection。但由于其多路径的设计特征，我将其归为Inception系网络。
+Motivatio...
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -379,8 +379,9 @@ Overview本文提出了深度网络的新维度，除了深度、宽度（Channe
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1610.02357
-Introduction本篇是keras库作者的文章，对Inception结构进行了改进：用Depth-wise seperable convolution替换了...
+            本篇是keras库作者的文章，对Inception结构进行了改进：用Depth-wise seperable convolution替换了Inception单元中的1×1卷积和3×3卷积。
+文章对Inception结构的评论非常有见地。
+Motivation文章指出，Inception单元背后的假设是跨Channel和跨空间的相关性可以充分解耦，类似的还有长度和高度方向上的卷积结...
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -751,8 +752,8 @@ Layer()是一个计算层的抽象，完成网络中对Tensor的...
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            论文：Accurate, Large Minibatch SGD: Training ImageNet in One Hour
-这篇文章在各处都有很广泛的讨论，作为实验经验并不多的小白，将文中tricks只做些记录。
+            这篇文章在各处都有很广泛的讨论，作为实验经验并不多的小白，将文中tricks只做些记录。
+Linear Scaling Rule进行大批量的Minibatch SGD时会有批量越大，误差越大的问题。本文提出的Linear Scaling Rule正是试图解决这一问题。
 
         
         &nbsp;&nbsp;&nbsp;
@@ -814,8 +815,7 @@ Layer()是一个计算层的抽象，完成网络中对Tensor的...
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            论文：On the Effects and Weight Normalization in GAN
-本文探索了参数标准化(Weight Normalization)这一技术在GAN中的应用。BN在mini-batch的层级上计算均值和方差，容易引入噪声，并不适用于GAN这种生成模型，而WN对参数进行重写，引入噪声更少。
+            本文探索了参数标准化(Weight Normalization)这一技术在GAN中的应用。BN在mini-batch的层级上计算均值和方差，容易引入噪声，并不适用于GAN这种生成模型，而WN对参数进行重写，引入噪声更少。
 我觉得本文的亮点有二：
 
         
@@ -878,8 +878,8 @@ Layer()是一个计算层的抽象，完成网络中对Tensor的...
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            论文：Large-Scale Evolution of Image, Classifiers
-Abstract深层网络在图片分类问题上表现优异，但网络结构的设计上并没有统一的指导。进化是构建深度网络架构的一种方式。利用本文的自动化方法得出的深度网络结构...
+            深层网络在图片分类问题上表现优异，但网络结构的设计上并没有统一的指导。进化是构建深度网络架构的一种方式。利用本文的自动化方法得出的深度网络结构，已经能在CIFAR-10上取得可以跟人工设计的网络相媲美的结果
+Methods
         
         &nbsp;&nbsp;&nbsp;
         <span>

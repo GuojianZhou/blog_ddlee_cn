@@ -315,8 +315,9 @@
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1612.03144
-Introduction对图片信息的理解常常关系到对位置和规模上不变性的建模。在较为成功的图片分类模型中，Max-Pooling这一操作建模了位置上的不变性：从局...
+            对图片信息的理解常常关系到对位置和规模上不变性的建模。在较为成功的图片分类模型中，Max-Pooling这一操作建模了位置上的不变性：从局部中挑选最大的响应，这一响应在局部的位置信息就被忽略掉了。而在规模不变性的方向上，添加不同大小感受野的卷积核（VGG），用小卷积核堆叠感受较大的范围（GoogLeNet），自动选择感受野的大小（Inception）等结构也展现了其合理的一面。
+回到检测任务，与分类任务不同的是，检测所面临的物体规模问题是跨类别的、处于同一语义场景中的。
+一个直观的思路是用不同大小的图片去生成相应大小的feature map，但这样带来巨...
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -377,8 +378,8 @@ Introduction对图片信息的理解常常关系到对位置和规模上不变�
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1605.06409
-Introduction文章指出了检测任务之前的框架存在不自然的设计，即全卷积的特征提取部分+全连接的分类器，而表现最好的图像分类器都是全卷积的结构（ResNet...
+            文章指出了检测任务之前的框架存在不自然的设计，即全卷积的特征提取部分+全连接的分类器，而表现最好的图像分类器都是全卷积的结构（ResNet等），这一点是由分类任务的平移不变性和检测任务的平移敏感性之间的矛盾导致的。换句话说，检测模型采用了分类模型的特征提取器，丢失了位置信息。这篇文章提出采用“位置敏感分数图”的方法解决这一问题。
+
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -439,8 +440,9 @@ Introduction文章指出了检测任务之前的框架存在不自然的设计�
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            Overview本作是Inception系列网络的第一篇，提出了Inception单元结构，基于这一结构的GoogLeNet拿下了ILSVRC14分类任务的头名。文章也探讨了网络在不断加深的情况下如何更好地利用计算资源，这一理念也是Inception系列网络的核心。
-
+            本作是Inception系列网络的第一篇，提出了Inception单元结构，基于这一结构的GoogLeNet拿下了ILSVRC14分类任务的头名。文章也探讨了网络在不断加深的情况下如何更好地利用计算资源，这一理念也是Inception系列网络的核心。
+MotivationInception单元的启发主要来自Network in Network结构和Arora等人在神经科学方面的工作。
+...
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -563,9 +565,8 @@ Object Detection Progress Summay检测方法回顾：R-CNN, Fast/Fa...
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            Faster R-CNN: Towards Real Time Object Detection with Region Proposal Networks
-https://arxiv.org/abs/1506.01497
-Overview
+            Faster R-CNN是2-stage方法的主流方法，提出的RPN网络取代Selective Search算法使得检测任务可以由神经网络端到端地完成。粗略的讲，Faster R-CNN = RPN + Fast R-CNN，跟RCNN共享卷积计算的特性使得RPN引入的计算量很小，使得Faster R-CNN可以在单个GPU上以5fps的速度运行，而在精度方面达到SOTA。
+
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -626,8 +627,9 @@ Overview
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            Fast R-CNN https://arxiv.org/abs/1504.08083
-OverviewFast R-CNN 是对R-CNN的改进，作者栏只有RBG一人。文章先指出了R-CNN存在的问题，再介绍了自己的改进思路。文章结构堪称典范，从现存...
+            Fast R-CNN 是对R-CNN的改进，作者栏只有RBG一人。文章先指出了R-CNN存在的问题，再介绍了自己的改进思路。文章结构堪称典范，从现存问题，到解决方案、实验细节，再到结果分析、拓展讨论，条分缕析，值得借鉴。而且，RBG开源的代码也影响了后来大部分这一领域的工作。
+R-CNN的问题
+训练是一个多阶段的过程（Proposal, Classification, Regression）
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -688,9 +690,10 @@ OverviewFast R-CNN 是对R-CNN的改进，作者栏只有RBG一人。文章先�
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1311.2524
-OverviewR-CNN系列的开山之作，2-stage的想法至今仍是精确度优先方法的主流。而且，本文中的众多做法也成为检测任务pipeline的标准配置。
-摘要中提到的两大贡...
+            R-CNN系列的开山之作，2-stage的想法至今仍是精确度优先方法的主流。而且，本文中的众多做法也成为检测任务pipeline的标准配置。
+摘要中提到的两大贡献：1）CNN可用于基于区域的定位和分割物体；2）监督训练样本数紧缺时，在额外的数据上预训练的模型经过fine-tuning可以取得很好的效果。
+第一个贡献影响了之后几乎所有2-stage方法，而第二个贡献中用分类任务（Imagenet）中训练好的模型作为基网络，在检测问题上fine-tuning的做法也在之后的工作中一直沿用。
+
         
         &nbsp;&nbsp;&nbsp;
         <span>

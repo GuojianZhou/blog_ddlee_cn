@@ -411,6 +411,15 @@
         </button>
         <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="menubtn">
             
+                <!-- All Site UV -->
+                <a class="index_share-link" href="#">
+                    <li class="mdl-menu__item mdl-js-ripple-effect">
+                        <span id="busuanzi_container_site_uv">
+                            <span id="busuanzi_value_site_uv"></span>&nbsp;浏览量
+                        </span>
+                    </li>
+                </a>
+            
 
             
 
@@ -476,8 +485,8 @@
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1608.06993
-IntroductionDenseNet将shortcut-connection的思路发挥到极致。在一个DenseBlock内部，每一层的输出均跟后面的层建立sh...
+            DenseNet将shortcut-connection的思路发挥到极致。在一个DenseBlock内部，每一层的输出均跟后面的层建立shortcut，特别需要注意的是，不同于ResNet中的相加，DenseNet连接shortcut的方式是Concat，这样越深的层则输入channel数越大。
+DenseNet
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -538,8 +547,8 @@ IntroductionDenseNet将shortcut-connection的思路发挥到极致。在一个De
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1611.05431
-Overview本文提出了深度网络的新维度，除了深度、宽度（Channel数）外，作者将在某一层并行transform的路径数提取为第三维度，称为”cardinality”。跟Incep...
+            本文提出了深度网络的新维度，除了深度、宽度（Channel数）外，作者将在某一层并行transform的路径数提取为第三维度，称为”cardinality”。跟Inception单元不同的是，这些并行路径均共享同一拓扑结构，而非精心设计的卷积核并联。除了并行相同的路径外，也添加了层与层间的shortcut connection。但由于其多路径的设计特征，我将其归为Inception系网络。
+Motivatio...
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -600,8 +609,8 @@ Overview本文提出了深度网络的新维度，除了深度、宽度（Channe
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1704.04861
-OverviewMobileNets系列可以看做是继Xception之后对Depthwise Separable Convolution的又一推动。利用深度可分离的特征，MobileNe...
+            MobileNets系列可以看做是继Xception之后对Depthwise Separable Convolution的又一推动。利用深度可分离的特征，MobileNets系列引入两个模型精度和大小的超参，在保持相当精度的同时享有非常小的计算消耗，适用于移动端情形，因而被命名为”MobileNets”。
+
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -662,8 +671,9 @@ OverviewMobileNets系列可以看做是继Xception之后对Depthwise Separable C
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1610.02357
-Introduction本篇是keras库作者的文章，对Inception结构进行了改进：用Depth-wise seperable convolution替换了...
+            本篇是keras库作者的文章，对Inception结构进行了改进：用Depth-wise seperable convolution替换了Inception单元中的1×1卷积和3×3卷积。
+文章对Inception结构的评论非常有见地。
+Motivation文章指出，Inception单元背后的假设是跨Channel和跨空间的相关性可以充分解耦，类似的还有长度和高度方向上的卷积结...
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -724,8 +734,10 @@ Introduction本篇是keras库作者的文章，对Inception结构进行了改进
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1602.07261
-Introduction在15年，ResNet成为那年最耀眼的卷积网络结构，skip-connection的结构也成为避不开的考虑选项。Inception系列也参...
+            在15年，ResNet成为那年最耀眼的卷积网络结构，skip-connection的结构也成为避不开的考虑选项。Inception系列也参考ResNet更新了自己的结构。同时推出了第四代和跟ResNet的结合版：Inception-v4和Inception-ResNet。
+然而，这是一篇几乎都是图的论文。
+所以，上图。
+
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -786,8 +798,10 @@ Introduction在15年，ResNet成为那年最耀眼的卷积网络结构，skip-c
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1611.10012
-Introduction这篇文章偏综述和实验报告的性质，前几个部分对检测模型有不错的概括，重头在实验结果部分，实验细节也描述的比较清楚，可以用来参考。
+            这篇文章偏综述和实验报告的性质，前几个部分对检测模型有不错的概括，重头在实验结果部分，实验细节也描述的比较清楚，可以用来参考。
+文章将检测模型分为三种元结构：Faster-RCNN、R-FCN和SSD，将特征提取网络网络独立出来作为元结构的一个部件，并松动了Proposal个数、输入图片尺寸，生成Feature map的大小等作为超参，并行实验，探索精度和速度方面的trade-off。
+文章也将源码公开，作为Tensorflow的Object Detection API。
+下图是三种元结构的图示：
 
         
         &nbsp;&nbsp;&nbsp;
@@ -849,8 +863,9 @@ Introduction这篇文章偏综述和实验报告的性质，前几个部分对�
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1711.07264
-Introduction文章指出两阶段检测器通常在生成Proposal后进行分类的“头”(head)部分进行密集的计算，如ResNet为基础网络的Faster-R...
+            文章指出两阶段检测器通常在生成Proposal后进行分类的“头”(head)部分进行密集的计算，如ResNet为基础网络的Faster-RCNN将整个stage5（或两个FC）放在RCNN部分， RFCN要生成一个具有随类别数线性增长的channel数的Score map，这些密集计算正是两阶段方法在精度上领先而在推断速度上难以满足实时要求的原因。
+针对这两种元结构(Faster-RCNN和RFCN)，文章提出了“头”轻量化方法，试图在保持精度的同时又能减少冗余的计算量，从而实现精度和速度的Trade-off。
+
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -911,9 +926,14 @@ Introduction文章指出两阶段检测器通常在生成Proposal后进行分类
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1506.02640
-IntroductionYOLO是单阶段方法的开山之作。它将检测任务表述成一个统一的、端到端的回归问题，并且以只处理一次图片同时得到位置和分类而得名。
+            YOLO是单阶段方法的开山之作。它将检测任务表述成一个统一的、端到端的回归问题，并且以只处理一次图片同时得到位置和分类而得名。
+YOLO的主要优点：
 
+快。
+全局处理使得背景错误相对少，相比基于局部（区域）的方法， 如Fast RCNN。
+泛化性能好，在艺术作品上做检测时，YOLO表现好。
+
+DesignYOLO的大致工作流程如下：...
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -974,8 +994,9 @@ IntroductionYOLO是单阶段方法的开山之作。它将检测任务表述成�
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/1512.00567
-Overview本文是作者推进inception结构的第2.5步。在更早的文章里，同一作者提出Batch Normalization并且用来改进了Inception结构，称为Incept...
+            本文是作者推进inception结构的第2.5步。在更早的文章里，同一作者提出Batch Normalization并且用来改进了Inception结构，称为Inception-BN。而在这篇文章里，作者提出了Inception-v2和Inception-v3，两者共享同一网络结构，v3版本相比v2版本加入了RMSProp，Label Smoothing等技巧。
+文章表述了Inception系列的几个设计原则，并根据这些原则改进了GoogLeNet的结构。
+
         
         &nbsp;&nbsp;&nbsp;
         <span>
@@ -1036,9 +1057,8 @@ Overview本文是作者推进inception结构的第2.5步。在更早的文章里
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            https://arxiv.org/abs/151.023325
-IntroductionSSD是对YOLO的改进，其达到跟两阶段方法相当的精度，又保持较快的运行速度。
-
+            IntroductionSSD是对YOLO的改进，其达到跟两阶段方法相当的精度，又保持较快的运行速度。
+SSD
         
         &nbsp;&nbsp;&nbsp;
         <span>

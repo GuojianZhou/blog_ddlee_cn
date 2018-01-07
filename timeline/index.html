@@ -707,8 +707,8 @@
 					</div>
 					<p class="md-timeline-excerpt">
 						
-							https://arxiv.org/abs/1608.06993
-IntroductionDenseNet将shortcut-connection的思路发挥到极致。在一个DenseBlock内部，每一层的输出均跟后面的层建立sh...
+							DenseNet将shortcut-connection的思路发挥到极致。在一个DenseBlock内部，每一层的输出均跟后面的层建立shortcut，特别需要注意的是，不同于ResNet中的相加，DenseNet连接shortcut的方式是Concat，这样越深的层则输入channel数越大。
+DenseNet
 						...
 					</p>
                     		</div>
@@ -732,8 +732,8 @@ IntroductionDenseNet将shortcut-connection的思路发挥到极致。在一个De
 					</div>
 					<p class="md-timeline-excerpt">
 						
-							https://arxiv.org/abs/1611.05431
-Overview本文提出了深度网络的新维度，除了深度、宽度（Channel数）外，作者将在某一层并行transform的路径数提取为第三维度，称为”cardinality”。跟Incep...
+							本文提出了深度网络的新维度，除了深度、宽度（Channel数）外，作者将在某一层并行transform的路径数提取为第三维度，称为”cardinality”。跟Inception单元不同的是，这些并行路径均共享同一拓扑结构，而非精心设计的卷积核并联。除了并行相同的路径外，也添加了层与层间的shortcut connection。但由于其多路径的设计特征，我将其归为Inception系网络。
+Motivatio...
 						...
 					</p>
                     		</div>
@@ -757,8 +757,8 @@ Overview本文提出了深度网络的新维度，除了深度、宽度（Channe
 					</div>
 					<p class="md-timeline-excerpt">
 						
-							https://arxiv.org/abs/1704.04861
-OverviewMobileNets系列可以看做是继Xception之后对Depthwise Separable Convolution的又一推动。利用深度可分离的特征，MobileNe...
+							MobileNets系列可以看做是继Xception之后对Depthwise Separable Convolution的又一推动。利用深度可分离的特征，MobileNets系列引入两个模型精度和大小的超参，在保持相当精度的同时享有非常小的计算消耗，适用于移动端情形，因而被命名为”MobileNets”。
+
 						...
 					</p>
                     		</div>
@@ -782,8 +782,9 @@ OverviewMobileNets系列可以看做是继Xception之后对Depthwise Separable C
 					</div>
 					<p class="md-timeline-excerpt">
 						
-							https://arxiv.org/abs/1610.02357
-Introduction本篇是keras库作者的文章，对Inception结构进行了改进：用Depth-wise seperable convolution替换了...
+							本篇是keras库作者的文章，对Inception结构进行了改进：用Depth-wise seperable convolution替换了Inception单元中的1×1卷积和3×3卷积。
+文章对Inception结构的评论非常有见地。
+Motivation文章指出，Inception单元背后的假设是跨Channel和跨空间的相关性可以充分解耦，类似的还有长度和高度方向上的卷积结...
 						...
 					</p>
                     		</div>
@@ -807,8 +808,10 @@ Introduction本篇是keras库作者的文章，对Inception结构进行了改进
 					</div>
 					<p class="md-timeline-excerpt">
 						
-							https://arxiv.org/abs/1602.07261
-Introduction在15年，ResNet成为那年最耀眼的卷积网络结构，skip-connection的结构也成为避不开的考虑选项。Inception系列也参...
+							在15年，ResNet成为那年最耀眼的卷积网络结构，skip-connection的结构也成为避不开的考虑选项。Inception系列也参考ResNet更新了自己的结构。同时推出了第四代和跟ResNet的结合版：Inception-v4和Inception-ResNet。
+然而，这是一篇几乎都是图的论文。
+所以，上图。
+
 						...
 					</p>
                     		</div>
@@ -832,8 +835,10 @@ Introduction在15年，ResNet成为那年最耀眼的卷积网络结构，skip-c
 					</div>
 					<p class="md-timeline-excerpt">
 						
-							https://arxiv.org/abs/1611.10012
-Introduction这篇文章偏综述和实验报告的性质，前几个部分对检测模型有不错的概括，重头在实验结果部分，实验细节也描述的比较清楚，可以用来参考。
+							这篇文章偏综述和实验报告的性质，前几个部分对检测模型有不错的概括，重头在实验结果部分，实验细节也描述的比较清楚，可以用来参考。
+文章将检测模型分为三种元结构：Faster-RCNN、R-FCN和SSD，将特征提取网络网络独立出来作为元结构的一个部件，并松动了Proposal个数、输入图片尺寸，生成Feature map的大小等作为超参，并行实验，探索精度和速度方面的trade-off。
+文章也将源码公开，作为Tensorflow的Object Detection API。
+下图是三种元结构的图示：
 
 						...
 					</p>
@@ -858,8 +863,9 @@ Introduction这篇文章偏综述和实验报告的性质，前几个部分对�
 					</div>
 					<p class="md-timeline-excerpt">
 						
-							https://arxiv.org/abs/1711.07264
-Introduction文章指出两阶段检测器通常在生成Proposal后进行分类的“头”(head)部分进行密集的计算，如ResNet为基础网络的Faster-R...
+							文章指出两阶段检测器通常在生成Proposal后进行分类的“头”(head)部分进行密集的计算，如ResNet为基础网络的Faster-RCNN将整个stage5（或两个FC）放在RCNN部分， RFCN要生成一个具有随类别数线性增长的channel数的Score map，这些密集计算正是两阶段方法在精度上领先而在推断速度上难以满足实时要求的原因。
+针对这两种元结构(Faster-RCNN和RFCN)，文章提出了“头”轻量化方法，试图在保持精度的同时又能减少冗余的计算量，从而实现精度和速度的Trade-off。
+
 						...
 					</p>
                     		</div>
@@ -883,9 +889,14 @@ Introduction文章指出两阶段检测器通常在生成Proposal后进行分类
 					</div>
 					<p class="md-timeline-excerpt">
 						
-							https://arxiv.org/abs/1506.02640
-IntroductionYOLO是单阶段方法的开山之作。它将检测任务表述成一个统一的、端到端的回归问题，并且以只处理一次图片同时得到位置和分类而得名。
+							YOLO是单阶段方法的开山之作。它将检测任务表述成一个统一的、端到端的回归问题，并且以只处理一次图片同时得到位置和分类而得名。
+YOLO的主要优点：
 
+快。
+全局处理使得背景错误相对少，相比基于局部（区域）的方法， 如Fast RCNN。
+泛化性能好，在艺术作品上做检测时，YOLO表现好。
+
+DesignYOLO的大致工作流程如下：...
 						...
 					</p>
                     		</div>
@@ -909,8 +920,9 @@ IntroductionYOLO是单阶段方法的开山之作。它将检测任务表述成�
 					</div>
 					<p class="md-timeline-excerpt">
 						
-							https://arxiv.org/abs/1512.00567
-Overview本文是作者推进inception结构的第2.5步。在更早的文章里，同一作者提出Batch Normalization并且用来改进了Inception结构，称为Incept...
+							本文是作者推进inception结构的第2.5步。在更早的文章里，同一作者提出Batch Normalization并且用来改进了Inception结构，称为Inception-BN。而在这篇文章里，作者提出了Inception-v2和Inception-v3，两者共享同一网络结构，v3版本相比v2版本加入了RMSProp，Label Smoothing等技巧。
+文章表述了Inception系列的几个设计原则，并根据这些原则改进了GoogLeNet的结构。
+
 						...
 					</p>
                     		</div>
@@ -934,9 +946,8 @@ Overview本文是作者推进inception结构的第2.5步。在更早的文章里
 					</div>
 					<p class="md-timeline-excerpt">
 						
-							https://arxiv.org/abs/151.023325
-IntroductionSSD是对YOLO的改进，其达到跟两阶段方法相当的精度，又保持较快的运行速度。
-
+							IntroductionSSD是对YOLO的改进，其达到跟两阶段方法相当的精度，又保持较快的运行速度。
+SSD
 						...
 					</p>
                     		</div>
@@ -960,8 +971,9 @@ IntroductionSSD是对YOLO的改进，其达到跟两阶段方法相当的精度�
 					</div>
 					<p class="md-timeline-excerpt">
 						
-							https://arxiv.org/abs/1612.03144
-Introduction对图片信息的理解常常关系到对位置和规模上不变性的建模。在较为成功的图片分类模型中，Max-Pooling这一操作建模了位置上的不变性：从局...
+							对图片信息的理解常常关系到对位置和规模上不变性的建模。在较为成功的图片分类模型中，Max-Pooling这一操作建模了位置上的不变性：从局部中挑选最大的响应，这一响应在局部的位置信息就被忽略掉了。而在规模不变性的方向上，添加不同大小感受野的卷积核（VGG），用小卷积核堆叠感受较大的范围（GoogLeNet），自动选择感受野的大小（Inception）等结构也展现了其合理的一面。
+回到检测任务，与分类任务不同的是，检测所面临的物体规模问题是跨类别的、处于同一语义场景中的。
+一个直观的思路是用不同大小的图片去生成相应大小的feature map，但这样带来巨...
 						...
 					</p>
                     		</div>
@@ -985,8 +997,8 @@ Introduction对图片信息的理解常常关系到对位置和规模上不变�
 					</div>
 					<p class="md-timeline-excerpt">
 						
-							https://arxiv.org/abs/1605.06409
-Introduction文章指出了检测任务之前的框架存在不自然的设计，即全卷积的特征提取部分+全连接的分类器，而表现最好的图像分类器都是全卷积的结构（ResNet...
+							文章指出了检测任务之前的框架存在不自然的设计，即全卷积的特征提取部分+全连接的分类器，而表现最好的图像分类器都是全卷积的结构（ResNet等），这一点是由分类任务的平移不变性和检测任务的平移敏感性之间的矛盾导致的。换句话说，检测模型采用了分类模型的特征提取器，丢失了位置信息。这篇文章提出采用“位置敏感分数图”的方法解决这一问题。
+
 						...
 					</p>
                     		</div>
@@ -1010,8 +1022,9 @@ Introduction文章指出了检测任务之前的框架存在不自然的设计�
 					</div>
 					<p class="md-timeline-excerpt">
 						
-							Overview本作是Inception系列网络的第一篇，提出了Inception单元结构，基于这一结构的GoogLeNet拿下了ILSVRC14分类任务的头名。文章也探讨了网络在不断加深的情况下如何更好地利用计算资源，这一理念也是Inception系列网络的核心。
-
+							本作是Inception系列网络的第一篇，提出了Inception单元结构，基于这一结构的GoogLeNet拿下了ILSVRC14分类任务的头名。文章也探讨了网络在不断加深的情况下如何更好地利用计算资源，这一理念也是Inception系列网络的核心。
+MotivationInception单元的启发主要来自Network in Network结构和Arora等人在神经科学方面的工作。
+...
 						...
 					</p>
                     		</div>
@@ -1060,9 +1073,8 @@ Object Detection Progress Summay检测方法回顾：R-CNN, Fast/Fa...
 					</div>
 					<p class="md-timeline-excerpt">
 						
-							Faster R-CNN: Towards Real Time Object Detection with Region Proposal Networks
-https://arxiv.org/abs/1506.01497
-Overview
+							Faster R-CNN是2-stage方法的主流方法，提出的RPN网络取代Selective Search算法使得检测任务可以由神经网络端到端地完成。粗略的讲，Faster R-CNN = RPN + Fast R-CNN，跟RCNN共享卷积计算的特性使得RPN引入的计算量很小，使得Faster R-CNN可以在单个GPU上以5fps的速度运行，而在精度方面达到SOTA。
+
 						...
 					</p>
                     		</div>
@@ -1086,8 +1098,9 @@ Overview
 					</div>
 					<p class="md-timeline-excerpt">
 						
-							Fast R-CNN https://arxiv.org/abs/1504.08083
-OverviewFast R-CNN 是对R-CNN的改进，作者栏只有RBG一人。文章先指出了R-CNN存在的问题，再介绍了自己的改进思路。文章结构堪称典范，从现存...
+							Fast R-CNN 是对R-CNN的改进，作者栏只有RBG一人。文章先指出了R-CNN存在的问题，再介绍了自己的改进思路。文章结构堪称典范，从现存问题，到解决方案、实验细节，再到结果分析、拓展讨论，条分缕析，值得借鉴。而且，RBG开源的代码也影响了后来大部分这一领域的工作。
+R-CNN的问题
+训练是一个多阶段的过程（Proposal, Classification, Regression）
 						...
 					</p>
                     		</div>
@@ -1111,9 +1124,10 @@ OverviewFast R-CNN 是对R-CNN的改进，作者栏只有RBG一人。文章先�
 					</div>
 					<p class="md-timeline-excerpt">
 						
-							https://arxiv.org/abs/1311.2524
-OverviewR-CNN系列的开山之作，2-stage的想法至今仍是精确度优先方法的主流。而且，本文中的众多做法也成为检测任务pipeline的标准配置。
-摘要中提到的两大贡...
+							R-CNN系列的开山之作，2-stage的想法至今仍是精确度优先方法的主流。而且，本文中的众多做法也成为检测任务pipeline的标准配置。
+摘要中提到的两大贡献：1）CNN可用于基于区域的定位和分割物体；2）监督训练样本数紧缺时，在额外的数据上预训练的模型经过fine-tuning可以取得很好的效果。
+第一个贡献影响了之后几乎所有2-stage方法，而第二个贡献中用分类任务（Imagenet）中训练好的模型作为基网络，在检测问题上fine-tuning的做法也在之后的工作中一直沿用。
+
 						...
 					</p>
                     		</div>
@@ -1409,8 +1423,8 @@ for i in range(len(flavor_list)):
 					</div>
 					<p class="md-timeline-excerpt">
 						
-							论文：Accurate, Large Minibatch SGD: Training ImageNet in One Hour
-这篇文章在各处都有很广泛的讨论，作为实验经验并不多的小白，将文中tricks只做些记录。
+							这篇文章在各处都有很广泛的讨论，作为实验经验并不多的小白，将文中tricks只做些记录。
+Linear Scaling Rule进行大批量的Minibatch SGD时会有批量越大，误差越大的问题。本文提出的Linear Scaling Rule正是试图解决这一问题。
 
 						...
 					</p>
@@ -1461,8 +1475,7 @@ Github仓库：
 					</div>
 					<p class="md-timeline-excerpt">
 						
-							论文：On the Effects and Weight Normalization in GAN
-本文探索了参数标准化(Weight Normalization)这一技术在GAN中的应用。BN在mini-batch的层级上计算均值和方差，容易引入噪声，并不适用于GAN这种生成模型，而WN对参数进行重写，引入噪声更少。
+							本文探索了参数标准化(Weight Normalization)这一技术在GAN中的应用。BN在mini-batch的层级上计算均值和方差，容易引入噪声，并不适用于GAN这种生成模型，而WN对参数进行重写，引入噪声更少。
 我觉得本文的亮点有二：
 
 						...
@@ -1488,8 +1501,8 @@ Github仓库：
 					</div>
 					<p class="md-timeline-excerpt">
 						
-							论文：Large-Scale Evolution of Image, Classifiers
-Abstract深层网络在图片分类问题上表现优异，但网络结构的设计上并没有统一的指导。进化是构建深度网络架构的一种方式。利用本文的自动化方法得出的深度网络结构...
+							深层网络在图片分类问题上表现优异，但网络结构的设计上并没有统一的指导。进化是构建深度网络架构的一种方式。利用本文的自动化方法得出的深度网络结构，已经能在CIFAR-10上取得可以跟人工设计的网络相媲美的结果
+Methods
 						...
 					</p>
                     		</div>
@@ -1513,13 +1526,16 @@ Abstract深层网络在图片分类问题上表现优异，但网络结构的设
 					</div>
 					<p class="md-timeline-excerpt">
 						
-							论文：An Analysis of Deep Neural Network Models for Practical Applications
-本文是对现有（论文发表于2016年5月）深度网络的比较，从以下方面入手：
+							本文是对现有（论文发表于2016年5月）深度网络的比较，从以下方面入手：
 
 accuracy
 memory footprint
 parameters
 operations count
+inference time
+power consumption
+
+以下图片各模型的着色是统一的：蓝色是Inception系，绿色是VGG系，粉色是ResNet系，黄色为AlexNet系。
 
 						...
 					</p>
@@ -1571,8 +1587,8 @@ Yoshua Bengio在2016年九月Deep Learning School的演讲Foundations and Challe
 					</div>
 					<p class="md-timeline-excerpt">
 						
-							论文：On-the-fly Operation Batching in Dynamic Computaion Graphs
-背景基于动态图的深度学习框架如Pytorch,DyNet提供了更为灵活的结构和数据维度的选择，但要求开发者自行将数...
+							基于动态图的深度学习框架如Pytorch,DyNet提供了更为灵活的结构和数据维度的选择，但要求开发者自行将数据批量化，才能最大限度地发挥框架的并行计算优势。
+当前的状况：灵活的结构与高效计算
 						...
 					</p>
                     		</div>
@@ -1673,9 +1689,10 @@ Python真是越来越火了。活跃的开源社区为Python这门语言贡献�
 					</div>
 					<p class="md-timeline-excerpt">
 						
-							论文：Deep Learning
-这篇文章是三位大牛15年发表在Nature上有关深度学习的综述，尽管这两年深度学习又有更多的模型和成果出现，文章显得有些过时，但来自三位领军人物对深度学习的深度阐述还是值得反复回味。
+							这篇文章是三位大牛15年发表在Nature上有关深度学习的综述，尽管这两年深度学习又有更多的模型和成果出现，文章显得有些过时，但来自三位领军人物对深度学习的深度阐述还是值得反复回味。
+Abstract摘要的第一句话可以说给深度学习下了定义。有一些观点认为深度学习就是堆叠了很多层的神经网络，因计算力的提升而迎来第二春。但请看三位是怎么说的：
 
+Deep learning...
 						...
 					</p>
                     		</div>
@@ -1749,8 +1766,9 @@ Dropout的洞察关于Dropout，一个流行的解释是，通过随机行为训
 					</div>
 					<p class="md-timeline-excerpt">
 						
-							论文：Deep Residual Learning for Image Recognition
-背景网络在堆叠到越来越深之后，由于BP算法所依赖的链式法则的连乘形式，会出现梯度消失和梯度下降的问题。初始标准化和中间标准化参数在一定程度上缓解了这一问题，但仍然存在更深的网络比浅层网络具有更大...
+							网络在堆叠到越来越深之后，由于BP算法所依赖的链式法则的连乘形式，会出现梯度消失和梯度下降的问题。初始标准化和中间标准化参数在一定程度上缓解了这一问题，但仍然存在更深的网络比浅层网络具有更大的训练误差的问题。
+
+
 						...
 					</p>
                     		</div>

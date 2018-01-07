@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Fri Oct 13 2017 00:57:35 GMT+0800">
-        <meta property="article:modified_time" content="Wed Dec 27 2017 22:10:01 GMT+0800">
+        <meta property="article:modified_time" content="Sun Jan 07 2018 17:38:01 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://blog.ddlee.cn/2017/10/13/论文笔记-Rich-feature-hierarchies-for-accurate-object-detection-and-semantic-segmentation/index.html",
     "headline": "[论文笔记]Rich feature hierarchies for accurate object detection and semantic segmentation",
     "datePublished": "Fri Oct 13 2017 00:57:35 GMT+0800",
-    "dateModified": "Wed Dec 27 2017 22:10:01 GMT+0800",
+    "dateModified": "Sun Jan 07 2018 17:38:01 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -353,7 +353,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Overview"><span class="post-toc-number">1.</span> <span class="post-toc-text">Overview</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Intro"><span class="post-toc-number">2.</span> <span class="post-toc-text">Intro</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Object-Detection-with-R-CNN"><span class="post-toc-number">3.</span> <span class="post-toc-text">Object Detection with R-CNN</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Training"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">Training</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Conclusion"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">Conclusion</span></a></li></ol></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Intro"><span class="post-toc-number">1.</span> <span class="post-toc-text">Intro</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Object-Detection-with-R-CNN"><span class="post-toc-number">2.</span> <span class="post-toc-text">Object Detection with R-CNN</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Training"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Training</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Conclusion"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">Conclusion</span></a></li></ol></li></ol>
     </ul>
     
 
@@ -514,8 +514,7 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p><a href="https://arxiv.org/abs/1311.2524" target="_blank" rel="external">https://arxiv.org/abs/1311.2524</a></p>
-<h3 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h3><p>R-CNN系列的开山之作，2-stage的想法至今仍是精确度优先方法的主流。而且，本文中的众多做法也成为检测任务pipeline的标准配置。</p>
+        <p>R-CNN系列的开山之作，2-stage的想法至今仍是精确度优先方法的主流。而且，本文中的众多做法也成为检测任务pipeline的标准配置。</p>
 <p>摘要中提到的两大贡献：1）CNN可用于基于区域的定位和分割物体；2）监督训练样本数紧缺时，在额外的数据上预训练的模型经过fine-tuning可以取得很好的效果。</p>
 <p>第一个贡献影响了之后几乎所有2-stage方法，而第二个贡献中用分类任务（Imagenet）中训练好的模型作为基网络，在检测问题上fine-tuning的做法也在之后的工作中一直沿用。</p>
 <h3 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h3><p>Features Matter. Traditional hand-design feature(SIFT, HOG) -&gt; Learned feature(CNN). 从图像识别的经验来看，CNN网络自动习得的特征已经超出了手工设计的特征。</p>
@@ -528,7 +527,7 @@
 <p>文章中特别提到，IOU的选择（即正负样例的标签准备）对结果影响显著，这里要谈两个threshold，一个用来识别正样本（IOU跟ground truth较高），另一个用来标记负样本（即背景类），而介于两者之间的则为hard negatives，若标为正类，则包含了过多的背景信息，反之又包含了要检测物体的特征，因而这些proposal便被忽略掉。</p>
 <p>另一个重要的问题是bounding-box regression，这一过程是proposal向ground truth调整，实现时加入了log/exp变换来使loss保持在合理的量级上。</p>
 <h4 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h4><p>R-CNN的想法直接明了，即是将CNN在分类上取得的成就运用在检测上，是深度学习方法在检测任务上的试水。模型本身存在的问题也很多，如需要训练三个不同的模型（proposal, classification, regression）、重复计算过多导致的性能问题等。尽管如此，这篇论文的很多做法仍然广泛地影响着检测任务上的深度模型革命，后续的很多工作也都是针对改进文章中的pipeline而展开，此篇可以称得上”the first paper”。</p>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+<p>论文链接：<a href="https://arxiv.org/abs/1311.2524" target="_blank" rel="external">https://arxiv.org/abs/1311.2524</a></p>
 
         
                 <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">

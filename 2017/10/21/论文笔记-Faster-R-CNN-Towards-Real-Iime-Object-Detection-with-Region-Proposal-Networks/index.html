@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Sat Oct 21 2017 23:39:34 GMT+0800">
-        <meta property="article:modified_time" content="Wed Dec 27 2017 22:08:20 GMT+0800">
+        <meta property="article:modified_time" content="Sun Jan 07 2018 17:12:28 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://blog.ddlee.cn/2017/10/21/论文笔记-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/index.html",
     "headline": "[论文笔记]Faster R-CNN: Towards Real Time Object Detection with Region Proposal Networks",
     "datePublished": "Sat Oct 21 2017 23:39:34 GMT+0800",
-    "dateModified": "Wed Dec 27 2017 22:08:20 GMT+0800",
+    "dateModified": "Sun Jan 07 2018 17:12:28 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -353,7 +353,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Overview"><span class="post-toc-number">1.</span> <span class="post-toc-text">Overview</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Regional-Proposal-Networks"><span class="post-toc-number">2.</span> <span class="post-toc-text">Regional Proposal Networks</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Alternate-Training"><span class="post-toc-number">3.</span> <span class="post-toc-text">Alternate Training</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#小结"><span class="post-toc-number">4.</span> <span class="post-toc-text">小结</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Regional-Proposal-Networks"><span class="post-toc-number">1.</span> <span class="post-toc-text">Regional Proposal Networks</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Alternate-Training"><span class="post-toc-number">2.</span> <span class="post-toc-text">Alternate Training</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#小结"><span class="post-toc-number">3.</span> <span class="post-toc-text">小结</span></a></li></ol>
     </ul>
     
 
@@ -514,9 +514,7 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>Faster R-CNN: Towards Real Time Object Detection with Region Proposal Networks</p>
-<p><a href="https://arxiv.org/abs/1506.01497" target="_blank" rel="external">https://arxiv.org/abs/1506.01497</a></p>
-<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>Faster R-CNN是2-stage方法的主流方法，提出的RPN网络取代Selective Search算法使得检测任务可以由神经网络端到端地完成。粗略的讲，Faster R-CNN = RPN + Fast R-CNN，跟RCNN共享卷积计算的特性使得RPN引入的计算量很小，使得Faster R-CNN可以在单个GPU上以5fps的速度运行，而在精度方面达到SOTA。</p>
+        <p>Faster R-CNN是2-stage方法的主流方法，提出的RPN网络取代Selective Search算法使得检测任务可以由神经网络端到端地完成。粗略的讲，Faster R-CNN = RPN + Fast R-CNN，跟RCNN共享卷积计算的特性使得RPN引入的计算量很小，使得Faster R-CNN可以在单个GPU上以5fps的速度运行，而在精度方面达到SOTA。</p>
 <h2 id="Regional-Proposal-Networks"><a href="#Regional-Proposal-Networks" class="headerlink" title="Regional Proposal Networks"></a>Regional Proposal Networks</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/rpn.png" alt="faster_rcnn_arch"></p>
 <p>RPN网络将Proposal这一任务建模为二分类的问题。</p>
 <p>第一步是在一个滑动窗口上生成不同大小和长宽比例的anchor box，取定IOU的阈值，按Ground Truth标定这些anchor box的正负。于是，传入RPN网络的样本即是anchor box和每个anchor box是否有物体。RPN网络将每个样本映射为一个概率值和四个坐标值，概率值反应这个anchor box有物体的概率，四个坐标值用于回归定义物体的位置。最后将二分类和坐标回归的Loss统一起来，作为RPN网络的目标训练。</p>
@@ -524,7 +522,7 @@
 <h2 id="Alternate-Training"><a href="#Alternate-Training" class="headerlink" title="Alternate Training"></a>Alternate Training</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/faster_rcnn_netwrok.png" alt="faster_rcnn_arch"></p>
 <p>RPN网络是在feature map上进行的，因而可以跟RCNN完全共享feature extractor部分的卷积运算。训练时，RPN和RCNN的训练可以交替进行，即交替地固定RPN和RCNN部分的参数，更新另一部分。</p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>Faster R-CNN的成功之处在于用RPN网络完成了检测任务的“深度化”。使用滑动窗口生成anchor box的思想也在后来的工作中越来越多地被采用（YOLO v2等）。RPN网络也成为检测2-stage方法的标准部件。</p>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+<p>论文链接：<a href="https://arxiv.org/abs/1506.01497" target="_blank" rel="external">https://arxiv.org/abs/1506.01497</a></p>
 
         
                 <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">

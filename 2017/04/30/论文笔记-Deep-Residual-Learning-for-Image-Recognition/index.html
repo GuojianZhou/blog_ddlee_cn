@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Sun Apr 30 2017 23:12:11 GMT+0800">
-        <meta property="article:modified_time" content="Tue May 30 2017 21:37:56 GMT+0800">
+        <meta property="article:modified_time" content="Sun Jan 07 2018 17:10:06 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://blog.ddlee.cn/2017/04/30/论文笔记-Deep-Residual-Learning-for-Image-Recognition/index.html",
     "headline": "[论文笔记]Deep Residual Learning for Image Recognition",
     "datePublished": "Sun Apr 30 2017 23:12:11 GMT+0800",
-    "dateModified": "Tue May 30 2017 21:37:56 GMT+0800",
+    "dateModified": "Sun Jan 07 2018 17:10:06 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -353,7 +353,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#背景"><span class="post-toc-number">1.</span> <span class="post-toc-text">背景</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#基本结构"><span class="post-toc-number">2.</span> <span class="post-toc-text">基本结构</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#假设"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">假设</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#残差单元"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">残差单元</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#动机-启发"><span class="post-toc-number">3.</span> <span class="post-toc-text">动机/启发</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实验"><span class="post-toc-number">4.</span> <span class="post-toc-text">实验</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#拾遗"><span class="post-toc-number">5.</span> <span class="post-toc-text">拾遗</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Deeper-Bottleneck-Architectures"><span class="post-toc-number">5.0.1.</span> <span class="post-toc-text">Deeper Bottleneck Architectures</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Standard-deviations-of-layer-responses"><span class="post-toc-number">5.0.2.</span> <span class="post-toc-text">Standard deviations of layer responses</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#小结"><span class="post-toc-number">6.</span> <span class="post-toc-text">小结</span></a></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#基本结构"><span class="post-toc-number">1.</span> <span class="post-toc-text">基本结构</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#假设"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">假设</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#残差单元"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">残差单元</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#动机-启发"><span class="post-toc-number">2.</span> <span class="post-toc-text">动机/启发</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#实验"><span class="post-toc-number">3.</span> <span class="post-toc-text">实验</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#拾遗"><span class="post-toc-number">4.</span> <span class="post-toc-text">拾遗</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Deeper-Bottleneck-Architectures"><span class="post-toc-number">4.0.1.</span> <span class="post-toc-text">Deeper Bottleneck Architectures</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Standard-deviations-of-layer-responses"><span class="post-toc-number">4.0.2.</span> <span class="post-toc-text">Standard deviations of layer responses</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#小结"><span class="post-toc-number">5.</span> <span class="post-toc-text">小结</span></a></li></ol>
     </ul>
     
 
@@ -514,8 +514,7 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>论文：<a href="http://arxiv.org/abs/1512.03385" target="_blank" rel="external">Deep Residual Learning for Image Recognition</a></p>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>网络在堆叠到越来越深之后，由于BP算法所依赖的链式法则的连乘形式，会出现梯度消失和梯度下降的问题。初始标准化和中间标准化参数在一定程度上缓解了这一问题，但仍然存在更深的网络比浅层网络具有更大的训练误差的问题。</p>
+        <p>网络在堆叠到越来越深之后，由于BP算法所依赖的链式法则的连乘形式，会出现梯度消失和梯度下降的问题。初始标准化和中间标准化参数在一定程度上缓解了这一问题，但仍然存在更深的网络比浅层网络具有更大的训练误差的问题。</p>
 <p><img src="http://static.ddlee.cn/static/img/论文笔记-Deep-Residual-Learning-for-Image-Recognition/error.png" alt="error"></p>
 <h2 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h2><h3 id="假设"><a href="#假设" class="headerlink" title="假设"></a>假设</h3><p>多层的网络结构能够任意接近地拟合目标映射$H(x)$，那么也能任意接近地拟合其关于恒等映射的残差函数$H(x)-x$。记$F(x)=H(x)-x$，则原来的目标映射表为$F(x)+x$。由此，可以设计如下结构。</p>
 <h3 id="残差单元"><a href="#残差单元" class="headerlink" title="残差单元"></a>残差单元</h3><p><img src="http://static.ddlee.cn/static/img/论文笔记-Deep-Residual-Learning-for-Image-Recognition/block.jpg" alt="Residual Learning: a building block"></p>
@@ -527,6 +526,7 @@
 <h4 id="Standard-deviations-of-layer-responses"><a href="#Standard-deviations-of-layer-responses" class="headerlink" title="Standard deviations of layer responses"></a>Standard deviations of layer responses</h4><p><img src="http://static.ddlee.cn/static/img/论文笔记-Deep-Residual-Learning-for-Image-Recognition/std.png" alt="std"><br>上图是在CIFAR-10数据集上训练的网络各层的相应方差（Batch-Normalization之后，激活之前）。可以看到，残差网络相对普通网络有更小的方差。这一结果支持了残差函数比非残差函数更接近于0的想法（即更接近恒等映射）。此外，还显示出网络越深，越倾向于保留流过的信息。</p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>深度残差网络在当年的比赛中几乎是满贯。<br>下面是我的一些（未经实验证实的）理解：</p>
 <p>首先，其”跳级”的网络结构对深度网络的设计是一种启发，通过“跳级”，可以把之前网络的信息相对完整的跟后层网络结合起来，即低层次解耦得到的特征和高层次解耦得到的特征再组合。<br>再者，这种分叉的结构可以看作网络结构层面的”Dropout”: 如果被跳过的网络块不能习得更有用的信息，就被恒等映射跳过了。</p>
+<p>论文链接：<a href="http://arxiv.org/abs/1512.03385" target="_blank" rel="external">Deep Residual Learning for Image Recognition</a></p>
 
         
                 <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">

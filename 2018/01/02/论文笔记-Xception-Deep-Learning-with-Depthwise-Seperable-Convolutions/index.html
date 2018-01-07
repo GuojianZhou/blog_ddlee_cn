@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Tue Jan 02 2018 21:04:30 GMT+0800">
-        <meta property="article:modified_time" content="Sat Jan 06 2018 21:26:12 GMT+0800">
+        <meta property="article:modified_time" content="Sun Jan 07 2018 17:39:02 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://blog.ddlee.cn/2018/01/02/论文笔记-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/index.html",
     "headline": "[论文笔记]Xception: Deep Learning with Depthwise Seperable Convolutions",
     "datePublished": "Tue Jan 02 2018 21:04:30 GMT+0800",
-    "dateModified": "Sat Jan 06 2018 21:26:12 GMT+0800",
+    "dateModified": "Sun Jan 07 2018 17:39:02 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -353,7 +353,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Introduction"><span class="post-toc-number">1.</span> <span class="post-toc-text">Introduction</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Motivation"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Motivation</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Architectrue"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Architectrue</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Experiments"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">Experiments</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Concolusion"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">Concolusion</span></a></li></ol></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Motivation"><span class="post-toc-number">1.</span> <span class="post-toc-text">Motivation</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Architectrue"><span class="post-toc-number">2.</span> <span class="post-toc-text">Architectrue</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Experiments"><span class="post-toc-number">3.</span> <span class="post-toc-text">Experiments</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Concolusion"><span class="post-toc-number">4.</span> <span class="post-toc-text">Concolusion</span></a></li></ol>
     </ul>
     
 
@@ -514,8 +514,7 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p><a href="https://arxiv.org/abs/1610.02357" target="_blank" rel="external">https://arxiv.org/abs/1610.02357</a></p>
-<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>本篇是keras库作者的文章，对Inception结构进行了改进：用Depth-wise seperable convolution替换了Inception单元中的1×1卷积和3×3卷积。</p>
+        <p>本篇是keras库作者的文章，对Inception结构进行了改进：用Depth-wise seperable convolution替换了Inception单元中的1×1卷积和3×3卷积。</p>
 <p>文章对Inception结构的评论非常有见地。</p>
 <h3 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h3><p>文章指出，Inception单元背后的假设是跨Channel和跨空间的相关性可以充分解耦，类似的还有长度和高度方向上的卷积结构（在Inception-v3里的3×3卷积被1×3和3×1卷积替代）。</p>
 <p>进一步的，Xception基于更强的假设：跨channel和跨空间的相关性完全解耦。这也是Depthwise Separable Convolution所建模的理念。</p>
@@ -531,7 +530,7 @@
 <p><img src="http://static.ddlee.cn/static/img/论文笔记-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/arch.png" alt="inception"></p>
 <h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p>本文的实验部分并没有像其他论文那样集成一个在ImageNet上SOTA的结果，而是以Inception-v3为基线，对比了参数数量和性能，认为提升正来自于更合理的参数利用。文章还对比了Residual的作用，在Xception网络中，Skip-connection不仅能提高训练速度，还能增强模型的性能。</p>
 <h3 id="Concolusion"><a href="#Concolusion" class="headerlink" title="Concolusion"></a>Concolusion</h3><p>本文贡献主要对Inception单元的解读和引入Depthwise Seperable Convolution。更多对于Depthwise Seperable Convolution的描述，请参考<a href="https://blog.ddlee.cn/2018/01/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/">MobileNets</a>的笔记。</p>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+<p>论文链接：<a href="https://arxiv.org/abs/1610.02357" target="_blank" rel="external">https://arxiv.org/abs/1610.02357</a></p>
 
         
                 <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">

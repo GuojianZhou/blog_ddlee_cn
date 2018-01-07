@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Thu Jan 04 2018 21:10:09 GMT+0800">
-        <meta property="article:modified_time" content="Sat Jan 06 2018 21:19:20 GMT+0800">
+        <meta property="article:modified_time" content="Sun Jan 07 2018 17:15:21 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://blog.ddlee.cn/2018/01/04/论文笔记-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/index.html",
     "headline": "[论文笔记]MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications",
     "datePublished": "Thu Jan 04 2018 21:10:09 GMT+0800",
-    "dateModified": "Sat Jan 06 2018 21:19:20 GMT+0800",
+    "dateModified": "Sun Jan 07 2018 17:15:21 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -353,7 +353,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Overview"><span class="post-toc-number">1.</span> <span class="post-toc-text">Overview</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Depthwise-Separable-Convolution"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Depthwise Separable Convolution</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Architecture"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Architecture</span></a></li></ol></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Depthwise-Separable-Convolution"><span class="post-toc-number">1.</span> <span class="post-toc-text">Depthwise Separable Convolution</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Architecture"><span class="post-toc-number">2.</span> <span class="post-toc-text">Architecture</span></a></li></ol>
     </ul>
     
 
@@ -514,8 +514,7 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p><a href="https://arxiv.org/abs/1704.04861" target="_blank" rel="external">https://arxiv.org/abs/1704.04861</a></p>
-<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>MobileNets系列可以看做是继Xception之后对Depthwise Separable Convolution的又一推动。利用深度可分离的特征，MobileNets系列引入两个模型精度和大小的超参，在保持相当精度的同时享有非常小的计算消耗，适用于移动端情形，因而被命名为”MobileNets”。</p>
+        <p>MobileNets系列可以看做是继Xception之后对Depthwise Separable Convolution的又一推动。利用深度可分离的特征，MobileNets系列引入两个模型精度和大小的超参，在保持相当精度的同时享有非常小的计算消耗，适用于移动端情形，因而被命名为”MobileNets”。</p>
 <h3 id="Depthwise-Separable-Convolution"><a href="#Depthwise-Separable-Convolution" class="headerlink" title="Depthwise Separable Convolution"></a>Depthwise Separable Convolution</h3><p>深度可分离卷积是近期深度网络设计的重要趋势。最早见于L. Sifre的PhD论文Rigid-motion scattering for image classification，其1×1卷积在Inception, ResNet, SqueezeNet等网络中作为降维bottleneck使用。Xception指出，Inception单元本质上假设了跨通道和跨空间相关性的解耦关系，并将这一解耦关系推向极端，用Depthwise Separable Convolution改造了Inception结构。</p>
 <p>深度可分离卷积受欢迎的另一重要原因是其参数高效性。将原有卷积换成深度可分离卷积后，可以享受到模型压缩的增益。</p>
 <p>标准的卷积操作，可以认为是大小为DK的窗口在DF大小的特征图上滑动计算，计算复杂性为：</p>
@@ -529,7 +528,7 @@
 <p><img src="http://static.ddlee.cn/static/img/论文笔记-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/depthwise-seperable.png" alt="depthwise-seperable"></p>
 <h3 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h3><p>MobileNet的基本结构如下：</p>
 <p><img src="http://static.ddlee.cn/static/img/论文笔记-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/arch.png" alt="arch"></p>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
+<p>论文链接：<a href="https://arxiv.org/abs/1704.04861" target="_blank" rel="external">https://arxiv.org/abs/1704.04861</a></p>
 
         
                 <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">

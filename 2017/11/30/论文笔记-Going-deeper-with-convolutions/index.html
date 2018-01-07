@@ -246,7 +246,7 @@
 
     
         <meta property="article:published_time" content="Thu Nov 30 2017 20:39:58 GMT+0800">
-        <meta property="article:modified_time" content="Sat Jan 06 2018 20:46:06 GMT+0800">
+        <meta property="article:modified_time" content="Sun Jan 07 2018 17:13:04 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -269,7 +269,7 @@
     "mainEntityOfPage": "http://blog.ddlee.cn/2017/11/30/论文笔记-Going-deeper-with-convolutions/index.html",
     "headline": "[论文笔记]Going deeper with convolutions",
     "datePublished": "Thu Nov 30 2017 20:39:58 GMT+0800",
-    "dateModified": "Sat Jan 06 2018 20:46:06 GMT+0800",
+    "dateModified": "Sun Jan 07 2018 17:13:04 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -353,7 +353,7 @@
     </button>
 
     <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
-        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Overview"><span class="post-toc-number">1.</span> <span class="post-toc-text">Overview</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Motivation"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">Motivation</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Stacked-Inception-Module"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">Stacked Inception Module</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Dimension-Reduction"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">Dimension Reduction</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Auxililary-Classifier"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">Auxililary Classifier</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Architecture-of-GoogLeNet"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">Architecture of GoogLeNet</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Conclusion"><span class="post-toc-number">1.5.</span> <span class="post-toc-text">Conclusion</span></a></li></ol></li></ol>
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Motivation"><span class="post-toc-number">1.</span> <span class="post-toc-text">Motivation</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Stacked-Inception-Module"><span class="post-toc-number">2.</span> <span class="post-toc-text">Stacked Inception Module</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Dimension-Reduction"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">Dimension Reduction</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Auxililary-Classifier"><span class="post-toc-number">3.</span> <span class="post-toc-text">Auxililary Classifier</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Architecture-of-GoogLeNet"><span class="post-toc-number">4.</span> <span class="post-toc-text">Architecture of GoogLeNet</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Conclusion"><span class="post-toc-number">5.</span> <span class="post-toc-text">Conclusion</span></a></li></ol>
     </ul>
     
 
@@ -514,7 +514,7 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>本作是Inception系列网络的第一篇，提出了Inception单元结构，基于这一结构的GoogLeNet拿下了ILSVRC14分类任务的头名。文章也探讨了网络在不断加深的情况下如何更好地利用计算资源，这一理念也是Inception系列网络的核心。</p>
+        <p>本作是Inception系列网络的第一篇，提出了Inception单元结构，基于这一结构的GoogLeNet拿下了ILSVRC14分类任务的头名。文章也探讨了网络在不断加深的情况下如何更好地利用计算资源，这一理念也是Inception系列网络的核心。</p>
 <h3 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h3><p>Inception单元的启发主要来自Network in Network结构和Arora等人在神经科学方面的工作。</p>
 <p>提高深度模型的一个简单想法是增加深度，但这样带来过拟合的风险和巨大的计算资源消耗，对数据量和计算力的要求可能会超过网络加深带来的收益。</p>
 <p>解决这些问题的基本思路是使用稀疏连接的网络，而这也跟Arora等人工作中的Hebbian principle吻合：共同激活的神经元常常集聚在一起。换句话说，某一层激活的神经元只向下一层中特定的几个神经元传递激活信号，而向其他神经元几乎不传递信息，即仅有少部分连接是真正有效的，这也是稀疏的含义。</p>
@@ -534,7 +534,6 @@
 <h3 id="Architecture-of-GoogLeNet"><a href="#Architecture-of-GoogLeNet" class="headerlink" title="Architecture of GoogLeNet"></a>Architecture of GoogLeNet</h3><p>下面的表显示了GoogLeNet的整体架构，可以留意到Inception单元的堆叠和Channel数在子路径中的变化。NetScope可视化可参见<a href="http://ethereon.github.io/netscope/#/gist/db8754ee4b239920b3df5ab93220a84b" target="_blank" rel="external">GoogLeNet Vis</a>。源文件位于<a href="https://github.com/ddlee96/NN_structures/tree/master/caffe_vis" target="_blank" rel="external">NN_Structures/caffe_vis/</a>。</p>
 <p><img src="http://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/table.png" alt="arch"></p>
 <h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>文章是对NiN思想的继承和推进，不同于AlexNet和VGG，网络的模块化更加凸显，多路径的结构也成为新的网络设计范本，启发了众多后续网络结构的设计。</p>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 
         
                 <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
