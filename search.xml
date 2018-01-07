@@ -1635,9 +1635,9 @@ with​ tf​.​Session​()​​ as​ sess:
             
             <tag> AI </tag>
             
-            <tag> Tensorflow </tag>
-            
             <tag> best practice </tag>
+            
+            <tag> Tensorflow </tag>
             
         </tags>
         
@@ -2559,9 +2559,9 @@ df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
             
             <tag> Python </tag>
             
-            <tag> Data Science </tag>
-            
             <tag> Programming </tag>
+            
+            <tag> Data Science </tag>
             
         </tags>
         
@@ -3672,11 +3672,11 @@ server {
         
         <tags>
             
-            <tag> Data Science </tag>
-            
             <tag> Programming </tag>
             
             <tag> R </tag>
+            
+            <tag> Data Science </tag>
             
         </tags>
         
