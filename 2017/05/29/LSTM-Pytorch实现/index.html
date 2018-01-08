@@ -248,7 +248,7 @@
 
     
         <meta property="article:published_time" content="Mon May 29 2017 01:06:44 GMT+0800">
-        <meta property="article:modified_time" content="Mon May 29 2017 01:16:52 GMT+0800">
+        <meta property="article:modified_time" content="Mon Jan 08 2018 21:28:44 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -271,7 +271,7 @@
     "mainEntityOfPage": "http://blog.ddlee.cn/2017/05/29/LSTM-Pytorch实现/index.html",
     "headline": "LSTM:Pytorch实现",
     "datePublished": "Mon May 29 2017 01:06:44 GMT+0800",
-    "dateModified": "Mon May 29 2017 01:16:52 GMT+0800",
+    "dateModified": "Mon Jan 08 2018 21:28:44 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -518,12 +518,13 @@
     
         <p>本文讨论LSTM网络的Pytorch实现，兼论Pytorch库的代码组织方式和架构设计。</p>
 <h2 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a>LSTM</h2><p>LSTM是一种循环神经网络，适用于对序列化的输入建模。Chris Olah的这篇<a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="external">文章</a>细致地解释了一个LSTM单元的运作方式，建议阅读。</p>
-<h3 id="两个想法"><a href="#两个想法" class="headerlink" title="两个想法"></a>两个想法</h3><h4 id="Gate：信息流动的闸门"><a href="#Gate：信息流动的闸门" class="headerlink" title="Gate：信息流动的闸门"></a>Gate：信息流动的闸门</h4><p>$$i<em>t = sigmoid(W</em>{xi} x<em>t  +  W</em>{hi}h_{t-1} + b_i)$$<br>$$f<em>t = sigmoid(W</em>{xf} x<em>t  +  W</em>{hf}h_{t-1} + b_f)$$<br>$$o<em>t = sigmoid(W</em>{xo} x<em>t  +  W</em>{ho}h_{t-1} + b_o)$$<br>$x$ 表示输入，$h$表示隐藏状态，用$sigmoid$函数将输入二者的传递结果映射到$（0,1)$上，分别赋予输入门、遗忘门、输出门的含义，来控制不同神经单元（同一神经元不同时间点的状态）之间信息流动。</p>
-<h4 id="Cell：记忆池"><a href="#Cell：记忆池" class="headerlink" title="Cell：记忆池"></a>Cell：记忆池</h4><p>$$c_t = f<em>t \odot c</em>{t - 1} + i<em>t \odot tanh(W</em>{xc} x<em>t  +  W</em>{hc}h_{t-1} + b_c)\<br>h_t = o_t \odot tanh(c_t)$$<br>$h$表示隐藏状态，$C$表示记忆池，通过Gate，上一单元（状态）的信息有控制地遗忘，当前的输入有控制地流入，记忆池中的信息有控制地流入隐藏状态。</p>
+<h3 id="两个想法"><a href="#两个想法" class="headerlink" title="两个想法"></a>两个想法</h3><h4 id="Gate：信息流动的闸门"><a href="#Gate：信息流动的闸门" class="headerlink" title="Gate：信息流动的闸门"></a>Gate：信息流动的闸门</h4><script type="math/tex; mode=display">i_t = sigmoid(W_{xi} x_t  +  W_{hi}h_{t-1} + b_i)</script><script type="math/tex; mode=display">f_t = sigmoid(W_{xf} x_t  +  W_{hf}h_{t-1} + b_f)</script><script type="math/tex; mode=display">o_t = sigmoid(W_{xo} x_t  +  W_{ho}h_{t-1} + b_o)</script><p>$x$ 表示输入，$h$表示隐藏状态，用$sigmoid$函数将输入二者的传递结果映射到$（0,1)$上，分别赋予输入门、遗忘门、输出门的含义，来控制不同神经单元（同一神经元不同时间点的状态）之间信息流动。</p>
+<h4 id="Cell：记忆池"><a href="#Cell：记忆池" class="headerlink" title="Cell：记忆池"></a>Cell：记忆池</h4><script type="math/tex; mode=display">c_t = f_t \odot c_{t - 1} + i_t \odot tanh(W_{xc} x_t  +  W_{hc}h_{t-1} + b_c)\\
+h_t = o_t \odot tanh(c_t)</script><p>$h$表示隐藏状态，$C$表示记忆池，通过Gate，上一单元（状态）的信息有控制地遗忘，当前的输入有控制地流入，记忆池中的信息有控制地流入隐藏状态。</p>
 <h3 id="与普通RNN的对比"><a href="#与普通RNN的对比" class="headerlink" title="与普通RNN的对比"></a>与普通RNN的对比</h3><p><img src="http://static.ddlee.cn/static/img/./LSTM-Pytorch实现/LSTM3-SimpleRNN.png" alt="RNN"><br>普通RNN只有一个自更新的隐藏状态单元。</p>
 <p><img src="http://static.ddlee.cn/static/img/./LSTM-Pytorch实现/LSTM.jpg" alt="LSTM"><br>LSTM增加了记忆池Cell，并通过几个Gate将信息有控制地更新在记忆池中，并通过记忆池中的信息来决定隐藏状态。</p>
 <h2 id="From-Scratch"><a href="#From-Scratch" class="headerlink" title="From Scratch"></a>From Scratch</h2><p>下面是手动实现LSTM的代码，继承了基类<code>nn.Module</code>。</p>
-<pre><code class="python">import torch.nn as nn
+<pre><code class="lang-python">import torch.nn as nn
 import torch
 from torch.autograd import Variable
 
@@ -572,7 +573,7 @@ class LSTM(nn.Module):
 </ol>
 <p>下面开始按图索骥，源码见<a href="https://github.com/pytorch/pytorch/tree/master/torch" target="_blank" rel="external">GitHub</a>。</p>
 <h4 id="LSTM类"><a href="#LSTM类" class="headerlink" title="LSTM类"></a>LSTM类</h4><p>文件：<a href="https://github.com/pytorch/pytorch/blob/master/torch/nn/modules/rnn.py" target="_blank" rel="external">nn/modules/rnn.py</a></p>
-<pre><code class="Python"># nn/modules/rnn.py
+<pre><code class="lang-Python"># nn/modules/rnn.py
 class RNNBase(Module):
   def __init__(self, mode, input_size, output_size):
       pass
@@ -594,13 +595,13 @@ class LSTM(RNNBase):
 <li>在基类<code>nn.Module</code>中，把<code>__call__()</code>定义为调用<code>forward()</code>方法，因而真正的功能实现在<code>_backend.RNN()</code>中</li>
 </ol>
 <h4 id="AutogradRNN函数"><a href="#AutogradRNN函数" class="headerlink" title="AutogradRNN函数"></a>AutogradRNN函数</h4><p>下面寻找<code>_backend.RNN</code>。<br>文件：<a href="https://github.com/pytorch/pytorch/blob/master/torch/nn/backends/thnn.py" target="_blank" rel="external">nn/backends/thnn.py</a></p>
-<pre><code class="python"># nn/backends/thnn.py
+<pre><code class="lang-python"># nn/backends/thnn.py
 def _initialize_backend():
     from .._functions.rnn import RNN, LSTMCell
 </code></pre>
 <p>原来，<code>_backend</code>也是索引。</p>
 <p>终于找到<code>RNN()</code>函数。<br>文件：<a href="https://github.com/pytorch/pytorch/blob/master/torch/nn/_functions/rnn.py" target="_blank" rel="external">nn/_functions/rnn.py</a></p>
-<pre><code class="python"># nn/_functions/rnn.py
+<pre><code class="lang-python"># nn/_functions/rnn.py
 def RNN(*args, **kwargs):
     def forward(input, *fargs, **fkwargs):
         func = AutogradRNN(*args, **kwargs)
@@ -623,7 +624,7 @@ def AutogradRNN(mode, input_size, hidden_size):
 <li><code>RNN()</code>和<code>AutogradRNN()</code>返回的都是其<code>forward()</code>函数句柄</li>
 </ol>
 <p>下面是<code>Recurrent()</code>函数：</p>
-<pre><code class="python">def Recurrent(inner):
+<pre><code class="lang-python">def Recurrent(inner):
     def forward(input, hidden, weight):
         output = []
         steps = range(input.size(0) - 1, -1, -1)
@@ -637,7 +638,7 @@ def AutogradRNN(mode, input_size, hidden_size):
 <li><code>Recurrent()</code>函数实现了“递归”的结构，根据输入的大小组合<code>Cell</code>，完成了隐藏状态和参数的迭代。</li>
 <li><code>Recurrent()</code>函数将<code>Cell(inner)</code>组合为<code>Layer</code>。</li>
 </ol>
-<h4 id="StackedRNN-函数"><a href="#StackedRNN-函数" class="headerlink" title="StackedRNN()函数"></a>StackedRNN()函数</h4><pre><code class="python">def StackedRNN(inners, num_layers):
+<h4 id="StackedRNN-函数"><a href="#StackedRNN-函数" class="headerlink" title="StackedRNN()函数"></a>StackedRNN()函数</h4><pre><code class="lang-python">def StackedRNN(inners, num_layers):
     num_directions = len(inners)
     total_layers = num_layers * num_directions
     def forward(input, hidden, weight):
@@ -660,7 +661,7 @@ def AutogradRNN(mode, input_size, hidden_size):
 <li><code>StackedRNN()</code>函数将<code>Layer(inner)</code>组合为栈</li>
 </ol>
 <p>最后的最后，一个基本的LSTM单元内的计算由<code>LSTMCell()</code>函数实现。</p>
-<h4 id="LSTMCell-函数"><a href="#LSTMCell-函数" class="headerlink" title="LSTMCell()函数"></a>LSTMCell()函数</h4><pre><code class="python">def LSTMCell(input, hidden, w_ih, w_hh, b_ih=None, b_hh=None):
+<h4 id="LSTMCell-函数"><a href="#LSTMCell-函数" class="headerlink" title="LSTMCell()函数"></a>LSTMCell()函数</h4><pre><code class="lang-python">def LSTMCell(input, hidden, w_ih, w_hh, b_ih=None, b_hh=None):
     if input.is_cuda:
         igates = F.linear(input, w_ih)
         hgates = F.linear(hidden[0], w_hh)
@@ -1128,6 +1129,26 @@ It will not impact the appearance and can give developers a lot of support :)
 </script>
 
 <!-- MathJax Load-->
+
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+        tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+        TeX: {  noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+        messageStyle: "none"
+    });
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
 
 
 <!-- Bing Background -->
