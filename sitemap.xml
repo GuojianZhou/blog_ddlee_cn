@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.ddlee.cn/2017/07/22/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E6%9D%83%E9%87%8D%E8%A1%B0%E5%87%8F/</loc>
+    
+    <lastmod>2018-01-08T12:56:22.596Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/timeline/index.html</loc>
+    
+    <lastmod>2018-01-08T12:39:51.239Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/About/index.html</loc>
+    
+    <lastmod>2018-01-08T12:38:37.877Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.ddlee.cn/2017/12/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-You-Only-Look-Once-Unified-Real-Time-Object-Detection/</loc>
     
     <lastmod>2018-01-07T09:39:20.444Z</lastmod>
@@ -61,13 +82,6 @@
     <loc>http://blog.ddlee.cn/2017/05/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-On-the-fly-Operation-Batching-in-Dynamic-Computation-Graphs/</loc>
     
     <lastmod>2018-01-07T09:36:58.795Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/07/22/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E6%9D%83%E9%87%8D%E8%A1%B0%E5%87%8F/</loc>
-    
-    <lastmod>2018-01-07T09:36:20.241Z</lastmod>
     
   </url>
   
@@ -177,13 +191,6 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/timeline/index.html</loc>
-    
-    <lastmod>2018-01-07T07:37:07.167Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.ddlee.cn/2016/06/11/%E4%B8%AA%E6%80%A7%E5%8C%96%E4%BD%A0%E7%9A%84Ubuntu-3%EF%BC%9A%E4%B8%BB%E9%A2%98%EF%BC%8C%E6%8F%92%E4%BB%B6%E4%BB%A5%E5%8F%8A%E6%A1%8C%E9%9D%A2%E5%B0%8F%E5%B7%A5%E5%85%B7/</loc>
     
     <lastmod>2018-01-06T15:08:54.432Z</lastmod>
@@ -222,13 +229,6 @@
     <loc>http://blog.ddlee.cn/2017/05/28/Python%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B7%A5%E5%85%B7%E6%8C%87%E5%BC%95/</loc>
     
     <lastmod>2017-11-18T17:45:32.127Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/About/index.html</loc>
-    
-    <lastmod>2017-08-10T14:04:17.948Z</lastmod>
     
   </url>
   
