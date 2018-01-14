@@ -4,7 +4,7 @@
   <url>
     <loc>http://blog.ddlee.cn/2018/01/15/FlintOS%E8%BD%BB%E4%BD%93%E9%AA%8C/</loc>
     
-    <lastmod>2018-01-14T17:36:06.047Z</lastmod>
+    <lastmod>2018-01-14T17:38:33.870Z</lastmod>
     
   </url>
   
@@ -16,14 +16,7 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/12/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-R-FCN-Object-Detection-via-Region-based-Fully-Convolutinal-Networks/</loc>
-    
-    <lastmod>2018-01-09T16:56:34.011Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/12/22/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/</loc>
+    <loc>http://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Densely-Connected-Convolutional-Networks/</loc>
     
     <lastmod>2018-01-09T16:56:34.011Z</lastmod>
     
@@ -37,23 +30,16 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Densely-Connected-Convolutional-Networks/</loc>
+    <loc>http://blog.ddlee.cn/2017/12/22/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/</loc>
     
     <lastmod>2018-01-09T16:56:34.011Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/12/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-You-Only-Look-Once-Unified-Real-Time-Object-Detection/</loc>
+    <loc>http://blog.ddlee.cn/2017/12/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-R-FCN-Object-Detection-via-Region-based-Fully-Convolutinal-Networks/</loc>
     
-    <lastmod>2018-01-09T16:56:34.010Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/12/12/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-SSD-Single-Shot-MultiBox-Detector/</loc>
-    
-    <lastmod>2018-01-09T16:56:34.010Z</lastmod>
+    <lastmod>2018-01-09T16:56:34.011Z</lastmod>
     
   </url>
   
@@ -72,21 +58,21 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2018/01/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/</loc>
+    <loc>http://blog.ddlee.cn/2017/12/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-You-Only-Look-Once-Unified-Real-Time-Object-Detection/</loc>
     
-    <lastmod>2018-01-09T16:56:34.009Z</lastmod>
+    <lastmod>2018-01-09T16:56:34.010Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/12/12/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-SSD-Single-Shot-MultiBox-Detector/</loc>
+    
+    <lastmod>2018-01-09T16:56:34.010Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.ddlee.cn/2018/01/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/</loc>
-    
-    <lastmod>2018-01-09T16:56:34.009Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/12/26/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/</loc>
     
     <lastmod>2018-01-09T16:56:34.009Z</lastmod>
     
@@ -100,21 +86,28 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/07/11/Tensorflow%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%EF%BC%9A%E8%AF%95%E9%AA%8C%E7%AE%A1%E7%90%86/</loc>
+    <loc>http://blog.ddlee.cn/2018/01/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/</loc>
     
-    <lastmod>2018-01-09T16:56:34.008Z</lastmod>
+    <lastmod>2018-01-09T16:56:34.009Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/11/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Going-deeper-with-convolutions/</loc>
+    <loc>http://blog.ddlee.cn/2017/12/26/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/</loc>
     
-    <lastmod>2018-01-09T16:56:34.008Z</lastmod>
+    <lastmod>2018-01-09T16:56:34.009Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://blog.ddlee.cn/2017/07/22/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E6%9D%83%E9%87%8D%E8%A1%B0%E5%87%8F/</loc>
+    
+    <lastmod>2018-01-09T16:56:34.008Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/07/11/Tensorflow%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%EF%BC%9A%E8%AF%95%E9%AA%8C%E7%AE%A1%E7%90%86/</loc>
     
     <lastmod>2018-01-09T16:56:34.008Z</lastmod>
     
@@ -128,7 +121,21 @@
   </url>
   
   <url>
+    <loc>http://blog.ddlee.cn/2017/11/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Going-deeper-with-convolutions/</loc>
+    
+    <lastmod>2018-01-09T16:56:34.008Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.ddlee.cn/2017/11/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MegDet-A-Large-Mini-Batch-Object-Detector/</loc>
+    
+    <lastmod>2018-01-09T16:56:34.007Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/10/15/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Fast-R-CNN/</loc>
     
     <lastmod>2018-01-09T16:56:34.007Z</lastmod>
     
@@ -149,20 +156,6 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/10/15/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Fast-R-CNN/</loc>
-    
-    <lastmod>2018-01-09T16:56:34.007Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/08/06/%E5%A2%93%E7%95%94%E5%93%80%E6%AD%8C/</loc>
-    
-    <lastmod>2018-01-09T16:56:34.006Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.ddlee.cn/2017/10/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Rich-feature-hierarchies-for-accurate-object-detection-and-semantic-segmentation/</loc>
     
     <lastmod>2018-01-09T16:56:34.006Z</lastmod>
@@ -170,7 +163,7 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/08/31/Android-Reborn-%E4%B8%AA%E4%BA%BAAPP%E5%AD%98%E6%A1%A3/</loc>
+    <loc>http://blog.ddlee.cn/2017/08/06/%E5%A2%93%E7%95%94%E5%93%80%E6%AD%8C/</loc>
     
     <lastmod>2018-01-09T16:56:34.006Z</lastmod>
     
@@ -184,7 +177,14 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/07/30/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BModel/</loc>
+    <loc>http://blog.ddlee.cn/2017/08/31/Android-Reborn-%E4%B8%AA%E4%BA%BAAPP%E5%AD%98%E6%A1%A3/</loc>
+    
+    <lastmod>2018-01-09T16:56:34.006Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/07/25/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BContainer/</loc>
     
     <lastmod>2018-01-09T16:56:34.005Z</lastmod>
     
@@ -198,16 +198,9 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/07/25/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BContainer/</loc>
+    <loc>http://blog.ddlee.cn/2017/07/30/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BModel/</loc>
     
     <lastmod>2018-01-09T16:56:34.005Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/03/22/DevOps%E4%BE%A7%E8%AE%B0/</loc>
-    
-    <lastmod>2018-01-09T16:56:34.004Z</lastmod>
     
   </url>
   
@@ -219,7 +212,7 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/03/26/Kaggle%E6%AF%94%E8%B5%9B%E4%B8%ADEDA%EF%BC%9A%E6%B5%81%E7%A8%8B%E3%80%81%E5%81%9A%E6%B3%95%E4%B8%8E%E7%9B%AE%E7%9A%84/</loc>
+    <loc>http://blog.ddlee.cn/2017/03/22/DevOps%E4%BE%A7%E8%AE%B0/</loc>
     
     <lastmod>2018-01-09T16:56:34.004Z</lastmod>
     
@@ -233,9 +226,23 @@
   </url>
   
   <url>
+    <loc>http://blog.ddlee.cn/2017/03/26/Kaggle%E6%AF%94%E8%B5%9B%E4%B8%ADEDA%EF%BC%9A%E6%B5%81%E7%A8%8B%E3%80%81%E5%81%9A%E6%B3%95%E4%B8%8E%E7%9B%AE%E7%9A%84/</loc>
+    
+    <lastmod>2018-01-09T16:56:34.004Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.ddlee.cn/2017/06/03/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/</loc>
     
     <lastmod>2018-01-09T16:56:34.004Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/05/17/Dropout-Pytorch%E5%AE%9E%E7%8E%B0/</loc>
+    
+    <lastmod>2018-01-09T16:56:34.003Z</lastmod>
     
   </url>
   
@@ -254,21 +261,14 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/05/17/Dropout-Pytorch%E5%AE%9E%E7%8E%B0/</loc>
-    
-    <lastmod>2018-01-09T16:56:34.003Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/06/05/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Large-Scale-Evolution-of-Image-Classifiers/</loc>
+    <loc>http://blog.ddlee.cn/2017/06/10/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-On-the-Effects-and-Weight-Normalization-in-GAN/</loc>
     
     <lastmod>2018-01-09T16:56:34.002Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/06/14/%E8%87%AA%E7%94%A8LaTeX%E4%B8%AD%E8%8B%B1%E6%96%87%E5%BB%BA%E7%AB%8B%E6%A8%A1%E6%9D%BF/</loc>
+    <loc>http://blog.ddlee.cn/2017/06/05/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Large-Scale-Evolution-of-Image-Classifiers/</loc>
     
     <lastmod>2018-01-09T16:56:34.002Z</lastmod>
     
@@ -282,16 +282,9 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/06/10/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-On-the-Effects-and-Weight-Normalization-in-GAN/</loc>
+    <loc>http://blog.ddlee.cn/2017/06/14/%E8%87%AA%E7%94%A8LaTeX%E4%B8%AD%E8%8B%B1%E6%96%87%E5%BB%BA%E7%AB%8B%E6%A8%A1%E6%9D%BF/</loc>
     
     <lastmod>2018-01-09T16:56:34.002Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/03/31/The-Devtools-Way-devtools-RStudio%E5%BF%AB%E9%80%9FR%E7%A8%8B%E5%BA%8F%E5%8C%85%E5%BC%80%E5%8F%91/</loc>
-    
-    <lastmod>2018-01-09T16:56:34.001Z</lastmod>
     
   </url>
   
@@ -317,9 +310,9 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/03/30/HADOOP%E5%AD%A6%E4%B9%A0%E9%80%9F%E8%AE%B0/</loc>
+    <loc>http://blog.ddlee.cn/2017/03/31/The-Devtools-Way-devtools-RStudio%E5%BF%AB%E9%80%9FR%E7%A8%8B%E5%BA%8F%E5%8C%85%E5%BC%80%E5%8F%91/</loc>
     
-    <lastmod>2018-01-09T16:56:34.000Z</lastmod>
+    <lastmod>2018-01-09T16:56:34.001Z</lastmod>
     
   </url>
   
@@ -338,6 +331,13 @@
   </url>
   
   <url>
+    <loc>http://blog.ddlee.cn/2017/03/30/HADOOP%E5%AD%A6%E4%B9%A0%E9%80%9F%E8%AE%B0/</loc>
+    
+    <lastmod>2018-01-09T16:56:34.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.ddlee.cn/2017/05/28/Pandas%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96/</loc>
     
     <lastmod>2018-01-09T16:56:34.000Z</lastmod>
@@ -345,14 +345,7 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/04/03/Coroutine-Generator-Async%E4%B8%8EAwait/</loc>
-    
-    <lastmod>2018-01-09T16:56:33.999Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/04/03/500lines%E9%A1%B9%E7%9B%AECrawler%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</loc>
+    <loc>http://blog.ddlee.cn/2017/03/16/Python%E4%B8%8ESQL_Server%E7%9A%84%E4%BA%A4%E4%BA%92%EF%BC%9ApyODBC,%20pymssql,%20SQLAlchemy/</loc>
     
     <lastmod>2018-01-09T16:56:33.999Z</lastmod>
     
@@ -366,14 +359,21 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/03/16/Python%E4%B8%8ESQL_Server%E7%9A%84%E4%BA%A4%E4%BA%92%EF%BC%9ApyODBC,%20pymssql,%20SQLAlchemy/</loc>
+    <loc>http://blog.ddlee.cn/2017/04/03/500lines%E9%A1%B9%E7%9B%AECrawler%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</loc>
     
     <lastmod>2018-01-09T16:56:33.999Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2016/08/07/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E8%B5%84%E6%BA%90/</loc>
+    <loc>http://blog.ddlee.cn/2017/04/03/Coroutine-Generator-Async%E4%B8%8EAwait/</loc>
+    
+    <lastmod>2018-01-09T16:56:33.999Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/04/05/ddlee%E7%BA%A6%E4%B9%A6%E8%AE%A1%E5%88%92%EF%BC%88%E7%AC%AC%E4%BA%8C%E5%BC%B9%EF%BC%89/</loc>
     
     <lastmod>2018-01-09T16:56:33.998Z</lastmod>
     
@@ -387,6 +387,13 @@
   </url>
   
   <url>
+    <loc>http://blog.ddlee.cn/2016/08/07/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E8%B5%84%E6%BA%90/</loc>
+    
+    <lastmod>2018-01-09T16:56:33.998Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.ddlee.cn/2017/01/27/%E8%B0%81%E4%BC%9A%E4%B8%8D%E5%8E%8C%E5%85%B6%E7%83%A6%E5%9C%B0%E5%AE%89%E6%85%B0%E9%82%A3%E6%97%A0%E7%9F%A5%E7%9A%84%E5%B0%91%E5%B9%B4-1/</loc>
     
     <lastmod>2018-01-09T16:56:33.998Z</lastmod>
@@ -394,21 +401,14 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/04/05/ddlee%E7%BA%A6%E4%B9%A6%E8%AE%A1%E5%88%92%EF%BC%88%E7%AC%AC%E4%BA%8C%E5%BC%B9%EF%BC%89/</loc>
-    
-    <lastmod>2018-01-09T16:56:33.998Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2016/05/30/%E4%B8%AA%E6%80%A7%E5%8C%96%E4%BD%A0%E7%9A%84Ubuntu-1%EF%BC%9AGNOME%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83/</loc>
+    <loc>http://blog.ddlee.cn/2016/09/23/%E5%B0%8F%E7%B1%B33%E5%8F%98%E8%BA%AB%E8%AE%B0/</loc>
     
     <lastmod>2018-01-09T16:56:33.997Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2016/09/23/%E5%B0%8F%E7%B1%B33%E5%8F%98%E8%BA%AB%E8%AE%B0/</loc>
+    <loc>http://blog.ddlee.cn/2016/05/30/%E4%B8%AA%E6%80%A7%E5%8C%96%E4%BD%A0%E7%9A%84Ubuntu-1%EF%BC%9AGNOME%E6%A1%8C%E9%9D%A2%E7%8E%AF%E5%A2%83/</loc>
     
     <lastmod>2018-01-09T16:56:33.997Z</lastmod>
     
@@ -436,13 +436,6 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/04/08/%E7%BC%96%E7%A8%8B%E6%96%B9%E6%B3%95%E8%AE%BA-%E9%87%8D%E6%9E%84/</loc>
-    
-    <lastmod>2018-01-09T16:56:33.996Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.ddlee.cn/2016/06/11/%E4%B8%AA%E6%80%A7%E5%8C%96%E4%BD%A0%E7%9A%84Ubuntu-3%EF%BC%9A%E4%B8%BB%E9%A2%98%EF%BC%8C%E6%8F%92%E4%BB%B6%E4%BB%A5%E5%8F%8A%E6%A1%8C%E9%9D%A2%E5%B0%8F%E5%B7%A5%E5%85%B7/</loc>
     
     <lastmod>2018-01-09T16:56:33.996Z</lastmod>
@@ -450,14 +443,21 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/About/index.html</loc>
+    <loc>http://blog.ddlee.cn/2017/04/08/%E7%BC%96%E7%A8%8B%E6%96%B9%E6%B3%95%E8%AE%BA-%E9%87%8D%E6%9E%84/</loc>
+    
+    <lastmod>2018-01-09T16:56:33.996Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/tags/index.html</loc>
     
     <lastmod>2018-01-09T16:56:33.995Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/tags/index.html</loc>
+    <loc>http://blog.ddlee.cn/About/index.html</loc>
     
     <lastmod>2018-01-09T16:56:33.995Z</lastmod>
     
