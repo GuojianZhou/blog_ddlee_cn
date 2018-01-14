@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.ddlee.cn/"/>
-  <updated>2018-01-14T17:38:33.870Z</updated>
+  <updated>2018-01-14T18:06:16.783Z</updated>
   <id>http://blog.ddlee.cn/</id>
   
   <author>
@@ -16,11 +16,99 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Laptop Reborn: 系统重装侧记</title>
+    <link href="http://blog.ddlee.cn/2018/01/15/Laptop-Reborn-%E7%B3%BB%E7%BB%9F%E9%87%8D%E8%A3%85%E4%BE%A7%E8%AE%B0/"/>
+    <id>http://blog.ddlee.cn/2018/01/15/Laptop-Reborn-系统重装侧记/</id>
+    <published>2018-01-14T18:06:16.000Z</published>
+    <updated>2018-01-14T18:06:16.783Z</updated>
+    
+    <content type="html"><![CDATA[<p>本篇是个人向的系统重装记录，以便自己日后参考。</p>
+<p>我使用的系统是Win10+Ubuntu16.04。</p>
+<p>Ubuntu为主力，Windows在两种情况下发挥作用：</p>
+<ol>
+<li>用只支持win平台下解锁的移动硬盘存取文件</li>
+<li>用iTunes备份iPad和传输文件</li>
+</ol>
+<h2 id="备份-Backup"><a href="#备份-Backup" class="headerlink" title="备份 Backup"></a>备份 Backup</h2><p>备份必然是第一步，几乎只需要备份用户文件夹就好。</p>
+<p>Ubuntu:<br>/home/Documents/<br>/home/Pictures(Music, Video, etc.)<br>/home/Downloads(Maybe)</p>
+<p>Windows<br>~/Documents/(Music, Picture, Video, Desktop)</p>
+<h2 id="镜像准备-ISO-Preparation"><a href="#镜像准备-ISO-Preparation" class="headerlink" title="镜像准备 ISO Preparation"></a>镜像准备 ISO Preparation</h2><p>准备系统镜像。这次用的刻录软件分别是Ruff(Windows)和Etcher(Ubuntu)。</p>
+<p>Ubuntu: Ubuntu Gnome 16.04(From TUNA Mirror)</p>
+<p>Windows: Win10-multi-ver1709(msdn.itellyou.cn)</p>
+<p>Burning Tool: etcher portable</p>
+<h2 id="硬盘分区-Disk-Partition"><a href="#硬盘分区-Disk-Partition" class="headerlink" title="硬盘分区 Disk Partition"></a>硬盘分区 Disk Partition</h2><p>双系统共存的话，要先装Windows(反之Windows安装时会影响已存在的Ubuntu)，因此分区这一部分在安装Windows的时候完成。</p>
+<p>我的SSD只有240G，因此选择50+50给Windows，剩下的给Ubuntu(包括swap)</p>
+<p>Windows(sys 50G, data 50G)<br>Ubuntu(sys 120G)</p>
+<h2 id="驱动准备-Driver-Preparation"><a href="#驱动准备-Driver-Preparation" class="headerlink" title="驱动准备 Driver Preparation"></a>驱动准备 Driver Preparation</h2><p>Ubuntu还好，全新的Windows可能没法驱动网卡，这样就没办法更新和后续操作。我之前的方案是用驱动人生或者驱动精灵的网卡版，用完之后，良犬烹。但这次洁癖发作，因此选择去联想官网下载网卡驱动。再用相对干净的Driver boost更新其他驱动。</p>
+<p>netcard: <a href="https://pcsupport.lenovo.com/us/en/products/laptops-and-netbooks/thinkpad-t-series-laptops/thinkpad-t460p/downloads" target="_blank" rel="external">https://pcsupport.lenovo.com/us/en/products/laptops-and-netbooks/thinkpad-t-series-laptops/thinkpad-t460p/downloads</a></p>
+<p>Driver update tool(Driver boost 3): <a href="http://download.cnet.com/Driver-Booster-2/3000-18513_4-75992725.html?part=dl-&amp;subj=dl&amp;tag=button" target="_blank" rel="external">http://download.cnet.com/Driver-Booster-2/3000-18513_4-75992725.html?part=dl-&amp;subj=dl&amp;tag=button</a></p>
+<h2 id="软件安装-Software-Installation"><a href="#软件安装-Software-Installation" class="headerlink" title="软件安装 Software Installation"></a>软件安装 Software Installation</h2><p>这一部分只是一个list，主要给自己参考用。</p>
+<p>Windows:</p>
+<ul>
+<li>Minimal-Net-Pack</li>
+<li>Office 2016</li>
+<li>iTunes</li>
+<li>CCleaner</li>
+<li>Picasa</li>
+<li>PotPlayer</li>
+<li>mini-Thunder</li>
+<li>Launchy</li>
+</ul>
+<p>Ubuntu:</p>
+<ul>
+<li>Minimal-Net-Pack</li>
+<li>Google Chrome</li>
+<li>Sougou Pinyin, Nutstore, Stacer</li>
+<li>Netease Music, Variety</li>
+<li>Gnome themes, Telegram, Xmind, FileZilla</li>
+</ul>
+<h2 id="开发环境配置-Environment-Configuration"><a href="#开发环境配置-Environment-Configuration" class="headerlink" title="开发环境配置 Environment Configuration"></a>开发环境配置 Environment Configuration</h2><p>这一部分完成自己开发环境的配置。</p>
+<h4 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h4><p>SSH key: ssh-keygen and ssh-add, git config name&amp;email</p>
+<h4 id="Python-Annaconda"><a href="#Python-Annaconda" class="headerlink" title="Python(Annaconda)"></a>Python(Annaconda)</h4><p>(pypi: 修改 ~/.config/pip/pip.conf (Linux), %APPDATA%\pip\pip.ini (Windows 10) 或 $HOME/Library/Application Support/pip/pip.conf (macOS) (没有就创建一个)， 修改 index-url至tuna，例如<br>[global]<br>index-url = <a href="https://pypi.tuna.tsinghua.edu.cn/simple" target="_blank" rel="external">https://pypi.tuna.tsinghua.edu.cn/simple</a> )<br>(conda TUNA 还提供了 Anaconda 仓库的镜像，运行以下命令:<br>conda config –add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</a></p>
+<p>conda config –add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</a></p>
+<p>conda config –set show_channel_urls yes<br>即可添加 Anaconda Python 免费仓库。)</p>
+<h4 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h4><p>install: <a href="https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/</a></p>
+<p>To verify: sudo docker run hello-world</p>
+<p>mirror: <a href="https://www.docker-cn.com/registry-mirror" target="_blank" rel="external">https://www.docker-cn.com/registry-mirror</a><br>chmod 755 /etc/docker<br>为了永久性保留更改，您可以修改 /etc/docker/daemon.json 文件并添加上 registry-mirrors 键值。<br>{ “registry-mirrors”: [“<a href="https://registry.docker-cn.com" target="_blank" rel="external">https://registry.docker-cn.com</a>“] }<br>修改保存后重启 Docker 以使配置生效</p>
+<p>ref: <a href="https://docker_practice.gitee.io" target="_blank" rel="external">https://docker_practice.gitee.io</a></p>
+<h4 id="R"><a href="#R" class="headerlink" title="R"></a>R</h4><p>sudo apt install r-base r-base-dev</p>
+<h4 id="Hexo-Node-js"><a href="#Hexo-Node-js" class="headerlink" title="Hexo(Node.js)"></a>Hexo(Node.js)</h4><p>Node.js:<br>curl -sL <a href="https://deb.nodesource.com/setup_8.x" target="_blank" rel="external">https://deb.nodesource.com/setup_8.x</a> | sudo -E bash -<br>sudo apt-get install -y nodejs<br>hexo:<br>sudo npm install -g hexo-cli<br>rebuild bind in hexo directory:<br>npm rebuild node-sass</p>
+<h2 id="杂项-Minor-Changes"><a href="#杂项-Minor-Changes" class="headerlink" title="杂项 Minor Changes"></a>杂项 Minor Changes</h2><p>一些需要操作的小地方备忘。</p>
+<p>1.install Nvidia Driver<br><a href="http://www.linuxandubuntu.com/home/how-to-install-latest-nvidia-drivers-in-linux" target="_blank" rel="external">http://www.linuxandubuntu.com/home/how-to-install-latest-nvidia-drivers-in-linux</a><br><a href="https://gist.github.com/wangruohui/df039f0dc434d6486f5d4d098aa52d07" target="_blank" rel="external">https://gist.github.com/wangruohui/df039f0dc434d6486f5d4d098aa52d07</a></p>
+<p>sudo add-apt-repository ppa:graphics-drivers/ppa<br>sudo apt-get update<br>sudo apt-get install nvidia-384<br>(ref at <a href="http://www.nvidia.com/object/unix.html" target="_blank" rel="external">http://www.nvidia.com/object/unix.html</a> to determine driver version)<br>optional: pip install gpustat</p>
+<p>Proxy for ppa.launchpad.net<br>修改/etc/apt/sources.list.d下面需要代理的仓库，将ppa.launchpad.net换成代理地址，执行sudo apt update更新即可。 可用代理地址：<a href="http://launchpad.proxy.ustclug.org/" target="_blank" rel="external">http://launchpad.proxy.ustclug.org/</a></p>
+<p>2.Grub skip time<br><a href="https://askubuntu.com/questions/157925/how-do-i-skip-the-grub-menu-on-a-dual-boot-system" target="_blank" rel="external">https://askubuntu.com/questions/157925/how-do-i-skip-the-grub-menu-on-a-dual-boot-system</a></p>
+<p>Edit /etc/default/grub to contain</p>
+<p>if you prefer to see the menu for 1 second:<br>GRUB_HIDDEN_TIMEOUT=<br>GRUB_TIMEOUT=1</p>
+<p>When you’re done, run sudo update-grub to save your changes.</p>
+<p>3.cpufrequtils(set performance &amp; get temperature)<br><a href="http://www.linux-magazine.com/Online/Blogs/Productivity-Sauce/Power-Management-with-cpufrequtils" target="_blank" rel="external">http://www.linux-magazine.com/Online/Blogs/Productivity-Sauce/Power-Management-with-cpufrequtils</a><br><a href="https://askubuntu.com/questions/15832/how-do-i-get-the-cpu-temperature" target="_blank" rel="external">https://askubuntu.com/questions/15832/how-do-i-get-the-cpu-temperature</a></p>
+<ul>
+<li>Disable intel turbo boost technology: terminal:<br>sudo -i<br>echo “1” | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo<br>exit</li>
+</ul>
+<p>4.tracke-miner-fs bug<br><a href="https://askubuntu.com/questions/346211/tracker-store-and-tracker-miner-fs-eating-up-my-cpu-on-every-startup" target="_blank" rel="external">https://askubuntu.com/questions/346211/tracker-store-and-tracker-miner-fs-eating-up-my-cpu-on-every-startup</a></p>
+<p>echo -e “\nHidden=true\n” | sudo tee –append /etc/xdg/autostart/tracker-extract.desktop /etc/xdg/autostart/tracker-miner-apps.desktop /etc/xdg/autostart/tracker-miner-fs.desktop /etc/xdg/autostart/tracker-miner-user-guides.desktop /etc/xdg/autostart/tracker-store.desktop &gt; /dev/null<br>gsettings set org.freedesktop.Tracker.Miner.Files crawling-interval -2<br>gsettings set org.freedesktop.Tracker.Miner.Files enable-monitors false<br>tracker reset –hard</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本篇是个人向的系统重装记录，以便自己日后参考。&lt;/p&gt;
+&lt;p&gt;我使用的系统是Win10+Ubuntu16.04。&lt;/p&gt;
+&lt;p&gt;Ubuntu为主力，Windows在两种情况下发挥作用：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;用只支持win平台下解锁的移动硬盘存取文件&lt;/li&gt;
+&lt;li&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>FlintOS轻体验</title>
-    <link href="http://blog.ddlee.cn/2018/01/15/FlintOS%E8%BD%BB%E4%BD%93%E9%AA%8C/"/>
-    <id>http://blog.ddlee.cn/2018/01/15/FlintOS轻体验/</id>
-    <published>2018-01-14T17:36:06.000Z</published>
-    <updated>2018-01-14T17:38:33.870Z</updated>
+    <link href="http://blog.ddlee.cn/2018/01/10/FlintOS%E8%BD%BB%E4%BD%93%E9%AA%8C/"/>
+    <id>http://blog.ddlee.cn/2018/01/10/FlintOS轻体验/</id>
+    <published>2018-01-09T17:36:06.000Z</published>
+    <updated>2018-01-14T18:06:43.322Z</updated>
     
     <content type="html"><![CDATA[<p>呃，我在<a href="https://ddlee.cn/index_ver2016.html" target="_blank" rel="external">2016版的个人主页</a>里曾表达自己特别想拥有一台Chromebook，可终于还是屈服在了网络环境面前。</p>
 <p>离了我的路由器，我的Chromebook几乎就是个废物了。</p>
@@ -890,67 +978,6 @@
       <category term="Software" scheme="http://blog.ddlee.cn/tags/Software/"/>
     
       <category term="Linux" scheme="http://blog.ddlee.cn/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>IOS Reborn: 个人APP存档</title>
-    <link href="http://blog.ddlee.cn/2017/09/02/IOS-Reborn-%E4%B8%AA%E4%BA%BAAPP%E5%AD%98%E6%A1%A3/"/>
-    <id>http://blog.ddlee.cn/2017/09/02/IOS-Reborn-个人APP存档/</id>
-    <published>2017-09-01T16:07:47.000Z</published>
-    <updated>2018-01-09T16:56:34.007Z</updated>
-    
-    <content type="html"><![CDATA[<p>IOS系统个人应用列表备份，iPad主要为阅读、娱乐功能，iPod用于听歌、播客。</p>
-<h3 id="iPad-mini-4"><a href="#iPad-mini-4" class="headerlink" title="iPad mini 4"></a>iPad mini 4</h3><h4 id="Productivity"><a href="#Productivity" class="headerlink" title="Productivity"></a>Productivity</h4><ul>
-<li>Documents，文件中转中心，连接云服务、私有云。PDF文档中心</li>
-<li>Google Keep，记录琐事、备忘</li>
-<li>Pushbullet，多客户端跨平台文字、链接转发</li>
-<li>PDF Expert，为Documents提供PDF标注编辑等功能</li>
-<li>Git2Go，GitHub客户端，读代码</li>
-<li>百度网盘，转存文件、电子书</li>
-</ul>
-<h4 id="Reading"><a href="#Reading" class="headerlink" title="Reading"></a>Reading</h4><ul>
-<li>Reeder 3，Feedly客户端，咨讯中心</li>
-<li>Pocket，稍后再读，配合Reeder 3</li>
-<li>知乎，内容索引</li>
-<li>多看阅读，电子书中心</li>
-<li>Quora，内容索引</li>
-<li>kindle，电子书，Amazon内容</li>
-<li>Medium，高质量的写作社区</li>
-<li>iBooks，少部分电子书</li>
-</ul>
-<h4 id="LifeStyle"><a href="#LifeStyle" class="headerlink" title="LifeStyle"></a>LifeStyle</h4><ul>
-<li>导航犬离线地图，地图备查</li>
-<li>Bilibili HD</li>
-<li>AVPlayer HD，本地视频，私有云视频</li>
-<li>网易云音乐</li>
-</ul>
-<h3 id="iPod"><a href="#iPod" class="headerlink" title="iPod"></a>iPod</h3><h4 id="Music"><a href="#Music" class="headerlink" title="Music"></a>Music</h4><ul>
-<li>网易云音乐</li>
-<li>QQ音乐</li>
-<li>KUSC，南加州古典音乐电台</li>
-<li>overcast，Podcast客户端</li>
-</ul>
-<h4 id="LifeStyle-1"><a href="#LifeStyle-1" class="headerlink" title="LifeStyle"></a>LifeStyle</h4><ul>
-<li>Bilibili</li>
-<li>地铁通</li>
-</ul>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;IOS系统个人应用列表备份，iPad主要为阅读、娱乐功能，iPod用于听歌、播客。&lt;/p&gt;
-&lt;h3 id=&quot;iPad-mini-4&quot;&gt;&lt;a href=&quot;#iPad-mini-4&quot; class=&quot;headerlink&quot; title=&quot;iPad mini 4&quot;&gt;&lt;/a&gt;iPad
-    
-    </summary>
-    
-      <category term="Individual Development" scheme="http://blog.ddlee.cn/categories/Individual-Development/"/>
-    
-    
-      <category term="Software" scheme="http://blog.ddlee.cn/tags/Software/"/>
-    
-      <category term="IOS" scheme="http://blog.ddlee.cn/tags/IOS/"/>
     
   </entry>
   
