@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.ddlee.cn/"/>
-  <updated>2018-01-09T16:56:34.011Z</updated>
+  <updated>2018-01-14T17:36:06.047Z</updated>
   <id>http://blog.ddlee.cn/</id>
   
   <author>
@@ -14,6 +14,51 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>FlintOS轻体验</title>
+    <link href="http://blog.ddlee.cn/2018/01/15/FlintOS%E8%BD%BB%E4%BD%93%E9%AA%8C/"/>
+    <id>http://blog.ddlee.cn/2018/01/15/FlintOS轻体验/</id>
+    <published>2018-01-14T17:36:06.000Z</published>
+    <updated>2018-01-14T17:36:06.047Z</updated>
+    
+    <content type="html"><![CDATA[<p>呃，我在<a href="https://ddlee.cn/index_ver2016.html" target="_blank" rel="external">2016版的个人主页</a>里曾表达自己特别想拥有一台Chromebook，可终于还是屈服在了网络环境面前。</p>
+<p>离了我的路由器，我的Chromebook几乎就是个废物了。</p>
+<p>不过，FlintOS的出现让我重拾了这个想法，我可能还是需要一台轻便的上网本。</p>
+<p>FlintOS是Chromium OS的中文本地化项目，而后者正是Chromebook的操作系统，在美国的低端笔记本市场和教育市场占有很大的份额。</p>
+<p>只不过在大陆呵呵。</p>
+<p>言归正传，FlintOS背后的公司是成立不久的燧炻科技，这里是他们的<a href="https://flintos.com" target="_blank" rel="external">官网</a>，可以在这个<a href="https://flintos.com/faq/" target="_blank" rel="external">页面</a>了解更多FlintOS的信息，本篇中的版本是在<a href="https://flintos.com/community/topic/flint-os-for-pc-dev-3-1-%e5%8f%91%e5%b8%83%e9%80%9a%e7%9f%a5/" target="_blank" rel="external">论坛</a>的DEV3.2中国版。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>DEV3.2中国版的最大亮点是支持本地账户。这意味着在大陆的网络环境下也有使用的可能性。而且，这个版本内置了可供科学上网的服务，测试可用。另外，FlintOS settings里面也包括了安装Flash的快捷方式。</p>
+<p>目前建议是在U盘上体验，安装教程在<a href="https://flintos.com/instructions-pc" target="_blank" rel="external">这里</a>。</p>
+<p>也可以选择安装双启动和硬盘独占安装，可以参考社区的<a href="https://flintos.com/community/forum/flint-os-for-pc/" target="_blank" rel="external">置顶帖</a>。</p>
+<h2 id="界面UI"><a href="#界面UI" class="headerlink" title="界面UI"></a>界面UI</h2><p>桌面和右下角的通知栏，遵从了Material Design，看着舒服。<br><img src="http://static.ddlee.cn/static/img/FlintOS轻体验/desktop.png" alt="desktop"></p>
+<p>APP Launcher，跟Gnome的风格很像。搜索栏可以直接Google搜索，也可以搜索文件和APP。实际上大部分APP可以当做交互逻辑级别更高的书签，打开即是新建相应网站的标签页（如YouTube）。<br><img src="http://static.ddlee.cn/static/img/FlintOS轻体验/apps.png" alt="desktop"></p>
+<p>这个是Chrome Web Store，跟作为浏览器的Chrome完全一致，只不过这个平台上可没有homebrew也没有dpkg。<br><img src="http://static.ddlee.cn/static/img/FlintOS轻体验/webstore.png" alt="desktop"></p>
+<p>文件管理应用，跟Google Drive深度集成。<br><img src="http://static.ddlee.cn/static/img/FlintOS轻体验/files.png" alt="desktop"></p>
+<h2 id="编程相关"><a href="#编程相关" class="headerlink" title="编程相关"></a>编程相关</h2><p>我也尝试探索用于开发的可能性，由于ssh的存在，可操作性还是很高的。</p>
+<p><img src="http://static.ddlee.cn/static/img/FlintOS轻体验/ssh.png" alt="desktop"></p>
+<p>Texts是一个比较轻亮的文本编辑器。当然也有仿atom的付费APP。<br><img src="http://static.ddlee.cn/static/img/FlintOS轻体验/texts.png" alt="desktop"></p>
+<p>crosh（通过Crtl+Shift+T打开）是内置的shell，功能上还有待探索，图为运行top的效果。<br><img src="http://static.ddlee.cn/static/img/FlintOS轻体验/crosh.png" alt="desktop"></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>Chromium OS的理念是web为王，浏览器即一切。这种理念配合Google相当完整的生态使得Chromebook在廉价本市场几乎是统治地位。去年的MS build上，微软也发布了对标的Windows版本，demo用的场景就是老师为每个学生配备PC。</p>
+<p>相比之下，大陆的这个市场还是空白（或许不一定有，毕竟教育方面并不普及）。看到有把这种理念本地化的公司出现还是很惊艳，在此默默祝福他们。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;呃，我在&lt;a href=&quot;https://ddlee.cn/index_ver2016.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;2016版的个人主页&lt;/a&gt;里曾表达自己特别想拥有一台Chromebook，可终于还是屈服在了网络环境面前。&lt;/
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://blog.ddlee.cn/categories/Linux/"/>
+    
+    
+      <category term="Software" scheme="http://blog.ddlee.cn/tags/Software/"/>
+    
+      <category term="Chrome" scheme="http://blog.ddlee.cn/tags/Chrome/"/>
+    
+      <category term="Geek" scheme="http://blog.ddlee.cn/tags/Geek/"/>
+    
+  </entry>
   
   <entry>
     <title>[论文笔记]Densely Connected Convolutional Networks</title>
@@ -900,80 +945,6 @@
       <category term="Software" scheme="http://blog.ddlee.cn/tags/Software/"/>
     
       <category term="IOS" scheme="http://blog.ddlee.cn/tags/IOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Android Reborn: 个人APP存档</title>
-    <link href="http://blog.ddlee.cn/2017/08/31/Android-Reborn-%E4%B8%AA%E4%BA%BAAPP%E5%AD%98%E6%A1%A3/"/>
-    <id>http://blog.ddlee.cn/2017/08/31/Android-Reborn-个人APP存档/</id>
-    <published>2017-08-31T15:57:23.000Z</published>
-    <updated>2018-01-09T16:56:34.006Z</updated>
-    
-    <content type="html"><![CDATA[<p>个人使用Android的应用列表备份。</p>
-<h3 id="GApps"><a href="#GApps" class="headerlink" title="GApps"></a>GApps</h3><ul>
-<li>Google Photos</li>
-<li>Google Chrome</li>
-<li>YouTube</li>
-<li>Google Keep</li>
-<li>Inbox by Gmail</li>
-<li>Google Pinyin Keyboard</li>
-<li>Google Now</li>
-</ul>
-<h3 id="Productivity"><a href="#Productivity" class="headerlink" title="Productivity"></a>Productivity</h3><ul>
-<li>Solid File Explorer， 文件管理，云服务等中转</li>
-<li>Steam，Steam二次验证工具</li>
-<li>Evernote，笔记同步</li>
-<li>WPS Office，文档阅读与编辑</li>
-<li>Pushbullet，多端文字链接通信</li>
-<li>Pulse Secure，学校指定VPN工具</li>
-<li>Google Authenticator(Nutstore Rvoked)，二次验证工具</li>
-<li>CamScanner，文档扫描</li>
-<li>FeedMe，RSS阅读，配合feedly</li>
-</ul>
-<h3 id="System-Optimization"><a href="#System-Optimization" class="headerlink" title="System Optimization"></a>System Optimization</h3><ul>
-<li>Nova LancherI(config)，桌面（已备份）</li>
-<li>SD Maid，系统清理，APP管理</li>
-<li>Tasker，自动化任务编排</li>
-<li>Ice Box，流氓应用管理（已备份）</li>
-<li>SMS Backup，通话记录和短信备份</li>
-<li>SuperSU，ROOT权限管理</li>
-<li>MyAndroidTools，系统级的应用活动、服务管理（已备份）</li>
-<li>Titanium Backup，系统备份</li>
-<li>Brevent，系统进程管理</li>
-<li>Greenify，系统进程管理</li>
-</ul>
-<h3 id="LifeStyle"><a href="#LifeStyle" class="headerlink" title="LifeStyle"></a>LifeStyle</h3><ul>
-<li>Wechat，微信</li>
-<li>Mobike，共享单车</li>
-<li>Resplash，高质量图片，壁纸图库</li>
-<li>Prisma，智能风格转换，滤镜</li>
-<li>Photo Scan，旧实体照片数字化</li>
-<li>Snapseed，图片处理</li>
-<li>AliPay，支付宝</li>
-<li>Max+，DOTA2资讯</li>
-<li>C5Game，DOTA2饰品</li>
-<li>TIM，工作版QQ</li>
-<li>Retrorika，图标包</li>
-</ul>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;个人使用Android的应用列表备份。&lt;/p&gt;
-&lt;h3 id=&quot;GApps&quot;&gt;&lt;a href=&quot;#GApps&quot; class=&quot;headerlink&quot; title=&quot;GApps&quot;&gt;&lt;/a&gt;GApps&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;Google Photos&lt;/li&gt;
-&lt;li&gt;Go
-    
-    </summary>
-    
-      <category term="Individual Development" scheme="http://blog.ddlee.cn/categories/Individual-Development/"/>
-    
-    
-      <category term="Software" scheme="http://blog.ddlee.cn/tags/Software/"/>
-    
-      <category term="Android" scheme="http://blog.ddlee.cn/tags/Android/"/>
     
   </entry>
   
