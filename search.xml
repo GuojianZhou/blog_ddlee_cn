@@ -4,6 +4,64 @@
   
     
     <entry>
+      <title><![CDATA[Chrome扩展推荐]]></title>
+      <url>http://blog.ddlee.cn/2018/01/16/Chrome%E6%89%A9%E5%B1%95%E6%8E%A8%E8%8D%90/</url>
+      <content type="html"><![CDATA[<p>本篇是一个Chrome扩展的推荐列表。所有扩展插件在<a href="https://chrome.google.com/webstore/" target="_blank" rel="external">Chrome Web Store</a>都可搜索得到。</p>
+<ul>
+<li>Adblock Plus，用于屏蔽广告，效果出众，必备</li>
+<li>Chrono Download Manager，下载任务管理，必备</li>
+<li>Draw.io Desktop，流程图编辑，轻量方便</li>
+<li>Emoji Keyboard (2016) by EmojiOne，表情输入</li>
+<li>Evernote Web Clipper，保存有价值的信息到Evernote</li>
+<li>Fatkun Batch Download Image，批量下载图片的插件，配合Google搜图</li>
+<li>Follow Feed(by Feedly)，在当前网页搜索RSS订阅源并订阅至Feedly，用于订阅浏览到的价值博客等</li>
+<li>GNOME Shell Integration，GNOME插件集成，用于在extension.gnome.org给GNOME安装插件，GNOME用户必备（有关GNOME可参考<a href="https://blog.ddlee.cn/tags/Gnome/">这里</a>）</li>
+<li>Google Dictionary (by Google)，字典，设置快捷键Ctrl+D，搜词很方便</li>
+<li>Google Input Tools，Google输入工具，应急之用</li>
+<li>Google Scholar Button，用于在当前网页识别论文并在Google Scholar上检索相关内容</li>
+<li>Google Translate，选取网页内容，可进行方便翻译</li>
+<li>Inbox by Gmail，用于保存连接等内容到邮箱，方便分享</li>
+<li>LastPass，跨平台的免费密码管理</li>
+<li>Mega，如名</li>
+<li>Mendeley Importer，导入文章到Mendeley Library</li>
+<li>Mercury Reader，渲染网页到阅读模式，清爽干净</li>
+<li>Momentum，增强新标签页，显示时钟、天气、To Do List等</li>
+<li>Octotree，显示Github Repo的目录结构，必备</li>
+<li>One-Click Extensions Manager，管理扩展用，用于节省内存</li>
+<li>PDF Viewer，用于阅读PDF（免于直接下载），记得勾选Allow access to file URLs</li>
+<li>Proxy SwitchyOmega，代理，善用auto switch和备份等功能</li>
+<li>Pushbullet，跨设备文字通信，精分（PC用Ubuntu，平板iOS，手机Android）推荐</li>
+<li>Quick QRCode，利器，用于把文字、连接等转成二维码，方便分享</li>
+<li>Save to Google，保存网页到Google</li>
+<li>Save to Pocket，保存到Pocket，稍后再读工具</li>
+<li>Secure Shell，网页版SSH</li>
+<li>Tab Snooze，折叠暂时不必要的标签页，利器</li>
+<li>Telegram，如名</li>
+<li>Text，轻量文本编辑器</li>
+<li>Turn Off the Lights，利器，关灯。YouTube和Bilibili可用，其他未测试</li>
+<li>Vimium，利器，脱离鼠标的网页浏览体验</li>
+<li>微软雅黑字体，强迫症推荐</li>
+</ul>
+]]></content>
+      
+        <categories>
+            
+            <category> Individual Development </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Chrome </tag>
+            
+            <tag> Software </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Laptop Reborn: 系统重装侧记]]></title>
       <url>http://blog.ddlee.cn/2018/01/15/Laptop-Reborn-%E7%B3%BB%E7%BB%9F%E9%87%8D%E8%A3%85%E4%BE%A7%E8%AE%B0/</url>
       <content type="html"><![CDATA[<p>本篇是个人向的系统重装记录，以便自己日后参考。</p>
@@ -115,9 +173,9 @@
         
         <tags>
             
-            <tag> Software </tag>
-            
             <tag> Chrome </tag>
+            
+            <tag> Software </tag>
             
             <tag> Geek </tag>
             
@@ -1025,9 +1083,9 @@
         
         <tags>
             
-            <tag> Android </tag>
-            
             <tag> Software </tag>
+            
+            <tag> Android </tag>
             
         </tags>
         
@@ -3074,11 +3132,11 @@ def dropout_backward(dout, cache):
             
             <tag> Deep Learning </tag>
             
-            <tag> Tensorflow </tag>
-            
             <tag> Machine Learning </tag>
             
             <tag> Papers </tag>
+            
+            <tag> Tensorflow </tag>
             
         </tags>
         

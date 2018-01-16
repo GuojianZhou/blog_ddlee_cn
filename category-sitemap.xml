@@ -42,13 +42,6 @@
     </url>
 
     <url>
-        <loc>http://blog.ddlee.cn/categories/Individual-Development/</loc>
-        <lastmod>2018-01-09T16:56:34.007Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://blog.ddlee.cn/categories/Programming/</loc>
         <lastmod>2018-01-09T16:56:34.008Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -72,6 +65,13 @@
     <url>
         <loc>http://blog.ddlee.cn/categories/Linux/</loc>
         <lastmod>2018-01-14T18:06:43.322Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://blog.ddlee.cn/categories/Individual-Development/</loc>
+        <lastmod>2018-01-16T12:59:51.235Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.ddlee.cn/"/>
-  <updated>2018-01-14T18:06:16.783Z</updated>
+  <updated>2018-01-16T12:59:51.235Z</updated>
   <id>http://blog.ddlee.cn/</id>
   
   <author>
@@ -14,6 +14,67 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Chrome扩展推荐</title>
+    <link href="http://blog.ddlee.cn/2018/01/16/Chrome%E6%89%A9%E5%B1%95%E6%8E%A8%E8%8D%90/"/>
+    <id>http://blog.ddlee.cn/2018/01/16/Chrome扩展推荐/</id>
+    <published>2018-01-16T12:59:51.000Z</published>
+    <updated>2018-01-16T12:59:51.235Z</updated>
+    
+    <content type="html"><![CDATA[<p>本篇是一个Chrome扩展的推荐列表。所有扩展插件在<a href="https://chrome.google.com/webstore/" target="_blank" rel="external">Chrome Web Store</a>都可搜索得到。</p>
+<ul>
+<li>Adblock Plus，用于屏蔽广告，效果出众，必备</li>
+<li>Chrono Download Manager，下载任务管理，必备</li>
+<li>Draw.io Desktop，流程图编辑，轻量方便</li>
+<li>Emoji Keyboard (2016) by EmojiOne，表情输入</li>
+<li>Evernote Web Clipper，保存有价值的信息到Evernote</li>
+<li>Fatkun Batch Download Image，批量下载图片的插件，配合Google搜图</li>
+<li>Follow Feed(by Feedly)，在当前网页搜索RSS订阅源并订阅至Feedly，用于订阅浏览到的价值博客等</li>
+<li>GNOME Shell Integration，GNOME插件集成，用于在extension.gnome.org给GNOME安装插件，GNOME用户必备（有关GNOME可参考<a href="https://blog.ddlee.cn/tags/Gnome/">这里</a>）</li>
+<li>Google Dictionary (by Google)，字典，设置快捷键Ctrl+D，搜词很方便</li>
+<li>Google Input Tools，Google输入工具，应急之用</li>
+<li>Google Scholar Button，用于在当前网页识别论文并在Google Scholar上检索相关内容</li>
+<li>Google Translate，选取网页内容，可进行方便翻译</li>
+<li>Inbox by Gmail，用于保存连接等内容到邮箱，方便分享</li>
+<li>LastPass，跨平台的免费密码管理</li>
+<li>Mega，如名</li>
+<li>Mendeley Importer，导入文章到Mendeley Library</li>
+<li>Mercury Reader，渲染网页到阅读模式，清爽干净</li>
+<li>Momentum，增强新标签页，显示时钟、天气、To Do List等</li>
+<li>Octotree，显示Github Repo的目录结构，必备</li>
+<li>One-Click Extensions Manager，管理扩展用，用于节省内存</li>
+<li>PDF Viewer，用于阅读PDF（免于直接下载），记得勾选Allow access to file URLs</li>
+<li>Proxy SwitchyOmega，代理，善用auto switch和备份等功能</li>
+<li>Pushbullet，跨设备文字通信，精分（PC用Ubuntu，平板iOS，手机Android）推荐</li>
+<li>Quick QRCode，利器，用于把文字、连接等转成二维码，方便分享</li>
+<li>Save to Google，保存网页到Google</li>
+<li>Save to Pocket，保存到Pocket，稍后再读工具</li>
+<li>Secure Shell，网页版SSH</li>
+<li>Tab Snooze，折叠暂时不必要的标签页，利器</li>
+<li>Telegram，如名</li>
+<li>Text，轻量文本编辑器</li>
+<li>Turn Off the Lights，利器，关灯。YouTube和Bilibili可用，其他未测试</li>
+<li>Vimium，利器，脱离鼠标的网页浏览体验</li>
+<li>微软雅黑字体，强迫症推荐</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本篇是一个Chrome扩展的推荐列表。所有扩展插件在&lt;a href=&quot;https://chrome.google.com/webstore/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Chrome Web Store&lt;/a&gt;都可搜索得到。&lt;/p&gt;
+&lt;u
+    
+    </summary>
+    
+      <category term="Individual Development" scheme="http://blog.ddlee.cn/categories/Individual-Development/"/>
+    
+    
+      <category term="Chrome" scheme="http://blog.ddlee.cn/tags/Chrome/"/>
+    
+      <category term="Software" scheme="http://blog.ddlee.cn/tags/Software/"/>
+    
+  </entry>
   
   <entry>
     <title>Laptop Reborn: 系统重装侧记</title>
@@ -146,9 +207,9 @@
       <category term="Linux" scheme="http://blog.ddlee.cn/categories/Linux/"/>
     
     
-      <category term="Software" scheme="http://blog.ddlee.cn/tags/Software/"/>
-    
       <category term="Chrome" scheme="http://blog.ddlee.cn/tags/Chrome/"/>
+    
+      <category term="Software" scheme="http://blog.ddlee.cn/tags/Software/"/>
     
       <category term="Geek" scheme="http://blog.ddlee.cn/tags/Geek/"/>
     
@@ -920,64 +981,6 @@
       <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
     
       <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux Reborn: 个人存档</title>
-    <link href="http://blog.ddlee.cn/2017/09/19/Linux%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/"/>
-    <id>http://blog.ddlee.cn/2017/09/19/Linux软件推荐/</id>
-    <published>2017-09-19T13:35:09.000Z</published>
-    <updated>2018-01-09T16:56:34.006Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="个人的需求与应用场景"><a href="#个人的需求与应用场景" class="headerlink" title="个人的需求与应用场景"></a>个人的需求与应用场景</h3><p>我是（几乎）完全使用Linux的，它也满足了我的大部分需求，主要以下几块：</p>
-<ol>
-<li>编程，主流IDE, Editor都会有Linux版本，而软件库大部分也是先支持Linux的（服务器）</li>
-<li>上网，一个chrome几乎足够</li>
-<li>娱乐，steam有Linux客户端，很多游戏也有相应版本（当然也有很多没有）</li>
-</ol>
-<p>下面是我整理的一个列表，算是给自己的存档。</p>
-<h3 id="推荐"><a href="#推荐" class="headerlink" title="推荐"></a>推荐</h3><h4 id="编程相关"><a href="#编程相关" class="headerlink" title="编程相关"></a>编程相关</h4><h5 id="Text-Editor"><a href="#Text-Editor" class="headerlink" title="Text Editor"></a>Text Editor</h5><p>选择有很多，我用Sublime Text写代码，用Atom写博客（中文支持好），用VS Code读代码。总之精分，各取所好。</p>
-<p>另外讲两个小技巧：</p>
-<ol>
-<li>利用<code>sshfs</code>把服务器的文件挂在到本地用编辑器编辑，然后远程终端运行</li>
-<li><code>ssh -L localhost:8888:localhost:8888 user@host</code>命令可以将远程端口映射到本地，这样可以在服务器端开启<code>jupyter notebook</code>，再在本地用浏览器访问</li>
-</ol>
-<h5 id="tmux-amp-zsh"><a href="#tmux-amp-zsh" class="headerlink" title="tmux&amp;zsh"></a>tmux&amp;zsh</h5><p>tmux是一个终端多窗口管理器，可以打开多个终端窗口、挂起和挂载终端回话等，利器。</p>
-<pre><code>sudo apt install tmux
-</code></pre><h5 id="GitKraken"><a href="#GitKraken" class="headerlink" title="GitKraken"></a>GitKraken</h5><p>Git图形客户端</p>
-<h4 id="效率类"><a href="#效率类" class="headerlink" title="效率类"></a>效率类</h4><h5 id="Whatever-Evernote-alternative"><a href="#Whatever-Evernote-alternative" class="headerlink" title="Whatever- Evernote alternative"></a><a href="https://cellard0-0r.github.io/whatever/" target="_blank" rel="external">Whatever- Evernote alternative</a></h5><p>Evernote的第三方客户端，调用网页API，不占用免费版的客户端限制个数</p>
-<h5 id="Stacer-System-Cleaner"><a href="#Stacer-System-Cleaner" class="headerlink" title="Stacer- System Cleaner"></a><a href="https://github.com/oguzhaninan/Stacer/releases" target="_blank" rel="external">Stacer- System Cleaner</a></h5><p>提供系统监视器和清理功能，也可以卸载包</p>
-<h5 id="synapse-App-Launcher"><a href="#synapse-App-Launcher" class="headerlink" title="synapse- App Launcher"></a>synapse- App Launcher</h5><p>一个类似lauchy的应用启动器，可以直接用apt安装</p>
-<pre><code>sudo apt install synapse
-</code></pre><h5 id="Gdebi-Package-Installer"><a href="#Gdebi-Package-Installer" class="headerlink" title="Gdebi- Package Installer"></a>Gdebi- Package Installer</h5><p>包安装程序，比自带的安装好用一些（安装deb包等）</p>
-<pre><code>sudo apt install gdebi
-</code></pre><h5 id="Mailspring-Mail-Client"><a href="#Mailspring-Mail-Client" class="headerlink" title="Mailspring- Mail Client"></a><a href="https://getmailspring.com/" target="_blank" rel="external">Mailspring- Mail Client</a></h5><p>邮件客户端，比thunderbird, evolution等界面美观一些</p>
-<h5 id="Gparted-Disk-Management"><a href="#Gparted-Disk-Management" class="headerlink" title="Gparted- Disk Management"></a>Gparted- Disk Management</h5><p>磁盘管理程序，用于分区、格式化等等</p>
-<pre><code>sudo apt install gparted
-</code></pre><h4 id="Okular-PDF-Reader"><a href="#Okular-PDF-Reader" class="headerlink" title="Okular- PDF Reader"></a>Okular- PDF Reader</h4><p>功能强大的PDF阅读器</p>
-<pre><code>sudo apt install okular
-</code></pre><h4 id="WPS-Office"><a href="#WPS-Office" class="headerlink" title="WPS Office"></a><a href="https://www.wps.com/linux" target="_blank" rel="external">WPS Office</a></h4><p>WPS的Linux版本，比Libre要好用很多</p>
-<h4 id="Shutter"><a href="#Shutter" class="headerlink" title="Shutter"></a>Shutter</h4><p>截屏软件，可以通过ubunut软件中心安装</p>
-<h3 id="通讯与娱乐"><a href="#通讯与娱乐" class="headerlink" title="通讯与娱乐"></a>通讯与娱乐</h3><h5 id="Wewechat-Wechat-client"><a href="#Wewechat-Wechat-client" class="headerlink" title="Wewechat- Wechat client"></a><a href="https://github.com/trazyn/weweChat/releases" target="_blank" rel="external">Wewechat- Wechat client</a></h5><p>微信的第三方客户端，还有<a href="https://github.com/geeeeeeeeek/electronic-wechat" target="_blank" rel="external">electron-wechat</a>，wewechat界面更好，而后者可以看公众号的文章。</p>
-<h5 id="IeaseMusic-Netease-Music-Client"><a href="#IeaseMusic-Netease-Music-Client" class="headerlink" title="IeaseMusic- Netease Music Client"></a><a href="https://github.com/trazyn/ieaseMusic/releases" target="_blank" rel="external">IeaseMusic- Netease Music Client</a></h5><p>网易云音乐的第三方客户端，界面漂亮，我一般用于听FM。功能上更全的自然是<a href="http://music.163.com/#/download" target="_blank" rel="external">官方版本</a>。</p>
-<h5 id="1Listen"><a href="#1Listen" class="headerlink" title="1Listen"></a><a href="https://listen1.github.io/listen1/" target="_blank" rel="external">1Listen</a></h5><p>综合了网易，QQ，虾米三家的曲库，用于找想听的歌，建议下载chrome插件版。</p>
-<h5 id="Steam"><a href="#Steam" class="headerlink" title="Steam"></a><a href="http://store.steampowered.com/linux" target="_blank" rel="external">Steam</a></h5><p>Dota2是可以通过steam的Linux版本玩的，我买过的大部分解密游戏也可以。</p>
-<p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;个人的需求与应用场景&quot;&gt;&lt;a href=&quot;#个人的需求与应用场景&quot; class=&quot;headerlink&quot; title=&quot;个人的需求与应用场景&quot;&gt;&lt;/a&gt;个人的需求与应用场景&lt;/h3&gt;&lt;p&gt;我是（几乎）完全使用Linux的，它也满足了我的大部分需求，主要以下几块：&lt;
-    
-    </summary>
-    
-      <category term="Individual Development" scheme="http://blog.ddlee.cn/categories/Individual-Development/"/>
-    
-    
-      <category term="Software" scheme="http://blog.ddlee.cn/tags/Software/"/>
-    
-      <category term="Linux" scheme="http://blog.ddlee.cn/tags/Linux/"/>
     
   </entry>
   
