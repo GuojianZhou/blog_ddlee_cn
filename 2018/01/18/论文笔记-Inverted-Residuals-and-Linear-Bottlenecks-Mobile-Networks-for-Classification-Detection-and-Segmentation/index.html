@@ -47,7 +47,7 @@
     
     <title>
         
-            谁会不厌其烦地安慰那无知的少年（一） | 
+            [论文笔记]Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation | 
         
         萧爽楼
     </title>
@@ -58,7 +58,7 @@
 
     <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
-    <meta name="keywords" content="萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee,随笔">
+    <meta name="keywords" content="萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee,Deep Learning,AI,Papers,Computer Vision">
     <meta name="theme-color" content="#0097A7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
@@ -224,7 +224,7 @@
     <!-- WebAPP Icons -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="萧爽楼">
-    <meta name="msapplication-starturl" content="http://blog.ddlee.cn/2017/01/27/谁会不厌其烦地安慰那无知的少年-1/">
+    <meta name="msapplication-starturl" content="http://blog.ddlee.cn/2018/01/18/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/">
     <meta name="msapplication-navbutton-color" content="#0097A7">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="萧爽楼">
@@ -239,16 +239,16 @@
     
 
     <!-- The Open Graph protocol -->
-    <meta property="og:url" content="http://blog.ddlee.cn/2017/01/27/谁会不厌其烦地安慰那无知的少年-1/">
+    <meta property="og:url" content="http://blog.ddlee.cn/2018/01/18/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="谁会不厌其烦地安慰那无知的少年（一） | 萧爽楼">
+    <meta property="og:title" content="[论文笔记]Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation | 萧爽楼">
     <meta property="og:image" content="http://static.ddlee.cn/static/img/material-theme-img/favicon.png">
     <meta property="og:description" content="我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
-    <meta property="og:article:tag" content="随笔"> 
+    <meta property="og:article:tag" content="Deep Learning"> <meta property="og:article:tag" content="AI"> <meta property="og:article:tag" content="Papers"> <meta property="og:article:tag" content="Computer Vision"> 
 
     
-        <meta property="article:published_time" content="Fri Jan 27 2017 22:20:59 GMT+0800">
-        <meta property="article:modified_time" content="Wed Jan 10 2018 00:56:33 GMT+0800">
+        <meta property="article:published_time" content="Thu Jan 18 2018 00:52:08 GMT+0800">
+        <meta property="article:modified_time" content="Thu Jan 18 2018 00:52:08 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -256,7 +256,7 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="http://blog.ddlee.cn/2017/01/27/谁会不厌其烦地安慰那无知的少年-1/index.html" />
+        <link rel="canonical" href="http://blog.ddlee.cn/2018/01/18/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/index.html" />
     
 
     <!-- Structured-data for SEO -->
@@ -268,10 +268,10 @@
 {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "mainEntityOfPage": "http://blog.ddlee.cn/2017/01/27/谁会不厌其烦地安慰那无知的少年-1/index.html",
-    "headline": "谁会不厌其烦地安慰那无知的少年（一）",
-    "datePublished": "Fri Jan 27 2017 22:20:59 GMT+0800",
-    "dateModified": "Wed Jan 10 2018 00:56:33 GMT+0800",
+    "mainEntityOfPage": "http://blog.ddlee.cn/2018/01/18/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/index.html",
+    "headline": "[论文笔记]Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation",
+    "datePublished": "Thu Jan 18 2018 00:52:08 GMT+0800",
+    "dateModified": "Thu Jan 18 2018 00:52:08 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -289,7 +289,7 @@
             "url": "http://static.ddlee.cn/static/img/material-theme-img/favicon.png"
         }
     },
-    "keywords": ",随笔萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee",
+    "keywords": ",Deep Learning,AI,Papers,Computer Vision萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee",
     "description": "我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。",
 }
 </script>
@@ -357,6 +357,15 @@
     <!-- Left aligned menu below button -->
     
     
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Intuition"><span class="post-toc-number">1.</span> <span class="post-toc-text">Intuition</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Experiments"><span class="post-toc-number">2.</span> <span class="post-toc-text">Experiments</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#ImageNet-Classification"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">ImageNet Classification</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Object-Detection"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">Object Detection</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Segmentation"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">Segmentation</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Ablation-Study"><span class="post-toc-number">3.</span> <span class="post-toc-text">Ablation Study</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#附录"><span class="post-toc-number">4.</span> <span class="post-toc-text">附录</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#小结"><span class="post-toc-number">5.</span> <span class="post-toc-text">小结</span></a></li></ol>
+    </ul>
+    
 
 
 
@@ -386,7 +395,7 @@
         
     
             <p class="article-headline-p">
-                谁会不厌其烦地安慰那无知的少年（一）
+                [论文笔记]Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation
             </p>
         </div>
 
@@ -405,7 +414,7 @@
     <!-- Author Name & Date -->
     <div>
         <strong>ddlee</strong>
-        <span>1月 27, 2017</span>
+        <span>1月 18, 2018</span>
     </div>
 
     <div class="section-spacer"></div>
@@ -427,7 +436,7 @@
 <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
     <li class="mdl-menu__item">在其它设备中阅读本文章</li>
     
-        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAEOCAAAAABd2qZ5AAADlElEQVR42u3aS46kMBAFwLr/pWe2Lc0UvJe2ES0FqxaiwA4vsvPz+eP6cX0Q4MCBAwcOHDhw4MDxYo5PfF3/6uf9/3xy9OS35/PfRnvBgQMHDhwHOG5CUbCU619d3/m20G+ULfHNGnDgwIEDxzGOPMhdbzXf5MoxzNaAAwcOHDh+F0eeeiVMeTKJAwcOHDh+L0eSjCXhsw3YCRAOHDhw4HgbR1vmu/7k9f08SVtvZR2sleLAgQMHjuWBhvf//eh8Bw4cOHDg+Iejva6DWVtGbIckZs/fvA0HDhw4cGzlWBksyFtQbcBOSodJsheNVuDAgQMHjmMc7VJmY3B50fBcqMaBAwcOHOc4krCUtH9mC52N5SUrz4Fw4MCBA8dejvwV+VbzxbWjD+vvxIEDBw4cz3O0AwGzELgejNsV4sCBAweOZziuC3/5+MJsrOH673aFw/fgwIEDB46tHHl5rt1YOx6RE8zStnomHQcOHDhwjDjagYBdLaJ2uKEN/8V4BA4cOHDgOMCRp1uzUYa8kJeHzDx43/DhwIEDB46tHPmH20G6vMnUjkrkKNEB4MCBAweOwxxtUtQmgTOIPIjWx4YDBw4cOLZyzIYV8k/OhthmBcR2uAEHDhw4cJzgmKVYs2C8noblR1UcMA4cOHDgOMAxC7RtcE2CdFLayw8vGrDAgQMHDhxbOdqS3EpqN+NLVrJSuMSBAwcOHHs5ZkNmsyG29QZV28qK1oMDBw4cOI5xtOW5PNStlwtn96N/EXDgwIEDx1aOlqYda0jGoNvtzVK+KNDiwIEDB46tHHm4WtneSotrVris2044cODAgWMrR5sCzRpLeQkvSSnzwIwDBw4cOJ7hmH0gD59JMbFtdOWUN2keDhw4cODYyjEr+c1C4N5rth4cOHDgwPEMR0swK9u1xLPSYXsYOHDgwIHjBEce2JJFt+9MmFqaYg04cODAgeMYx8pwW55Q7Sr2zS4cOHDgwHGaY70kl4ftZKHrbaQ6FcSBAwcOHFs5ZiFqVphLEra84HidOhZwOHDgwIHjAEdeFszDW07TtqDyQBsdLQ4cOHDgOMbRplX5MMQshJ94fqlWigMHDhw4DnO0oW6WkuXjDklShwMHDhw43smxsvm8OJikjishFgcOHDhwnObY2+yZDd7lIxQrLS4cOHDgwHGaI9/ASitoFjJnzaqiAYYDBw4cOLZyuHDgwIEDBw4cOHDgwPGy6y//zCEZDfRO1QAAAABJRU5ErkJggg==">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAVYAAAFWCAAAAAAXxOpfAAAFjUlEQVR42u3awXIUMQwE0Pz/T8OVKsimWzKwnjyfKLI79jzvoUvSxw/rL6wPBFixYrWwYsVqYcWK1cJ6FetHvH79/KeP/uTzr7/1+xOS53/2yfa0yS6vTbBixYoVK9bbWfNXTV6sfck/HPHlpSZ/3Vx5+15YsWLFihXrM1jzUNUeMXna7CI3YW6zO1asWLFixfo9WYvSQ/ytHPrU5SXviBUrVqxYsWKdHbH95ObaZuWVvPSDFStWrFixfh/WthixaW+0DY8EOh/XyH8K/6iXhRUrVqxYsf5X1tkg5rP/fWAQEytWrFixYn171nZtShubcLNvkOT/P5TBihUrVqxYL2TNCyJnhxXyHdvWS/K0s6MbWLFixYoV6+2seZGlHV9oxyxmp8rHMtqnJdBYsWLFihXrU1mTcYR2xCHnywNc8fKj0Bb9aLBixYoVK9bLWduySP7XWfukbf/kcbANkVGww4oVK1asWC9knR2iDUPtBbShLY9rCd/s/FixYsWKFeuNrK+3T0oMbbiZDWVuPjm7jDYCYsWKFStWrDey7ksPmxGHTdjak82ufJhbsWLFihUr1jdmzbdpRytmJZik6TIrCc3GTaKwiBUrVqxYsV7Lmr9kElBmIxH7Bsz+qtqfC1asWLFixfoM1lmEai+gDVibEY0cLi8kffFkrFixYsWK9VrWNkK1IxGzHduGSh7a2vJN9C2sWLFixYr1EayzINKGpH3Eydsts2JK3qTBihUrVqxYn8E6a2zsRyLai5zFo/anUDd4sGLFihUr1gtZk22SF5gVLGafyYtB+WXnJZgoYGHFihUrVqyXsG6iyea4bUklj0H7y5j91LBixYoVK9YbWfcDlMkr5W2PNtK1DZ79+Mgqt2LFihUrVqxvzzprReSfOdUCmRWAZs2haF+sWLFixYr1QtZ20KGNRx/xylsvbVmkHa3IS0JYsWLFihXr7ax56Jm1QNpg1O47i0p5eSgf0cCKFStWrFjvZW1HE9rok7dG8qZOcpLZEEke4LBixYoVK9Zns+YxZR+58ue0LZY8YK2KQVixYsWKFeuFrG18accp8rLLviWTj2XMijhFqQUrVqxYsWK9kLUtr+SsyavOhh7aK/9RruIMWLFixYoV67WssxduofNxh/Zss6jXlmCKpgtWrFixYsV6CWtyoFlbpW23tMWRWUycnTlq/2DFihUrVqyXs24GGjbBKC+F5M2htrmSPOGLd8GKFStWrFivZW1bGvvvzkY6kgGOtlySXE/0/1ixYsWKFeuFrG20moGeDWFttNqfbdXLwooVK1asWN+YNYkseftk1kRpWyYtRL7aM2DFihUrVqy3s87KCnnLpB16SJolbdOlDXmzdhRWrFixYsV6O+tm+LItagxHHEaNmbzlMzsDVqxYsWLFei9rvllLfyrizEYuzl5D1C7CihUrVqxYL2TNCy77VsqmvDK71OSceQircytWrFixYsX69qzt8ESywWzcIQ9z7fDEvlVTN12wYsWKFSvWq1jbYsRm0CGh2ZMVzZI4kGHFihUrVqzPY22jUltY2QDlJ5m1bdqmyxfvjhUrVqxYsV7LOhvImB0uaZnka0+82RcrVqxYsWJ9HusM/VRxJHna2ZDXxsF6qgUrVqxYsWJ9Y9azUSYvVcwaPG3pJAdtG0tYsWLFihXrk1hnjZb8iPvhjHaXdshjNiyCFStWrFixPom1LWe00efUVbWhLfmh7FsvWLFixYoV63dgzY+7Dy55uJmVfjZR8nDAwooVK1asWC9kbVsybeEjb4TMxjtOlWOwYsWKFSvWZ7DONkiGLU7FsnokohwEmX0XK1asWLFivZ21HcRsRx5nTZ3Z0GdeakmIi+IRVqxYsWLFeiGrdWphxYoVq4UVK1YLK1asFta3Xz8B74LgBFMoWE0AAAAASUVORK5CYII=">
     
 </ul>
 
@@ -441,7 +450,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/随笔/">随笔</a>
+        <a class="post_tag-link" href="/tags/AI/">AI</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Computer-Vision/">Computer Vision</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Deep-Learning/">Deep Learning</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Papers/">Papers</a>
     </ul>
     
 
@@ -469,7 +478,7 @@
 
     <!-- Share Weibo -->
     
-        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=谁会不厌其烦地安慰那无知的少年（一）&url=http://blog.ddlee.cn/2017/01/27/谁会不厌其烦地安慰那无知的少年-1/index.html&pic=http://blog.ddlee.cnhttp://static.ddlee.cn/static/img/material-theme-img/favicon.png&searchPic=false&style=simple" target="_blank">
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=[论文笔记]Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation&url=http://blog.ddlee.cn/2018/01/18/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/index.html&pic=http://blog.ddlee.cnhttp://static.ddlee.cn/static/img/material-theme-img/favicon.png&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
                 分享到微博
             </li>
@@ -490,7 +499,7 @@
 
     <!-- Share QQ -->
     
-        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=萧爽楼&title=谁会不厌其烦地安慰那无知的少年（一）&summary=我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。&pics=http://blog.ddlee.cnhttp://static.ddlee.cn/static/img/material-theme-img/favicon.png&url=http://blog.ddlee.cn/2017/01/27/谁会不厌其烦地安慰那无知的少年-1/index.html" target="_blank">
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=萧爽楼&title=[论文笔记]Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation&summary=我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。&pics=http://blog.ddlee.cnhttp://static.ddlee.cn/static/img/material-theme-img/favicon.png&url=http://blog.ddlee.cn/2018/01/18/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/index.html" target="_blank">
             <li class="mdl-menu__item">
                 分享到 QQ
             </li>
@@ -499,7 +508,7 @@
 
     <!-- Share Telegram -->
     
-        <a class="post_share-link" href="https://telegram.me/share/url?url=http://blog.ddlee.cn/2017/01/27/谁会不厌其烦地安慰那无知的少年-1/index.html&text=谁会不厌其烦地安慰那无知的少年（一）" target="_blank">
+        <a class="post_share-link" href="https://telegram.me/share/url?url=http://blog.ddlee.cn/2018/01/18/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/index.html&text=[论文笔记]Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation" target="_blank">
             <li class="mdl-menu__item">
                 分享到 Telegram
             </li>
@@ -515,65 +524,43 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <blockquote>
-<p><em>一个男孩要下过多少电影，才能称得上是一个男人？一只海鸥要飞过多少海洋，才能在柔柔的沙滩上安息？——鲍勃·迪伦，《答案在风中飘荡》</em></p>
-</blockquote>
-<p>星星眨着眼，银河却不见。万家灯火散落在不遥远的远方，贪婪的夜色吞噬着视野，列车不紧不慢地刺破雾气的深不可测，卧铺床头的小台灯透过车窗温暖出朦胧一片，笼住返乡人的放松与期盼。</p>
-<p>其实丁丁差点没赶上火车。亏得遇到老司机，路上没怎么堵。过检票口的时候，广播刚刚喊着“你所乘坐的班次已停止检票”。</p>
-<p>火车终于安稳地行着。丁丁的心情也慢慢舒畅起来。</p>
-<p>丁丁趴在铺上，翻看相册，回想这又一个人生七年。</p>
-<p>小学到中学就是一趟火车，有起点也有终点，不慌不忙。大学是脱了轨的同一趟火车，东栽西撞，没有诗也到不了远方。</p>
-<p>想到这里，丁丁下了铺，留意了一下安全锤的位置，然而，在回来时，他还是不可避免地被旁边的大叔注意到了。</p>
-<p>嘿，小伙子，你也用Lumia 啊。</p>
-<p>丁丁尴尬地讲，没，只是备用机，主力还是安卓。心想着竟然还被看出来了，不过正好，用Lumia不装逼，那跟咸鱼有什么区别。</p>
-<p>大叔你做什么工作的呀。</p>
-<p>大叔讲他是个半个码农，三倍的房奴，两个孩子的爹地，一个老婆坚实的依靠。</p>
-<p>丁丁说自己是三个舍友的爸爸，五门课的开课赞助商，七个女生的备胎，九个社团的划水副总监。</p>
-<p>大叔说你这就是我的Pro版啊，深交吗小伙子？</p>
-<p>丁丁说，好。</p>
-<p>可这一开口，大叔就是从诗词歌赋到人生哲学。只不过，没有雪也没有月亮，我不是紫薇他也不叫尔康。</p>
-<p>大叔并不大，现在在南京，江北一套房，鼓楼一套学区。两个儿子，大的刚上一年级，小的还不会撒谎。</p>
-<p>自己公司年底出了状况，没能跟家人坐同一趟车回家。</p>
-<p>大叔说自己本科数学，毕了业才发现自己卵没什么用。女朋友学计算机，早就找好了工作，自己只好考了研，后来拿了个硕士，主攻信号转发与缓存。</p>
-<p>丁丁说我也数学。</p>
-<p>大叔抿了抿嘴，嗯，有意思有意思。</p>
-<p>大叔说那我给你介绍介绍考研经验吧。</p>
-<p>丁丁说好啊好啊。</p>
-<p>那年考研的形势很严峻，因为减招。</p>
-<p>为了考研，大三那年寒假，我初五就从家里跑出来了。赶巧的是，那年跟今年一样，过年赶得好晚，我统共在家不到十天。</p>
-<p>临走那天晚上，爸爸到单位值班，去之前又塞给我几百块钱，说穷家富路，但这种行为被我义正辞严地拒绝了。可爸爸走后，我泪湿眼底。</p>
-<p>因为这一离开就又是半年。</p>
-<p>考上大学第一年回家，奶奶跟我说你走后你爸来我这儿的时候哭了，说你跟小鸟一样飞走了。我说也是啊，我长大了，爸爸的一个时代也结束了呀，就在我报完到送他回去的那一刻。</p>
-<p>那天在楼下值班室那里领钥匙，爸爸在一边摸着头笑，见我回头，他跟遇到喜欢的女生那样不好意思，红着脸。</p>
-<p>爸爸的一个时代结束了呀。</p>
-<p>还记得，我上小学那会儿，连午休都要家长签字确认的，还有作业也是，爸爸兢兢业业地把题都重新算一遍，马虎的地方狠狠批我一顿，这才用方方正正的钢笔给我签上“家长已检查”，现在我才知道，这叫“背书”。</p>
-<p>那时候妈妈在一边儿踩着缝纫机，看点播台的我被爸爸叫过去，扭扭捏捏地摸着后脑勺，阳台上水仙开着，香味儿就飘到屋里来。</p>
-<p>其实那时候的我才最懂事儿。那时我最大的梦想就是娶了班上最文静的女生，让妈妈少操点儿心。而她当时就是我的同桌，放学我们还一起走到灵石路的尽头，走过小酒馆的门口。后来四五年级，起了流言，我们就分了。</p>
-<p>后来在外面求学，跟父母在一起的时间就越来越少了。那时候我最喜欢的时候是坐在大巴士高高的最后一排，靠窗，看路边的杨树一棵一棵闪过，我觉得我的人生康庄大道就在脚下一点一点伸展开来。</p>
-<p>爸爸给我的支持也越来越少了。他不懂遗传平衡定律，找不到辅助线，也人脸识别不了虚拟语气。我的小小心思就像宇宙那般，无边地膨胀起来了。</p>
-<p>高考就是碰到气球的那根针。我感觉自己是被发配到了南方，而且还被冻成了狗。</p>
-<p>丁丁顺着说，南方确实冷的不行，尤其下雨天。</p>
-<p>大叔说，你看，这些小事，我不说，就要一点一点埋葬在潺潺流去的岁月里了。</p>
-<p>可我考研那年不懂事。我哭的时候，却觉得自己分分钟像个大人了，我早回去正是在做着那些英雄们不得不做的事儿。天将降大任于斯人矣。</p>
-<p>为了呵护这个家，却要离开它。</p>
-<p>浊酒一杯，家万里。</p>
-<p>我觉得这就是我的燃情岁月。</p>
-<p>后来研考上了，女朋友等了我三年，然后就媳妇也有了。后来我才知道燃情岁月才算刚刚开始。</p>
-<p>丁丁蛮懂事，道，汪、汪、汪。</p>
-<p>再后来，有了一室一厅，吉利帝豪，郊区的三室两厅，又因为堵车把车给卖了，再后来有了一个儿子，鼓楼的学区加户口房，又添了个儿子，就把爸妈接过来了。</p>
-<p>这几年没有我特别想做的事儿。只有我需要做好的事儿。</p>
-<p>两个小魔王，说实话我不觉得爸妈老年生活有多幸福。</p>
-<p>不过多亏通了地铁，我每天八点半能到家，磕个瓜子，跟我爸聊聊我儿子和他儿子。</p>
-<p>可是，小伙子，你知道吗？我考研那年，就是个愣头青。</p>
-<p>那时候我对私人的时间有着近乎偏执的吝啬。我觉得自己独处的时间才是上天赐予的礼物。回家过年又烦又累，措不及防的应酬是对我神圣的私有时间的侵犯。所以，其实我早早就狠下心来，一定要早早的回学校。</p>
-<p>我上车那天风声呼啸，暗云疾行，干燥的北风中赫赫抬起的，是我打车的一只大手。路两边白杨赤条条的，行人裹着衣，绷着脸。</p>
-<p>风萧萧兮易水寒，众人向北我向南。</p>
-<p>可是，小伙子，你知道吗？</p>
-<p>让男孩成为男人的，不是事业，是家业啊。</p>
-<p>大叔突然不说了。他翻了个身，晚安。</p>
-<p>丁丁也回过头，抹了眼睛，退了返程。</p>
-<p>@<a href="http://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
-<p>2017年1月</p>
+        <p>本文是MobileNets的第二版。<a href="https://blog.ddlee.cn/2018/01/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/">第一版</a>中，MobileNets全面应用了Depth-wise Seperable Convolution并提出两个超参来控制网络容量，在保持移动端可接受的模型复杂性的基础上达到了相当的精度。而第二版中，MobileNets应用了新的单元：Inverted residual with linear bottleneck，主要的改动是添加了线性Bottleneck和将skip-connection转移到低维bottleneck层。</p>
+<h3 id="Intuition"><a href="#Intuition" class="headerlink" title="Intuition"></a>Intuition</h3><p>本篇比较丰富的地方是对网络中bottleneck结构的探讨。</p>
+<p>在最早的Network in Network工作中，1x1卷积被作为一个降维的操作而引入，后来逐渐发展为Depth-wise Seperable Convolution（可分离卷积）并被广泛应用，堪称跟skip-connection同样具有影响力的网络部件。在<a href="https://blog.ddlee.cn/2017/11/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Going-deeper-with-convolutions/">Inception单元</a>最初提出之时，具有较多channel的feature map被认为是可供压缩的，作者引入1x1卷积将它们映射到低维（较少channel数）空间上并添加多路径处理的范式。之后的<a href="https://blog.ddlee.cn/2018/01/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/">Xception</a>、MobileNets等工作则将可分离卷积应用到极致：前者指出可分离卷积背后的假设是跨channel相关性和跨spatial相关性的解耦，后者则利用可控的两个超参来获得在效率和精度上取得较好平衡的网络。</p>
+<p>文中，经过激活层后的张量被称为兴趣流形，具有维HxWxD，其中D即为通常意义的channel数，部分文章也将其称为网络的宽度（width）。</p>
+<p>根据之前的研究，兴趣流形可能仅分布在激活空间的一个低维子空间里，利用这一点很容易使用1x1卷积将张量降维（即MobileNet V1的工作），但由于ReLU的存在，这种降维实际上会损失较多的信息。下图是一个例子。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/collapse.png" alt="envolve"></p>
+<p>上图中，利用MxN的矩阵B将张量（2D，即N=2）变换到M维的空间中，通过ReLUctant后（y=ReLU(Bx)），再用此矩阵之逆恢复原来的张量。可以看到，当M较小时，恢复后的张量坍缩严重，M较大时则恢复较好。</p>
+<p>这意味着，在较低维度的张量表示（兴趣流形）上进行ReLU等线性变换会有很大的信息损耗。因而本文提出使用线性变换替代Bottleneck的激活层，而在需要激活的卷积层中，使用较大的M使张量在进行激活前先扩张，整个单元的输入输出是低维张量，而中间的层则用较高维的张量。文中所用单元的演化过程如下：</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/envolve.png" alt="envolve"></p>
+<p>。图a中普通卷积将channel和spatial的信息同时进行映射，参数量较大；图b为可分离卷积，解耦了channel和spatial，化乘法为加法，有一定比例的参数节省；图c中进行可分离卷积后又添加了bottleneck，映射到低维空间中；图d则是从低维空间开始，进行可分离卷积时扩张到较高的维度（前后维度之比被称为expansion factor，扩张系数），之后再通过1x1卷积降到原始维度。</p>
+<p>实际上，图c和图d的结构在堆叠时是等价的，只是观察起点的不同。但基于兴趣流形应该分布在一个低维子空间上的假设，这引出了文章的第二个关键点：将skip-connection转移到低维表达间，即Inverted residual block。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/invert_residual.png" alt="inverted"></p>
+<p>综合以上两点，文章中网络所用的基本单元如下：</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/module.png" alt="envolve"></p>
+<p>文章指出，这种设计将层输入、输出空间跟层变换分离，即网络容量（capacity）和表达力（expressIveness）的解耦。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/module2.png" alt="envolve"></p>
+<h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p>MobileNet V2的整体结构如下表：</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/arch.png" alt="envolve"></p>
+<p>上图中，t代表单元的扩张系数，c代表channel数，n为单元重复个数，s为stride数。可见，网络整体上遵循了重复相同单元和加深则变宽等设计范式。也不免有人工设计的成分（如28^2*64单元的stride，单元重复数等）。</p>
+<h4 id="ImageNet-Classification"><a href="#ImageNet-Classification" class="headerlink" title="ImageNet Classification"></a>ImageNet Classification</h4><p>MoblieNets V2仍然集成了V1版本的两个超参数，在ImageNet上的实验结果如下：</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/imagenet.png" alt="envolve"></p>
+<p>可以看到相比V1版本优势明显，在精度方面跟NAS搜索出的结构有相当的表现。</p>
+<h4 id="Object-Detection"><a href="#Object-Detection" class="headerlink" title="Object Detection"></a>Object Detection</h4><p>文章还提出SSDLite来更好适应移动端需求，改动是将head部分的普通卷积都替换为了可分离卷积。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/coco.png" alt="envolve"></p>
+<p>上面是在COCO上的表现，可以看到精度方面跟YOLOv2和SSD300相当（尽管很低，相比SOTA差距还很大），但模型参数和运算复杂度都有一个数量级的减少。最后的CPU时间是在Pixel上测得，可以到5FPS，达不到真正移动实时的要求，但也是不小的推进了（并没有给出GPU上的推断时间，而Pixel+TF-Lite的benchmark又跟其他网络难以产生有效的比较）。</p>
+<h4 id="Segmentation"><a href="#Segmentation" class="headerlink" title="Segmentation"></a>Segmentation</h4><p>下图是在VOC上分割的结果：</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/seg.png" alt="envolve"></p>
+<h3 id="Ablation-Study"><a href="#Ablation-Study" class="headerlink" title="Ablation Study"></a>Ablation Study</h3><p>文章还做了关于线性变换bottleneck替代ReLU和skip-connection位置的实验，进一步支撑之前的分析。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/ablation.png" alt="envolve"></p>
+<h3 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h3><p>本篇文章的附录部分提供了紧的n维流形在经过升维线性变化加ReLU后被映射到子集的期望大小的界，这个界说明在扩张到足够高的维度后，升维线性变换加ReLu能以较高的概率可逆（保持信息）并加入非线性。</p>
+<p>上面的结论是非常拗口的。自己的理解是，使用ReLU引入非线性的同时会导致信息损失（非线性指不会被卷积、全连接等线性映射吸收掉，信息损失则是指ReLU将&lt;0的输入置0，输入变得稀疏，而若所有输入的某一维度都被置0，则会使输入空间本身降维），我们要对抗这一可能的信息损失，需要将输入先扩张，即y=ReLU(Bx)，x为R^n空间上的输入，B为m×n矩阵，我们期望m足够大，以达到扩张的效果并在经过ReLU后保持y跟x的信息量同样多（文中的引理二，即是证此变换可逆性的一个条件，应该是借用了代数的概念，矩阵在经过可逆变换后不会降秩，秩成为衡量信息损失的指标）。</p>
+<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/distribution.png" alt="envolve"></p>
+<p>在ReLU(Bx)算符可逆性的问题上，作者做了一些经验性实验，如上图。a和b分别为训练前后，每层正激活channel数（可逆性条件）和其占总channel数比例的分布。图a和图b的左图，随网络加深，channel数增多，即变宽；训练前后，方差增大，且有两层低于了可逆性条件阈值（图b左图中绿色线低于紫色阈值的部分）。右图是一个比例，由于随机初始化，均值在0.5附近，训练后同样方差增大，而可逆性条件阈值一直为1/6（即为MobileNet V2扩张系数的倒数）。</p>
+<p>附录的Theorem 1则证明了ReLU(Bx)算符将输入x压缩后的空间维度(n-volume)的界，此界在扩张系数较大时可以跟原空间相当，即信息损失很小。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>能够看到附录里给出文中假定或观察的数学证明的论文还是开心的。太多论文只是终于实验的SOTA而避而不谈Insights，况且给出证明。尽管本篇附录中的证明仍有经验主义的部分，且并没有完全定义清楚问题和结论，其对后续工作的启发价值还是有的。</p>
+<p>这也暴露了当前领域的通病，我们没有共通的一套语言来描述自己的网络，譬如，如何定义网络的容量、表达力，如何衡量信息的损失。没有通用的定义造成了论文表述常常有另经验少者难以理解的表达。去定义这样一套语言和标准来为网络设计提供参考，希望成为以后的研究热点，也是我自己的一个思考方向。</p>
+<p>总体来看，本篇文章提供的两点改进都是有启发性的，但并不完整，需要更多工作来补充。另外源码没有给出，会尝试复现。</p>
 
         
                 <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
@@ -582,7 +569,7 @@
                             <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://static.ddlee.cn/static/img/material-theme-img/cc-by-sa.png" /></a>@<a href="https://ddlee.cn">ddlee</a><br />本文章遵从<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>。<br />这意味着您可以署名转载本文章，并附上此协议。
                         </strong>
                         <br>
-                        <strong>本文链接：</strong><a href="http://blog.ddlee.cn/2017/01/27/谁会不厌其烦地安慰那无知的少年-1/">http://blog.ddlee.cn/2017/01/27/谁会不厌其烦地安慰那无知的少年-1/</a>
+                        <strong>本文链接：</strong><a href="http://blog.ddlee.cn/2018/01/18/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/">http://blog.ddlee.cn/2018/01/18/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/</a>
                     </p>
                 </blockquote>
         
@@ -640,8 +627,8 @@
 
 <script type="text/javascript">
     var disqus_config = function () {
-        this.page.url = 'http://blog.ddlee.cn/2017/01/27/谁会不厌其烦地安慰那无知的少年-1/';  // Replace PAGE_URL with your page's canonical URL variable
-        this.page.identifier = 'http://blog.ddlee.cn/2017/01/27/谁会不厌其烦地安慰那无知的少年-1/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        this.page.url = 'http://blog.ddlee.cn/2018/01/18/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/';  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = 'http://blog.ddlee.cn/2018/01/18/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
     };
 </script>
 
@@ -690,21 +677,13 @@
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
-        <a href="/2017/02/15/谁会不厌其烦地安慰那无知的少年-2/" id="post_nav-newer" class="prev-content">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
-                <i class="material-icons">arrow_back</i>
-            </button>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            新篇
-        </a>
-    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
 
     <!-- Next Nav -->
     
-        <a href="/2016/09/23/小米3变身记/" id="post_nav-older" class="next-content">
+        <a href="/2018/01/16/Chrome扩展推荐/" id="post_nav-older" class="next-content">
             旧篇
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
