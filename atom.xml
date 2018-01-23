@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.ddlee.cn/"/>
-  <updated>2018-01-17T17:03:29.326Z</updated>
+  <updated>2018-01-18T18:30:59.000Z</updated>
   <id>http://blog.ddlee.cn/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://blog.ddlee.cn/2018/01/18/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/"/>
     <id>http://blog.ddlee.cn/2018/01/18/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/</id>
     <published>2018-01-17T16:52:08.000Z</published>
-    <updated>2018-01-17T17:03:29.326Z</updated>
+    <updated>2018-01-18T18:30:59.000Z</updated>
     
     <content type="html"><![CDATA[<p>本文是MobileNets的第二版。<a href="https://blog.ddlee.cn/2018/01/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/">第一版</a>中，MobileNets全面应用了Depth-wise Seperable Convolution并提出两个超参来控制网络容量，在保持移动端可接受的模型复杂性的基础上达到了相当的精度。而第二版中，MobileNets应用了新的单元：Inverted residual with linear bottleneck，主要的改动是添加了线性Bottleneck和将skip-connection转移到低维bottleneck层。</p>
 <h3 id="Intuition"><a href="#Intuition" class="headerlink" title="Intuition"></a>Intuition</h3><p>本篇比较丰富的地方是对网络中bottleneck结构的探讨。</p>

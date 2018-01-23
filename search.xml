@@ -3195,11 +3195,11 @@ def dropout_backward(dout, cache):
             
             <tag> Deep Learning </tag>
             
-            <tag> Tensorflow </tag>
-            
             <tag> Machine Learning </tag>
             
             <tag> Papers </tag>
+            
+            <tag> Tensorflow </tag>
             
         </tags>
         
