@@ -79,13 +79,6 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/12/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Feature-Pyramid-Networks-for-Object-Detection/</loc>
-    
-    <lastmod>2018-01-09T16:56:34.011Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.ddlee.cn/2017/12/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-R-FCN-Object-Detection-via-Region-based-Fully-Convolutinal-Networks/</loc>
     
     <lastmod>2018-01-09T16:56:34.011Z</lastmod>
@@ -100,7 +93,14 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/12/24/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/</loc>
+    <loc>http://blog.ddlee.cn/2017/12/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Feature-Pyramid-Networks-for-Object-Detection/</loc>
+    
+    <lastmod>2018-01-09T16:56:34.011Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/12/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-You-Only-Look-Once-Unified-Real-Time-Object-Detection/</loc>
     
     <lastmod>2018-01-09T16:56:34.010Z</lastmod>
     
@@ -114,7 +114,7 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/12/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-You-Only-Look-Once-Unified-Real-Time-Object-Detection/</loc>
+    <loc>http://blog.ddlee.cn/2017/12/24/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/</loc>
     
     <lastmod>2018-01-09T16:56:34.010Z</lastmod>
     
@@ -149,13 +149,6 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/</loc>
-    
-    <lastmod>2018-01-09T16:56:34.007Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.ddlee.cn/2017/11/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MegDet-A-Large-Mini-Batch-Object-Detector/</loc>
     
     <lastmod>2018-01-09T16:56:34.007Z</lastmod>
@@ -163,7 +156,7 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/09/02/IOS-Reborn-%E4%B8%AA%E4%BA%BAAPP%E5%AD%98%E6%A1%A3/</loc>
+    <loc>http://blog.ddlee.cn/2017/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/</loc>
     
     <lastmod>2018-01-09T16:56:34.007Z</lastmod>
     
@@ -177,16 +170,9 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/08/31/Android-Reborn-%E4%B8%AA%E4%BA%BAAPP%E5%AD%98%E6%A1%A3/</loc>
+    <loc>http://blog.ddlee.cn/2017/09/02/IOS-Reborn-%E4%B8%AA%E4%BA%BAAPP%E5%AD%98%E6%A1%A3/</loc>
     
-    <lastmod>2018-01-09T16:56:34.006Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/08/06/%E5%A2%93%E7%95%94%E5%93%80%E6%AD%8C/</loc>
-    
-    <lastmod>2018-01-09T16:56:34.006Z</lastmod>
+    <lastmod>2018-01-09T16:56:34.007Z</lastmod>
     
   </url>
   
@@ -205,14 +191,28 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/07/15/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BLayer%E3%80%81Tensor%E5%92%8CNode/</loc>
+    <loc>http://blog.ddlee.cn/2017/08/06/%E5%A2%93%E7%95%94%E5%93%80%E6%AD%8C/</loc>
+    
+    <lastmod>2018-01-09T16:56:34.006Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/08/31/Android-Reborn-%E4%B8%AA%E4%BA%BAAPP%E5%AD%98%E6%A1%A3/</loc>
+    
+    <lastmod>2018-01-09T16:56:34.006Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/07/30/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BModel/</loc>
     
     <lastmod>2018-01-09T16:56:34.005Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/07/30/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BModel/</loc>
+    <loc>http://blog.ddlee.cn/2017/07/15/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BLayer%E3%80%81Tensor%E5%92%8CNode/</loc>
     
     <lastmod>2018-01-09T16:56:34.005Z</lastmod>
     
@@ -233,21 +233,7 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/05/28/Python%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B7%A5%E5%85%B7%E6%8C%87%E5%BC%95/</loc>
-    
-    <lastmod>2018-01-09T16:56:34.004Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.ddlee.cn/2017/03/26/Kaggle%E6%AF%94%E8%B5%9B%E4%B8%ADEDA%EF%BC%9A%E6%B5%81%E7%A8%8B%E3%80%81%E5%81%9A%E6%B3%95%E4%B8%8E%E7%9B%AE%E7%9A%84/</loc>
-    
-    <lastmod>2018-01-09T16:56:34.004Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/03/22/DevOps%E4%BE%A7%E8%AE%B0/</loc>
     
     <lastmod>2018-01-09T16:56:34.004Z</lastmod>
     
@@ -261,14 +247,28 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/03/12/%E5%86%8D%E6%AC%A1%E6%8A%98%E8%85%BE%E6%88%91%E7%9A%84WNDR4300/</loc>
+    <loc>http://blog.ddlee.cn/2017/03/22/DevOps%E4%BE%A7%E8%AE%B0/</loc>
+    
+    <lastmod>2018-01-09T16:56:34.004Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/05/28/Python%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B7%A5%E5%85%B7%E6%8C%87%E5%BC%95/</loc>
+    
+    <lastmod>2018-01-09T16:56:34.004Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/06/01/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E8%A1%A8%E7%A4%BA/</loc>
     
     <lastmod>2018-01-09T16:56:34.003Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/06/01/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E8%A1%A8%E7%A4%BA/</loc>
+    <loc>http://blog.ddlee.cn/2017/03/12/%E5%86%8D%E6%AC%A1%E6%8A%98%E8%85%BE%E6%88%91%E7%9A%84WNDR4300/</loc>
     
     <lastmod>2018-01-09T16:56:34.003Z</lastmod>
     
@@ -282,7 +282,7 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/06/05/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Large-Scale-Evolution-of-Image-Classifiers/</loc>
+    <loc>http://blog.ddlee.cn/2017/06/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Accurate-Large-Minibatch-SGD-Training-ImageNet-in-One-Hour/</loc>
     
     <lastmod>2018-01-09T16:56:34.002Z</lastmod>
     
@@ -296,30 +296,16 @@
   </url>
   
   <url>
+    <loc>http://blog.ddlee.cn/2017/06/05/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Large-Scale-Evolution-of-Image-Classifiers/</loc>
+    
+    <lastmod>2018-01-09T16:56:34.002Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.ddlee.cn/2017/06/14/%E8%87%AA%E7%94%A8LaTeX%E4%B8%AD%E8%8B%B1%E6%96%87%E5%BB%BA%E7%AB%8B%E6%A8%A1%E6%9D%BF/</loc>
     
     <lastmod>2018-01-09T16:56:34.002Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/06/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Accurate-Large-Minibatch-SGD-Training-ImageNet-in-One-Hour/</loc>
-    
-    <lastmod>2018-01-09T16:56:34.002Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/03/31/The-Devtools-Way-devtools-RStudio%E5%BF%AB%E9%80%9FR%E7%A8%8B%E5%BA%8F%E5%8C%85%E5%BC%80%E5%8F%91/</loc>
-    
-    <lastmod>2018-01-09T16:56:34.001Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.ddlee.cn/2017/05/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Visualizing-and-Understanding-Recurrent-Networks/</loc>
-    
-    <lastmod>2018-01-09T16:56:34.001Z</lastmod>
     
   </url>
   
@@ -338,9 +324,16 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/05/28/Pandas%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96/</loc>
+    <loc>http://blog.ddlee.cn/2017/03/31/The-Devtools-Way-devtools-RStudio%E5%BF%AB%E9%80%9FR%E7%A8%8B%E5%BA%8F%E5%8C%85%E5%BC%80%E5%8F%91/</loc>
     
-    <lastmod>2018-01-09T16:56:34.000Z</lastmod>
+    <lastmod>2018-01-09T16:56:34.001Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/05/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Visualizing-and-Understanding-Recurrent-Networks/</loc>
+    
+    <lastmod>2018-01-09T16:56:34.001Z</lastmod>
     
   </url>
   
@@ -366,14 +359,21 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/04/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Deep-Residual-Learning-for-Image-Recognition/</loc>
+    <loc>http://blog.ddlee.cn/2017/05/28/Pandas%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96/</loc>
+    
+    <lastmod>2018-01-09T16:56:34.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/04/03/500lines%E9%A1%B9%E7%9B%AECrawler%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</loc>
     
     <lastmod>2018-01-09T16:56:33.999Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/04/03/500lines%E9%A1%B9%E7%9B%AECrawler%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</loc>
+    <loc>http://blog.ddlee.cn/2017/04/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Deep-Residual-Learning-for-Image-Recognition/</loc>
     
     <lastmod>2018-01-09T16:56:33.999Z</lastmod>
     
@@ -422,13 +422,6 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/03/03/%E8%B0%81%E4%BC%9A%E4%B8%8D%E5%8E%8C%E5%85%B6%E7%83%A6%E5%9C%B0%E5%AE%89%E6%85%B0%E9%82%A3%E6%97%A0%E7%9F%A5%E7%9A%84%E5%B0%91%E5%B9%B4-3/</loc>
-    
-    <lastmod>2018-01-09T16:56:33.997Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.ddlee.cn/2016/09/23/%E5%B0%8F%E7%B1%B33%E5%8F%98%E8%BA%AB%E8%AE%B0/</loc>
     
     <lastmod>2018-01-09T16:56:33.997Z</lastmod>
@@ -450,14 +443,21 @@
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2016/06/11/%E4%B8%AA%E6%80%A7%E5%8C%96%E4%BD%A0%E7%9A%84Ubuntu-3%EF%BC%9A%E4%B8%BB%E9%A2%98%EF%BC%8C%E6%8F%92%E4%BB%B6%E4%BB%A5%E5%8F%8A%E6%A1%8C%E9%9D%A2%E5%B0%8F%E5%B7%A5%E5%85%B7/</loc>
+    <loc>http://blog.ddlee.cn/2017/03/03/%E8%B0%81%E4%BC%9A%E4%B8%8D%E5%8E%8C%E5%85%B6%E7%83%A6%E5%9C%B0%E5%AE%89%E6%85%B0%E9%82%A3%E6%97%A0%E7%9F%A5%E7%9A%84%E5%B0%91%E5%B9%B4-3/</loc>
+    
+    <lastmod>2018-01-09T16:56:33.997Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.ddlee.cn/2017/05/23/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Deep-Learning/</loc>
     
     <lastmod>2018-01-09T16:56:33.996Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.ddlee.cn/2017/05/23/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Deep-Learning/</loc>
+    <loc>http://blog.ddlee.cn/2016/06/11/%E4%B8%AA%E6%80%A7%E5%8C%96%E4%BD%A0%E7%9A%84Ubuntu-3%EF%BC%9A%E4%B8%BB%E9%A2%98%EF%BC%8C%E6%8F%92%E4%BB%B6%E4%BB%A5%E5%8F%8A%E6%A1%8C%E9%9D%A2%E5%B0%8F%E5%B7%A5%E5%85%B7/</loc>
     
     <lastmod>2018-01-09T16:56:33.996Z</lastmod>
     
