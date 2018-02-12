@@ -4,9 +4,9 @@
   <subtitle>李家丞</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://blog.ddlee.cn/"/>
+  <link href="https://blog.ddlee.cn/"/>
   <updated>2018-02-12T02:09:22.054Z</updated>
-  <id>http://blog.ddlee.cn/</id>
+  <id>https://blog.ddlee.cn/</id>
   
   <author>
     <name>ddlee</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>PyCharm+PipEnv本地Python开发环境配置</title>
-    <link href="http://blog.ddlee.cn/2018/02/12/PyCharm-PipEnv%E6%9C%AC%E5%9C%B0Python%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
-    <id>http://blog.ddlee.cn/2018/02/12/PyCharm-PipEnv本地Python开发环境配置/</id>
+    <link href="https://blog.ddlee.cn/2018/02/12/PyCharm-PipEnv%E6%9C%AC%E5%9C%B0Python%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
+    <id>https://blog.ddlee.cn/2018/02/12/PyCharm-PipEnv本地Python开发环境配置/</id>
     <published>2018-02-12T02:09:22.000Z</published>
     <updated>2018-02-12T02:09:22.054Z</updated>
     
@@ -51,21 +51,21 @@
     
     </summary>
     
-      <category term="Programming" scheme="http://blog.ddlee.cn/categories/Programming/"/>
+      <category term="Programming" scheme="https://blog.ddlee.cn/categories/Programming/"/>
     
     
-      <category term="Python" scheme="http://blog.ddlee.cn/tags/Python/"/>
+      <category term="Python" scheme="https://blog.ddlee.cn/tags/Python/"/>
     
-      <category term="Software" scheme="http://blog.ddlee.cn/tags/Software/"/>
+      <category term="Software" scheme="https://blog.ddlee.cn/tags/Software/"/>
     
-      <category term="Pipenv" scheme="http://blog.ddlee.cn/tags/Pipenv/"/>
+      <category term="Pipenv" scheme="https://blog.ddlee.cn/tags/Pipenv/"/>
     
   </entry>
   
   <entry>
     <title>[论文笔记]Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation</title>
-    <link href="http://blog.ddlee.cn/2018/01/18/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/"/>
-    <id>http://blog.ddlee.cn/2018/01/18/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/</id>
+    <link href="https://blog.ddlee.cn/2018/01/18/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/"/>
+    <id>https://blog.ddlee.cn/2018/01/18/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/</id>
     <published>2018-01-17T16:52:08.000Z</published>
     <updated>2018-01-18T18:30:59.000Z</updated>
     
@@ -114,23 +114,23 @@
     
     </summary>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
+      <category term="AI" scheme="https://blog.ddlee.cn/tags/AI/"/>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
-      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
+      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
   <entry>
     <title>Chrome扩展推荐</title>
-    <link href="http://blog.ddlee.cn/2018/01/16/Chrome%E6%89%A9%E5%B1%95%E6%8E%A8%E8%8D%90/"/>
-    <id>http://blog.ddlee.cn/2018/01/16/Chrome扩展推荐/</id>
+    <link href="https://blog.ddlee.cn/2018/01/16/Chrome%E6%89%A9%E5%B1%95%E6%8E%A8%E8%8D%90/"/>
+    <id>https://blog.ddlee.cn/2018/01/16/Chrome扩展推荐/</id>
     <published>2018-01-16T12:59:51.000Z</published>
     <updated>2018-01-16T12:59:51.235Z</updated>
     
@@ -179,19 +179,19 @@
     
     </summary>
     
-      <category term="Individual Development" scheme="http://blog.ddlee.cn/categories/Individual-Development/"/>
+      <category term="Individual Development" scheme="https://blog.ddlee.cn/categories/Individual-Development/"/>
     
     
-      <category term="Software" scheme="http://blog.ddlee.cn/tags/Software/"/>
+      <category term="Software" scheme="https://blog.ddlee.cn/tags/Software/"/>
     
-      <category term="Chrome" scheme="http://blog.ddlee.cn/tags/Chrome/"/>
+      <category term="Chrome" scheme="https://blog.ddlee.cn/tags/Chrome/"/>
     
   </entry>
   
   <entry>
     <title>Laptop Reborn: 系统重装侧记</title>
-    <link href="http://blog.ddlee.cn/2018/01/15/Laptop-Reborn-%E7%B3%BB%E7%BB%9F%E9%87%8D%E8%A3%85%E4%BE%A7%E8%AE%B0/"/>
-    <id>http://blog.ddlee.cn/2018/01/15/Laptop-Reborn-系统重装侧记/</id>
+    <link href="https://blog.ddlee.cn/2018/01/15/Laptop-Reborn-%E7%B3%BB%E7%BB%9F%E9%87%8D%E8%A3%85%E4%BE%A7%E8%AE%B0/"/>
+    <id>https://blog.ddlee.cn/2018/01/15/Laptop-Reborn-系统重装侧记/</id>
     <published>2018-01-14T18:06:16.000Z</published>
     <updated>2018-01-14T18:06:16.783Z</updated>
     
@@ -278,8 +278,8 @@
   
   <entry>
     <title>FlintOS轻体验</title>
-    <link href="http://blog.ddlee.cn/2018/01/10/FlintOS%E8%BD%BB%E4%BD%93%E9%AA%8C/"/>
-    <id>http://blog.ddlee.cn/2018/01/10/FlintOS轻体验/</id>
+    <link href="https://blog.ddlee.cn/2018/01/10/FlintOS%E8%BD%BB%E4%BD%93%E9%AA%8C/"/>
+    <id>https://blog.ddlee.cn/2018/01/10/FlintOS轻体验/</id>
     <published>2018-01-09T17:36:06.000Z</published>
     <updated>2018-01-14T18:06:43.322Z</updated>
     
@@ -316,21 +316,21 @@
     
     </summary>
     
-      <category term="Linux" scheme="http://blog.ddlee.cn/categories/Linux/"/>
+      <category term="Linux" scheme="https://blog.ddlee.cn/categories/Linux/"/>
     
     
-      <category term="Software" scheme="http://blog.ddlee.cn/tags/Software/"/>
+      <category term="Software" scheme="https://blog.ddlee.cn/tags/Software/"/>
     
-      <category term="Chrome" scheme="http://blog.ddlee.cn/tags/Chrome/"/>
+      <category term="Chrome" scheme="https://blog.ddlee.cn/tags/Chrome/"/>
     
-      <category term="Geek" scheme="http://blog.ddlee.cn/tags/Geek/"/>
+      <category term="Geek" scheme="https://blog.ddlee.cn/tags/Geek/"/>
     
   </entry>
   
   <entry>
     <title>[论文笔记]Densely Connected Convolutional Networks</title>
-    <link href="http://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Densely-Connected-Convolutional-Networks/"/>
-    <id>http://blog.ddlee.cn/2018/01/06/论文笔记-Densely-Connected-Convolutional-Networks/</id>
+    <link href="https://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Densely-Connected-Convolutional-Networks/"/>
+    <id>https://blog.ddlee.cn/2018/01/06/论文笔记-Densely-Connected-Convolutional-Networks/</id>
     <published>2018-01-06T13:23:16.000Z</published>
     <updated>2018-01-23T13:13:59.898Z</updated>
     
@@ -350,21 +350,21 @@
     
     </summary>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
-      <category term="Neural Network" scheme="http://blog.ddlee.cn/tags/Neural-Network/"/>
+      <category term="Neural Network" scheme="https://blog.ddlee.cn/tags/Neural-Network/"/>
     
   </entry>
   
   <entry>
     <title>[论文笔记]Aggregated Residual Transformations for Deep Neural Networks</title>
-    <link href="http://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/"/>
-    <id>http://blog.ddlee.cn/2018/01/06/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/</id>
+    <link href="https://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/"/>
+    <id>https://blog.ddlee.cn/2018/01/06/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/</id>
     <published>2018-01-06T13:19:34.000Z</published>
     <updated>2018-01-23T13:13:31.520Z</updated>
     
@@ -395,21 +395,21 @@
     
     </summary>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
+      <category term="AI" scheme="https://blog.ddlee.cn/tags/AI/"/>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
   </entry>
   
   <entry>
     <title>[论文笔记]MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications</title>
-    <link href="http://blog.ddlee.cn/2018/01/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/"/>
-    <id>http://blog.ddlee.cn/2018/01/04/论文笔记-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/</id>
+    <link href="https://blog.ddlee.cn/2018/01/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/"/>
+    <id>https://blog.ddlee.cn/2018/01/04/论文笔记-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/</id>
     <published>2018-01-04T13:10:09.000Z</published>
     <updated>2018-01-09T16:56:34.009Z</updated>
     
@@ -436,21 +436,21 @@
     
     </summary>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
-      <category term="Neural Network" scheme="http://blog.ddlee.cn/tags/Neural-Network/"/>
+      <category term="Neural Network" scheme="https://blog.ddlee.cn/tags/Neural-Network/"/>
     
   </entry>
   
   <entry>
     <title>[论文笔记]Xception: Deep Learning with Depthwise Seperable Convolutions</title>
-    <link href="http://blog.ddlee.cn/2018/01/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/"/>
-    <id>http://blog.ddlee.cn/2018/01/02/论文笔记-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/</id>
+    <link href="https://blog.ddlee.cn/2018/01/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/"/>
+    <id>https://blog.ddlee.cn/2018/01/02/论文笔记-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/</id>
     <published>2018-01-02T13:04:30.000Z</published>
     <updated>2018-01-23T13:15:00.097Z</updated>
     
@@ -481,21 +481,21 @@
     
     </summary>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="AI" scheme="http://blog.ddlee.cn/tags/AI/"/>
+      <category term="AI" scheme="https://blog.ddlee.cn/tags/AI/"/>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
   </entry>
   
   <entry>
     <title>[论文笔记]Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning</title>
-    <link href="http://blog.ddlee.cn/2017/12/26/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/"/>
-    <id>http://blog.ddlee.cn/2017/12/26/论文笔记-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/</id>
+    <link href="https://blog.ddlee.cn/2017/12/26/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/"/>
+    <id>https://blog.ddlee.cn/2017/12/26/论文笔记-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/</id>
     <published>2017-12-26T12:59:02.000Z</published>
     <updated>2018-01-23T13:14:21.300Z</updated>
     
@@ -517,21 +517,21 @@
     
     </summary>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
-      <category term="Neural Network" scheme="http://blog.ddlee.cn/tags/Neural-Network/"/>
+      <category term="Neural Network" scheme="https://blog.ddlee.cn/tags/Neural-Network/"/>
     
   </entry>
   
   <entry>
     <title>[论文笔记]Speed/accuracy trade-offs for modern convolutional object detectors</title>
-    <link href="http://blog.ddlee.cn/2017/12/24/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/"/>
-    <id>http://blog.ddlee.cn/2017/12/24/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/</id>
+    <link href="https://blog.ddlee.cn/2017/12/24/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/"/>
+    <id>https://blog.ddlee.cn/2017/12/24/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/</id>
     <published>2017-12-24T13:55:22.000Z</published>
     <updated>2018-01-09T16:56:34.010Z</updated>
     
@@ -590,21 +590,21 @@
     
     </summary>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
+      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
     
-      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
+      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
   <entry>
     <title>[论文笔记]Light-Head R-CNN: In Defense of Two-Stage Object Detector</title>
-    <link href="http://blog.ddlee.cn/2017/12/22/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/"/>
-    <id>http://blog.ddlee.cn/2017/12/22/论文笔记-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/</id>
+    <link href="https://blog.ddlee.cn/2017/12/22/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/"/>
+    <id>https://blog.ddlee.cn/2017/12/22/论文笔记-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/</id>
     <published>2017-12-22T13:55:36.000Z</published>
     <updated>2018-01-09T16:56:34.011Z</updated>
     
@@ -633,21 +633,21 @@
     
     </summary>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
+      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
     
-      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
+      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
   <entry>
     <title>[论文笔记]You Only Look Once: Unified, Real Time Object Detection</title>
-    <link href="http://blog.ddlee.cn/2017/12/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-You-Only-Look-Once-Unified-Real-Time-Object-Detection/"/>
-    <id>http://blog.ddlee.cn/2017/12/20/论文笔记-You-Only-Look-Once-Unified-Real-Time-Object-Detection/</id>
+    <link href="https://blog.ddlee.cn/2017/12/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-You-Only-Look-Once-Unified-Real-Time-Object-Detection/"/>
+    <id>https://blog.ddlee.cn/2017/12/20/论文笔记-You-Only-Look-Once-Unified-Real-Time-Object-Detection/</id>
     <published>2017-12-20T13:38:31.000Z</published>
     <updated>2018-01-09T16:56:34.010Z</updated>
     
@@ -680,21 +680,21 @@
     
     </summary>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
+      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
     
-      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
+      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
   <entry>
     <title>[论文笔记]Rethinking the Inception Architecture for Computer Vision</title>
-    <link href="http://blog.ddlee.cn/2017/12/16/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Rethinking-the-Inception-Architecture-for-Computer-Vision/"/>
-    <id>http://blog.ddlee.cn/2017/12/16/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/</id>
+    <link href="https://blog.ddlee.cn/2017/12/16/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Rethinking-the-Inception-Architecture-for-Computer-Vision/"/>
+    <id>https://blog.ddlee.cn/2017/12/16/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/</id>
     <published>2017-12-16T12:53:29.000Z</published>
     <updated>2018-01-23T13:14:43.796Z</updated>
     
@@ -741,21 +741,21 @@
     
     </summary>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
-      <category term="Neural Network" scheme="http://blog.ddlee.cn/tags/Neural-Network/"/>
+      <category term="Neural Network" scheme="https://blog.ddlee.cn/tags/Neural-Network/"/>
     
   </entry>
   
   <entry>
     <title>[论文笔记]SSD: Single Shot MultiBox Detector</title>
-    <link href="http://blog.ddlee.cn/2017/12/12/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-SSD-Single-Shot-MultiBox-Detector/"/>
-    <id>http://blog.ddlee.cn/2017/12/12/论文笔记-SSD-Single-Shot-MultiBox-Detector/</id>
+    <link href="https://blog.ddlee.cn/2017/12/12/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-SSD-Single-Shot-MultiBox-Detector/"/>
+    <id>https://blog.ddlee.cn/2017/12/12/论文笔记-SSD-Single-Shot-MultiBox-Detector/</id>
     <published>2017-12-12T13:37:56.000Z</published>
     <updated>2018-01-09T16:56:34.010Z</updated>
     
@@ -777,21 +777,21 @@
     
     </summary>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
+      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
     
-      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
+      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
   <entry>
     <title>[论文笔记]Feature Pyramid Networks for Object Detection</title>
-    <link href="http://blog.ddlee.cn/2017/12/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Feature-Pyramid-Networks-for-Object-Detection/"/>
-    <id>http://blog.ddlee.cn/2017/12/07/论文笔记-Feature-Pyramid-Networks-for-Object-Detection/</id>
+    <link href="https://blog.ddlee.cn/2017/12/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Feature-Pyramid-Networks-for-Object-Detection/"/>
+    <id>https://blog.ddlee.cn/2017/12/07/论文笔记-Feature-Pyramid-Networks-for-Object-Detection/</id>
     <published>2017-12-07T13:55:59.000Z</published>
     <updated>2018-01-09T16:56:34.011Z</updated>
     
@@ -816,21 +816,21 @@
     
     </summary>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
+      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
     
-      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
+      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
   <entry>
     <title>[论文笔记]R-FCN: Object Detection via Region-based Fully Convolutinal Networks</title>
-    <link href="http://blog.ddlee.cn/2017/12/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-R-FCN-Object-Detection-via-Region-based-Fully-Convolutinal-Networks/"/>
-    <id>http://blog.ddlee.cn/2017/12/07/论文笔记-R-FCN-Object-Detection-via-Region-based-Fully-Convolutinal-Networks/</id>
+    <link href="https://blog.ddlee.cn/2017/12/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-R-FCN-Object-Detection-via-Region-based-Fully-Convolutinal-Networks/"/>
+    <id>https://blog.ddlee.cn/2017/12/07/论文笔记-R-FCN-Object-Detection-via-Region-based-Fully-Convolutinal-Networks/</id>
     <published>2017-12-07T13:55:48.000Z</published>
     <updated>2018-01-09T16:56:34.011Z</updated>
     
@@ -855,21 +855,21 @@
     
     </summary>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
+      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
     
-      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
+      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
   <entry>
     <title>[论文笔记]Going deeper with convolutions</title>
-    <link href="http://blog.ddlee.cn/2017/11/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Going-deeper-with-convolutions/"/>
-    <id>http://blog.ddlee.cn/2017/11/30/论文笔记-Going-deeper-with-convolutions/</id>
+    <link href="https://blog.ddlee.cn/2017/11/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Going-deeper-with-convolutions/"/>
+    <id>https://blog.ddlee.cn/2017/11/30/论文笔记-Going-deeper-with-convolutions/</id>
     <published>2017-11-30T12:39:58.000Z</published>
     <updated>2018-01-23T13:14:10.606Z</updated>
     
@@ -902,21 +902,21 @@
     
     </summary>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
-      <category term="Neural Network" scheme="http://blog.ddlee.cn/tags/Neural-Network/"/>
+      <category term="Neural Network" scheme="https://blog.ddlee.cn/tags/Neural-Network/"/>
     
   </entry>
   
   <entry>
     <title>[论文笔记]MegDet: A Large Mini-Batch Object Detector</title>
-    <link href="http://blog.ddlee.cn/2017/11/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MegDet-A-Large-Mini-Batch-Object-Detector/"/>
-    <id>http://blog.ddlee.cn/2017/11/21/论文笔记-MegDet-A-Large-Mini-Batch-Object-Detector/</id>
+    <link href="https://blog.ddlee.cn/2017/11/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MegDet-A-Large-Mini-Batch-Object-Detector/"/>
+    <id>https://blog.ddlee.cn/2017/11/21/论文笔记-MegDet-A-Large-Mini-Batch-Object-Detector/</id>
     <published>2017-11-21T15:30:56.000Z</published>
     <updated>2018-01-09T16:56:34.007Z</updated>
     
@@ -958,21 +958,21 @@
     
     </summary>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/tags/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
-      <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
+      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
     
   </entry>
   
   <entry>
     <title>[论文笔记]Faster R-CNN: Towards Real Time Object Detection with Region Proposal Networks</title>
-    <link href="http://blog.ddlee.cn/2017/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/"/>
-    <id>http://blog.ddlee.cn/2017/10/21/论文笔记-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/</id>
+    <link href="https://blog.ddlee.cn/2017/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/"/>
+    <id>https://blog.ddlee.cn/2017/10/21/论文笔记-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/</id>
     <published>2017-10-21T15:39:34.000Z</published>
     <updated>2018-01-09T16:56:34.007Z</updated>
     
@@ -993,14 +993,14 @@
     
     </summary>
     
-      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
+      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
+      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
     
-      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
+      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
