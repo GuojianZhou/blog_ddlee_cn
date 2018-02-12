@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.ddlee.cn/"/>
-  <updated>2018-01-18T18:30:59.000Z</updated>
+  <updated>2018-02-12T02:09:22.054Z</updated>
   <id>http://blog.ddlee.cn/</id>
   
   <author>
@@ -14,6 +14,53 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PyCharm+PipEnv本地Python开发环境配置</title>
+    <link href="http://blog.ddlee.cn/2018/02/12/PyCharm-PipEnv%E6%9C%AC%E5%9C%B0Python%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
+    <id>http://blog.ddlee.cn/2018/02/12/PyCharm-PipEnv本地Python开发环境配置/</id>
+    <published>2018-02-12T02:09:22.000Z</published>
+    <updated>2018-02-12T02:09:22.054Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文记录基于PyCharm的Python工作环境配置，最终实现的效果是本地修改，远程调试，运行环境可迁移。</p>
+<h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><p>该环境的配置需要如下准备：</p>
+<ul>
+<li>开发用笔记本电脑和部署用服务器</li>
+<li><p>PyCharm Pro版本，如果是学生，可以免费得到这一版本</p>
+</li>
+<li><p>依赖管理包Pipenv</p>
+</li>
+</ul>
+<p>逻辑是在本地编写和调试代码，调用服务器的计算资源运行，并通过PyCharm和Pipenv保证本地开发环境和服务器端运行环境的一致。</p>
+<p>关于Pipenv：<br>Pipenv是一个将pip和virtualenv功能整合在一起的依赖管理包，提倡一个项目一个环境，利用Pipfile存储依赖信息并提供可迁移性。Pipenv为每个项目建立一个virtualenv，并记录pip安装依赖包的版本信息。</p>
+<h3 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h3><p>1.（可选）在GitHub等版本控制服务建立repo。<br>2.在服务器上建立项目文件夹，并用命令<code>pipenv install</code>初始化项目环境。<br>3.本地使用PyCharm打开项目（从GitHub，或者新建在本地文件夹），并配置部署环境（Tools-&gt;Deployment-&gt;Configurations)，以SFTP方式连接，并在本地开发项目文件夹和服务器端项目文件夹建立映射。</p>
+<p><img src="http://static.ddlee.cn/static/img/PyCharm-PipEnv本地Python开发环境配置/sftp.png" alt="sftp"></p>
+<p>4.打开Files-&gt;settings-&gt;project settings-&gt;project interpreter，选择add remote，勾选Deployment configuration到上一步建立的配置，选择Move this server to IDE settings。</p>
+<p><img src="http://static.ddlee.cn/static/img/PyCharm-PipEnv本地Python开发环境配置/interpreter.png" alt="interpreter"></p>
+<p>最后指定好上一步pipenv建立的vitualenv（默认目录为~/.local/share/virtualenvs/）为Python解释器的路径。</p>
+<p><img src="http://static.ddlee.cn/static/img/PyCharm-PipEnv本地Python开发环境配置/patch.png" alt="path"></p>
+<p>5.在Tools-&gt;Deployment-&gt;Download from将服务器代码下载到本地（主要是Pipfile），之后右击项目，将项目文件上传到服务器（本地代码文件），并在Tools-&gt;Deployment勾选Automatic Upload，使本地代码跟服务器代码保持同步。</p>
+<p>6.在Tools-&gt;Start SSH Session利用部署配置登录服务器，使用Pipenv来安装需要的依赖后，在本地新建脚本文件进行测试。</p>
+<h3 id="工作流"><a href="#工作流" class="headerlink" title="工作流"></a>工作流</h3><p>1.本地修改代码，自动上传到服务器<br>2.利用SSH处理数据存取路径等问题<br>3.运行脚本（使用远程环境）并调试<br>4.解决报错问题<br>5.调试成功，将代码提交到版本控制服务<br>6.重复</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文记录基于PyCharm的Python工作环境配置，最终实现的效果是本地修改，远程调试，运行环境可迁移。&lt;/p&gt;
+&lt;h3 id=&quot;准备&quot;&gt;&lt;a href=&quot;#准备&quot; class=&quot;headerlink&quot; title=&quot;准备&quot;&gt;&lt;/a&gt;准备&lt;/h3&gt;&lt;p&gt;该环境的配置需要如
+    
+    </summary>
+    
+      <category term="Programming" scheme="http://blog.ddlee.cn/categories/Programming/"/>
+    
+    
+      <category term="Python" scheme="http://blog.ddlee.cn/tags/Python/"/>
+    
+      <category term="Software" scheme="http://blog.ddlee.cn/tags/Software/"/>
+    
+      <category term="Pipenv" scheme="http://blog.ddlee.cn/tags/Pipenv/"/>
+    
+  </entry>
   
   <entry>
     <title>[论文笔记]Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation</title>
@@ -548,9 +595,9 @@
     
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
       <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
@@ -591,9 +638,9 @@
     
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
       <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
@@ -638,9 +685,9 @@
     
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
       <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
@@ -735,9 +782,9 @@
     
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
       <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
@@ -774,9 +821,9 @@
     
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
       <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
@@ -813,9 +860,9 @@
     
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
       <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
@@ -951,60 +998,9 @@
     
       <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
       <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
     
-  </entry>
-  
-  <entry>
-    <title>[论文笔记]Fast R-CNN</title>
-    <link href="http://blog.ddlee.cn/2017/10/15/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Fast-R-CNN/"/>
-    <id>http://blog.ddlee.cn/2017/10/15/论文笔记-Fast-R-CNN/</id>
-    <published>2017-10-15T15:34:31.000Z</published>
-    <updated>2018-01-09T16:56:34.007Z</updated>
-    
-    <content type="html"><![CDATA[<p>Fast R-CNN 是对R-CNN的改进，作者栏只有RBG一人。文章先指出了R-CNN存在的问题，再介绍了自己的改进思路。文章结构堪称典范，从现存问题，到解决方案、实验细节，再到结果分析、拓展讨论，条分缕析，值得借鉴。而且，RBG开源的代码也影响了后来大部分这一领域的工作。</p>
-<h2 id="R-CNN的问题"><a href="#R-CNN的问题" class="headerlink" title="R-CNN的问题"></a>R-CNN的问题</h2><ul>
-<li>训练是一个多阶段的过程（Proposal, Classification, Regression）</li>
-<li>训练耗时耗力</li>
-<li>推断耗时</li>
-</ul>
-<p>而耗时的原因是CNN是在每一个Proposal上单独进行的，没有共享计算。</p>
-<h2 id="Fast-R-CNN-Architecture"><a href="#Fast-R-CNN-Architecture" class="headerlink" title="Fast R-CNN Architecture"></a>Fast R-CNN Architecture</h2><h3 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h3><p><img src="http://static.ddlee.cn/static/img/论文笔记-Fast-R-CNN/fast-rcnn-arch.png" alt="arch"></p>
-<p>上图是Fast R-CNN的架构。图片经过feature extractor产生feature map, 原图上运行Selective Search算法将RoI（Region of Interset）对应到feature map上，再对每个RoI进行RoI Pooling操作便得到等长的feature vector，最后通过FC后并行地进行Classifaction和BBox Regression。</p>
-<p>Fast R-CNN的这一结构正是检测任务主流2-stage方法所采用的元结构的雏形。整个系统由Proposal, Feature Extractor, Object Recognition&amp;Localization几个部件组成。Proposal部分被替换成RPN(Faster R-CNN)，Feature Extractor部分使用SOTA的分类CNN网络(ResNet等），而最后的部分常常是并行的多任务结构（Mask R-CNN等）。</p>
-<h3 id="RoI-Pooling"><a href="#RoI-Pooling" class="headerlink" title="RoI Pooling"></a>RoI Pooling</h3><p>这一操作是将不同大小的RoI（feature map上）统一的过程，具体做法是将RoI等分成目标个数的网格，在每个网格上进行max pooling，就得到等长的RoI feature vector。</p>
-<h3 id="Mini-batch-Sampling"><a href="#Mini-batch-Sampling" class="headerlink" title="Mini-batch Sampling"></a>Mini-batch Sampling</h3><p>文章指出SPPNet训练较慢的原因在于来自不同图片的RoI不能共享计算，因而Fast R-CNN采用这样的mini-batch采样策略：先采样N张图片，再在每张图片上采样R/N个RoI，构成R大小的mini-batch。</p>
-<p>采样时，总是保持25%比例正样本（iou大于0.5），iou在0.1到0.5的作为hard example。</p>
-<h3 id="Multi-task-Loss"><a href="#Multi-task-Loss" class="headerlink" title="Multi-task Loss"></a>Multi-task Loss</h3><p>得到RoI feature vector后，后续的操作是一个并行的结构，Fast R-CNN将Classification和Regression的损失统一起来，并且在Regression中用更鲁棒的Smooth L1 Loss代替L2 Loss。</p>
-<h3 id="Fine-Tuning"><a href="#Fine-Tuning" class="headerlink" title="Fine Tuning"></a>Fine Tuning</h3><p>文章还发现，对于预训练的VGG网络，开放Conv部分的参数更新有助于性能的提升，而不是只更新FC层。<br>将proposal, classification, regression统一在一个框架</p>
-<h2 id="Design-Evaluation"><a href="#Design-Evaluation" class="headerlink" title="Design Evaluation"></a>Design Evaluation</h2><p>文章最后还对系统结构进行了讨论：</p>
-<ul>
-<li>multi-loss traing相比单独训练Classification确有提升</li>
-<li>Scale invariance方面，multi-scale相比single-scale精度略有提升，但带来的时间开销更大。一定程度上说明CNN结构可以内在地学习scale invariance</li>
-<li>在更多的数据(VOC)上训练后，mAP是有进一步提升的</li>
-<li>Softmax分类器比”one vs rest”型的SVM表现略好，引入了类间的竞争</li>
-<li>更多的Proposal并不一定带来性能的提升</li>
-</ul>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>Fast R-CNN是对R-CNN的改进，也是对2-stage方法的系统化、架构化。文章将Proposal, Feature Extractor, Object Recognition&amp;Localization统一在一个整体的结构中，并推进共享卷积计算以提高效率的想法演进，是最有贡献的地方。</p>
-<p>论文链接：<a href="https://arxiv.org/abs/1504.08083" target="_blank" rel="external">https://arxiv.org/abs/1504.08083</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Fast R-CNN 是对R-CNN的改进，作者栏只有RBG一人。文章先指出了R-CNN存在的问题，再介绍了自己的改进思路。文章结构堪称典范，从现存问题，到解决方案、实验细节，再到结果分析、拓展讨论，条分缕析，值得借鉴。而且，RBG开源的代码也影响了后来大部分这一领域的工作
-    
-    </summary>
-    
-      <category term="Papers" scheme="http://blog.ddlee.cn/categories/Papers/"/>
-    
-    
-      <category term="Deep Learning" scheme="http://blog.ddlee.cn/tags/Deep-Learning/"/>
-    
       <category term="Computer Vision" scheme="http://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
-      <category term="Object Detection" scheme="http://blog.ddlee.cn/tags/Object-Detection/"/>
     
   </entry>
   
