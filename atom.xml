@@ -34,11 +34,11 @@
 <p>逻辑是在本地编写和调试代码，调用服务器的计算资源运行，并通过PyCharm和Pipenv保证本地开发环境和服务器端运行环境的一致。</p>
 <p>关于Pipenv：<br>Pipenv是一个将pip和virtualenv功能整合在一起的依赖管理包，提倡一个项目一个环境，利用Pipfile存储依赖信息并提供可迁移性。Pipenv为每个项目建立一个virtualenv，并记录pip安装依赖包的版本信息。</p>
 <h3 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h3><p>1.（可选）在GitHub等版本控制服务建立repo。<br>2.在服务器上建立项目文件夹，并用命令<code>pipenv install</code>初始化项目环境。<br>3.本地使用PyCharm打开项目（从GitHub，或者新建在本地文件夹），并配置部署环境（Tools-&gt;Deployment-&gt;Configurations)，以SFTP方式连接，并在本地开发项目文件夹和服务器端项目文件夹建立映射。</p>
-<p><img src="http://static.ddlee.cn/static/img/PyCharm-PipEnv本地Python开发环境配置/sftp.png" alt="sftp"></p>
+<p><img src="https://static.ddlee.cn/static/img/PyCharm-PipEnv本地Python开发环境配置/sftp.png" alt="sftp"></p>
 <p>4.打开Files-&gt;settings-&gt;project settings-&gt;project interpreter，选择add remote，勾选Deployment configuration到上一步建立的配置，选择Move this server to IDE settings。</p>
-<p><img src="http://static.ddlee.cn/static/img/PyCharm-PipEnv本地Python开发环境配置/interpreter.png" alt="interpreter"></p>
+<p><img src="https://static.ddlee.cn/static/img/PyCharm-PipEnv本地Python开发环境配置/interpreter.png" alt="interpreter"></p>
 <p>最后指定好上一步pipenv建立的vitualenv（默认目录为~/.local/share/virtualenvs/）为Python解释器的路径。</p>
-<p><img src="http://static.ddlee.cn/static/img/PyCharm-PipEnv本地Python开发环境配置/patch.png" alt="path"></p>
+<p><img src="https://static.ddlee.cn/static/img/PyCharm-PipEnv本地Python开发环境配置/patch.png" alt="path"></p>
 <p>5.在Tools-&gt;Deployment-&gt;Download from将服务器代码下载到本地（主要是Pipfile），之后右击项目，将项目文件上传到服务器（本地代码文件），并在Tools-&gt;Deployment勾选Automatic Upload，使本地代码跟服务器代码保持同步。</p>
 <p>6.在Tools-&gt;Start SSH Session利用部署配置登录服务器，使用Pipenv来安装需要的依赖后，在本地新建脚本文件进行测试。</p>
 <h3 id="工作流"><a href="#工作流" class="headerlink" title="工作流"></a>工作流</h3><p>1.本地修改代码，自动上传到服务器<br>2.利用SSH处理数据存取路径等问题<br>3.运行脚本（使用远程环境）并调试<br>4.解决报错问题<br>5.调试成功，将代码提交到版本控制服务<br>6.重复</p>
@@ -74,33 +74,33 @@
 <p>在最早的Network in Network工作中，1x1卷积被作为一个降维的操作而引入，后来逐渐发展为Depth-wise Seperable Convolution（可分离卷积）并被广泛应用，堪称跟skip-connection同样具有影响力的网络部件。在<a href="https://blog.ddlee.cn/2017/11/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Going-deeper-with-convolutions/">Inception单元</a>最初提出之时，具有较多channel的feature map被认为是可供压缩的，作者引入1x1卷积将它们映射到低维（较少channel数）空间上并添加多路径处理的范式。之后的<a href="https://blog.ddlee.cn/2018/01/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/">Xception</a>、MobileNets等工作则将可分离卷积应用到极致：前者指出可分离卷积背后的假设是跨channel相关性和跨spatial相关性的解耦，后者则利用可控的两个超参来获得在效率和精度上取得较好平衡的网络。</p>
 <p>文中，经过激活层后的张量被称为兴趣流形，具有维HxWxD，其中D即为通常意义的channel数，部分文章也将其称为网络的宽度（width）。</p>
 <p>根据之前的研究，兴趣流形可能仅分布在激活空间的一个低维子空间里，利用这一点很容易使用1x1卷积将张量降维（即MobileNet V1的工作），但由于ReLU的存在，这种降维实际上会损失较多的信息。下图是一个例子。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/collapse.png" alt="envolve"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/collapse.png" alt="envolve"></p>
 <p>上图中，利用MxN的矩阵B将张量（2D，即N=2）变换到M维的空间中，通过ReLUctant后（y=ReLU(Bx)），再用此矩阵之逆恢复原来的张量。可以看到，当M较小时，恢复后的张量坍缩严重，M较大时则恢复较好。</p>
 <p>这意味着，在较低维度的张量表示（兴趣流形）上进行ReLU等线性变换会有很大的信息损耗。因而本文提出使用线性变换替代Bottleneck的激活层，而在需要激活的卷积层中，使用较大的M使张量在进行激活前先扩张，整个单元的输入输出是低维张量，而中间的层则用较高维的张量。文中所用单元的演化过程如下：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/envolve.png" alt="envolve"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/envolve.png" alt="envolve"></p>
 <p>。图a中普通卷积将channel和spatial的信息同时进行映射，参数量较大；图b为可分离卷积，解耦了channel和spatial，化乘法为加法，有一定比例的参数节省；图c中进行可分离卷积后又添加了bottleneck，映射到低维空间中；图d则是从低维空间开始，进行可分离卷积时扩张到较高的维度（前后维度之比被称为expansion factor，扩张系数），之后再通过1x1卷积降到原始维度。</p>
 <p>实际上，图c和图d的结构在堆叠时是等价的，只是观察起点的不同。但基于兴趣流形应该分布在一个低维子空间上的假设，这引出了文章的第二个关键点：将skip-connection转移到低维表达间，即Inverted residual block。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/invert_residual.png" alt="inverted"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/invert_residual.png" alt="inverted"></p>
 <p>综合以上两点，文章中网络所用的基本单元如下：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/module.png" alt="envolve"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/module.png" alt="envolve"></p>
 <p>文章指出，这种设计将层输入、输出空间跟层变换分离，即网络容量（capacity）和表达力（expressIveness）的解耦。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/module2.png" alt="envolve"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/module2.png" alt="envolve"></p>
 <h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p>MobileNet V2的整体结构如下表：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/arch.png" alt="envolve"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/arch.png" alt="envolve"></p>
 <p>上图中，t代表单元的扩张系数，c代表channel数，n为单元重复个数，s为stride数。可见，网络整体上遵循了重复相同单元和加深则变宽等设计范式。也不免有人工设计的成分（如28^2*64单元的stride，单元重复数等）。</p>
 <h4 id="ImageNet-Classification"><a href="#ImageNet-Classification" class="headerlink" title="ImageNet Classification"></a>ImageNet Classification</h4><p>MoblieNets V2仍然集成了V1版本的两个超参数，在ImageNet上的实验结果如下：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/imagenet.png" alt="envolve"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/imagenet.png" alt="envolve"></p>
 <p>可以看到相比V1版本优势明显，在精度方面跟NAS搜索出的结构有相当的表现。</p>
 <h4 id="Object-Detection"><a href="#Object-Detection" class="headerlink" title="Object Detection"></a>Object Detection</h4><p>文章还提出SSDLite来更好适应移动端需求，改动是将head部分的普通卷积都替换为了可分离卷积。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/coco.png" alt="envolve"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/coco.png" alt="envolve"></p>
 <p>上面是在COCO上的表现，可以看到精度方面跟YOLOv2和SSD300相当（尽管很低，相比SOTA差距还很大），但模型参数和运算复杂度都有一个数量级的减少。最后的CPU时间是在Pixel上测得，可以到5FPS，达不到真正移动实时的要求，但也是不小的推进了（并没有给出GPU上的推断时间，而Pixel+TF-Lite的benchmark又跟其他网络难以产生有效的比较）。</p>
 <h4 id="Segmentation"><a href="#Segmentation" class="headerlink" title="Segmentation"></a>Segmentation</h4><p>下图是在VOC上分割的结果：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/seg.png" alt="envolve"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/seg.png" alt="envolve"></p>
 <h3 id="Ablation-Study"><a href="#Ablation-Study" class="headerlink" title="Ablation Study"></a>Ablation Study</h3><p>文章还做了关于线性变换bottleneck替代ReLU和skip-connection位置的实验，进一步支撑之前的分析。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/ablation.png" alt="envolve"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/ablation.png" alt="envolve"></p>
 <h3 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h3><p>本篇文章的附录部分提供了紧的n维流形在经过升维线性变化加ReLU后被映射到子集的期望大小的界，这个界说明在扩张到足够高的维度后，升维线性变换加ReLu能以较高的概率可逆（保持信息）并加入非线性。</p>
 <p>上面的结论是非常拗口的。自己的理解是，使用ReLU引入非线性的同时会导致信息损失（非线性指不会被卷积、全连接等线性映射吸收掉，信息损失则是指ReLU将&lt;0的输入置0，输入变得稀疏，而若所有输入的某一维度都被置0，则会使输入空间本身降维），我们要对抗这一可能的信息损失，需要将输入先扩张，即y=ReLU(Bx)，x为R^n空间上的输入，B为m×n矩阵，我们期望m足够大，以达到扩张的效果并在经过ReLU后保持y跟x的信息量同样多（文中的引理二，即是证此变换可逆性的一个条件，应该是借用了代数的概念，矩阵在经过可逆变换后不会降秩，秩成为衡量信息损失的指标）。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/distribution.png" alt="envolve"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/distribution.png" alt="envolve"></p>
 <p>在ReLU(Bx)算符可逆性的问题上，作者做了一些经验性实验，如上图。a和b分别为训练前后，每层正激活channel数（可逆性条件）和其占总channel数比例的分布。图a和图b的左图，随网络加深，channel数增多，即变宽；训练前后，方差增大，且有两层低于了可逆性条件阈值（图b左图中绿色线低于紫色阈值的部分）。右图是一个比例，由于随机初始化，均值在0.5附近，训练后同样方差增大，而可逆性条件阈值一直为1/6（即为MobileNet V2扩张系数的倒数）。</p>
 <p>附录的Theorem 1则证明了ReLU(Bx)算符将输入x压缩后的空间维度(n-volume)的界，此界在扩张系数较大时可以跟原空间相当，即信息损失很小。</p>
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>能够看到附录里给出文中假定或观察的数学证明的论文还是开心的。太多论文只是终于实验的SOTA而避而不谈Insights，况且给出证明。尽管本篇附录中的证明仍有经验主义的部分，且并没有完全定义清楚问题和结论，其对后续工作的启发价值还是有的。</p>
@@ -293,19 +293,19 @@
 <p>目前建议是在U盘上体验，安装教程在<a href="https://flintos.com/instructions-pc" target="_blank" rel="external">这里</a>。</p>
 <p>也可以选择安装双启动和硬盘独占安装，可以参考社区的<a href="https://flintos.com/community/forum/flint-os-for-pc/" target="_blank" rel="external">置顶帖</a>。</p>
 <h2 id="界面UI"><a href="#界面UI" class="headerlink" title="界面UI"></a>界面UI</h2><p>桌面和右下角的通知栏，遵从了Material Design，看着舒服。</p>
-<p><img src="http://static.ddlee.cn/static/img/FlintOS轻体验/desktop.png" alt="desktop"></p>
+<p><img src="https://static.ddlee.cn/static/img/FlintOS轻体验/desktop.png" alt="desktop"></p>
 <p>APP Launcher，跟Gnome的风格很像。搜索栏可以直接Google搜索，也可以搜索文件和APP。实际上大部分APP可以当做交互逻辑级别更高的书签，打开即是新建相应网站的标签页（如YouTube）。</p>
-<p><img src="http://static.ddlee.cn/static/img/FlintOS轻体验/apps.png" alt="desktop"></p>
+<p><img src="https://static.ddlee.cn/static/img/FlintOS轻体验/apps.png" alt="desktop"></p>
 <p>这个是Chrome Web Store，跟作为浏览器的Chrome完全一致，只不过这个平台上可没有homebrew也没有dpkg。</p>
-<p><img src="http://static.ddlee.cn/static/img/FlintOS轻体验/webstore.png" alt="desktop"></p>
+<p><img src="https://static.ddlee.cn/static/img/FlintOS轻体验/webstore.png" alt="desktop"></p>
 <p>文件管理应用，跟Google Drive深度集成。</p>
-<p><img src="http://static.ddlee.cn/static/img/FlintOS轻体验/files.png" alt="desktop"></p>
+<p><img src="https://static.ddlee.cn/static/img/FlintOS轻体验/files.png" alt="desktop"></p>
 <h2 id="编程相关"><a href="#编程相关" class="headerlink" title="编程相关"></a>编程相关</h2><p>我也尝试探索用于开发的可能性，由于ssh的存在，可操作性还是很高的。</p>
-<p><img src="http://static.ddlee.cn/static/img/FlintOS轻体验/ssh.png" alt="desktop"></p>
+<p><img src="https://static.ddlee.cn/static/img/FlintOS轻体验/ssh.png" alt="desktop"></p>
 <p>Texts是一个比较轻亮的文本编辑器。当然也有仿atom的付费APP。</p>
-<p><img src="http://static.ddlee.cn/static/img/FlintOS轻体验/texts.png" alt="desktop"></p>
+<p><img src="https://static.ddlee.cn/static/img/FlintOS轻体验/texts.png" alt="desktop"></p>
 <p>crosh（通过Crtl+Shift+T打开）是内置的shell，功能上还有待探索，图为运行top的效果。</p>
-<p><img src="http://static.ddlee.cn/static/img/FlintOS轻体验/crosh.png" alt="desktop"></p>
+<p><img src="https://static.ddlee.cn/static/img/FlintOS轻体验/crosh.png" alt="desktop"></p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>Chromium OS的理念是web为王，浏览器即一切。这种理念配合Google相当完整的生态使得Chromebook在廉价本市场几乎是统治地位。去年的MS build上，微软也发布了对标的Windows版本，demo用的场景就是老师为每个学生配备PC。</p>
 <p>相比之下，大陆的这个市场还是空白（或许不一定有，毕竟教育方面并不普及）。看到有把这种理念本地化的公司出现还是很惊艳，在此默默祝福他们。</p>
 ]]></content>
@@ -335,12 +335,12 @@
     <updated>2018-01-23T13:13:59.898Z</updated>
     
     <content type="html"><![CDATA[<p>DenseNet将shortcut-connection的思路发挥到极致。在一个DenseBlock内部，每一层的输出均跟后面的层建立shortcut，特别需要注意的是，不同于ResNet中的相加，DenseNet连接shortcut的方式是Concat，这样越深的层则输入channel数越大。</p>
-<h3 id="DenseNet"><a href="#DenseNet" class="headerlink" title="DenseNet"></a>DenseNet</h3><p><img src="http://static.ddlee.cn/static/img/论文笔记-Densely-Connected-Convolutional-Networks/arch.png" alt="arch"></p>
+<h3 id="DenseNet"><a href="#DenseNet" class="headerlink" title="DenseNet"></a>DenseNet</h3><p><img src="https://static.ddlee.cn/static/img/论文笔记-Densely-Connected-Convolutional-Networks/arch.png" alt="arch"></p>
 <p>整个网络被分为Dense Block和Transition Layer，前者内部进行密集连接，保持同样大小的feature map，后者为DenseBlock之间的连接层，完成下采样操作。</p>
 <p>在每个DenseBlock内部，接受的数据维度会随层数加深而变大（因为不断拼接了之前层的输出），增长的速率即为初始的channel数，文章称这一channel数为growth rate，作为模型的一个超参数。初始的growth rate为32时，在DenseNet121架构下，最后一层的channel数将增长到1024。</p>
 <p><a href="http://ethereon.github.io/netscope/#/gist/56cb18697f42eb0374d933446f45b151" target="_blank" rel="external">Netscope Vis</a>，源文件位于<a href="https://github.com/ddlee96/awesome_cnn" target="_blank" rel="external">awesome_cnn</a>。</p>
 <h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p>作者在CIFAR和ImageNet上都做了实验，DenseNet取得了跟ResNet相当的表现，加入Bottleneck和一部分压缩技巧后，用较少的参数就能达到跟ResNet相当的效果：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Densely-Connected-Convolutional-Networks/result.png" alt="arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Densely-Connected-Convolutional-Networks/result.png" alt="arch"></p>
 <p>论文链接：<a href="https://arxiv.org/abs/1608.06993" target="_blank" rel="external">https://arxiv.org/abs/1608.06993</a></p>
 ]]></content>
     
@@ -378,13 +378,13 @@
 <h3 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h3><p>文章将残差函数表示为：</p>
 <p>其中，C为本层进行的变换数目，即”cardinality”。</p>
 <p>相比Inception-ResNet，ResNeXt相当于将其Inception Module的每条路径规范化了，并将规范后的路径数目作为新的超参数。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/multi-path.png" alt="multi-path"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/multi-path.png" alt="multi-path"></p>
 <p>上图中，路径被扩展为多条，而每条路径的宽度（channel数）也变窄了（64-&gt;4）。</p>
 <p><a href="http://ethereon.github.io/netscope/#/gist/c2ba521fcb60520abb0b0da0e9c0f2ef" target="_blank" rel="external">NetScope Vis</a>，源文件位于<a href="https://github.com/ddlee96/awesome_cnn" target="_blank" rel="external">awesome_cnn</a>。</p>
 <h3 id="Experiements"><a href="#Experiements" class="headerlink" title="Experiements"></a>Experiements</h3><p>ResNeXt试图在保持参数数目的情况下提高网络性能，提升cardinality的同时使每条路径的宽度变窄。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/setting.png" alt="setting"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/setting.png" alt="setting"></p>
 <p>对比其他网络的结果：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/result.png" alt="result"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/result.png" alt="result"></p>
 <h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>ResNeXt较为突出的是把Inception单元规范化了，摆脱了需要精心设计Inception单元中卷积结构的问题，更好地组织了参数。</p>
 <p>论文链接：<a href="https://arxiv.org/abs/1611.05431" target="_blank" rel="external">https://arxiv.org/abs/1611.05431</a></p>
 ]]></content>
@@ -424,9 +424,9 @@
 <p>相比下，深度可分离卷积的计算复杂性约为原来的(1/N+1/DK^2)。</p>
 <p>进一步地，MobileNet添加两个超参来控制这一压缩程度，alpha为channel数压缩系数，rho为分辨率压缩系数：</p>
 <p>DK×DK × alpha×M × rho×DF× rho×DF + alpha×M × alpha×N × rho×DF × rho×DF</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/depthwise-seperable.png" alt="depthwise-seperable"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/depthwise-seperable.png" alt="depthwise-seperable"></p>
 <h3 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture"></a>Architecture</h3><p>MobileNet的基本结构如下：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/arch.png" alt="arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/arch.png" alt="arch"></p>
 <p>论文链接：<a href="https://arxiv.org/abs/1704.04861" target="_blank" rel="external">https://arxiv.org/abs/1704.04861</a></p>
 ]]></content>
     
@@ -459,15 +459,15 @@
 <h3 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h3><p>文章指出，Inception单元背后的假设是跨Channel和跨空间的相关性可以充分解耦，类似的还有长度和高度方向上的卷积结构（在Inception-v3里的3×3卷积被1×3和3×1卷积替代）。</p>
 <p>进一步的，Xception基于更强的假设：跨channel和跨空间的相关性完全解耦。这也是Depthwise Separable Convolution所建模的理念。</p>
 <p>一个简化的Inception单元：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/inception.png" alt="inception"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/inception.png" alt="inception"></p>
 <p>等价于：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/inception2.png" alt="inception"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/inception2.png" alt="inception"></p>
 <p>将channel推向极端，即每个channel都由独立的3×3卷积处理：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/inception3.png" alt="inception"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/inception3.png" alt="inception"></p>
 <p>这样就得到了Depthwise Separable Convolution。</p>
 <h3 id="Architectrue"><a href="#Architectrue" class="headerlink" title="Architectrue"></a>Architectrue</h3><p>简单讲，Xception是线性堆叠的Depthwise Separable卷积，附加了Skip-connection。</p>
 <p>NetScope Vis请参见<a href="http://ethereon.github.io/netscope/#gist/931d7c91b22109f83bbbb7ff1a215f5f" target="_blank" rel="external">这里</a>，源文件位于<a href="https://github.com/ddlee96/awesome_cnn" target="_blank" rel="external">awesome_cnn</a>。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/arch.png" alt="inception"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/arch.png" alt="inception"></p>
 <h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p>本文的实验部分并没有像其他论文那样集成一个在ImageNet上SOTA的结果，而是以Inception-v3为基线，对比了参数数量和性能，认为提升正来自于更合理的参数利用。文章还对比了Residual的作用，在Xception网络中，Skip-connection不仅能提高训练速度，还能增强模型的性能。</p>
 <h3 id="Concolusion"><a href="#Concolusion" class="headerlink" title="Concolusion"></a>Concolusion</h3><p>本文贡献主要对Inception单元的解读和引入Depthwise Seperable Convolution。更多对于Depthwise Seperable Convolution的描述，请参考<a href="https://blog.ddlee.cn/2018/01/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/">MobileNets</a>的笔记。</p>
 <p>论文链接：<a href="https://arxiv.org/abs/1610.02357" target="_blank" rel="external">https://arxiv.org/abs/1610.02357</a></p>
@@ -503,9 +503,9 @@
 <p>然而，这是一篇几乎都是图的论文。</p>
 <p>所以，上图。</p>
 <h3 id="Inception-v4-Architecture"><a href="#Inception-v4-Architecture" class="headerlink" title="Inception-v4 Architecture"></a>Inception-v4 Architecture</h3><p>NetScope Vis请参见<a href="http://ethereon.github.io/netscope/#gist/e0ac64013b167844053184d97b380978" target="_blank" rel="external">这里</a>，源文件位于<a href="https://github.com/ddlee96/awesome_cnn" target="_blank" rel="external">awesome_cnn</a>。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/arch1.jpg" alt="arch1"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/arch1.jpg" alt="arch1"></p>
 <h3 id="Inception-ResNet-v2-Architecture"><a href="#Inception-ResNet-v2-Architecture" class="headerlink" title="Inception-ResNet(v2) Architecture"></a>Inception-ResNet(v2) Architecture</h3><p>NetScope Vis请参见<a href="http://ethereon.github.io/netscope/#gist/aadd97383baccabb8b827ba507c24162" target="_blank" rel="external">这里</a>，源文件位于<a href="https://github.com/ddlee96/NN_structures/tree/master/caffe_vis" target="_blank" rel="external">NN_Structures/caffe_vis/</a>。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/arch2.jpg" alt="arch1"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/arch2.jpg" alt="arch1"></p>
 <h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p>文章在实验部分提到，不借助Skip-connection的结构也可以将Inception网络提升到SOTA的水准，但加入Skip-connection可以有效增加训练速度。</p>
 <h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>卷积网络结构的演进遇到了瓶颈，在ImageNet上的提升边界似乎碰到天花板，且更多来自训练技巧和集成。</p>
 <p>论文链接：<a href="https://arxiv.org/abs/1602.07261" target="_blank" rel="external">https://arxiv.org/abs/1602.07261</a></p>
@@ -539,8 +539,8 @@
 <p>文章将检测模型分为三种元结构：Faster-RCNN、R-FCN和SSD，将特征提取网络网络独立出来作为元结构的一个部件，并松动了Proposal个数、输入图片尺寸，生成Feature map的大小等作为超参，并行实验，探索精度和速度方面的trade-off。</p>
 <p>文章也将源码公开，作为Tensorflow的Object Detection API。</p>
 <p>下图是三种元结构的图示：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/meta-arch.png" alt="meta-arch"></p>
-<h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig2.png" alt="meta-arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/meta-arch.png" alt="meta-arch"></p>
+<h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p><img src="https://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig2.png" alt="meta-arch"></p>
 <p>信息量非常大的一张图。</p>
 <ul>
 <li>横纵两个维度分别代表速度和准确度，横轴越靠左说明用时越少，纵轴越靠上说明mAP表现越好，因而，sweet spot应分布在左上角</li>
@@ -554,27 +554,27 @@
 <li>sweet spot区特征提取网络由ResNet统治，较少Proposal的Faster-RCNN可以跟R-FCN相当</li>
 <li>特征提取网络方面，Inception V2和MobileNet在高速度区，Incep-ResNet和ResNet在sweet spot和高精度区，Inception V3和VGG则远离理想边界（虚线）</li>
 </ul>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig3.png" alt="meta-arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig3.png" alt="meta-arch"></p>
 <p>上图是特征提取网络对三种元结构的影响，横轴是特征提取网络的分类准确率，纵轴是检测任务上的mAP表现，可以看到，SSD在纵轴方向上方差最小，而Faster-RCNN和R-FCN对特征提取网络更为敏感。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig4.png" alt="meta-arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig4.png" alt="meta-arch"></p>
 <p>上图的横轴是不同的特征提取网络，组内是三种元结构的对比，纵轴是不同尺寸物体的mAP。</p>
 <p>可以看到，在大物体的检测上，使用较小的网络时，SSD的效果跟两阶段方法相当，更深的特征提取网络则对两阶段方法的中型和小型物体的检测提升较大（ResNet101和Incep-ResNet都显现了两阶段方法在小物体上的提升）</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig5.png" alt="meta-arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig5.png" alt="meta-arch"></p>
 <p>上图显示了输入图片尺寸对mAP的影响。高分的图片对小物体检测帮助明显，因而拥有更高的精度，但相对运行速度会变慢。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig6.png" alt="meta-arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig6.png" alt="meta-arch"></p>
 <p>上图探究了两阶段方法中Proposal个数的影响，左边是Faster-RCNN，右边是R-FCN，实线是mAP，虚线是推断时间。<br>分析：</p>
 <ul>
 <li>相比R-FCN，Faster-RCNN推断时间对Proposal个数相当敏感（因为有per ROI的计算）</li>
 <li>减少Proposal的个数，并不会给精度带来致命的下降</li>
 </ul>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig7.png" alt="meta-arch"></p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig8.png" alt="meta-arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig7.png" alt="meta-arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig8.png" alt="meta-arch"></p>
 <p>上面两图是对FLOPS的记录，相对GPU时间更为中立，在图8中，GPU部分显现了ResNet跟Inception的分野（关于45度线，此时FLOPS跟GPU时间相当），文章认为分解操作(Factorization)减少了FLOPs，但增加了内存的IO时间，或者是GPU指令集更适合密集的卷积计算。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig9.png" alt="meta-arch"></p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig10.png" alt="meta-arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig9.png" alt="meta-arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig10.png" alt="meta-arch"></p>
 <p>上两图是对内存占用的分析，总体来说，特征提取网络越精简、feature map尺寸越小，占用内存越少，运行时间也越短。</p>
 <p>最后，文章描述了他们ensemble的思路，在一系列不同stride、loss和配置的Faster-RCNN中（ResNet和Incep-ResNet为特征提取网络），贪心地选择验证集上AP较高的，并且去除类AP相似的模型。选择的5个用于ensemble的模型如下：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/table5.png" alt="meta-arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/table5.png" alt="meta-arch"></p>
 <h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>这篇文章是不错的实验结果报告，测试了足够多的模型，也得出了合理的和有启发的结论。几点想法：</p>
 <ul>
 <li>RFCN并没有很好的解决定位跟分类的矛盾，per ROI的子网络最好还是要有，但要限制Proposal的个数（实际大部分都是负样本）来减少冗余</li>
@@ -595,9 +595,9 @@
     
       <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
-    
       <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
+    
+      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
     
   </entry>
   
@@ -610,7 +610,7 @@
     
     <content type="html"><![CDATA[<p>文章指出两阶段检测器通常在生成Proposal后进行分类的“头”(head)部分进行密集的计算，如ResNet为基础网络的Faster-RCNN将整个stage5（或两个FC）放在RCNN部分， RFCN要生成一个具有随类别数线性增长的channel数的Score map，这些密集计算正是两阶段方法在精度上领先而在推断速度上难以满足实时要求的原因。</p>
 <p>针对这两种元结构(Faster-RCNN和RFCN)，文章提出了“头”轻量化方法，试图在保持精度的同时又能减少冗余的计算量，从而实现精度和速度的Trade-off。</p>
-<h2 id="Light-Head-R-CNN"><a href="#Light-Head-R-CNN" class="headerlink" title="Light-Head R-CNN"></a>Light-Head R-CNN</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/arch.png" alt="arch"></p>
+<h2 id="Light-Head-R-CNN"><a href="#Light-Head-R-CNN" class="headerlink" title="Light-Head R-CNN"></a>Light-Head R-CNN</h2><p><img src="https://static.ddlee.cn/static/img/论文笔记-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/arch.png" alt="arch"></p>
 <p>如上图，虚线框出的部分是三种结构的RCNN子网络（在每个RoI上进行的计算），light-head R-CNN中，在生成Score map前，ResNet的stage5中卷积被替换为sperable convolution，产生的Score map也减少至10×p×p（相比原先的#class×p×p）。</p>
 <p>一个可能的解释是，“瘦”（channel数较少）的score map使用于分类的特征信息更加紧凑，原先较“厚”的score map在经过PSROIPooling的操作时，大部分信息并没有提取（只提取了特定类和特定位置的信息，与这一信息处在同一score map上的其他数据都被忽略了）。</p>
 <p>进一步地，位置敏感的思路将位置性在channel上表达出来，同时隐含地使用了更类别数相同长度的向量表达了分类性（这一长度相同带来的好处即是RCNN子网络可以免去参数）。</p>
@@ -618,8 +618,8 @@
 <p>粗看来，light-head将原来RFCN的score map的职责两步化了：thin score map主攻位置信息，RCNN子网络中的FC主攻分类信息。另外，global average pool的操作被去掉，用于保持精度。</p>
 <h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>实验部分，文章验证了较“瘦”的Score map不会对精度产生太大损害，也展现了ROI Align, Multiscale train等技巧对基线的提升过程。</p>
 <p>文章的主要结果如下面两图（第一个为高精度，第二个为高速度）：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/result1.png" alt="result1"></p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/result2.png" alt="result2"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/result1.png" alt="result1"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/result2.png" alt="result2"></p>
 <p>只能说这样的对比比较诡异。</p>
 <p>第一张图中三个light-head结果并不能跟上面的其他结构构成多少有效的对照组，要么scale不同，要么FPN, multi-scale, ROI Align不同。唯一的有效对照是跟Mask-RCNN。</p>
 <p>在高精度方面，基础网络不同，采用的scale也不同，没有有效的对照组。</p>
@@ -638,9 +638,9 @@
     
       <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
-    
       <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
+    
+      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
     
   </entry>
   
@@ -660,10 +660,10 @@
 </ul>
 <h3 id="Design"><a href="#Design" class="headerlink" title="Design"></a>Design</h3><p>YOLO的大致工作流程如下：<br>1.准备数据：将图片缩放，划分为等分的网格，每个网格按跟ground truth的IOU分配到所要预测的样本。<br>2.卷积网络：由GoogLeNet更改而来，每个网格对每个类别预测一个条件概率值，并在网格基础上生成B个box，每个box预测五个回归值，四个表征位置，第五个表征这个box含有物体（注意不是某一类物体）的概率和位置的准确程度（由IOU表示）。测试时，分数如下计算：</p>
 <p>等式左边第一项由网格预测，后两项由每个box预测，综合起来变得到每个box含有不同类别物体的分数。<br>因而，卷积网络共输出的预测值个数为S×S×(B×5+C)，S为网格数，B为每个网格生成box个数，C为类别数。<br>3.后处理：使用NMS过滤得到的box</p>
-<h4 id="Loss"><a href="#Loss" class="headerlink" title="Loss"></a>Loss</h4><p><img src="http://static.ddlee.cn/static/img/论文笔记-You-Only-Look-Once-Unified-Real-Time-Object-Detection/loss.jpg" alt="loss-function"></p>
+<h4 id="Loss"><a href="#Loss" class="headerlink" title="Loss"></a>Loss</h4><p><img src="https://static.ddlee.cn/static/img/论文笔记-You-Only-Look-Once-Unified-Real-Time-Object-Detection/loss.jpg" alt="loss-function"></p>
 <p>图片来自<a href="https://zhuanlan.zhihu.com/p/24916786" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/24916786</a></p>
 <p>损失函数被分为三部分：坐标误差、物体误差、类别误差。为了平衡类别不均衡和大小物体等带来的影响，loss中添加了权重并将长宽取根号。</p>
-<h2 id="Error-Analysis"><a href="#Error-Analysis" class="headerlink" title="Error Analysis"></a>Error Analysis</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-You-Only-Look-Once-Unified-Real-Time-Object-Detection/error.png" alt="error"></p>
+<h2 id="Error-Analysis"><a href="#Error-Analysis" class="headerlink" title="Error Analysis"></a>Error Analysis</h2><p><img src="https://static.ddlee.cn/static/img/论文笔记-You-Only-Look-Once-Unified-Real-Time-Object-Detection/error.png" alt="error"></p>
 <p>相比Fast-RCNN，YOLO的背景误检在错误中占比重小，而位置错误占比大（未采用log编码）。</p>
 <h2 id="Limitations"><a href="#Limitations" class="headerlink" title="Limitations"></a>Limitations</h2><p>YOLO划分网格的思路还是比较粗糙的，每个网格生成的box个数也限制了其对小物体和相近物体的检测。</p>
 <h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>YOLO提出了单阶段的新思路，相比两阶段方法，其速度优势明显，实时的特性令人印象深刻。</p>
@@ -685,9 +685,9 @@
     
       <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
-    
       <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
+    
+      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
     
   </entry>
   
@@ -709,27 +709,27 @@
 <h3 id="Factorizing-Convolution"><a href="#Factorizing-Convolution" class="headerlink" title="Factorizing Convolution"></a>Factorizing Convolution</h3><p>分解一直是计算数学里经典的思路。从牛顿法到BFGS，就是把Hessian矩阵（或其逆）用一系列的向量操作来表示和近似，避免矩阵的计算。</p>
 <p>本文提出了两种卷积结构方面的分解，一个是在卷积核的层面，另一个是在空间方面。</p>
 <p>第一种分解是将大核卷积分解成串联的小核卷积。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/factor3.png" alt="factor5"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/factor3.png" alt="factor5"></p>
 <p>用两个3×3的卷积代替5×5的卷积，带来的参数减少为(9+9)/(5×5).</p>
 <p>第二种分解是在卷积核本身上，引入非对称卷积：用3×1和1×3的卷积串联代替3×3卷积。如下图所示。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/factor1.png" alt="factor3"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/factor1.png" alt="factor3"></p>
 <p>这种分解也可以推广到n维情况，且n越大，带来的收益越明显。</p>
 <p>空间上的卷积分解建模了这样的情形：两个方向上的卷积参数互相正交，便被空间分解卷积解耦。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/spatial-seperable.png" alt="factor5"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/spatial-seperable.png" alt="factor5"></p>
 <h3 id="Utility-of-Auxiliary-Classifiers"><a href="#Utility-of-Auxiliary-Classifiers" class="headerlink" title="Utility of Auxiliary Classifiers"></a>Utility of Auxiliary Classifiers</h3><p>在GoogLeNet中，作者用loss监督了低维的特征图的学习，但进一步的实验发现，加入BN层后，这些增益被抵消了，于是Auxiliary Classifier可被看做是某种正则化技术，在加入BN的网络中便不再应用。</p>
 <h3 id="Efficient-Grid-Size-Reduction"><a href="#Efficient-Grid-Size-Reduction" class="headerlink" title="Efficient Grid Size Reduction"></a>Efficient Grid Size Reduction</h3><p>这一节讨论网络中的特征降维，即下采样的过程，通常由卷积层或Pooling层的stride参数控制。文章为避免原则一中提到的Representation Bottleneck，在进行Pooling之前将网络加宽（通过Channel数的增加），这也对应了平衡宽度和深度的原则。</p>
 <p>最终结合了Inception结构和下采样需求的单元如下：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/downsample.png" alt="factor5"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/downsample.png" alt="factor5"></p>
 <p>不同于Inception单元，上面的1×1卷积扩展了Channel，并且3×3卷积采用了stride=2。</p>
-<h3 id="Inception-v2-amp-Inception-v3-Architecture"><a href="#Inception-v2-amp-Inception-v3-Architecture" class="headerlink" title="Inception-v2 &amp; Inception-v3 Architecture"></a>Inception-v2 &amp; Inception-v3 Architecture</h3><p><img src="http://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/arch.png" alt="factor5"></p>
+<h3 id="Inception-v2-amp-Inception-v3-Architecture"><a href="#Inception-v2-amp-Inception-v3-Architecture" class="headerlink" title="Inception-v2 &amp; Inception-v3 Architecture"></a>Inception-v2 &amp; Inception-v3 Architecture</h3><p><img src="https://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/arch.png" alt="factor5"></p>
 <p>可以看到随深度增加，Channel数也在扩展，而Inception单元也遵从了堆叠的范式。</p>
 <p>其中三种Inception单元分别为：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/inceptiona.png" alt="factor5"></p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/inceptionb.png" alt="factor5"></p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/inceptionc.png" alt="factor5"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/inceptiona.png" alt="factor5"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/inceptionb.png" alt="factor5"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/inceptionc.png" alt="factor5"></p>
 <p>另外，也可以查看<a href="http://ethereon.github.io/netscope/#gist/a2394c1c4a9738469078f096a8979346" target="_blank" rel="external">NetScope Vis</a>来熟悉Inception-v3的结构，源文件位于<a href="https://github.com/ddlee96/awesome_cnn" target="_blank" rel="external">awesome_cnn</a>。</p>
 <h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p>下面是Inception结构演化带来的增益分解：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/experiment.png" alt="factor5"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/experiment.png" alt="factor5"></p>
 <h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本篇是对Inception系网络的推进，其分解的思想成为又一网络设计的指导原则。</p>
 <p>对卷积的进一步理解，可以参考这个<a href="https://graphics.stanford.edu/courses/cs178-10/applets/convolution.html" target="_blank" rel="external">页面</a>，这一工具可视化了不同卷积核对输入的处理，给出的例子都是在早期人们手工设计的滤波器，而深度网络隐式地学习到了这些滤波器的卷积表达。</p>
 <p>论文链接：<a href="https://arxiv.org/abs/1512.00567" target="_blank" rel="external">https://arxiv.org/abs/1512.00567</a></p>
@@ -760,7 +760,7 @@
     <updated>2018-01-09T16:56:34.010Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>SSD是对YOLO的改进，其达到跟两阶段方法相当的精度，又保持较快的运行速度。</p>
-<h2 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-SSD-Single-Shot-MultiBox-Detector/arch.jpg" alt="arch"></p>
+<h2 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h2><p><img src="https://static.ddlee.cn/static/img/论文笔记-SSD-Single-Shot-MultiBox-Detector/arch.jpg" alt="arch"></p>
 <ul>
 <li><p>多尺度的feature map：基于VGG的不同卷积段，输出feature map到回归器中。这一点试图提升小物体的检测精度。</p>
 </li>
@@ -782,9 +782,9 @@
     
       <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
-    
       <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
+    
+      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
     
   </entry>
   
@@ -799,11 +799,11 @@
 <p>回到检测任务，与分类任务不同的是，检测所面临的物体规模问题是跨类别的、处于同一语义场景中的。</p>
 <p>一个直观的思路是用不同大小的图片去生成相应大小的feature map，但这样带来巨大的参数，使本来就只能跑个位数图片的内存更加不够用。另一个思路是直接使用不同深度的卷积层生成的feature map，但较浅层的feature map上包含的低等级特征又会干扰分类的精度。</p>
 <p>本文提出的方法是在高等级feature map上将特征向下回传，反向构建特征金字塔。</p>
-<h3 id="Feature-Pyramid-Networks"><a href="#Feature-Pyramid-Networks" class="headerlink" title="Feature Pyramid Networks"></a>Feature Pyramid Networks</h3><p><img src="http://static.ddlee.cn/static/img/论文笔记-Feature-Pyramid-Networks-for-Object-Detection/arch.png" alt="arch"></p>
+<h3 id="Feature-Pyramid-Networks"><a href="#Feature-Pyramid-Networks" class="headerlink" title="Feature Pyramid Networks"></a>Feature Pyramid Networks</h3><p><img src="https://static.ddlee.cn/static/img/论文笔记-Feature-Pyramid-Networks-for-Object-Detection/arch.png" alt="arch"></p>
 <p>从图片开始，照常进行级联式的特征提取，再添加一条回传路径：从最高级的feature map开始，向下进行最近邻上采样得到与低等级的feature map相同大小的回传feature map，再进行元素位置上的叠加（lateral connection），构成这一深度上的特征。</p>
 <p>这种操作的信念是，低等级的feature map包含更多的位置信息，高等级的feature map则包含更好的分类信息，将这两者结合，力图达到检测任务的位置分类双要求。</p>
 <h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p>文章的主要实验结果如下：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Feature-Pyramid-Networks-for-Object-Detection/result.png" alt="Experiments results"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Feature-Pyramid-Networks-for-Object-Detection/result.png" alt="Experiments results"></p>
 <p>对比不同head部分，输入feature的变化对检测精度确实有提升，而且，lateral和top-down两个操作也是缺一不可。</p>
 <h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>特征金字塔本是很自然的想法，但如何构建金字塔同时平衡检测任务的定位和分类双目标，又能保证显存的有效利用，是本文做的比较好的地方。如今，FPN也几乎成为特征提取网络的标配，更说明了这种组合方式的有效性。</p>
 <p>个人方面，FPN跟multi-scale的区别在哪，还值得进一步探索。</p>
@@ -821,9 +821,9 @@
     
       <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
-    
       <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
+    
+      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
     
   </entry>
   
@@ -836,7 +836,7 @@
     
     <content type="html"><![CDATA[<p>文章指出了检测任务之前的框架存在不自然的设计，即全卷积的特征提取部分+全连接的分类器，而表现最好的图像分类器都是全卷积的结构（ResNet等），这一点是由分类任务的平移不变性和检测任务的平移敏感性之间的矛盾导致的。换句话说，检测模型采用了分类模型的特征提取器，丢失了位置信息。这篇文章提出采用“位置敏感分数图”的方法解决这一问题。</p>
 <h3 id="Position-sensitive-score-maps-amp-Position-sensitive-RoI-Pooling"><a href="#Position-sensitive-score-maps-amp-Position-sensitive-RoI-Pooling" class="headerlink" title="Position-sensitive score maps &amp; Position-sensitive RoI Pooling"></a>Position-sensitive score maps &amp; Position-sensitive RoI Pooling</h3><p>位置敏感分数图的生成有两个重要操作，一是生成更“厚”的feature map，二是在RoI Pooling时选择性地输入feature map。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-R-FCN-Object-Detection-via-Region-based-Fully-Convolutinal-Networks/rfcn.png" alt="arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-R-FCN-Object-Detection-via-Region-based-Fully-Convolutinal-Networks/rfcn.png" alt="arch"></p>
 <p>Faster R-CNN中，经过RPN得到RoI，转化成分类任务，还加入了一定量的卷积操作（ResNet中的conv5部分），而这一部分卷积操作是不能共享的。R-FCN则着眼于全卷积结构，利用卷积操作在Channel这一维度上的自由性，赋予其位置敏感的意义。下面是具体的操作：</p>
 <ul>
 <li>在全卷积网络的最后一层，生成k^2(C+1)个Channel的Feature map，其中C为类别数，k^2代表k×k网格，用于分别检测目标物体的k×k个部分。即是用不同channel的feature map代表物体的不同局部（如左上部分，右下部分）。</li>
@@ -860,9 +860,9 @@
     
       <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
-    
       <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
+    
+      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
     
   </entry>
   
@@ -885,13 +885,13 @@
 <p>根据Hebbian principle，跨channel的这些神经元，应是高度相关的，于是有信息压缩的空间，因而使用跨channel的1×1的卷积将它们嵌入到低维的空间里（比如，Inception4a单元的输入channel是512，不同分支的1×1卷积输出channel则是192,96,16和64，见下面GoogLeNet结构表），在这个低维空间里，用密集的全连接建模（即3×5和5×5卷积），它们的输出channel相加也再恢复到原来的输入channel维度（Inception4a分别是192+208+48+64），最后的连接由Concat操作完成（分块矩阵的合并），这样就完成了分块密集矩阵对稀疏矩阵的近似。</p>
 <p>这样来看，3×3和5×5大小的选择并不是本质的，本质的是分块低维嵌入和concat的分治思路。而在ResNeXt的工作中，这里的分块被认为是新的维度（称为cardinality），采用相同的拓扑结构。</p>
 <h3 id="Stacked-Inception-Module"><a href="#Stacked-Inception-Module" class="headerlink" title="Stacked Inception Module"></a>Stacked Inception Module</h3><p>在GoogLeNet中，借鉴了AlexNet和VGG的stack(repeat)策略，将Inception单元重复串联起来，构成基本的特征提取结构。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/arch.png" alt="arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/arch.png" alt="arch"></p>
 <h4 id="Dimension-Reduction"><a href="#Dimension-Reduction" class="headerlink" title="Dimension Reduction"></a>Dimension Reduction</h4><p>朴素版本的Inception单元会带来Channel维数的不断增长，加入的1×1卷积则起到低维嵌入的作用，使Inception单元前后channel数保持稳定。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/inception.png" alt="arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/inception.png" alt="arch"></p>
 <h3 id="Auxililary-Classifier"><a href="#Auxililary-Classifier" class="headerlink" title="Auxililary Classifier"></a>Auxililary Classifier</h3><p>这里是本文的另一个贡献，将监督信息传入中间的feature map，构成一个整合loss，作者认为这样有助于浅层特征的学习。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/auxililary.png" alt="arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/auxililary.png" alt="arch"></p>
 <h3 id="Architecture-of-GoogLeNet"><a href="#Architecture-of-GoogLeNet" class="headerlink" title="Architecture of GoogLeNet"></a>Architecture of GoogLeNet</h3><p>下面的表显示了GoogLeNet的整体架构，可以留意到Inception单元的堆叠和Channel数在子路径中的变化。NetScope可视化可参见<a href="http://ethereon.github.io/netscope/#/gist/db8754ee4b239920b3df5ab93220a84b" target="_blank" rel="external">GoogLeNet Vis</a>。源文件位于<a href="https://github.com/ddlee96/awesome_cnn" target="_blank" rel="external">awesome_cnn</a>。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/table.png" alt="arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/table.png" alt="arch"></p>
 <h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>文章是对NiN思想的继承和推进，不同于AlexNet和VGG，网络的模块化更加凸显，多路径的结构也成为新的网络设计范本，启发了众多后续网络结构的设计。</p>
 ]]></content>
     
@@ -941,12 +941,12 @@
 <p>检测中常常需要较大分辨率的图片，而GPU内存限制了单卡上的图片个数，提高batch size意味着BN要在多卡（Cross-GPU）上进行。</p>
 <p>BN操作需要对每个batch计算均值和方差来进行标准化，对于多卡，具体做法是，单卡独立计算均值，聚合（类似Map-Reduce中的Reduce）算均值，再将均值下发到每个卡，算差，再聚合起来，计算batch的方差，最后将方差下发到每个卡，结合之前下发的均值进行标准化。</p>
 <p>流程如图：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-MegDet-A-Large-Mini-Batch-Object-Detector/cgbn.png" alt="cgbn"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-MegDet-A-Large-Mini-Batch-Object-Detector/cgbn.png" alt="cgbn"></p>
 <h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>在COCO数据集上的架构用预训练ResNet-50作为基础网络，FPN用于提供feature map。</p>
 <p>结果显示，不使用BN时，较大的batch size（64,128）不能收敛。使用BN后，增大Batch size能够收敛但仅带来较小的精度提升，而BN的大小也不是越大越好，实验中，32是最好的选择。主要结果如下表：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-MegDet-A-Large-Mini-Batch-Object-Detector/results.png" alt="results"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-MegDet-A-Large-Mini-Batch-Object-Detector/results.png" alt="results"></p>
 <p>按epoch，精度的变化如下图，小batch（16）在最初的几个epoch表现比大batch（32）要好。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-MegDet-A-Large-Mini-Batch-Object-Detector/byepoch.png" alt="accuracy-by-epoch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-MegDet-A-Large-Mini-Batch-Object-Detector/byepoch.png" alt="accuracy-by-epoch"></p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>这篇论文读起来总感觉少了些东西。对Linear scale rule的解释固然新颖，但没有引入新的trick（只是确认了检测仍是需要Linear scale rule的）。多卡的BN确实是非常厉害的工程实现（高效性），但实验的结果并没有支持到较大的batch size（128,256）比小batch精度更好的期望，而最后的COCO夺冠模型整合了多种trick，没有更进一步的错误分析，很难支撑说明CGBN带来的关键作用。</p>
 <p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
@@ -977,11 +977,11 @@
     <updated>2018-01-09T16:56:34.007Z</updated>
     
     <content type="html"><![CDATA[<p>Faster R-CNN是2-stage方法的主流方法，提出的RPN网络取代Selective Search算法使得检测任务可以由神经网络端到端地完成。粗略的讲，Faster R-CNN = RPN + Fast R-CNN，跟RCNN共享卷积计算的特性使得RPN引入的计算量很小，使得Faster R-CNN可以在单个GPU上以5fps的速度运行，而在精度方面达到SOTA。</p>
-<h2 id="Regional-Proposal-Networks"><a href="#Regional-Proposal-Networks" class="headerlink" title="Regional Proposal Networks"></a>Regional Proposal Networks</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/rpn.png" alt="faster_rcnn_arch"></p>
+<h2 id="Regional-Proposal-Networks"><a href="#Regional-Proposal-Networks" class="headerlink" title="Regional Proposal Networks"></a>Regional Proposal Networks</h2><p><img src="https://static.ddlee.cn/static/img/论文笔记-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/rpn.png" alt="faster_rcnn_arch"></p>
 <p>RPN网络将Proposal这一任务建模为二分类的问题。</p>
 <p>第一步是在一个滑动窗口上生成不同大小和长宽比例的anchor box，取定IOU的阈值，按Ground Truth标定这些anchor box的正负。于是，传入RPN网络的样本即是anchor box和每个anchor box是否有物体。RPN网络将每个样本映射为一个概率值和四个坐标值，概率值反应这个anchor box有物体的概率，四个坐标值用于回归定义物体的位置。最后将二分类和坐标回归的Loss统一起来，作为RPN网络的目标训练。</p>
 <p>RPN网络可调的超参还是很多的，anchor box的大小和长宽比例、IoU的阈值、每张图片上Proposal正负样本的比例等。</p>
-<h2 id="Alternate-Training"><a href="#Alternate-Training" class="headerlink" title="Alternate Training"></a>Alternate Training</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/faster_rcnn_netwrok.png" alt="faster_rcnn_arch"></p>
+<h2 id="Alternate-Training"><a href="#Alternate-Training" class="headerlink" title="Alternate Training"></a>Alternate Training</h2><p><img src="https://static.ddlee.cn/static/img/论文笔记-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/faster_rcnn_netwrok.png" alt="faster_rcnn_arch"></p>
 <p>RPN网络是在feature map上进行的，因而可以跟RCNN完全共享feature extractor部分的卷积运算。训练时，RPN和RCNN的训练可以交替进行，即交替地固定RPN和RCNN部分的参数，更新另一部分。</p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>Faster R-CNN的成功之处在于用RPN网络完成了检测任务的“深度化”。使用滑动窗口生成anchor box的思想也在后来的工作中越来越多地被采用（YOLO v2等）。RPN网络也成为检测2-stage方法的标准部件。</p>
 <p>论文链接：<a href="https://arxiv.org/abs/1506.01497" target="_blank" rel="external">https://arxiv.org/abs/1506.01497</a></p>
@@ -998,9 +998,9 @@
     
       <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
-    
       <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
+    
+      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
     
   </entry>
   

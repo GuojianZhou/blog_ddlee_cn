@@ -56,7 +56,7 @@
 
     <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
-    <meta name="keywords" content="萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee,Deep Learning,Object Detection,Computer Vision">
+    <meta name="keywords" content="萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee,Deep Learning,Computer Vision,Object Detection">
     <meta name="theme-color" content="#0097A7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
@@ -279,7 +279,7 @@
     <meta property="og:title" content="[论文笔记]Speed/accuracy trade-offs for modern convolutional object detectors | 萧爽楼">
     <meta property="og:image" content="https://static.ddlee.cn/static/img/material-theme-img/favicon.png">
     <meta property="og:description" content="我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
-    <meta property="og:article:tag" content="Deep Learning"> <meta property="og:article:tag" content="Object Detection"> <meta property="og:article:tag" content="Computer Vision"> 
+    <meta property="og:article:tag" content="Deep Learning"> <meta property="og:article:tag" content="Computer Vision"> <meta property="og:article:tag" content="Object Detection"> 
 
     
         <meta property="article:published_time" content="Sun Dec 24 2017 21:55:22 GMT+0800">
@@ -324,7 +324,7 @@
             "url": "https://static.ddlee.cn/static/img/material-theme-img/favicon.png"
         }
     },
-    "keywords": ",Deep Learning,Object Detection,Computer Vision萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee",
+    "keywords": ",Deep Learning,Computer Vision,Object Detection萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee",
     "description": "我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。",
 }
 </script>
@@ -553,8 +553,8 @@
 <p>文章将检测模型分为三种元结构：Faster-RCNN、R-FCN和SSD，将特征提取网络网络独立出来作为元结构的一个部件，并松动了Proposal个数、输入图片尺寸，生成Feature map的大小等作为超参，并行实验，探索精度和速度方面的trade-off。</p>
 <p>文章也将源码公开，作为Tensorflow的Object Detection API。</p>
 <p>下图是三种元结构的图示：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/meta-arch.png" alt="meta-arch"></p>
-<h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig2.png" alt="meta-arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/meta-arch.png" alt="meta-arch"></p>
+<h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p><img src="https://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig2.png" alt="meta-arch"></p>
 <p>信息量非常大的一张图。</p>
 <ul>
 <li>横纵两个维度分别代表速度和准确度，横轴越靠左说明用时越少，纵轴越靠上说明mAP表现越好，因而，sweet spot应分布在左上角</li>
@@ -568,27 +568,27 @@
 <li>sweet spot区特征提取网络由ResNet统治，较少Proposal的Faster-RCNN可以跟R-FCN相当</li>
 <li>特征提取网络方面，Inception V2和MobileNet在高速度区，Incep-ResNet和ResNet在sweet spot和高精度区，Inception V3和VGG则远离理想边界（虚线）</li>
 </ul>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig3.png" alt="meta-arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig3.png" alt="meta-arch"></p>
 <p>上图是特征提取网络对三种元结构的影响，横轴是特征提取网络的分类准确率，纵轴是检测任务上的mAP表现，可以看到，SSD在纵轴方向上方差最小，而Faster-RCNN和R-FCN对特征提取网络更为敏感。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig4.png" alt="meta-arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig4.png" alt="meta-arch"></p>
 <p>上图的横轴是不同的特征提取网络，组内是三种元结构的对比，纵轴是不同尺寸物体的mAP。</p>
 <p>可以看到，在大物体的检测上，使用较小的网络时，SSD的效果跟两阶段方法相当，更深的特征提取网络则对两阶段方法的中型和小型物体的检测提升较大（ResNet101和Incep-ResNet都显现了两阶段方法在小物体上的提升）</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig5.png" alt="meta-arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig5.png" alt="meta-arch"></p>
 <p>上图显示了输入图片尺寸对mAP的影响。高分的图片对小物体检测帮助明显，因而拥有更高的精度，但相对运行速度会变慢。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig6.png" alt="meta-arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig6.png" alt="meta-arch"></p>
 <p>上图探究了两阶段方法中Proposal个数的影响，左边是Faster-RCNN，右边是R-FCN，实线是mAP，虚线是推断时间。<br>分析：</p>
 <ul>
 <li>相比R-FCN，Faster-RCNN推断时间对Proposal个数相当敏感（因为有per ROI的计算）</li>
 <li>减少Proposal的个数，并不会给精度带来致命的下降</li>
 </ul>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig7.png" alt="meta-arch"></p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig8.png" alt="meta-arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig7.png" alt="meta-arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig8.png" alt="meta-arch"></p>
 <p>上面两图是对FLOPS的记录，相对GPU时间更为中立，在图8中，GPU部分显现了ResNet跟Inception的分野（关于45度线，此时FLOPS跟GPU时间相当），文章认为分解操作(Factorization)减少了FLOPs，但增加了内存的IO时间，或者是GPU指令集更适合密集的卷积计算。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig9.png" alt="meta-arch"></p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig10.png" alt="meta-arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig9.png" alt="meta-arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/fig10.png" alt="meta-arch"></p>
 <p>上两图是对内存占用的分析，总体来说，特征提取网络越精简、feature map尺寸越小，占用内存越少，运行时间也越短。</p>
 <p>最后，文章描述了他们ensemble的思路，在一系列不同stride、loss和配置的Faster-RCNN中（ResNet和Incep-ResNet为特征提取网络），贪心地选择验证集上AP较高的，并且去除类AP相似的模型。选择的5个用于ensemble的模型如下：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/table5.png" alt="meta-arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/table5.png" alt="meta-arch"></p>
 <h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>这篇文章是不错的实验结果报告，测试了足够多的模型，也得出了合理的和有启发的结论。几点想法：</p>
 <ul>
 <li>RFCN并没有很好的解决定位跟分类的矛盾，per ROI的子网络最好还是要有，但要限制Proposal的个数（实际大部分都是负样本）来减少冗余</li>

@@ -559,13 +559,13 @@
 <h3 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h3><p>文章将残差函数表示为：</p>
 <p>其中，C为本层进行的变换数目，即”cardinality”。</p>
 <p>相比Inception-ResNet，ResNeXt相当于将其Inception Module的每条路径规范化了，并将规范后的路径数目作为新的超参数。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/multi-path.png" alt="multi-path"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/multi-path.png" alt="multi-path"></p>
 <p>上图中，路径被扩展为多条，而每条路径的宽度（channel数）也变窄了（64-&gt;4）。</p>
 <p><a href="http://ethereon.github.io/netscope/#/gist/c2ba521fcb60520abb0b0da0e9c0f2ef" target="_blank" rel="external">NetScope Vis</a>，源文件位于<a href="https://github.com/ddlee96/awesome_cnn" target="_blank" rel="external">awesome_cnn</a>。</p>
 <h3 id="Experiements"><a href="#Experiements" class="headerlink" title="Experiements"></a>Experiements</h3><p>ResNeXt试图在保持参数数目的情况下提高网络性能，提升cardinality的同时使每条路径的宽度变窄。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/setting.png" alt="setting"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/setting.png" alt="setting"></p>
 <p>对比其他网络的结果：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/result.png" alt="result"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/result.png" alt="result"></p>
 <h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>ResNeXt较为突出的是把Inception单元规范化了，摆脱了需要精心设计Inception单元中卷积结构的问题，更好地组织了参数。</p>
 <p>论文链接：<a href="https://arxiv.org/abs/1611.05431" target="_blank" rel="external">https://arxiv.org/abs/1611.05431</a></p>
 

@@ -553,11 +553,11 @@
 <h2 id="实验设定"><a href="#实验设定" class="headerlink" title="实验设定"></a>实验设定</h2><p>字母级的循环神经网络，用Torch实现，代码见<a href="http://github.com/karpathy/char-rnn" target="_blank" rel="external">GitHub</a>。字母嵌入成One-hot向量。优化方面，采用了RMSProp算法，加入了学习速率的decay和early stopping。</p>
 <p>数据集采用了托尔斯泰的《战争与和平》和Linux核心的代码。</p>
 <h2 id="可解释性激活的例子"><a href="#可解释性激活的例子" class="headerlink" title="可解释性激活的例子"></a>可解释性激活的例子</h2><p>$tanh$函数激活的例子，$-1$为红色，$+1$为蓝色。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Visualizing-and-Understanding-Recurrent-Networks/pane1.png" alt="pane1"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Visualizing-and-Understanding-Recurrent-Networks/pane1.png" alt="pane1"></p>
 <p>上图分别是记录了行位置、引文和if语句特征的例子和失败的例子。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Visualizing-and-Understanding-Recurrent-Networks/pane2.png" alt="pane2"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Visualizing-and-Understanding-Recurrent-Networks/pane2.png" alt="pane2"></p>
 <p>上图分别是记录代码中注释、代码嵌套深度和行末标记特征的例子。</p>
-<h2 id="Gates数值的统计"><a href="#Gates数值的统计" class="headerlink" title="Gates数值的统计"></a>Gates数值的统计</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-Visualizing-and-Understanding-Recurrent-Networks/gates.png" alt="gates"></p>
+<h2 id="Gates数值的统计"><a href="#Gates数值的统计" class="headerlink" title="Gates数值的统计"></a>Gates数值的统计</h2><p><img src="https://static.ddlee.cn/static/img/论文笔记-Visualizing-and-Understanding-Recurrent-Networks/gates.png" alt="gates"></p>
 <p>此图信息量很大。</p>
 <ol>
 <li>left-saturated和right-saturated表示各个Gates激活函数（$sigmoid$）小于0.1和大于0.9，即总是阻止信息流过和总是允许信息流过。</li>
@@ -579,7 +579,7 @@
 <li>Boost，其他错误</li>
 </ol>
 <p>根据作者的实验，错误的来源有如下分解：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Visualizing-and-Understanding-Recurrent-Networks/error.png" alt="error"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Visualizing-and-Understanding-Recurrent-Networks/error.png" alt="error"></p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>这篇文章是打开LSTM黑箱的尝试，提供了序列维度上共享权值的合理性证据，对Gates状态的可视化也非常值得关注，最后对误差的分解可能对新的网络结构有所启发（比如，如何将单词级别和字母级别的LSTM嵌套起来，解决首字母预测的问题？）。</p>
 
         

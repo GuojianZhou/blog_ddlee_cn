@@ -553,8 +553,8 @@
 <h2 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a>LSTM</h2><p>LSTM是一种循环神经网络，适用于对序列化的输入建模。Chris Olah的这篇<a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="external">文章</a>细致地解释了一个LSTM单元的运作方式，建议阅读。</p>
 <h3 id="两个想法"><a href="#两个想法" class="headerlink" title="两个想法"></a>两个想法</h3><h4 id="Gate：信息流动的闸门"><a href="#Gate：信息流动的闸门" class="headerlink" title="Gate：信息流动的闸门"></a>Gate：信息流动的闸门</h4><p>$$i<em>t = sigmoid(W</em>{xi} x<em>t  +  W</em>{hi}h_{t-1} + b_i)$$<br>$$f<em>t = sigmoid(W</em>{xf} x<em>t  +  W</em>{hf}h_{t-1} + b_f)$$<br>$$o<em>t = sigmoid(W</em>{xo} x<em>t  +  W</em>{ho}h_{t-1} + b_o)$$<br>$x$ 表示输入，$h$表示隐藏状态，用$sigmoid$函数将输入二者的传递结果映射到$（0,1)$上，分别赋予输入门、遗忘门、输出门的含义，来控制不同神经单元（同一神经元不同时间点的状态）之间信息流动。</p>
 <h4 id="Cell：记忆池"><a href="#Cell：记忆池" class="headerlink" title="Cell：记忆池"></a>Cell：记忆池</h4><p>$$c_t = f<em>t \odot c</em>{t - 1} + i<em>t \odot tanh(W</em>{xc} x<em>t  +  W</em>{hc}h_{t-1} + b_c)\<br>h_t = o_t \odot tanh(c_t)$$<br>$h$表示隐藏状态，$C$表示记忆池，通过Gate，上一单元（状态）的信息有控制地遗忘，当前的输入有控制地流入，记忆池中的信息有控制地流入隐藏状态。</p>
-<h3 id="与普通RNN的对比"><a href="#与普通RNN的对比" class="headerlink" title="与普通RNN的对比"></a>与普通RNN的对比</h3><p><img src="http://static.ddlee.cn/static/img/./LSTM-Pytorch实现/LSTM3-SimpleRNN.png" alt="RNN"><br>普通RNN只有一个自更新的隐藏状态单元。</p>
-<p><img src="http://static.ddlee.cn/static/img/./LSTM-Pytorch实现/LSTM.jpg" alt="LSTM"><br>LSTM增加了记忆池Cell，并通过几个Gate将信息有控制地更新在记忆池中，并通过记忆池中的信息来决定隐藏状态。</p>
+<h3 id="与普通RNN的对比"><a href="#与普通RNN的对比" class="headerlink" title="与普通RNN的对比"></a>与普通RNN的对比</h3><p><img src="https://static.ddlee.cn/static/img/./LSTM-Pytorch实现/LSTM3-SimpleRNN.png" alt="RNN"><br>普通RNN只有一个自更新的隐藏状态单元。</p>
+<p><img src="https://static.ddlee.cn/static/img/./LSTM-Pytorch实现/LSTM.jpg" alt="LSTM"><br>LSTM增加了记忆池Cell，并通过几个Gate将信息有控制地更新在记忆池中，并通过记忆池中的信息来决定隐藏状态。</p>
 <h2 id="From-Scratch"><a href="#From-Scratch" class="headerlink" title="From Scratch"></a>From Scratch</h2><p>下面是手动实现LSTM的代码，继承了基类<code>nn.Module</code>。</p>
 <pre><code class="python">import torch.nn as nn
 import torch
@@ -724,7 +724,7 @@ def AutogradRNN(mode, input_size, hidden_size):
 <li>胞(cell)、层(layer)、栈(stacked layer)的层次化解耦，每一层抽象处理一部分参数（结构）</li>
 <li>函数句柄的传递：处理好参数后返回函数句柄<code>forward</code></li>
 </ol>
-<p><img src="http://static.ddlee.cn/static/img/LSTM-Pytorch实现/str.jpg" alt="str"></p>
+<p><img src="https://static.ddlee.cn/static/img/LSTM-Pytorch实现/str.jpg" alt="str"></p>
 <p>如洋葱一般，我们剥到最后，发现处理的信息正是输入、隐藏状态和LSTM单元几个控制门的参数。在一层一层的抽象之中，Pytorch在不同的层面处理了不同的参数，保证了扩展性和抽象层之间的解耦。</p>
 
         

@@ -551,7 +551,7 @@
     
         <p>Dropout技术是Srivastava等人在2012年提出的技术，现在已然成为各种深度模型的标配。其中心思想是随机地冻结一部分模型参数，用于提高模型的泛化性能。</p>
 <h3 id="Dropout的洞察"><a href="#Dropout的洞察" class="headerlink" title="Dropout的洞察"></a>Dropout的洞察</h3><p>关于Dropout，一个流行的解释是，通过随机行为训练网络，并平均多个随机决定的结果，实现了参数共享的Bagging。如下图，通过随机地冻结/抛弃某些隐藏单元，我们得到了新的子网络，而参数共享是说，与Bagging中子模型相互独立的参数不同，深度网络中Dropout生成的子网络是串行的，后一个子模型继承了前一个子模型的某些参数。</p>
-<p><img src="http://static.ddlee.cn/static/img/Dropout-Pytorch实现/dropout.jpg" alt="dropout"></p>
+<p><img src="https://static.ddlee.cn/static/img/Dropout-Pytorch实现/dropout.jpg" alt="dropout"></p>
 <p>Dropout是模型自我破坏的一种形式，这种破坏使得存活下来的部分更加鲁棒。例如，某一隐藏单元学得了脸部鼻子的特征，而在Dropout中遭到破坏，则在之后的迭代中，要么该隐藏单元重新学习到鼻子的特征，要么学到别的特征，后者则说明，鼻子特征对该任务来说是冗余的，因而，通过Dropout，保留下来的特征更加稳定和富有信息。</p>
 <p>Hinton曾用生物学的观点解释这一点。神经网络的训练过程可以看做是生物种群逐渐适应环境的过程，在迭代中传递的模型参数可以看做种群的基因，Dropout以随机信号的方式给环境随机的干扰，使得传递的基因不得不适应更多的情况才能存活。</p>
 <p>另一个需要指出的地方是，Dropout给隐藏单元加入的噪声是乘性的，不像Bias那样加在隐藏单元上，这样在进行反向传播时，Dropout引入的噪声仍能够起作用。</p>

@@ -560,27 +560,27 @@
 <h3 id="Factorizing-Convolution"><a href="#Factorizing-Convolution" class="headerlink" title="Factorizing Convolution"></a>Factorizing Convolution</h3><p>分解一直是计算数学里经典的思路。从牛顿法到BFGS，就是把Hessian矩阵（或其逆）用一系列的向量操作来表示和近似，避免矩阵的计算。</p>
 <p>本文提出了两种卷积结构方面的分解，一个是在卷积核的层面，另一个是在空间方面。</p>
 <p>第一种分解是将大核卷积分解成串联的小核卷积。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/factor3.png" alt="factor5"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/factor3.png" alt="factor5"></p>
 <p>用两个3×3的卷积代替5×5的卷积，带来的参数减少为(9+9)/(5×5).</p>
 <p>第二种分解是在卷积核本身上，引入非对称卷积：用3×1和1×3的卷积串联代替3×3卷积。如下图所示。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/factor1.png" alt="factor3"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/factor1.png" alt="factor3"></p>
 <p>这种分解也可以推广到n维情况，且n越大，带来的收益越明显。</p>
 <p>空间上的卷积分解建模了这样的情形：两个方向上的卷积参数互相正交，便被空间分解卷积解耦。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/spatial-seperable.png" alt="factor5"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/spatial-seperable.png" alt="factor5"></p>
 <h3 id="Utility-of-Auxiliary-Classifiers"><a href="#Utility-of-Auxiliary-Classifiers" class="headerlink" title="Utility of Auxiliary Classifiers"></a>Utility of Auxiliary Classifiers</h3><p>在GoogLeNet中，作者用loss监督了低维的特征图的学习，但进一步的实验发现，加入BN层后，这些增益被抵消了，于是Auxiliary Classifier可被看做是某种正则化技术，在加入BN的网络中便不再应用。</p>
 <h3 id="Efficient-Grid-Size-Reduction"><a href="#Efficient-Grid-Size-Reduction" class="headerlink" title="Efficient Grid Size Reduction"></a>Efficient Grid Size Reduction</h3><p>这一节讨论网络中的特征降维，即下采样的过程，通常由卷积层或Pooling层的stride参数控制。文章为避免原则一中提到的Representation Bottleneck，在进行Pooling之前将网络加宽（通过Channel数的增加），这也对应了平衡宽度和深度的原则。</p>
 <p>最终结合了Inception结构和下采样需求的单元如下：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/downsample.png" alt="factor5"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/downsample.png" alt="factor5"></p>
 <p>不同于Inception单元，上面的1×1卷积扩展了Channel，并且3×3卷积采用了stride=2。</p>
-<h3 id="Inception-v2-amp-Inception-v3-Architecture"><a href="#Inception-v2-amp-Inception-v3-Architecture" class="headerlink" title="Inception-v2 &amp; Inception-v3 Architecture"></a>Inception-v2 &amp; Inception-v3 Architecture</h3><p><img src="http://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/arch.png" alt="factor5"></p>
+<h3 id="Inception-v2-amp-Inception-v3-Architecture"><a href="#Inception-v2-amp-Inception-v3-Architecture" class="headerlink" title="Inception-v2 &amp; Inception-v3 Architecture"></a>Inception-v2 &amp; Inception-v3 Architecture</h3><p><img src="https://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/arch.png" alt="factor5"></p>
 <p>可以看到随深度增加，Channel数也在扩展，而Inception单元也遵从了堆叠的范式。</p>
 <p>其中三种Inception单元分别为：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/inceptiona.png" alt="factor5"></p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/inceptionb.png" alt="factor5"></p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/inceptionc.png" alt="factor5"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/inceptiona.png" alt="factor5"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/inceptionb.png" alt="factor5"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/inceptionc.png" alt="factor5"></p>
 <p>另外，也可以查看<a href="http://ethereon.github.io/netscope/#gist/a2394c1c4a9738469078f096a8979346" target="_blank" rel="external">NetScope Vis</a>来熟悉Inception-v3的结构，源文件位于<a href="https://github.com/ddlee96/awesome_cnn" target="_blank" rel="external">awesome_cnn</a>。</p>
 <h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p>下面是Inception结构演化带来的增益分解：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/experiment.png" alt="factor5"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/experiment.png" alt="factor5"></p>
 <h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>本篇是对Inception系网络的推进，其分解的思想成为又一网络设计的指导原则。</p>
 <p>对卷积的进一步理解，可以参考这个<a href="https://graphics.stanford.edu/courses/cs178-10/applets/convolution.html" target="_blank" rel="external">页面</a>，这一工具可视化了不同卷积核对输入的处理，给出的例子都是在早期人们手工设计的滤波器，而深度网络隐式地学习到了这些滤波器的卷积表达。</p>
 <p>论文链接：<a href="https://arxiv.org/abs/1512.00567" target="_blank" rel="external">https://arxiv.org/abs/1512.00567</a></p>

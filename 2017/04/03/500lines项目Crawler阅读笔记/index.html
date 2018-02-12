@@ -550,7 +550,7 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <p>源码来自GitHub上著名的Repo: <a href="https://github.com/aosabook/500lines" target="_blank" rel="external">500lines or less</a>。</p>
-<h3 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h3><p><img src="http://static.ddlee.cn/static/img/500lines_crawler/500lines_crawler.png" alt="structure"></p>
+<h3 id="整体结构"><a href="#整体结构" class="headerlink" title="整体结构"></a>整体结构</h3><p><img src="https://static.ddlee.cn/static/img/500lines_crawler/500lines_crawler.png" alt="structure"></p>
 <p>代码结构由crawling, crawl, reporting三大部分组成。</p>
 <ul>
 <li>crawl: 驱动，解析传入的参数，管理loop，调用crawler，生成report</li>
@@ -558,7 +558,7 @@
 <li>reporting： 生成记录</li>
 </ul>
 <h3 id="Crawler类"><a href="#Crawler类" class="headerlink" title="Crawler类"></a>Crawler类</h3><p>Crawler类实现了解析网址，抓取内容等基本功能，利用<code>asyncio</code>库构建<code>coroutine</code>（parse_lings(), fetch(), work()）。</p>
-<p><img src="http://static.ddlee.cn/static/img/500lines_crawler/500lines_crawler_class.png" alt="Class Crawler"></p>
+<p><img src="https://static.ddlee.cn/static/img/500lines_crawler/500lines_crawler_class.png" alt="Class Crawler"></p>
 <p>核心之处是组织管理异步的抓取任务，代码块结构如下：</p>
 <pre><code class="python">class Crawler:
   def __init__(self, roots, ....., loop):
@@ -605,7 +605,7 @@
     yield from self.q.join()
 </code></pre>
 <p>下图是我对上述代码结构的理解：</p>
-<p><img src="http://static.ddlee.cn/static/img/500lines_crawler/coroutine.JPG" alt="coroutines"></p>
+<p><img src="https://static.ddlee.cn/static/img/500lines_crawler/coroutine.JPG" alt="coroutines"></p>
 <p>对coroutine的进一步介绍，参见<a href="/2017/04/03/Coroutine-Generator-Async与Await/">Coroutine-Generator-Async与Await</a>。</p>
 <h3 id="A-Web-Crawler-With-asyncio-Coroutines导读"><a href="#A-Web-Crawler-With-asyncio-Coroutines导读" class="headerlink" title="A Web Crawler With asyncio Coroutines导读"></a><a href="http://aosabook.org/en/500L/a-web-crawler-with-asyncio-coroutines.html" target="_blank" rel="external">A Web Crawler With asyncio Coroutines</a>导读</h3><p>文章整体结构：</p>
 <ul>

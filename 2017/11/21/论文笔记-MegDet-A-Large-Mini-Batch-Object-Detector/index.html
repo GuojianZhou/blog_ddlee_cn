@@ -570,12 +570,12 @@
 <p>检测中常常需要较大分辨率的图片，而GPU内存限制了单卡上的图片个数，提高batch size意味着BN要在多卡（Cross-GPU）上进行。</p>
 <p>BN操作需要对每个batch计算均值和方差来进行标准化，对于多卡，具体做法是，单卡独立计算均值，聚合（类似Map-Reduce中的Reduce）算均值，再将均值下发到每个卡，算差，再聚合起来，计算batch的方差，最后将方差下发到每个卡，结合之前下发的均值进行标准化。</p>
 <p>流程如图：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-MegDet-A-Large-Mini-Batch-Object-Detector/cgbn.png" alt="cgbn"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-MegDet-A-Large-Mini-Batch-Object-Detector/cgbn.png" alt="cgbn"></p>
 <h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>在COCO数据集上的架构用预训练ResNet-50作为基础网络，FPN用于提供feature map。</p>
 <p>结果显示，不使用BN时，较大的batch size（64,128）不能收敛。使用BN后，增大Batch size能够收敛但仅带来较小的精度提升，而BN的大小也不是越大越好，实验中，32是最好的选择。主要结果如下表：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-MegDet-A-Large-Mini-Batch-Object-Detector/results.png" alt="results"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-MegDet-A-Large-Mini-Batch-Object-Detector/results.png" alt="results"></p>
 <p>按epoch，精度的变化如下图，小batch（16）在最初的几个epoch表现比大batch（32）要好。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-MegDet-A-Large-Mini-Batch-Object-Detector/byepoch.png" alt="accuracy-by-epoch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-MegDet-A-Large-Mini-Batch-Object-Detector/byepoch.png" alt="accuracy-by-epoch"></p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>这篇论文读起来总感觉少了些东西。对Linear scale rule的解释固然新颖，但没有引入新的trick（只是确认了检测仍是需要Linear scale rule的）。多卡的BN确实是非常厉害的工程实现（高效性），但实验的结果并没有支持到较大的batch size（128,256）比小batch精度更好的期望，而最后的COCO夺冠模型整合了多种trick，没有更进一步的错误分析，很难支撑说明CGBN带来的关键作用。</p>
 <p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 

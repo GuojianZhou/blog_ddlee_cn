@@ -56,7 +56,7 @@
 
     <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
-    <meta name="keywords" content="萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee,Deep Learning,Object Detection,Computer Vision">
+    <meta name="keywords" content="萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee,Deep Learning,Computer Vision,Object Detection">
     <meta name="theme-color" content="#0097A7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
@@ -279,7 +279,7 @@
     <meta property="og:title" content="[论文笔记]Feature Pyramid Networks for Object Detection | 萧爽楼">
     <meta property="og:image" content="https://static.ddlee.cn/static/img/material-theme-img/favicon.png">
     <meta property="og:description" content="我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
-    <meta property="og:article:tag" content="Deep Learning"> <meta property="og:article:tag" content="Object Detection"> <meta property="og:article:tag" content="Computer Vision"> 
+    <meta property="og:article:tag" content="Deep Learning"> <meta property="og:article:tag" content="Computer Vision"> <meta property="og:article:tag" content="Object Detection"> 
 
     
         <meta property="article:published_time" content="Thu Dec 07 2017 21:55:59 GMT+0800">
@@ -324,7 +324,7 @@
             "url": "https://static.ddlee.cn/static/img/material-theme-img/favicon.png"
         }
     },
-    "keywords": ",Deep Learning,Object Detection,Computer Vision萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee",
+    "keywords": ",Deep Learning,Computer Vision,Object Detection萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee",
     "description": "我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。",
 }
 </script>
@@ -553,11 +553,11 @@
 <p>回到检测任务，与分类任务不同的是，检测所面临的物体规模问题是跨类别的、处于同一语义场景中的。</p>
 <p>一个直观的思路是用不同大小的图片去生成相应大小的feature map，但这样带来巨大的参数，使本来就只能跑个位数图片的内存更加不够用。另一个思路是直接使用不同深度的卷积层生成的feature map，但较浅层的feature map上包含的低等级特征又会干扰分类的精度。</p>
 <p>本文提出的方法是在高等级feature map上将特征向下回传，反向构建特征金字塔。</p>
-<h3 id="Feature-Pyramid-Networks"><a href="#Feature-Pyramid-Networks" class="headerlink" title="Feature Pyramid Networks"></a>Feature Pyramid Networks</h3><p><img src="http://static.ddlee.cn/static/img/论文笔记-Feature-Pyramid-Networks-for-Object-Detection/arch.png" alt="arch"></p>
+<h3 id="Feature-Pyramid-Networks"><a href="#Feature-Pyramid-Networks" class="headerlink" title="Feature Pyramid Networks"></a>Feature Pyramid Networks</h3><p><img src="https://static.ddlee.cn/static/img/论文笔记-Feature-Pyramid-Networks-for-Object-Detection/arch.png" alt="arch"></p>
 <p>从图片开始，照常进行级联式的特征提取，再添加一条回传路径：从最高级的feature map开始，向下进行最近邻上采样得到与低等级的feature map相同大小的回传feature map，再进行元素位置上的叠加（lateral connection），构成这一深度上的特征。</p>
 <p>这种操作的信念是，低等级的feature map包含更多的位置信息，高等级的feature map则包含更好的分类信息，将这两者结合，力图达到检测任务的位置分类双要求。</p>
 <h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p>文章的主要实验结果如下：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Feature-Pyramid-Networks-for-Object-Detection/result.png" alt="Experiments results"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Feature-Pyramid-Networks-for-Object-Detection/result.png" alt="Experiments results"></p>
 <p>对比不同head部分，输入feature的变化对检测精度确实有提升，而且，lateral和top-down两个操作也是缺一不可。</p>
 <h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>特征金字塔本是很自然的想法，但如何构建金字塔同时平衡检测任务的定位和分类双目标，又能保证显存的有效利用，是本文做的比较好的地方。如今，FPN也几乎成为特征提取网络的标配，更说明了这种组合方式的有效性。</p>
 <p>个人方面，FPN跟multi-scale的区别在哪，还值得进一步探索。</p>

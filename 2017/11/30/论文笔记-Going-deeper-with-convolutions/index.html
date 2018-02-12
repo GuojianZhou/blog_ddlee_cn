@@ -561,13 +561,13 @@
 <p>根据Hebbian principle，跨channel的这些神经元，应是高度相关的，于是有信息压缩的空间，因而使用跨channel的1×1的卷积将它们嵌入到低维的空间里（比如，Inception4a单元的输入channel是512，不同分支的1×1卷积输出channel则是192,96,16和64，见下面GoogLeNet结构表），在这个低维空间里，用密集的全连接建模（即3×5和5×5卷积），它们的输出channel相加也再恢复到原来的输入channel维度（Inception4a分别是192+208+48+64），最后的连接由Concat操作完成（分块矩阵的合并），这样就完成了分块密集矩阵对稀疏矩阵的近似。</p>
 <p>这样来看，3×3和5×5大小的选择并不是本质的，本质的是分块低维嵌入和concat的分治思路。而在ResNeXt的工作中，这里的分块被认为是新的维度（称为cardinality），采用相同的拓扑结构。</p>
 <h3 id="Stacked-Inception-Module"><a href="#Stacked-Inception-Module" class="headerlink" title="Stacked Inception Module"></a>Stacked Inception Module</h3><p>在GoogLeNet中，借鉴了AlexNet和VGG的stack(repeat)策略，将Inception单元重复串联起来，构成基本的特征提取结构。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/arch.png" alt="arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/arch.png" alt="arch"></p>
 <h4 id="Dimension-Reduction"><a href="#Dimension-Reduction" class="headerlink" title="Dimension Reduction"></a>Dimension Reduction</h4><p>朴素版本的Inception单元会带来Channel维数的不断增长，加入的1×1卷积则起到低维嵌入的作用，使Inception单元前后channel数保持稳定。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/inception.png" alt="arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/inception.png" alt="arch"></p>
 <h3 id="Auxililary-Classifier"><a href="#Auxililary-Classifier" class="headerlink" title="Auxililary Classifier"></a>Auxililary Classifier</h3><p>这里是本文的另一个贡献，将监督信息传入中间的feature map，构成一个整合loss，作者认为这样有助于浅层特征的学习。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/auxililary.png" alt="arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/auxililary.png" alt="arch"></p>
 <h3 id="Architecture-of-GoogLeNet"><a href="#Architecture-of-GoogLeNet" class="headerlink" title="Architecture of GoogLeNet"></a>Architecture of GoogLeNet</h3><p>下面的表显示了GoogLeNet的整体架构，可以留意到Inception单元的堆叠和Channel数在子路径中的变化。NetScope可视化可参见<a href="http://ethereon.github.io/netscope/#/gist/db8754ee4b239920b3df5ab93220a84b" target="_blank" rel="external">GoogLeNet Vis</a>。源文件位于<a href="https://github.com/ddlee96/awesome_cnn" target="_blank" rel="external">awesome_cnn</a>。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/table.png" alt="arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/table.png" alt="arch"></p>
 <h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>文章是对NiN思想的继承和推进，不同于AlexNet和VGG，网络的模块化更加凸显，多路径的结构也成为新的网络设计范本，启发了众多后续网络结构的设计。</p>
 
         

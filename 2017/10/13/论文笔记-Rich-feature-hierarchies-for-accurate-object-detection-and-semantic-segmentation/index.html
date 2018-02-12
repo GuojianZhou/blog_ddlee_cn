@@ -557,7 +557,7 @@
 <p>检测任务中样本不足的问题（对大型网络）：在大数据集上预训练分类模型，在小数据集上fine-tuning检测任务。</p>
 <h3 id="Object-Detection-with-R-CNN"><a href="#Object-Detection-with-R-CNN" class="headerlink" title="Object Detection with R-CNN"></a>Object Detection with R-CNN</h3><p>Region Proposal: Selective Search</p>
 <p>Feature Extraction: AlexNet(NIPS 2012), 4096-dim feature vector from every region proposal</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Fast-R-CNN/rcnn.png" alt="arch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Fast-R-CNN/rcnn.png" alt="arch"></p>
 <h4 id="Training"><a href="#Training" class="headerlink" title="Training"></a>Training</h4><p>现在ILSVRC2012上预训练达到STOA，再在Pascal VOC上fine-tuning。根据IOU来给region proposal打标签，在每个batch中保持一定的正样本比例（背景类非常多）。这些都已成为标准做法，后续很多工作也是对这些细节进行改进（OHEM等）。</p>
 <p>文章中特别提到，IOU的选择（即正负样例的标签准备）对结果影响显著，这里要谈两个threshold，一个用来识别正样本（IOU跟ground truth较高），另一个用来标记负样本（即背景类），而介于两者之间的则为hard negatives，若标为正类，则包含了过多的背景信息，反之又包含了要检测物体的特征，因而这些proposal便被忽略掉。</p>
 <p>另一个重要的问题是bounding-box regression，这一过程是proposal向ground truth调整，实现时加入了log/exp变换来使loss保持在合理的量级上。</p>

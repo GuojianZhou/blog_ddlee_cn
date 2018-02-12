@@ -559,18 +559,18 @@
 <li>power consumption</li>
 </ul>
 <p>以下图片各模型的着色是统一的：蓝色是Inception系，绿色是VGG系，粉色是ResNet系，黄色为AlexNet系。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/top1.png" alt="top1"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/top1.png" alt="top1"></p>
 <p>上图是Top1准确率与模型参数数、操作数的关系。可以看到Inception系列网络以较少的参数取得相对高的准确率，而VGG系则在这一点上表现很差。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/infer-batch.png" alt="infer-batch"></p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/power-batch.png" alt="power-batch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/infer-batch.png" alt="infer-batch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/power-batch.png" alt="power-batch"></p>
 <p>上面两图分别是推断耗时和电量消耗与批量大小的关系。可以看到，两者均与批量大小无明显的相关关系。但电量消耗在不同的模型之间也非常类似，而推断时间与模型结构关系很大（VGG再次尴尬）。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/mem-batch.png" alt="mem-batch"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/mem-batch.png" alt="mem-batch"></p>
 <p>上图展示了模型占用内存大小与批量大小的关系，大部分网络都有相对固定的内存占用，随后随批量大小的上扬而上涨。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/ops-infer.png" alt="infer-ops"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/ops-infer.png" alt="infer-ops"></p>
 <p>从上图可以发现推断耗时和模型的操作数大体上呈现线性关系。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/ops-power.png" alt="ops-power"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/ops-power.png" alt="ops-power"></p>
 <p>电量消耗与模型的参数数、操作数并没有明显的相关性。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/accuracy-infer.png" alt="accuracy-infer"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-An-Analysis-of-Deep-Neural-Network-Models-for-Practical-Applications/accuracy-infer.png" alt="accuracy-infer"></p>
 <p>注意，上图中点的大小代表模型操作数，横轴代表推断效率，纵轴表示准确率。灰色区域表示模型获得了额外的推断效率或准确率，而白色区域代表非最优。</p>
 <p>操作数越多的模型推断效率越低，大部分模型都落在相对平衡的边界上，VGG和小批量情形下的AlexNet落在了非最优区域。</p>
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>从这篇论文的比较中可以看到，在特定的任务中对网络特定结构的设计（如Inception单元），即加入更强的先验知识，比堆叠网络层数更有效。深度网络还是需要人类的指导才能发挥更大的作用。</p>

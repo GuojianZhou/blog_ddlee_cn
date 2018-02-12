@@ -551,7 +551,7 @@
     
         <p>深层网络在图片分类问题上表现优异，但网络结构的设计上并没有统一的指导。进化是构建深度网络架构的一种方式。利用本文的自动化方法得出的深度网络结构，已经能在CIFAR-10上取得可以跟人工设计的网络相媲美的结果</p>
 <h2 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h2><h3 id="Evolution-Algorithm"><a href="#Evolution-Algorithm" class="headerlink" title="Evolution Algorithm"></a>Evolution Algorithm</h3><p>整个算法的核心是如下的tournament selection:</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/tournament.jpg" alt="tournament"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/tournament.jpg" alt="tournament"></p>
 <ul>
 <li>population: 供筛选的群体</li>
 <li>individual: 个体，带有指标fitness，特别地，指在CV集上的损失</li>
@@ -578,16 +578,16 @@
 <li>移除skip连接</li>
 </ul>
 <h3 id="Computation"><a href="#Computation" class="headerlink" title="Computation"></a>Computation</h3><p>计算方面采用了并行、异步、无锁的策略。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/comp.jpg" alt="comp"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/comp.jpg" alt="comp"></p>
 <p>建立约为 <em>population</em> 数1/4的 <em>worker</em>，分别运行于不同的机器上，之间独立异步。<em>population</em> 共享，若两个 <em>worker</em> 在一个 <em>individual</em> 上产生冲突，则后一个 <em>worker</em> 停止并等待再次尝试。</p>
 <h3 id="Weight-Inheritance"><a href="#Weight-Inheritance" class="headerlink" title="Weight Inheritance"></a>Weight Inheritance</h3><p>除了架构之外，子模型还会继承父母模型未经变异影响的隐藏层参数（不仅是DNA中的），这样使子模型的训练时间大幅减小。</p>
 <h2 id="Experiments-and-Results"><a href="#Experiments-and-Results" class="headerlink" title="Experiments and Results"></a>Experiments and Results</h2><p>文章的主要结果如下图：</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/results.png" alt="results"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/results.png" alt="results"></p>
 <p>最右边的结构是在CIFAR-10上发现的最好（CV集准确度最高）的结构，左边两个是它的祖先。其中白色块相当于简单的线性层，彩色块则带有非线性激活，可以看到，不同于人工设计的网络，某一线性层之后可能包含多个非线性层。</p>
 <p>另外，利用本文的模型，也在CIFAR-100上做了实验，可以达到76.3%的准确率，一定程度上说明了算法的扩展性。</p>
-<h2 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h2><p><img src="http://static.ddlee.cn/static/img/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/popu.png" alt="popu"></p>
+<h2 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h2><p><img src="https://static.ddlee.cn/static/img/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/popu.png" alt="popu"></p>
 <p>上图说明随着 <em>population</em> 规模和训练步数的增加，模型的整体水平在变好。</p>
-<p><img src="http://static.ddlee.cn/static/img/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/mutation.png" alt="mutation"></p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Large-Scale-Evolution-of-Image-Classifiers/mutation.png" alt="mutation"></p>
 <p>在模型陷入局部最优值时，提高变异率和重设参数会使群体继续进化。这是由于变异中包含恒等映射等不改变模型架构的变异类型，再加上weight Inheritance，一些子模型只是训练次数比其他模型多很多的“活化石”。</p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>Google I/O时就提到了自动筛选最优网络结构，但没有公布论文。但将网络结构自动化，必定是未来的方向。个人认为，ResNet就相当于自动化网络深度（一些层实际上被跳过了），而Inception单元似乎包含了太多的先验，而且也没有逻辑上的证据说明这样的结构更有效。网络结构本身就是先验信息，而要达到通用的人工智能，这些先验也必须由模型自行发觉。</p>
 <p>强化学习本身也是一个进化过程，应该也有相关的工作将强化学习的框架应用于网络结构的学习上。</p>
