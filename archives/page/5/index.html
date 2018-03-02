@@ -858,23 +858,21 @@ Dropout的洞察关于Dropout，一个流行的解释是，通过随机行为训
     
 
         <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2017/04/05/ddlee约书计划（第二弹）/">ddlee约书计划（第二弹）</a></p>
+        <p class="article-headline-p"><a href="/2017/04/03/Coroutine-Generator-Async与Await/">Coroutine,Generator,Async与Await</a></p>
     </div>
 
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            缘起读书这种事情，每几个月都会有那么几天。
-浑身难受。不干点什么，眼睛闲得团团转，双手也不知道往哪搁。
-大概是愧疚吧。要立个FLAG把这压抑着的自卑和热情释放一下。
-花大概十分钟的时间，下载/买下十个月都读不完的书。
-书单选书原则：
-
-我感兴趣
+            GeneratorGenerator能保存自己的状态，进入一种“Paused”状态，再次调用时会继续执行。
+Generator的好处之一是节省了存储空间开销，带一些”流处理”的思想。
+其实，我们也可以对Generator进行传入数据的操作：
+def coro():
+    hello = yield &quot;Hello&q...
         
         &nbsp;&nbsp;&nbsp;
         <span>
-            <a href="/2017/04/05/ddlee约书计划（第二弹）/" target="_self">阅读全文</a>
+            <a href="/2017/04/03/Coroutine-Generator-Async与Await/" target="_self">阅读全文</a>
         </span>
     </div>
     <!-- Post_entry Info-->
@@ -886,14 +884,14 @@ Dropout的洞察关于Dropout，一个流行的解释是，通过随机行为训
             </div>
             <div>
                 <strong>ddlee</strong>
-                <span>4月 05, 2017</span>
+                <span>4月 03, 2017</span>
             </div>
         </div>
         <div id="post_entry-right-info">
           
               <!-- Category -->
               <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/Reading/">Reading</a>
+                  <a class="post_category-link" href="/categories/Programming/">Programming</a>
               </span>
             
 
@@ -925,21 +923,18 @@ Dropout的洞察关于Dropout，一个流行的解释是，通过随机行为训
     
 
         <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2017/04/03/Coroutine-Generator-Async与Await/">Coroutine,Generator,Async与Await</a></p>
+        <p class="article-headline-p"><a href="/2017/04/03/500lines项目Crawler阅读笔记/">500lines项目Crawler源码阅读笔记</a></p>
     </div>
 
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            GeneratorGenerator能保存自己的状态，进入一种“Paused”状态，再次调用时会继续执行。
-Generator的好处之一是节省了存储空间开销，带一些”流处理”的思想。
-其实，我们也可以对Generator进行传入数据的操作：
-def coro():
-    hello = yield &quot;Hello&q...
+            源码来自GitHub上著名的Repo: 500lines or less。
+整体结构
         
         &nbsp;&nbsp;&nbsp;
         <span>
-            <a href="/2017/04/03/Coroutine-Generator-Async与Await/" target="_self">阅读全文</a>
+            <a href="/2017/04/03/500lines项目Crawler阅读笔记/" target="_self">阅读全文</a>
         </span>
     </div>
     <!-- Post_entry Info-->
@@ -1094,7 +1089,7 @@ def coro():
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">27</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
+                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">9</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">27</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
             </ul>
         </li>
         
