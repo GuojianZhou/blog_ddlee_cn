@@ -356,23 +356,21 @@
     
 
         <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2017/01/27/谁会不厌其烦地安慰那无知的少年-1/">谁会不厌其烦地安慰那无知的少年（一）</a></p>
+        <p class="article-headline-p"><a href="/2017/04/03/Coroutine-Generator-Async与Await/">Coroutine,Generator,Async与Await</a></p>
     </div>
 
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            
-一个男孩要下过多少电影，才能称得上是一个男人？一只海鸥要飞过多少海洋，才能在柔柔的沙滩上安息？——鲍勃·迪伦，《答案在风中飘荡》
-
-星星眨着眼，银河却不见。万家灯火散落在不遥远的远方，贪婪的夜色吞噬着视野，列车不紧不慢地刺破雾气的深不可测，卧铺床头的小台灯透过车窗温暖出朦胧一片，笼住返乡人的放松与期盼。
-其实丁丁差点没赶上火车。亏得遇到老司机，路上没怎么堵。过检票口的时候，广播刚刚喊着“你所乘坐的班次已停止检票”。
-火车终于安稳地行着。丁丁的心情也慢慢舒畅起来。
-...
+            GeneratorGenerator能保存自己的状态，进入一种“Paused”状态，再次调用时会继续执行。
+Generator的好处之一是节省了存储空间开销，带一些”流处理”的思想。
+其实，我们也可以对Generator进行传入数据的操作：
+def coro():
+    hello = yield &quot;Hello&q...
         
         &nbsp;&nbsp;&nbsp;
         <span>
-            <a href="/2017/01/27/谁会不厌其烦地安慰那无知的少年-1/" target="_self">阅读全文</a>
+            <a href="/2017/04/03/Coroutine-Generator-Async与Await/" target="_self">阅读全文</a>
         </span>
     </div>
     <!-- Post_entry Info-->
@@ -384,14 +382,14 @@
             </div>
             <div>
                 <strong>ddlee</strong>
-                <span>1月 27, 2017</span>
+                <span>4月 03, 2017</span>
             </div>
         </div>
         <div id="post_entry-right-info">
           
               <!-- Category -->
               <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/随笔/">随笔</a>
+                  <a class="post_category-link" href="/categories/Programming/">Programming</a>
               </span>
             
 
@@ -423,20 +421,18 @@
     
 
         <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2016/09/23/小米3变身记/">小米3变身记</a></p>
+        <p class="article-headline-p"><a href="/2017/04/03/500lines项目Crawler阅读笔记/">500lines项目Crawler源码阅读笔记</a></p>
     </div>
 
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            
-Across the Great Wall we can reach every corner in the world.”（越过长城，走向世界）
-
-1.缘起——我、小米、安卓和Android知乎上有个抖机灵的回答，问题是“Nexus 5 如果不使用 VPN，会有什么影响”，回...
+            源码来自GitHub上著名的Repo: 500lines or less。
+整体结构
         
         &nbsp;&nbsp;&nbsp;
         <span>
-            <a href="/2016/09/23/小米3变身记/" target="_self">阅读全文</a>
+            <a href="/2017/04/03/500lines项目Crawler阅读笔记/" target="_self">阅读全文</a>
         </span>
     </div>
     <!-- Post_entry Info-->
@@ -448,16 +444,140 @@ Across the Great Wall we can reach every corner in the world.”（越过长城�
             </div>
             <div>
                 <strong>ddlee</strong>
-                <span>9月 23, 2016</span>
+                <span>4月 03, 2017</span>
             </div>
         </div>
         <div id="post_entry-right-info">
           
               <!-- Category -->
               <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/Android/">Android</a>
+                  <a class="post_category-link" href="/categories/Programming/">Programming</a>
               </span>
             
+
+            
+
+            
+
+            <!-- Post Views -->
+            <span class="post_entry-views">
+            </span>
+        </div>
+    </div>
+</div>
+
+            
+            
+        
+    
+        
+            
+                <!-- Paradox Thumbnail -->
+                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
+    <!-- Post Thumbnail -->
+    
+        <!-- Custom Thumbnail -->
+        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50 lazy" data-original="https://static.ddlee.cn/static/img/Feedly_Reeder/Feedly+Reeder.png">
+    
+
+        <!-- Post Title -->
+        <p class="article-headline-p"><a href="/2017/04/03/Feedly-Reeder3-FeedMe-信息获取与处理/">Feedly+Reeder3+FeedMe:信息获取与处理</a></p>
+    </div>
+
+    <!-- Post Excerpt -->
+    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
+        
+            我蛮早就意识到自己被信息淹没了。于是关了票圈，屏蔽了空间，不装任何新闻APP，失去效力的微信群一概不留，知乎上的关注也缩减了很多很多。
+
+世界终于清静了。
+
+但仍然需要有关注的动向。我又捡起了RSS这个老朋友，建立起的信息获取跟处理流如下图：
+
+
+        
+        &nbsp;&nbsp;&nbsp;
+        <span>
+            <a href="/2017/04/03/Feedly-Reeder3-FeedMe-信息获取与处理/" target="_self">阅读全文</a>
+        </span>
+    </div>
+    <!-- Post_entry Info-->
+    <div id="post_entry-info">
+        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
+            <!-- Author Avatar -->
+            <div id="author-avatar">
+                <img src="https://static.ddlee.cn/static/img/material-theme-img/avatar.png" width="44px" height="44px" alt="ddlee's avatar">
+            </div>
+            <div>
+                <strong>ddlee</strong>
+                <span>4月 03, 2017</span>
+            </div>
+        </div>
+        <div id="post_entry-right-info">
+          
+              <!-- Category -->
+              <span class="post_entry-category">
+                  <a class="post_category-link" href="/categories/Individual-Development/">Individual Development</a>
+              </span>
+            
+
+            
+
+            
+
+            <!-- Post Views -->
+            <span class="post_entry-views">
+            </span>
+        </div>
+    </div>
+</div>
+
+            
+            
+        
+    
+        
+            
+                <!-- Paradox Thumbnail -->
+                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
+    <!-- Post Thumbnail -->
+    
+        <!-- Custom Thumbnail -->
+        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50 lazy" data-original="https://static.ddlee.cn/static/img/Website-Migeration/Vestacp.png">
+    
+
+        <!-- Post Title -->
+        <p class="article-headline-p"><a href="/2017/04/02/网站迁移小记：腾讯云-Debian-Vestacp/">网站迁移小记：腾讯云+Debian+Vestacp</a></p>
+    </div>
+
+    <!-- Post Excerpt -->
+    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
+        
+            先贴一张文章大纲。
+
+这是一个樱花开得正好但我很蛋疼的下午。
+中午抢到了腾讯的校园优惠，便打算把网站ddlee.cn迁到国内的服务器上来。
+密码管理先谈密码管理。
+
+        
+        &nbsp;&nbsp;&nbsp;
+        <span>
+            <a href="/2017/04/02/网站迁移小记：腾讯云-Debian-Vestacp/" target="_self">阅读全文</a>
+        </span>
+    </div>
+    <!-- Post_entry Info-->
+    <div id="post_entry-info">
+        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
+            <!-- Author Avatar -->
+            <div id="author-avatar">
+                <img src="https://static.ddlee.cn/static/img/material-theme-img/avatar.png" width="44px" height="44px" alt="ddlee's avatar">
+            </div>
+            <div>
+                <strong>ddlee</strong>
+                <span>4月 02, 2017</span>
+            </div>
+        </div>
+        <div id="post_entry-right-info">
+          
 
             
 
@@ -487,19 +607,19 @@ Across the Great Wall we can reach every corner in the world.”（越过长城�
     
 
         <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2016/08/07/数据分析资源/">数据分析在线学习资源(Personal Archive)</a></p>
+        <p class="article-headline-p"><a href="/2017/03/31/The-Devtools-Way-devtools-RStudio快速R程序包开发/">The Devtools Way: devtools+RStudio快速R程序包开发</a></p>
     </div>
 
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            数据分析方向的在线资源收集。
-1.Some wonderful Tutorials
-
+            本文记录我的首个R程序包MCMI的开发过程。
+参考资料
+两本Hadley Wickham写的书：Advanced R和
         
         &nbsp;&nbsp;&nbsp;
         <span>
-            <a href="/2016/08/07/数据分析资源/" target="_self">阅读全文</a>
+            <a href="/2017/03/31/The-Devtools-Way-devtools-RStudio快速R程序包开发/" target="_self">阅读全文</a>
         </span>
     </div>
     <!-- Post_entry Info-->
@@ -511,7 +631,7 @@ Across the Great Wall we can reach every corner in the world.”（越过长城�
             </div>
             <div>
                 <strong>ddlee</strong>
-                <span>8月 07, 2016</span>
+                <span>3月 31, 2017</span>
             </div>
         </div>
         <div id="post_entry-right-info">
@@ -543,26 +663,25 @@ Across the Great Wall we can reach every corner in the world.”（越过长城�
                 <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
     <!-- Post Thumbnail -->
     
-        <!-- Custom Thumbnail -->
-        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50 lazy" data-original="http://static.ddlee.cn/static/img/Ubuntu-3/Pomodoro2.jpg">
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+        
     
 
         <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2016/06/11/个性化你的Ubuntu-3：主题，插件以及桌面小工具/">个性化你的Ubuntu-3：主题，插件以及桌面小工具</a></p>
+        <p class="article-headline-p"><a href="/2017/03/30/HADOOP学习速记/">HADOOP学习速记</a></p>
     </div>
 
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            个性主题依赖于扩展User themes，分为GTK主题，shell主题和icon主题。
-
-从gnome-look.org下载喜欢的主题（压缩文件）。
-
-将下载...
+            HDFS: 分布式文件系统NameNode, DataNode: a MetaData-Data ModelStrategy: Block split, multi-copy, distribution
+NameNode: High Availabilitysolution 1: backup using NFSsolution 2: Two NameNo...
         
         &nbsp;&nbsp;&nbsp;
         <span>
-            <a href="/2016/06/11/个性化你的Ubuntu-3：主题，插件以及桌面小工具/" target="_self">阅读全文</a>
+            <a href="/2017/03/30/HADOOP学习速记/" target="_self">阅读全文</a>
         </span>
     </div>
     <!-- Post_entry Info-->
@@ -574,14 +693,14 @@ Across the Great Wall we can reach every corner in the world.”（越过长城�
             </div>
             <div>
                 <strong>ddlee</strong>
-                <span>6月 11, 2016</span>
+                <span>3月 30, 2017</span>
             </div>
         </div>
         <div id="post_entry-right-info">
           
               <!-- Category -->
               <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/Linux/">Linux</a>
+                  <a class="post_category-link" href="/categories/AI/">AI</a>
               </span>
             
 
@@ -613,18 +732,22 @@ Across the Great Wall we can reach every corner in the world.”（越过长城�
     
 
         <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2016/06/02/个性化你的Ubuntu-2：GNOME安装与工具/">个性化你的Ubuntu-2：GNOME安装与工具</a></p>
+        <p class="article-headline-p"><a href="/2017/03/26/Kaggle比赛中EDA：流程、做法与目的/">Kaggle比赛中EDA：流程、做法与目的</a></p>
     </div>
 
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            GNOME安装从上一篇文章，大家可以看到，GNOME是一系列软件的集合，安装时可以有不同的取舍。对于Ubuntu用户来说，可以有以下两类体验GNOME的方式。（参考：GNOME installation）
+            数据集大小、字段及相应的数据类型
+大小：占用内存估计
+字段数：维度估计，是否需要降维
+数据类型：numerical, factor, string, etc. 是否需要归一化，二元化等等
+
 
         
         &nbsp;&nbsp;&nbsp;
         <span>
-            <a href="/2016/06/02/个性化你的Ubuntu-2：GNOME安装与工具/" target="_self">阅读全文</a>
+            <a href="/2017/03/26/Kaggle比赛中EDA：流程、做法与目的/" target="_self">阅读全文</a>
         </span>
     </div>
     <!-- Post_entry Info-->
@@ -636,14 +759,14 @@ Across the Great Wall we can reach every corner in the world.”（越过长城�
             </div>
             <div>
                 <strong>ddlee</strong>
-                <span>6月 02, 2016</span>
+                <span>3月 26, 2017</span>
             </div>
         </div>
         <div id="post_entry-right-info">
           
               <!-- Category -->
               <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/Linux/">Linux</a>
+                  <a class="post_category-link" href="/categories/Data-Science/">Data Science</a>
               </span>
             
 
@@ -675,17 +798,18 @@ Across the Great Wall we can reach every corner in the world.”（越过长城�
     
 
         <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2016/05/30/个性化你的Ubuntu-1：GNOME桌面环境/">个性化你的Ubuntu-1：GNOME桌面环境</a></p>
+        <p class="article-headline-p"><a href="/2017/03/22/DevOps侧记/">Udacity课程： Intro to DevOps侧记</a></p>
     </div>
 
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            我与Ubuntu我最初是Windows98用户，再到Windows2003,Windows XP,Windows 7,上了大学后用Windows 8.1,Windows 10（想不到竟然能列这么长；我从没用过Windows Vista,不知道那是什么东西），我很喜欢8.1和10的开始屏幕和动态磁贴。非常偶然的机会，我在CS50的课程中接触了GNU/Linux，才知道，原来在MS　Windows和Mac OSＸ之外，还有...
+            文章主要内容来自Udacity的课程：Intro to DevOps
+CAMS: The DevOps Lifecycle...
         
         &nbsp;&nbsp;&nbsp;
         <span>
-            <a href="/2016/05/30/个性化你的Ubuntu-1：GNOME桌面环境/" target="_self">阅读全文</a>
+            <a href="/2017/03/22/DevOps侧记/" target="_self">阅读全文</a>
         </span>
     </div>
     <!-- Post_entry Info-->
@@ -697,14 +821,14 @@ Across the Great Wall we can reach every corner in the world.”（越过长城�
             </div>
             <div>
                 <strong>ddlee</strong>
-                <span>5月 30, 2016</span>
+                <span>3月 22, 2017</span>
             </div>
         </div>
         <div id="post_entry-right-info">
           
               <!-- Category -->
               <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/Linux/">Linux</a>
+                  <a class="post_category-link" href="/categories/Internet/">Internet</a>
               </span>
             
 
@@ -727,7 +851,7 @@ Across the Great Wall we can reach every corner in the world.”（越过长城�
     
     <!-- Index nav -->
         <nav class="material-nav mdl-cell mdl-cell--12-col">
-            <a class="extend prev" rel="prev" href="/page/6/"><button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons" role="presentation">arrow_back</i></button></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span>
+            <a class="extend prev" rel="prev" href="/page/6/"><button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons" role="presentation">arrow_back</i></button></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/8/"><button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons" role="presentation">arrow_forward</i></button></a>
         </nav>
     
 
@@ -736,7 +860,7 @@ Across the Great Wall we can reach every corner in the world.”（越过长城�
     var randomNum;
 
     var locatePost = $('.locate-thumbnail-symbol').next();
-    for(var i = 0; i < 10; i++) {
+    for(var i = 0; i < 8; i++) {
         randomNum = Math.floor(Math.random() * 102 + 1);
 
         locatePost.children('.post_thumbnail-random').attr('id', 'random_thumbnail-'+randomNum);
