@@ -41,8 +41,6 @@
             
             <tag> Software </tag>
             
-            <tag> Pipenv </tag>
-            
         </tags>
         
     </entry>
@@ -213,9 +211,9 @@
 </ul>
 <h2 id="开发环境配置-Environment-Configuration"><a href="#开发环境配置-Environment-Configuration" class="headerlink" title="开发环境配置 Environment Configuration"></a>开发环境配置 Environment Configuration</h2><p>这一部分完成自己开发环境的配置。</p>
 <h4 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h4><p>SSH key: ssh-keygen and ssh-add, git config name&amp;email</p>
-<h4 id="Python-Annaconda"><a href="#Python-Annaconda" class="headerlink" title="Python(Annaconda)"></a>Python(Annaconda)</h4><p>(pypi: 修改 ~/.config/pip/pip.conf (Linux), %APPDATA%\pip\pip.ini (Windows 10) 或 $HOME/Library/Application Support/pip/pip.conf (macOS) (没有就创建一个)， 修改 index-url至tuna，例如<br>[global]<br>index-url = <a href="https://pypi.tuna.tsinghua.edu.cn/simple" target="_blank" rel="external">https://pypi.tuna.tsinghua.edu.cn/simple</a> )<br>(conda TUNA 还提供了 Anaconda 仓库的镜像，运行以下命令:<br>conda config –add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</a></p>
-<p>conda config –add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</a></p>
-<p>conda config –set show_channel_urls yes<br>即可添加 Anaconda Python 免费仓库。)</p>
+<h4 id="Python-Annaconda"><a href="#Python-Annaconda" class="headerlink" title="Python(Annaconda)"></a>Python(Annaconda)</h4><p>(pypi: 修改 ~/.config/pip/pip.conf (Linux), %APPDATA%\pip\pip.ini (Windows 10) 或 $HOME/Library/Application Support/pip/pip.conf (macOS) (没有就创建一个)， 修改 index-url至tuna，例如<br>[global]<br>index-url = <a href="https://pypi.tuna.tsinghua.edu.cn/simple" target="_blank" rel="external">https://pypi.tuna.tsinghua.edu.cn/simple</a> )<br>(conda TUNA 还提供了 Anaconda 仓库的镜像，运行以下命令:<br>conda config —add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</a></p>
+<p>conda config —add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</a></p>
+<p>conda config —set show_channel_urls yes<br>即可添加 Anaconda Python 免费仓库。)</p>
 <h4 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h4><p>install: <a href="https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/</a></p>
 <p>To verify: sudo docker run hello-world</p>
 <p>mirror: <a href="https://www.docker-cn.com/registry-mirror" target="_blank" rel="external">https://www.docker-cn.com/registry-mirror</a><br>chmod 755 /etc/docker<br>为了永久性保留更改，您可以修改 /etc/docker/daemon.json 文件并添加上 registry-mirrors 键值。<br>{ “registry-mirrors”: [“<a href="https://registry.docker-cn.com" target="_blank" rel="external">https://registry.docker-cn.com</a>“] }<br>修改保存后重启 Docker 以使配置生效</p>
@@ -235,9 +233,25 @@
 <li>Disable intel turbo boost technology: terminal:<br>sudo -i<br>echo “1” | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo<br>exit</li>
 </ul>
 <p>4.tracke-miner-fs bug<br><a href="https://askubuntu.com/questions/346211/tracker-store-and-tracker-miner-fs-eating-up-my-cpu-on-every-startup" target="_blank" rel="external">https://askubuntu.com/questions/346211/tracker-store-and-tracker-miner-fs-eating-up-my-cpu-on-every-startup</a></p>
-<p>echo -e “\nHidden=true\n” | sudo tee –append /etc/xdg/autostart/tracker-extract.desktop /etc/xdg/autostart/tracker-miner-apps.desktop /etc/xdg/autostart/tracker-miner-fs.desktop /etc/xdg/autostart/tracker-miner-user-guides.desktop /etc/xdg/autostart/tracker-store.desktop &gt; /dev/null<br>gsettings set org.freedesktop.Tracker.Miner.Files crawling-interval -2<br>gsettings set org.freedesktop.Tracker.Miner.Files enable-monitors false<br>tracker reset –hard</p>
+<p>echo -e “\nHidden=true\n” | sudo tee —append /etc/xdg/autostart/tracker-extract.desktop /etc/xdg/autostart/tracker-miner-apps.desktop /etc/xdg/autostart/tracker-miner-fs.desktop /etc/xdg/autostart/tracker-miner-user-guides.desktop /etc/xdg/autostart/tracker-store.desktop &gt; /dev/null<br>gsettings set org.freedesktop.Tracker.Miner.Files crawling-interval -2<br>gsettings set org.freedesktop.Tracker.Miner.Files enable-monitors false<br>tracker reset —hard</p>
 ]]></content>
       
+        <categories>
+            
+            <category> Linux </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Linux </tag>
+            
+            <tag> OS </tag>
+            
+            <tag> Digital Life </tag>
+            
+        </tags>
         
     </entry>
     

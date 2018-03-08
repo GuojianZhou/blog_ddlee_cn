@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.ddlee.cn/"/>
-  <updated>2018-02-12T02:09:22.054Z</updated>
+  <updated>2018-03-08T16:17:30.680Z</updated>
   <id>https://blog.ddlee.cn/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://blog.ddlee.cn/2018/02/12/PyCharm-PipEnv%E6%9C%AC%E5%9C%B0Python%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
     <id>https://blog.ddlee.cn/2018/02/12/PyCharm-PipEnv本地Python开发环境配置/</id>
     <published>2018-02-12T02:09:22.000Z</published>
-    <updated>2018-02-12T02:09:22.054Z</updated>
+    <updated>2018-03-08T16:17:30.680Z</updated>
     
     <content type="html"><![CDATA[<p>本文记录基于PyCharm的Python工作环境配置，最终实现的效果是本地修改，远程调试，运行环境可迁移。</p>
 <h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><p>该环境的配置需要如下准备：</p>
@@ -57,8 +57,6 @@
       <category term="Python" scheme="https://blog.ddlee.cn/tags/Python/"/>
     
       <category term="Software" scheme="https://blog.ddlee.cn/tags/Software/"/>
-    
-      <category term="Pipenv" scheme="https://blog.ddlee.cn/tags/Pipenv/"/>
     
   </entry>
   
@@ -193,7 +191,7 @@
     <link href="https://blog.ddlee.cn/2018/01/15/Laptop-Reborn-%E7%B3%BB%E7%BB%9F%E9%87%8D%E8%A3%85%E4%BE%A7%E8%AE%B0/"/>
     <id>https://blog.ddlee.cn/2018/01/15/Laptop-Reborn-系统重装侧记/</id>
     <published>2018-01-14T18:06:16.000Z</published>
-    <updated>2018-01-14T18:06:16.783Z</updated>
+    <updated>2018-03-08T16:17:21.800Z</updated>
     
     <content type="html"><![CDATA[<p>本篇是个人向的系统重装记录，以便自己日后参考。</p>
 <p>我使用的系统是Win10+Ubuntu16.04。</p>
@@ -237,9 +235,9 @@
 </ul>
 <h2 id="开发环境配置-Environment-Configuration"><a href="#开发环境配置-Environment-Configuration" class="headerlink" title="开发环境配置 Environment Configuration"></a>开发环境配置 Environment Configuration</h2><p>这一部分完成自己开发环境的配置。</p>
 <h4 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h4><p>SSH key: ssh-keygen and ssh-add, git config name&amp;email</p>
-<h4 id="Python-Annaconda"><a href="#Python-Annaconda" class="headerlink" title="Python(Annaconda)"></a>Python(Annaconda)</h4><p>(pypi: 修改 ~/.config/pip/pip.conf (Linux), %APPDATA%\pip\pip.ini (Windows 10) 或 $HOME/Library/Application Support/pip/pip.conf (macOS) (没有就创建一个)， 修改 index-url至tuna，例如<br>[global]<br>index-url = <a href="https://pypi.tuna.tsinghua.edu.cn/simple" target="_blank" rel="external">https://pypi.tuna.tsinghua.edu.cn/simple</a> )<br>(conda TUNA 还提供了 Anaconda 仓库的镜像，运行以下命令:<br>conda config –add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</a></p>
-<p>conda config –add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</a></p>
-<p>conda config –set show_channel_urls yes<br>即可添加 Anaconda Python 免费仓库。)</p>
+<h4 id="Python-Annaconda"><a href="#Python-Annaconda" class="headerlink" title="Python(Annaconda)"></a>Python(Annaconda)</h4><p>(pypi: 修改 ~/.config/pip/pip.conf (Linux), %APPDATA%\pip\pip.ini (Windows 10) 或 $HOME/Library/Application Support/pip/pip.conf (macOS) (没有就创建一个)， 修改 index-url至tuna，例如<br>[global]<br>index-url = <a href="https://pypi.tuna.tsinghua.edu.cn/simple" target="_blank" rel="external">https://pypi.tuna.tsinghua.edu.cn/simple</a> )<br>(conda TUNA 还提供了 Anaconda 仓库的镜像，运行以下命令:<br>conda config —add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</a></p>
+<p>conda config —add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</a></p>
+<p>conda config —set show_channel_urls yes<br>即可添加 Anaconda Python 免费仓库。)</p>
 <h4 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h4><p>install: <a href="https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/</a></p>
 <p>To verify: sudo docker run hello-world</p>
 <p>mirror: <a href="https://www.docker-cn.com/registry-mirror" target="_blank" rel="external">https://www.docker-cn.com/registry-mirror</a><br>chmod 755 /etc/docker<br>为了永久性保留更改，您可以修改 /etc/docker/daemon.json 文件并添加上 registry-mirrors 键值。<br>{ “registry-mirrors”: [“<a href="https://registry.docker-cn.com" target="_blank" rel="external">https://registry.docker-cn.com</a>“] }<br>修改保存后重启 Docker 以使配置生效</p>
@@ -259,7 +257,7 @@
 <li>Disable intel turbo boost technology: terminal:<br>sudo -i<br>echo “1” | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo<br>exit</li>
 </ul>
 <p>4.tracke-miner-fs bug<br><a href="https://askubuntu.com/questions/346211/tracker-store-and-tracker-miner-fs-eating-up-my-cpu-on-every-startup" target="_blank" rel="external">https://askubuntu.com/questions/346211/tracker-store-and-tracker-miner-fs-eating-up-my-cpu-on-every-startup</a></p>
-<p>echo -e “\nHidden=true\n” | sudo tee –append /etc/xdg/autostart/tracker-extract.desktop /etc/xdg/autostart/tracker-miner-apps.desktop /etc/xdg/autostart/tracker-miner-fs.desktop /etc/xdg/autostart/tracker-miner-user-guides.desktop /etc/xdg/autostart/tracker-store.desktop &gt; /dev/null<br>gsettings set org.freedesktop.Tracker.Miner.Files crawling-interval -2<br>gsettings set org.freedesktop.Tracker.Miner.Files enable-monitors false<br>tracker reset –hard</p>
+<p>echo -e “\nHidden=true\n” | sudo tee —append /etc/xdg/autostart/tracker-extract.desktop /etc/xdg/autostart/tracker-miner-apps.desktop /etc/xdg/autostart/tracker-miner-fs.desktop /etc/xdg/autostart/tracker-miner-user-guides.desktop /etc/xdg/autostart/tracker-store.desktop &gt; /dev/null<br>gsettings set org.freedesktop.Tracker.Miner.Files crawling-interval -2<br>gsettings set org.freedesktop.Tracker.Miner.Files enable-monitors false<br>tracker reset —hard</p>
 ]]></content>
     
     <summary type="html">
@@ -273,6 +271,14 @@
     
     </summary>
     
+      <category term="Linux" scheme="https://blog.ddlee.cn/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="https://blog.ddlee.cn/tags/Linux/"/>
+    
+      <category term="OS" scheme="https://blog.ddlee.cn/tags/OS/"/>
+    
+      <category term="Digital Life" scheme="https://blog.ddlee.cn/tags/Digital-Life/"/>
     
   </entry>
   

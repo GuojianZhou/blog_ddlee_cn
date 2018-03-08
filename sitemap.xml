@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://blog.ddlee.cn/2018/02/12/PyCharm-PipEnv%E6%9C%AC%E5%9C%B0Python%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</loc>
+    
+    <lastmod>2018-03-08T16:17:30.680Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.ddlee.cn/2018/01/15/Laptop-Reborn-%E7%B3%BB%E7%BB%9F%E9%87%8D%E8%A3%85%E4%BE%A7%E8%AE%B0/</loc>
+    
+    <lastmod>2018-03-08T16:17:21.800Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://blog.ddlee.cn/About/index.html</loc>
     
     <lastmod>2018-03-08T15:53:38.030Z</lastmod>
@@ -26,13 +40,6 @@
     <loc>https://blog.ddlee.cn/2017/04/03/Feedly-Reeder3-FeedMe-%E4%BF%A1%E6%81%AF%E8%8E%B7%E5%8F%96%E4%B8%8E%E5%A4%84%E7%90%86/</loc>
     
     <lastmod>2018-02-12T02:28:13.673Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.ddlee.cn/2018/02/12/PyCharm-PipEnv%E6%9C%AC%E5%9C%B0Python%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</loc>
-    
-    <lastmod>2018-02-12T02:09:22.054Z</lastmod>
     
   </url>
   
@@ -96,13 +103,6 @@
     <loc>https://blog.ddlee.cn/2018/01/10/FlintOS%E8%BD%BB%E4%BD%93%E9%AA%8C/</loc>
     
     <lastmod>2018-01-14T18:06:43.322Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.ddlee.cn/2018/01/15/Laptop-Reborn-%E7%B3%BB%E7%BB%9F%E9%87%8D%E8%A3%85%E4%BE%A7%E8%AE%B0/</loc>
-    
-    <lastmod>2018-01-14T18:06:16.783Z</lastmod>
     
   </url>
   
