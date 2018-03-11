@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.ddlee.cn/"/>
-  <updated>2018-03-11T16:35:11.511Z</updated>
+  <updated>2018-03-11T16:38:40.119Z</updated>
   <id>https://blog.ddlee.cn/</id>
   
   <author>
@@ -19,8 +19,8 @@
     <title>目标检测任务表述与模型基本结构</title>
     <link href="https://blog.ddlee.cn/2018/03/05/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%BB%BB%E5%8A%A1%E8%A1%A8%E8%BF%B0%E4%B8%8E%E6%A8%A1%E5%9E%8B%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/"/>
     <id>https://blog.ddlee.cn/2018/03/05/目标检测任务表述与模型基本结构/</id>
-    <published>2018-03-04T16:34:31.000Z</published>
-    <updated>2018-03-11T16:35:11.511Z</updated>
+    <published>2018-03-04T16:14:31.000Z</published>
+    <updated>2018-03-11T16:38:40.119Z</updated>
     
     <content type="html"><![CDATA[<p>本文节选自博主通过格灵深瞳机构号发表在知乎上的文章：<a href="https://zhuanlan.zhihu.com/p/34142321" target="_blank" rel="external">干货 | 目标检测入门，看这篇就够了</a>。</p>
 <h2 id="目标检测的任务表述"><a href="#目标检测的任务表述" class="headerlink" title="目标检测的任务表述"></a>目标检测的任务表述</h2><p>如何从图像中解析出可供计算机理解的信息，是机器视觉的中心问题。深度学习模型由于其强大的表示能力，加之数据量的积累和计算力的进步，成为机器视觉的热点研究方向。</p>
