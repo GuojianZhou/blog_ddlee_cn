@@ -4,46 +4,6 @@
   
     
     <entry>
-      <title><![CDATA[目标检测任务表述与模型基本结构]]></title>
-      <url>https://blog.ddlee.cn/2018/03/05/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%BB%BB%E5%8A%A1%E8%A1%A8%E8%BF%B0%E4%B8%8E%E6%A8%A1%E5%9E%8B%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/</url>
-      <content type="html"><![CDATA[<p>本文节选自博主通过格灵深瞳机构号发表在知乎上的文章：<a href="https://zhuanlan.zhihu.com/p/34142321" target="_blank" rel="external">干货 | 目标检测入门，看这篇就够了</a>。</p>
-<h2 id="目标检测的任务表述"><a href="#目标检测的任务表述" class="headerlink" title="目标检测的任务表述"></a>目标检测的任务表述</h2><p>如何从图像中解析出可供计算机理解的信息，是机器视觉的中心问题。深度学习模型由于其强大的表示能力，加之数据量的积累和计算力的进步，成为机器视觉的热点研究方向。</p>
-<p>那么，如何理解一张图片？根据后续任务的需要，有三个主要的层次。</p>
-<p><img src="https://static.ddlee.cn/static/img/目标检测任务表述与模型基本结构/cv.jpg" alt="cv"> <em>图像理解的三个层次</em></p>
-<p>一是分类（Classification），即是将图像结构化为某一类别的信息，用事先确定好的类别(string)或实例ID来描述图片。这一任务是最简单、最基础的图像理解任务，也是深度学习模型最先取得突破和实现大规模应用的任务。其中，ImageNet是最权威的评测集，每年的ILSVRC催生了大量的优秀深度网络结构，为其他任务提供了基础。在应用领域，人脸、场景的识别等都可以归为分类任务。</p>
-<p>二是检测（Detection）。分类任务关心整体，给出的是整张图片的内容描述，而检测则关注特定的物体目标，要求同时获得这一目标的类别信息和位置信息。相比分类，检测给出的是对图片前景和背景的理解，我们需要从背景中分离出感兴趣的目标，并确定这一目标的描述（类别和位置），因而，检测模型的输出是一个列表，列表的每一项使用一个数据组给出检出目标的类别和位置（常用矩形检测框的坐标表示）。</p>
-<p>三是分割（Segmentation）。分割包括语义分割（semantic segmentation）和实例分割（instance segmentation），前者是对前背景分离的拓展，要求分离开具有不同语义的图像部分，而后者是检测任务的拓展，要求描述出目标的轮廓（相比检测框更为精细）。分割是对图像的像素级描述，它赋予每个像素类别（实例）意义，适用于理解要求较高的场景，如无人驾驶中对道路和非道路的分割。</p>
-<h2 id="检测模型基本特点"><a href="#检测模型基本特点" class="headerlink" title="检测模型基本特点"></a>检测模型基本特点</h2><p>深度学习方法主导下的检测模型，可以分为两阶段（two-stage）和单阶段（one-stage）。</p>
-<p><img src="https://static.ddlee.cn/static/img/目标检测任务表述与模型基本结构/faster-rcnn-arch.png" alt="faster-rcnn-arch"> <em>两阶段检测模型Pipeline，<a href="https://tryolabs.com/blog/2018/01/18/faster-r-cnn-down-the-rabbit-hole-of-modern-object-detection/" target="_blank" rel="external">来源</a></em></p>
-<p>检测模型整体上由基础网络（Backbone Network）和检测头部（Detection Head）构成。前者作为特征提取器，给出图像不同大小、不同抽象层次的表示；后者则依据这些表示和监督信息学习类别和位置关联。检测头部负责的类别预测和位置回归两个任务常常是并行进行的，构成多任务的损失进行联合训练。</p>
-<p><img src="https://static.ddlee.cn/static/img/目标检测任务表述与模型基本结构/faster-rcnn-head.png" alt="faster-rcnn-head"> <em>检测模型头部并行的分支，<a href="https://tryolabs.com/blog/2018/01/18/faster-r-cnn-down-the-rabbit-hole-of-modern-object-detection/" target="_blank" rel="external">来源</a></em></p>
-<p>相比单阶段，两阶段检测模型通常含有一个串行的头部结构，即完成前背景分类和回归后，把中间结果作为RCNN头部的输入再进行一次多分类和位置回归。这种设计带来了一些优点：</p>
-<ul>
-<li>对检测任务的解构，先进行前背景的分类，再进行物体的分类，这种解构使得监督信息在不同阶段对网络参数的学习进行指导</li>
-<li>RPN网络为RCNN网络提供良好的先验，并有机会整理样本的比例，减轻RCNN网络的学习负担</li>
-</ul>
-<p>这种设计的缺点也很明显：中间结果常常带来空间开销，而串行的方式也使得推断速度无法跟单阶段相比；级联的位置回归则会导致RCNN部分的重复计算（如两个RoI有重叠）。</p>
-<p>另一方面，单阶段模型只有一次类别预测和位置回归，卷积运算的共享程度更高，拥有更快的速度和更小的内存占用。读者将会在接下来的文章中看到，两种类型的模型也在互相吸收彼此的优点，这也使得两者的界限更为模糊。</p>
-]]></content>
-      
-        <categories>
-            
-            <category> AI </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> Object Detection </tag>
-            
-            <tag> Computer Vision </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
       <title><![CDATA[目标检测常用评测集：Pascal VOC, MS COCO, Cityscapes]]></title>
       <url>https://blog.ddlee.cn/2018/03/05/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%B8%B8%E7%94%A8%E8%AF%84%E6%B5%8B%E9%9B%86%EF%BC%9APascal-VOC-MS-COCO-Cityscapes/</url>
       <content type="html"><![CDATA[<p>本文节选自博主通过格灵深瞳公众号发表于知乎的文章：<a href="https://zhuanlan.zhihu.com/p/34179420" target="_blank" rel="external">目标检测入门（二）：模型的评测与训练技巧
@@ -66,6 +26,46 @@
 <p><img src="https://static.ddlee.cn/static/img/目标检测常用评测集：Pascal-VOC-MS-COCO-Cityscapes/coco-error-analysis.jpg" alt="coco-error-breakdown"> <em>错误来源分解，详见<a href="http://cocodataset.org/#detections-eval" target="_blank" rel="external">http://cocodataset.org/#detections-eval</a></em></p>
 <h3 id="Cityscapes"><a href="#Cityscapes" class="headerlink" title="Cityscapes"></a><a href="https://www.cityscapes-dataset.com/" target="_blank" rel="external">Cityscapes</a></h3><p><img src="https://static.ddlee.cn/static/img/目标检测常用评测集：Pascal-VOC-MS-COCO-Cityscapes/cityscapes-example.png" alt="cityscapes"> <em>Cityscapes数据示例</em></p>
 <p>Cityscapes数据集专注于现代城市道路场景的理解，提供了30个类的像素级标注，是自动驾驶方向较为权威的评测集。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> AI </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Object Detection </tag>
+            
+            <tag> Computer Vision </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
+      <title><![CDATA[目标检测任务表述与模型基本结构]]></title>
+      <url>https://blog.ddlee.cn/2018/03/05/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%BB%BB%E5%8A%A1%E8%A1%A8%E8%BF%B0%E4%B8%8E%E6%A8%A1%E5%9E%8B%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/</url>
+      <content type="html"><![CDATA[<p>本文节选自博主通过格灵深瞳机构号发表在知乎上的文章：<a href="https://zhuanlan.zhihu.com/p/34142321" target="_blank" rel="external">干货 | 目标检测入门，看这篇就够了</a>。</p>
+<h2 id="目标检测的任务表述"><a href="#目标检测的任务表述" class="headerlink" title="目标检测的任务表述"></a>目标检测的任务表述</h2><p>如何从图像中解析出可供计算机理解的信息，是机器视觉的中心问题。深度学习模型由于其强大的表示能力，加之数据量的积累和计算力的进步，成为机器视觉的热点研究方向。</p>
+<p>那么，如何理解一张图片？根据后续任务的需要，有三个主要的层次。</p>
+<p><img src="https://static.ddlee.cn/static/img/目标检测任务表述与模型基本结构/cv.jpg" alt="cv"> <em>图像理解的三个层次</em></p>
+<p>一是分类（Classification），即是将图像结构化为某一类别的信息，用事先确定好的类别(string)或实例ID来描述图片。这一任务是最简单、最基础的图像理解任务，也是深度学习模型最先取得突破和实现大规模应用的任务。其中，ImageNet是最权威的评测集，每年的ILSVRC催生了大量的优秀深度网络结构，为其他任务提供了基础。在应用领域，人脸、场景的识别等都可以归为分类任务。</p>
+<p>二是检测（Detection）。分类任务关心整体，给出的是整张图片的内容描述，而检测则关注特定的物体目标，要求同时获得这一目标的类别信息和位置信息。相比分类，检测给出的是对图片前景和背景的理解，我们需要从背景中分离出感兴趣的目标，并确定这一目标的描述（类别和位置），因而，检测模型的输出是一个列表，列表的每一项使用一个数据组给出检出目标的类别和位置（常用矩形检测框的坐标表示）。</p>
+<p>三是分割（Segmentation）。分割包括语义分割（semantic segmentation）和实例分割（instance segmentation），前者是对前背景分离的拓展，要求分离开具有不同语义的图像部分，而后者是检测任务的拓展，要求描述出目标的轮廓（相比检测框更为精细）。分割是对图像的像素级描述，它赋予每个像素类别（实例）意义，适用于理解要求较高的场景，如无人驾驶中对道路和非道路的分割。</p>
+<h2 id="检测模型基本特点"><a href="#检测模型基本特点" class="headerlink" title="检测模型基本特点"></a>检测模型基本特点</h2><p>深度学习方法主导下的检测模型，可以分为两阶段（two-stage）和单阶段（one-stage）。</p>
+<p><img src="https://static.ddlee.cn/static/img/目标检测任务表述与模型基本结构/faster-rcnn-arch.png" alt="faster-rcnn-arch"> <em>两阶段检测模型Pipeline，<a href="https://tryolabs.com/blog/2018/01/18/faster-r-cnn-down-the-rabbit-hole-of-modern-object-detection/" target="_blank" rel="external">来源</a></em></p>
+<p>检测模型整体上由基础网络（Backbone Network）和检测头部（Detection Head）构成。前者作为特征提取器，给出图像不同大小、不同抽象层次的表示；后者则依据这些表示和监督信息学习类别和位置关联。检测头部负责的类别预测和位置回归两个任务常常是并行进行的，构成多任务的损失进行联合训练。</p>
+<p><img src="https://static.ddlee.cn/static/img/目标检测任务表述与模型基本结构/faster-rcnn-head.png" alt="faster-rcnn-head"> <em>检测模型头部并行的分支，<a href="https://tryolabs.com/blog/2018/01/18/faster-r-cnn-down-the-rabbit-hole-of-modern-object-detection/" target="_blank" rel="external">来源</a></em></p>
+<p>相比单阶段，两阶段检测模型通常含有一个串行的头部结构，即完成前背景分类和回归后，把中间结果作为RCNN头部的输入再进行一次多分类和位置回归。这种设计带来了一些优点：</p>
+<ul>
+<li>对检测任务的解构，先进行前背景的分类，再进行物体的分类，这种解构使得监督信息在不同阶段对网络参数的学习进行指导</li>
+<li>RPN网络为RCNN网络提供良好的先验，并有机会整理样本的比例，减轻RCNN网络的学习负担</li>
+</ul>
+<p>这种设计的缺点也很明显：中间结果常常带来空间开销，而串行的方式也使得推断速度无法跟单阶段相比；级联的位置回归则会导致RCNN部分的重复计算（如两个RoI有重叠）。</p>
+<p>另一方面，单阶段模型只有一次类别预测和位置回归，卷积运算的共享程度更高，拥有更快的速度和更小的内存占用。读者将会在接下来的文章中看到，两种类型的模型也在互相吸收彼此的优点，这也使得两者的界限更为模糊。</p>
 ]]></content>
       
         <categories>
