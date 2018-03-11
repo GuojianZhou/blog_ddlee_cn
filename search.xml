@@ -78,8 +78,6 @@
         
         <tags>
             
-            <tag> Deep Learning </tag>
-            
             <tag> Papers </tag>
             
             <tag> Object Detection </tag>
@@ -108,8 +106,6 @@
         
         
         <tags>
-            
-            <tag> Deep Learning </tag>
             
             <tag> Papers </tag>
             
@@ -214,13 +210,11 @@
         
         <tags>
             
-            <tag> Deep Learning </tag>
-            
-            <tag> AI </tag>
-            
             <tag> Papers </tag>
             
             <tag> Computer Vision </tag>
+            
+            <tag> CNN </tag>
             
         </tags>
         
@@ -279,6 +273,8 @@
             <tag> Software </tag>
             
             <tag> Chrome </tag>
+            
+            <tag> Digital Life </tag>
             
         </tags>
         
@@ -414,9 +410,9 @@
             
             <tag> Software </tag>
             
-            <tag> Chrome </tag>
+            <tag> Linux </tag>
             
-            <tag> Geek </tag>
+            <tag> Chrome OS </tag>
             
         </tags>
         
@@ -444,11 +440,11 @@
         
         <tags>
             
-            <tag> Deep Learning </tag>
+            <tag> AI </tag>
             
             <tag> Papers </tag>
             
-            <tag> Neural Network </tag>
+            <tag> CNN </tag>
             
         </tags>
         
@@ -487,11 +483,11 @@
         
         <tags>
             
-            <tag> Deep Learning </tag>
-            
-            <tag> AI </tag>
-            
             <tag> Papers </tag>
+            
+            <tag> Computer Vision </tag>
+            
+            <tag> CNN </tag>
             
         </tags>
         
@@ -526,11 +522,11 @@
         
         <tags>
             
-            <tag> Deep Learning </tag>
-            
             <tag> Papers </tag>
             
-            <tag> Neural Network </tag>
+            <tag> Computer Vision </tag>
+            
+            <tag> CNN </tag>
             
         </tags>
         
@@ -567,11 +563,11 @@
         
         <tags>
             
-            <tag> Deep Learning </tag>
-            
-            <tag> AI </tag>
-            
             <tag> Papers </tag>
+            
+            <tag> Computer Vision </tag>
+            
+            <tag> CNN </tag>
             
         </tags>
         
@@ -601,11 +597,11 @@
         
         <tags>
             
-            <tag> Deep Learning </tag>
-            
             <tag> Papers </tag>
             
-            <tag> Neural Network </tag>
+            <tag> Computer Vision </tag>
+            
+            <tag> CNN </tag>
             
         </tags>
         
@@ -671,7 +667,7 @@
         
         <tags>
             
-            <tag> Deep Learning </tag>
+            <tag> Papers </tag>
             
             <tag> Object Detection </tag>
             
@@ -712,7 +708,7 @@
         
         <tags>
             
-            <tag> Deep Learning </tag>
+            <tag> Papers </tag>
             
             <tag> Object Detection </tag>
             
@@ -753,7 +749,7 @@
         
         <tags>
             
-            <tag> Deep Learning </tag>
+            <tag> Papers </tag>
             
             <tag> Object Detection </tag>
             
@@ -812,11 +808,11 @@
         
         <tags>
             
-            <tag> Deep Learning </tag>
-            
             <tag> Papers </tag>
             
-            <tag> Neural Network </tag>
+            <tag> Computer Vision </tag>
+            
+            <tag> CNN </tag>
             
         </tags>
         
@@ -846,7 +842,7 @@
         
         <tags>
             
-            <tag> Deep Learning </tag>
+            <tag> Papers </tag>
             
             <tag> Object Detection </tag>
             
@@ -883,7 +879,7 @@
         
         <tags>
             
-            <tag> Deep Learning </tag>
+            <tag> Papers </tag>
             
             <tag> Object Detection </tag>
             
@@ -920,7 +916,7 @@
         
         <tags>
             
-            <tag> Deep Learning </tag>
+            <tag> Papers </tag>
             
             <tag> Object Detection </tag>
             
@@ -964,11 +960,11 @@
         
         <tags>
             
-            <tag> Deep Learning </tag>
-            
             <tag> Papers </tag>
             
-            <tag> Neural Network </tag>
+            <tag> Computer Vision </tag>
+            
+            <tag> CNN </tag>
             
         </tags>
         
@@ -1017,11 +1013,11 @@
         
         <tags>
             
-            <tag> Deep Learning </tag>
-            
             <tag> Papers </tag>
             
             <tag> Object Detection </tag>
+            
+            <tag> Computer Vision </tag>
             
         </tags>
         
@@ -1050,7 +1046,7 @@
         
         <tags>
             
-            <tag> Deep Learning </tag>
+            <tag> Papers </tag>
             
             <tag> Object Detection </tag>
             
@@ -1099,7 +1095,7 @@
         
         <tags>
             
-            <tag> Deep Learning </tag>
+            <tag> Papers </tag>
             
             <tag> Object Detection </tag>
             
@@ -1137,11 +1133,11 @@
         
         <tags>
             
-            <tag> Deep Learning </tag>
-            
             <tag> Papers </tag>
             
             <tag> Object Detection </tag>
+            
+            <tag> Computer Vision </tag>
             
         </tags>
         
@@ -1198,6 +1194,8 @@
             <tag> Software </tag>
             
             <tag> Linux </tag>
+            
+            <tag> Digital Life </tag>
             
         </tags>
         
@@ -1256,6 +1254,8 @@
             <tag> Software </tag>
             
             <tag> IOS </tag>
+            
+            <tag> Digital Life </tag>
             
         </tags>
         
@@ -1325,6 +1325,8 @@
             <tag> Android </tag>
             
             <tag> Software </tag>
+            
+            <tag> Digital Life </tag>
             
         </tags>
         
@@ -1541,8 +1543,6 @@
         
         <tags>
             
-            <tag> Deep Learning </tag>
-            
             <tag> AI </tag>
             
             <tag> Programming </tag>
@@ -1634,7 +1634,7 @@
 </code></pre>
 <p>4）将整个<code>Container</code>并入<code>Node</code>以保持兼容性</p>
 <pre><code class="python">  self.outbound_nodes = []
-  self.inbound_nodes = []  
+  self.inbound_nodes = []
   Node(outbound_layer=self,
        inbound_layers=[],
        node_indices=[],
@@ -1655,7 +1655,7 @@
                layer = node.outbound_layer # Node对应的layer
                reference_input_tensors = node.input_tensors
                reference_output_tensors = node.output_tensors
-               computed_data = []  
+               computed_data = []
                if len(computed_data) == len(reference_input_tensors):
                    # 在Layer中进行计算
                    with K.name_scope(layer.name):
@@ -1687,8 +1687,6 @@
         
         
         <tags>
-            
-            <tag> Deep Learning </tag>
             
             <tag> AI </tag>
             
@@ -1914,8 +1912,6 @@ assert dense.inbound_nodes[1].input_tensors == [b]
         
         <tags>
             
-            <tag> Deep Learning </tag>
-            
             <tag> AI </tag>
             
             <tag> Programming </tag>
@@ -1963,9 +1959,9 @@ y_test = tf.nn.relu(tf.matmul(x_test, W) + b))
 <pre><code class="python">self​.​optimizer ​=​ tf​.​train​.​GradientDescentOptimizer​(​self​.​lr​).​minimize​(​self​.​loss​,global_step​=​self​.​global_step)
 saver ​=​ tf​.​train​.​Saver​()​​
 ​with​ tf​.​Session​()​​as​ sess:
- sess​.​run​(​tf​.​global_variables_initializer​())        
+ sess​.​run​(​tf​.​global_variables_initializer​())
  average_loss ​=​​0.0
- for​ index ​in​ range​(​num_train_steps​):            
+ for​ index ​in​ range​(​num_train_steps​):
     batch ​=​ batch_gen​.​next​()
     loss_batch​,​ _ ​=​ sess​.​run​([​model​.​loss​,​ model​.​optimizer​], feed_dict​={...})
     average_loss ​+=​ loss_batch
@@ -2049,8 +2045,6 @@ with​ tf​.​Session​()​​ as​ sess:
         
         
         <tags>
-            
-            <tag> Deep Learning </tag>
             
             <tag> AI </tag>
             
@@ -2148,11 +2142,11 @@ $$w_t+k^{(2)} = w_t^{(2)} - \mu^{(2)} \frac{1}{n} \sum_{j \leq k} \sum \bigtrian
         
         <tags>
             
-            <tag> Deep Learning </tag>
-            
-            <tag> AI </tag>
-            
             <tag> Papers </tag>
+            
+            <tag> Computer Vision </tag>
+            
+            <tag> Optimization </tag>
             
         </tags>
         
@@ -2282,11 +2276,11 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
         
         <tags>
             
-            <tag> Deep Learning </tag>
-            
             <tag> AI </tag>
             
             <tag> Papers </tag>
+            
+            <tag> Computer Vision </tag>
             
             <tag> GAN </tag>
             
@@ -2352,13 +2346,11 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
         
         <tags>
             
-            <tag> Deep Learning </tag>
-            
-            <tag> AI </tag>
-            
             <tag> Papers </tag>
             
             <tag> autoML </tag>
+            
+            <tag> CNN </tag>
             
         </tags>
         
@@ -2404,11 +2396,11 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
         
         <tags>
             
-            <tag> Deep Learning </tag>
-            
             <tag> Papers </tag>
             
-            <tag> Neural Network </tag>
+            <tag> Computer Vision </tag>
+            
+            <tag> CNN </tag>
             
         </tags>
         
@@ -2524,13 +2516,9 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
         
         <tags>
             
-            <tag> Deep Learning </tag>
+            <tag> Papers </tag>
             
-            <tag> AI </tag>
-            
-            <tag> Machine Learning </tag>
-            
-            <tag> Paper </tag>
+            <tag> Optimization </tag>
             
         </tags>
         
@@ -2728,8 +2716,6 @@ def AutogradRNN(mode, input_size, hidden_size):
         <tags>
             
             <tag> Python </tag>
-            
-            <tag> Deep Learning </tag>
             
             <tag> AI </tag>
             
@@ -3123,8 +3109,6 @@ export(tf.shade(agg, cmap=cm(fire, 0.2), how=&#39;eq_hist&#39;), &#39;census_ds_
         
         <tags>
             
-            <tag> Deep Learning </tag>
-            
             <tag> AI </tag>
             
             <tag> Papers </tag>
@@ -3228,8 +3212,6 @@ def dropout_backward(dout, cache):
             
             <tag> Python </tag>
             
-            <tag> Deep Learning </tag>
-            
             <tag> AI </tag>
             
             <tag> Pytorch </tag>
@@ -3284,13 +3266,9 @@ def dropout_backward(dout, cache):
         
         <tags>
             
-            <tag> Deep Learning </tag>
-            
-            <tag> AI </tag>
-            
-            <tag> Machine Learning </tag>
-            
             <tag> Papers </tag>
+            
+            <tag> RNN </tag>
             
         </tags>
         
@@ -3323,13 +3301,11 @@ def dropout_backward(dout, cache):
         
         <tags>
             
-            <tag> Deep Learning </tag>
-            
-            <tag> Machine Learning </tag>
-            
             <tag> Papers </tag>
             
             <tag> Computer Vision </tag>
+            
+            <tag> CNN </tag>
             
         </tags>
         
@@ -3368,8 +3344,6 @@ def dropout_backward(dout, cache):
         
         
         <tags>
-            
-            <tag> Deep Learning </tag>
             
             <tag> Machine Learning </tag>
             
@@ -3560,7 +3534,7 @@ print(c.send(&quot;World&quot;))
 </ul>
 <pre><code class="python">@coroutine
 def grep(pattern):  #正则匹配
-    print &quot;Looking for %s&quot; % pattern    
+    print &quot;Looking for %s&quot; % pattern
     while True:
         line = (yield)
         if pattern in line:
@@ -3638,7 +3612,7 @@ loop.run_forever()
             
             <tag> Python </tag>
             
-            <tag> 异步 </tag>
+            <tag> 异步计算 </tag>
             
         </tags>
         
@@ -3850,9 +3824,11 @@ loop.run_forever()
         
         <tags>
             
-            <tag> Individual Management </tag>
-            
             <tag> RSS </tag>
+            
+            <tag> 方法论 </tag>
+            
+            <tag> 信息处理 </tag>
             
         </tags>
         
@@ -3944,6 +3920,12 @@ server {
 <p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
       
+        <categories>
+            
+            <category> Internet </category>
+            
+        </categories>
+        
         
         <tags>
             
@@ -3953,7 +3935,7 @@ server {
             
             <tag> Vestacp </tag>
             
-            <tag> 博客迁移 </tag>
+            <tag> 博客 </tag>
             
         </tags>
         
@@ -4209,7 +4191,7 @@ server {
             
             <tag> DevOps </tag>
             
-            <tag> 技术 </tag>
+            <tag> MOOCs </tag>
             
         </tags>
         
@@ -4441,6 +4423,8 @@ directory mask = 0750
         
         <tags>
             
+            <tag> Digital Life </tag>
+            
             <tag> OpenWrt </tag>
             
             <tag> 路由器 </tag>
@@ -4544,7 +4528,7 @@ directory mask = 0750
       
         <categories>
             
-            <category> 随笔 </category>
+            <category> Writing </category>
             
         </categories>
         
@@ -4614,7 +4598,7 @@ directory mask = 0750
       
         <categories>
             
-            <category> 随笔 </category>
+            <category> Writing </category>
             
         </categories>
         
@@ -4693,7 +4677,7 @@ directory mask = 0750
       
         <categories>
             
-            <category> 随笔 </category>
+            <category> Writing </category>
             
         </categories>
         
@@ -4780,6 +4764,8 @@ directory mask = 0750
         <tags>
             
             <tag> Android </tag>
+            
+            <tag> Digital Life </tag>
             
         </tags>
         
@@ -4933,6 +4919,8 @@ sudo apt-get update &amp;&amp; sudo apt-get install gnome-shell-theme-elegance-c
             
             <tag> Linux </tag>
             
+            <tag> Digital Life </tag>
+            
             <tag> Gnome </tag>
             
         </tags>
@@ -4984,6 +4972,8 @@ sudo apt-get install chrome-gnome-shell
         <tags>
             
             <tag> Linux </tag>
+            
+            <tag> Digital Life </tag>
             
             <tag> Gnome </tag>
             
@@ -5041,6 +5031,8 @@ sudo apt-get install chrome-gnome-shell
         <tags>
             
             <tag> Linux </tag>
+            
+            <tag> Digital Life </tag>
             
             <tag> Gnome </tag>
             

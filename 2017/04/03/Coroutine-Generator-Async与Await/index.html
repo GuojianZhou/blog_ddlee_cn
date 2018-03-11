@@ -57,7 +57,7 @@
 
     <meta name="format-detection" content="telephone=no"/>
     <meta name="description" itemprop="description" content="我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
-    <meta name="keywords" content="萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee,Python,异步">
+    <meta name="keywords" content="萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee,Python,异步计算">
     <meta name="theme-color" content="#0097A7">
 
     <!-- Disable Fucking Bloody Baidu Tranformation -->
@@ -280,11 +280,11 @@
     <meta property="og:title" content="Coroutine,Generator,Async与Await | 萧爽楼">
     <meta property="og:image" content="https://static.ddlee.cn/static/img/material-theme-img/favicon.png">
     <meta property="og:description" content="我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
-    <meta property="og:article:tag" content="Python"> <meta property="og:article:tag" content="异步"> 
+    <meta property="og:article:tag" content="Python"> <meta property="og:article:tag" content="异步计算"> 
 
     
         <meta property="article:published_time" content="Mon Apr 03 2017 22:57:54 GMT+0800">
-        <meta property="article:modified_time" content="Wed Jan 10 2018 00:56:33 GMT+0800">
+        <meta property="article:modified_time" content="Mon Mar 12 2018 00:09:39 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -307,7 +307,7 @@
     "mainEntityOfPage": "https://blog.ddlee.cn/2017/04/03/Coroutine-Generator-Async与Await/index.html",
     "headline": "Coroutine,Generator,Async与Await",
     "datePublished": "Mon Apr 03 2017 22:57:54 GMT+0800",
-    "dateModified": "Wed Jan 10 2018 00:56:33 GMT+0800",
+    "dateModified": "Mon Mar 12 2018 00:09:39 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -325,7 +325,7 @@
             "url": "https://static.ddlee.cn/static/img/material-theme-img/favicon.png"
         }
     },
-    "keywords": ",Python,异步萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee",
+    "keywords": ",Python,异步计算萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee",
     "description": "我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。",
 }
 </script>
@@ -487,7 +487,7 @@
     </button>
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
         <li class="mdl-menu__item">
-        <a class="post_tag-link" href="/tags/Python/">Python</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/异步/">异步</a>
+        <a class="post_tag-link" href="/tags/Python/">Python</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/异步计算/">异步计算</a>
     </ul>
     
 
@@ -584,7 +584,7 @@ print(c.send(&quot;World&quot;))
 </ul>
 <pre><code class="python">@coroutine
 def grep(pattern):  #正则匹配
-    print &quot;Looking for %s&quot; % pattern    
+    print &quot;Looking for %s&quot; % pattern
     while True:
         line = (yield)
         if pattern in line:
@@ -828,7 +828,7 @@ loop.run_forever()
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">29</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
+                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">29</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Writing/">Writing<span class="sidebar_archives-count">3</span></a>
             </ul>
         </li>
         

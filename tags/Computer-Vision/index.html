@@ -612,21 +612,18 @@
     
 
         <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2017/12/24/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/">[论文笔记]Speed/accuracy trade-offs for modern convolutional object detectors</a></p>
+        <p class="article-headline-p"><a href="/2018/01/06/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/">[论文笔记]Aggregated Residual Transformations for Deep Neural Networks</a></p>
     </div>
 
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            这篇文章偏综述和实验报告的性质，前几个部分对检测模型有不错的概括，重头在实验结果部分，实验细节也描述的比较清楚，可以用来参考。
-文章将检测模型分为三种元结构：Faster-RCNN、R-FCN和SSD，将特征提取网络网络独立出来作为元结构的一个部件，并松动了Proposal个数、输入图片尺寸，生成Feature map的大小等作为超参，并行实验，探索精度和速度方面的trade-off。
-文章也将源码公开，作为Tensorflow的Object Detection API。
-下图是三种元结构的图示：
-
+            本文提出了深度网络的新维度，除了深度、宽度（Channel数）外，作者将在某一层并行transform的路径数提取为第三维度，称为”cardinality”。跟Inception单元不同的是，这些并行路径均共享同一拓扑结构，而非精心设计的卷积核并联。除了并行相同的路径外，也添加了层与层间的shortcut connection。但由于其多路径的设计特征，我将其归为Inception系网络。
+Motivatio...
         
         &nbsp;&nbsp;&nbsp;
         <span>
-            <a href="/2017/12/24/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/" target="_self">阅读全文</a>
+            <a href="/2018/01/06/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/" target="_self">阅读全文</a>
         </span>
     </div>
     <!-- Post_entry Info-->
@@ -638,7 +635,7 @@
             </div>
             <div>
                 <strong>ddlee</strong>
-                <span>12月 24, 2017</span>
+                <span>1月 06, 2018</span>
             </div>
         </div>
         <div id="post_entry-right-info">
@@ -677,19 +674,18 @@
     
 
         <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2017/12/22/论文笔记-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/">[论文笔记]Light-Head R-CNN: In Defense of Two-Stage Object Detector</a></p>
+        <p class="article-headline-p"><a href="/2018/01/04/论文笔记-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/">[论文笔记]MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications</a></p>
     </div>
 
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            文章指出两阶段检测器通常在生成Proposal后进行分类的“头”(head)部分进行密集的计算，如ResNet为基础网络的Faster-RCNN将整个stage5（或两个FC）放在RCNN部分， RFCN要生成一个具有随类别数线性增长的channel数的Score map，这些密集计算正是两阶段方法在精度上领先而在推断速度上难以满足实时要求的原因。
-针对这两种元结构(Faster-RCNN和RFCN)，文章提出了“头”轻量化方法，试图在保持精度的同时又能减少冗余的计算量，从而实现精度和速度的Trade-off。
+            MobileNets系列可以看做是继Xception之后对Depthwise Separable Convolution的又一推动。利用深度可分离的特征，MobileNets系列引入两个模型精度和大小的超参，在保持相当精度的同时享有非常小的计算消耗，适用于移动端情形，因而被命名为”MobileNets”。
 
         
         &nbsp;&nbsp;&nbsp;
         <span>
-            <a href="/2017/12/22/论文笔记-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/" target="_self">阅读全文</a>
+            <a href="/2018/01/04/论文笔记-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/" target="_self">阅读全文</a>
         </span>
     </div>
     <!-- Post_entry Info-->
@@ -701,7 +697,7 @@
             </div>
             <div>
                 <strong>ddlee</strong>
-                <span>12月 22, 2017</span>
+                <span>1月 04, 2018</span>
             </div>
         </div>
         <div id="post_entry-right-info">
@@ -740,24 +736,19 @@
     
 
         <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2017/12/20/论文笔记-You-Only-Look-Once-Unified-Real-Time-Object-Detection/">[论文笔记]You Only Look Once: Unified, Real Time Object Detection</a></p>
+        <p class="article-headline-p"><a href="/2018/01/02/论文笔记-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/">[论文笔记]Xception: Deep Learning with Depthwise Seperable Convolutions</a></p>
     </div>
 
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            YOLO是单阶段方法的开山之作。它将检测任务表述成一个统一的、端到端的回归问题，并且以只处理一次图片同时得到位置和分类而得名。
-YOLO的主要优点：
-
-快。
-全局处理使得背景错误相对少，相比基于局部（区域）的方法， 如Fast RCNN。
-泛化性能好，在艺术作品上做检测时，YOLO表现好。
-
-DesignYOLO的大致工作流程如下：...
+            本篇是keras库作者的文章，对Inception结构进行了改进：用Depth-wise seperable convolution替换了Inception单元中的1×1卷积和3×3卷积。
+文章对Inception结构的评论非常有见地。
+Motivation文章指出，Inception单元背后的假设是跨Channel和跨空间的相关性可以充分解耦，类似的还有长度和高度方向上的卷积结...
         
         &nbsp;&nbsp;&nbsp;
         <span>
-            <a href="/2017/12/20/论文笔记-You-Only-Look-Once-Unified-Real-Time-Object-Detection/" target="_self">阅读全文</a>
+            <a href="/2018/01/02/论文笔记-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/" target="_self">阅读全文</a>
         </span>
     </div>
     <!-- Post_entry Info-->
@@ -769,7 +760,7 @@ DesignYOLO的大致工作流程如下：...
             </div>
             <div>
                 <strong>ddlee</strong>
-                <span>12月 20, 2017</span>
+                <span>1月 02, 2018</span>
             </div>
         </div>
         <div id="post_entry-right-info">
@@ -808,18 +799,20 @@ DesignYOLO的大致工作流程如下：...
     
 
         <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2017/12/12/论文笔记-SSD-Single-Shot-MultiBox-Detector/">[论文笔记]SSD: Single Shot MultiBox Detector</a></p>
+        <p class="article-headline-p"><a href="/2017/12/26/论文笔记-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/">[论文笔记]Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning</a></p>
     </div>
 
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            IntroductionSSD是对YOLO的改进，其达到跟两阶段方法相当的精度，又保持较快的运行速度。
-SSD
+            在15年，ResNet成为那年最耀眼的卷积网络结构，skip-connection的结构也成为避不开的考虑选项。Inception系列也参考ResNet更新了自己的结构。同时推出了第四代和跟ResNet的结合版：Inception-v4和Inception-ResNet。
+然而，这是一篇几乎都是图的论文。
+所以，上图。
+
         
         &nbsp;&nbsp;&nbsp;
         <span>
-            <a href="/2017/12/12/论文笔记-SSD-Single-Shot-MultiBox-Detector/" target="_self">阅读全文</a>
+            <a href="/2017/12/26/论文笔记-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/" target="_self">阅读全文</a>
         </span>
     </div>
     <!-- Post_entry Info-->
@@ -831,7 +824,7 @@ SSD
             </div>
             <div>
                 <strong>ddlee</strong>
-                <span>12月 12, 2017</span>
+                <span>12月 26, 2017</span>
             </div>
         </div>
         <div id="post_entry-right-info">
@@ -861,7 +854,7 @@ SSD
     
     <!-- Index nav -->
         <nav class="material-nav mdl-cell mdl-cell--12-col">
-            <span class="page-number current">1</span><a class="page-number" href="/tags/Computer-Vision/page/2/">2</a><a class="extend next" rel="next" href="/tags/Computer-Vision/page/2/"><button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons" role="presentation">arrow_forward</i></button></a>
+            <span class="page-number current">1</span><a class="page-number" href="/tags/Computer-Vision/page/2/">2</a><a class="page-number" href="/tags/Computer-Vision/page/3/">3</a><a class="extend next" rel="next" href="/tags/Computer-Vision/page/2/"><button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons" role="presentation">arrow_forward</i></button></a>
         </nav>
     
 
@@ -974,7 +967,7 @@ SSD
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">29</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
+                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">29</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Writing/">Writing<span class="sidebar_archives-count">3</span></a>
             </ul>
         </li>
         

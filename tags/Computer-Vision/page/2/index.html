@@ -358,6 +358,327 @@
     
 
         <!-- Post Title -->
+        <p class="article-headline-p"><a href="/2017/12/24/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/">[论文笔记]Speed/accuracy trade-offs for modern convolutional object detectors</a></p>
+    </div>
+
+    <!-- Post Excerpt -->
+    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
+        
+            这篇文章偏综述和实验报告的性质，前几个部分对检测模型有不错的概括，重头在实验结果部分，实验细节也描述的比较清楚，可以用来参考。
+文章将检测模型分为三种元结构：Faster-RCNN、R-FCN和SSD，将特征提取网络网络独立出来作为元结构的一个部件，并松动了Proposal个数、输入图片尺寸，生成Feature map的大小等作为超参，并行实验，探索精度和速度方面的trade-off。
+文章也将源码公开，作为Tensorflow的Object Detection API。
+下图是三种元结构的图示：
+
+        
+        &nbsp;&nbsp;&nbsp;
+        <span>
+            <a href="/2017/12/24/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/" target="_self">阅读全文</a>
+        </span>
+    </div>
+    <!-- Post_entry Info-->
+    <div id="post_entry-info">
+        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
+            <!-- Author Avatar -->
+            <div id="author-avatar">
+                <img src="https://static.ddlee.cn/static/img/material-theme-img/avatar.png" width="44px" height="44px" alt="ddlee's avatar">
+            </div>
+            <div>
+                <strong>ddlee</strong>
+                <span>12月 24, 2017</span>
+            </div>
+        </div>
+        <div id="post_entry-right-info">
+          
+              <!-- Category -->
+              <span class="post_entry-category">
+                  <a class="post_category-link" href="/categories/Papers/">Papers</a>
+              </span>
+            
+
+            
+
+            
+
+            <!-- Post Views -->
+            <span class="post_entry-views">
+            </span>
+        </div>
+    </div>
+</div>
+
+            
+            
+        
+    
+        
+            
+                <!-- Paradox Thumbnail -->
+                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
+    <!-- Post Thumbnail -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+        
+    
+
+        <!-- Post Title -->
+        <p class="article-headline-p"><a href="/2017/12/22/论文笔记-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/">[论文笔记]Light-Head R-CNN: In Defense of Two-Stage Object Detector</a></p>
+    </div>
+
+    <!-- Post Excerpt -->
+    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
+        
+            文章指出两阶段检测器通常在生成Proposal后进行分类的“头”(head)部分进行密集的计算，如ResNet为基础网络的Faster-RCNN将整个stage5（或两个FC）放在RCNN部分， RFCN要生成一个具有随类别数线性增长的channel数的Score map，这些密集计算正是两阶段方法在精度上领先而在推断速度上难以满足实时要求的原因。
+针对这两种元结构(Faster-RCNN和RFCN)，文章提出了“头”轻量化方法，试图在保持精度的同时又能减少冗余的计算量，从而实现精度和速度的Trade-off。
+
+        
+        &nbsp;&nbsp;&nbsp;
+        <span>
+            <a href="/2017/12/22/论文笔记-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/" target="_self">阅读全文</a>
+        </span>
+    </div>
+    <!-- Post_entry Info-->
+    <div id="post_entry-info">
+        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
+            <!-- Author Avatar -->
+            <div id="author-avatar">
+                <img src="https://static.ddlee.cn/static/img/material-theme-img/avatar.png" width="44px" height="44px" alt="ddlee's avatar">
+            </div>
+            <div>
+                <strong>ddlee</strong>
+                <span>12月 22, 2017</span>
+            </div>
+        </div>
+        <div id="post_entry-right-info">
+          
+              <!-- Category -->
+              <span class="post_entry-category">
+                  <a class="post_category-link" href="/categories/Papers/">Papers</a>
+              </span>
+            
+
+            
+
+            
+
+            <!-- Post Views -->
+            <span class="post_entry-views">
+            </span>
+        </div>
+    </div>
+</div>
+
+            
+            
+        
+    
+        
+            
+                <!-- Paradox Thumbnail -->
+                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
+    <!-- Post Thumbnail -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+        
+    
+
+        <!-- Post Title -->
+        <p class="article-headline-p"><a href="/2017/12/20/论文笔记-You-Only-Look-Once-Unified-Real-Time-Object-Detection/">[论文笔记]You Only Look Once: Unified, Real Time Object Detection</a></p>
+    </div>
+
+    <!-- Post Excerpt -->
+    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
+        
+            YOLO是单阶段方法的开山之作。它将检测任务表述成一个统一的、端到端的回归问题，并且以只处理一次图片同时得到位置和分类而得名。
+YOLO的主要优点：
+
+快。
+全局处理使得背景错误相对少，相比基于局部（区域）的方法， 如Fast RCNN。
+泛化性能好，在艺术作品上做检测时，YOLO表现好。
+
+DesignYOLO的大致工作流程如下：...
+        
+        &nbsp;&nbsp;&nbsp;
+        <span>
+            <a href="/2017/12/20/论文笔记-You-Only-Look-Once-Unified-Real-Time-Object-Detection/" target="_self">阅读全文</a>
+        </span>
+    </div>
+    <!-- Post_entry Info-->
+    <div id="post_entry-info">
+        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
+            <!-- Author Avatar -->
+            <div id="author-avatar">
+                <img src="https://static.ddlee.cn/static/img/material-theme-img/avatar.png" width="44px" height="44px" alt="ddlee's avatar">
+            </div>
+            <div>
+                <strong>ddlee</strong>
+                <span>12月 20, 2017</span>
+            </div>
+        </div>
+        <div id="post_entry-right-info">
+          
+              <!-- Category -->
+              <span class="post_entry-category">
+                  <a class="post_category-link" href="/categories/Papers/">Papers</a>
+              </span>
+            
+
+            
+
+            
+
+            <!-- Post Views -->
+            <span class="post_entry-views">
+            </span>
+        </div>
+    </div>
+</div>
+
+            
+            
+        
+    
+        
+            
+                <!-- Paradox Thumbnail -->
+                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
+    <!-- Post Thumbnail -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+        
+    
+
+        <!-- Post Title -->
+        <p class="article-headline-p"><a href="/2017/12/16/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/">[论文笔记]Rethinking the Inception Architecture for Computer Vision</a></p>
+    </div>
+
+    <!-- Post Excerpt -->
+    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
+        
+            本文是作者推进inception结构的第2.5步。在更早的文章里，同一作者提出Batch Normalization并且用来改进了Inception结构，称为Inception-BN。而在这篇文章里，作者提出了Inception-v2和Inception-v3，两者共享同一网络结构，v3版本相比v2版本加入了RMSProp，Label Smoothing等技巧。
+文章表述了Inception系列的几个设计原则，并根据这些原则改进了GoogLeNet的结构。
+
+        
+        &nbsp;&nbsp;&nbsp;
+        <span>
+            <a href="/2017/12/16/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/" target="_self">阅读全文</a>
+        </span>
+    </div>
+    <!-- Post_entry Info-->
+    <div id="post_entry-info">
+        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
+            <!-- Author Avatar -->
+            <div id="author-avatar">
+                <img src="https://static.ddlee.cn/static/img/material-theme-img/avatar.png" width="44px" height="44px" alt="ddlee's avatar">
+            </div>
+            <div>
+                <strong>ddlee</strong>
+                <span>12月 16, 2017</span>
+            </div>
+        </div>
+        <div id="post_entry-right-info">
+          
+              <!-- Category -->
+              <span class="post_entry-category">
+                  <a class="post_category-link" href="/categories/Papers/">Papers</a>
+              </span>
+            
+
+            
+
+            
+
+            <!-- Post Views -->
+            <span class="post_entry-views">
+            </span>
+        </div>
+    </div>
+</div>
+
+            
+            
+        
+    
+        
+            
+                <!-- Paradox Thumbnail -->
+                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
+    <!-- Post Thumbnail -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+        
+    
+
+        <!-- Post Title -->
+        <p class="article-headline-p"><a href="/2017/12/12/论文笔记-SSD-Single-Shot-MultiBox-Detector/">[论文笔记]SSD: Single Shot MultiBox Detector</a></p>
+    </div>
+
+    <!-- Post Excerpt -->
+    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
+        
+            IntroductionSSD是对YOLO的改进，其达到跟两阶段方法相当的精度，又保持较快的运行速度。
+SSD
+        
+        &nbsp;&nbsp;&nbsp;
+        <span>
+            <a href="/2017/12/12/论文笔记-SSD-Single-Shot-MultiBox-Detector/" target="_self">阅读全文</a>
+        </span>
+    </div>
+    <!-- Post_entry Info-->
+    <div id="post_entry-info">
+        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
+            <!-- Author Avatar -->
+            <div id="author-avatar">
+                <img src="https://static.ddlee.cn/static/img/material-theme-img/avatar.png" width="44px" height="44px" alt="ddlee's avatar">
+            </div>
+            <div>
+                <strong>ddlee</strong>
+                <span>12月 12, 2017</span>
+            </div>
+        </div>
+        <div id="post_entry-right-info">
+          
+              <!-- Category -->
+              <span class="post_entry-category">
+                  <a class="post_category-link" href="/categories/Papers/">Papers</a>
+              </span>
+            
+
+            
+
+            
+
+            <!-- Post Views -->
+            <span class="post_entry-views">
+            </span>
+        </div>
+    </div>
+</div>
+
+            
+            
+        
+    
+        
+            
+                <!-- Paradox Thumbnail -->
+                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
+    <!-- Post Thumbnail -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+        
+    
+
+        <!-- Post Title -->
         <p class="article-headline-p"><a href="/2017/12/07/论文笔记-Feature-Pyramid-Networks-for-Object-Detection/">[论文笔记]Feature Pyramid Networks for Object Detection</a></p>
     </div>
 
@@ -483,18 +804,19 @@
     
 
         <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2017/10/21/论文笔记-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/">[论文笔记]Faster R-CNN: Towards Real Time Object Detection with Region Proposal Networks</a></p>
+        <p class="article-headline-p"><a href="/2017/11/30/论文笔记-Going-deeper-with-convolutions/">[论文笔记]Going deeper with convolutions</a></p>
     </div>
 
     <!-- Post Excerpt -->
     <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
         
-            Faster R-CNN是2-stage方法的主流方法，提出的RPN网络取代Selective Search算法使得检测任务可以由神经网络端到端地完成。粗略的讲，Faster R-CNN = RPN + Fast R-CNN，跟RCNN共享卷积计算的特性使得RPN引入的计算量很小，使得Faster R-CNN可以在单个GPU上以5fps的速度运行，而在精度方面达到SOTA。
-
+            本作是Inception系列网络的第一篇，提出了Inception单元结构，基于这一结构的GoogLeNet拿下了ILSVRC14分类任务的头名。文章也探讨了网络在不断加深的情况下如何更好地利用计算资源，这一理念也是Inception系列网络的核心。
+MotivationInception单元的启发主要来自Network in Network结构和Arora等人在神经科学方面的工作。
+...
         
         &nbsp;&nbsp;&nbsp;
         <span>
-            <a href="/2017/10/21/论文笔记-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/" target="_self">阅读全文</a>
+            <a href="/2017/11/30/论文笔记-Going-deeper-with-convolutions/" target="_self">阅读全文</a>
         </span>
     </div>
     <!-- Post_entry Info-->
@@ -506,133 +828,7 @@
             </div>
             <div>
                 <strong>ddlee</strong>
-                <span>10月 21, 2017</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/Papers/">Papers</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2017/10/15/论文笔记-Fast-R-CNN/">[论文笔记]Fast R-CNN</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            Fast R-CNN 是对R-CNN的改进，作者栏只有RBG一人。文章先指出了R-CNN存在的问题，再介绍了自己的改进思路。文章结构堪称典范，从现存问题，到解决方案、实验细节，再到结果分析、拓展讨论，条分缕析，值得借鉴。而且，RBG开源的代码也影响了后来大部分这一领域的工作。
-R-CNN的问题
-训练是一个多阶段的过程（Proposal, Classification, Regression）
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2017/10/15/论文笔记-Fast-R-CNN/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="https://static.ddlee.cn/static/img/material-theme-img/avatar.png" width="44px" height="44px" alt="ddlee's avatar">
-            </div>
-            <div>
-                <strong>ddlee</strong>
-                <span>10月 15, 2017</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-          
-              <!-- Category -->
-              <span class="post_entry-category">
-                  <a class="post_category-link" href="/categories/Papers/">Papers</a>
-              </span>
-            
-
-            
-
-            
-
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
-</div>
-
-            
-            
-        
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
-    
-        
-            <!-- Random Thumbnail -->
-            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
-        
-    
-
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2017/04/30/论文笔记-Deep-Residual-Learning-for-Image-Recognition/">[论文笔记]Deep Residual Learning for Image Recognition</a></p>
-    </div>
-
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
-        
-            网络在堆叠到越来越深之后，由于BP算法所依赖的链式法则的连乘形式，会出现梯度消失和梯度下降的问题。初始标准化和中间标准化参数在一定程度上缓解了这一问题，但仍然存在更深的网络比浅层网络具有更大的训练误差的问题。
-
-
-        
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2017/04/30/论文笔记-Deep-Residual-Learning-for-Image-Recognition/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="https://static.ddlee.cn/static/img/material-theme-img/avatar.png" width="44px" height="44px" alt="ddlee's avatar">
-            </div>
-            <div>
-                <strong>ddlee</strong>
-                <span>4月 30, 2017</span>
+                <span>11月 30, 2017</span>
             </div>
         </div>
         <div id="post_entry-right-info">
@@ -662,7 +858,7 @@ R-CNN的问题
     
     <!-- Index nav -->
         <nav class="material-nav mdl-cell mdl-cell--12-col">
-            <a class="extend prev" rel="prev" href="/tags/Computer-Vision/"><button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons" role="presentation">arrow_back</i></button></a><a class="page-number" href="/tags/Computer-Vision/">1</a><span class="page-number current">2</span>
+            <a class="extend prev" rel="prev" href="/tags/Computer-Vision/"><button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons" role="presentation">arrow_back</i></button></a><a class="page-number" href="/tags/Computer-Vision/">1</a><span class="page-number current">2</span><a class="page-number" href="/tags/Computer-Vision/page/3/">3</a><a class="extend next" rel="next" href="/tags/Computer-Vision/page/3/"><button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"><i class="material-icons" role="presentation">arrow_forward</i></button></a>
         </nav>
     
 
@@ -775,7 +971,7 @@ R-CNN的问题
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">29</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔/">随笔<span class="sidebar_archives-count">3</span></a>
+                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">10</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">29</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Writing/">Writing<span class="sidebar_archives-count">3</span></a>
             </ul>
         </li>
         

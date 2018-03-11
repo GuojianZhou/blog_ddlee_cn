@@ -66,7 +66,7 @@
     <link href="https://blog.ddlee.cn/2018/03/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-YOLO9000-Better-Faster-Stronger/"/>
     <id>https://blog.ddlee.cn/2018/03/02/论文笔记-YOLO9000-Better-Faster-Stronger/</id>
     <published>2018-03-02T15:55:48.000Z</published>
-    <updated>2018-03-11T15:56:21.041Z</updated>
+    <updated>2018-03-11T16:20:44.766Z</updated>
     
     <content type="html"><![CDATA[<p><a href="https://arxiv.org/1612.08242" target="_blank" rel="external">YOLO9000: Better, Faster, Stronger</a></p>
 <p>在这篇文章里，单阶段检测模型的先驱工作YOLO迎来了全面的更新：</p>
@@ -99,8 +99,6 @@
       <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
-    
       <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
       <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
@@ -114,7 +112,7 @@
     <link href="https://blog.ddlee.cn/2018/02/22/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Training-Region-based-Object-Detectors-with-Online-Hard-Example-Mining/"/>
     <id>https://blog.ddlee.cn/2018/02/22/论文笔记-Training-Region-based-Object-Detectors-with-Online-Hard-Example-Mining/</id>
     <published>2018-02-21T16:00:41.000Z</published>
-    <updated>2018-03-11T16:01:09.924Z</updated>
+    <updated>2018-03-11T16:20:10.704Z</updated>
     
     <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1604.03540" target="_blank" rel="external">Training Region-based Object Detectors with Online Hard Example Mining</a></p>
 <h3 id="OHEM-Online-Hard-negative-Example-Mining，在线难例挖掘"><a href="#OHEM-Online-Hard-negative-Example-Mining，在线难例挖掘" class="headerlink" title="OHEM(Online Hard negative Example Mining，在线难例挖掘)"></a>OHEM(Online Hard negative Example Mining，在线难例挖掘)</h3><p>本文是Bootstrapping（自助采样）在深度网络中的应用。两阶段网络由于其多步的特性，在RCNN子网络的计算前会有对RoI的整理过程，早期工作中，Fast R-CNN利用随机上采样和下采样的方法来维持正负样本比例，而本文提出的方法则使得网络具有挑选“好的”正负样本的能力。</p>
@@ -131,8 +129,6 @@
     
       <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
-    
-      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
       <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
@@ -192,7 +188,7 @@
     <link href="https://blog.ddlee.cn/2018/01/18/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/"/>
     <id>https://blog.ddlee.cn/2018/01/18/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/</id>
     <published>2018-01-17T16:52:08.000Z</published>
-    <updated>2018-01-18T18:30:59.000Z</updated>
+    <updated>2018-03-11T16:17:27.737Z</updated>
     
     <content type="html"><![CDATA[<p>本文是MobileNets的第二版。<a href="https://blog.ddlee.cn/2018/01/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/">第一版</a>中，MobileNets全面应用了Depth-wise Seperable Convolution并提出两个超参来控制网络容量，在保持移动端可接受的模型复杂性的基础上达到了相当的精度。而第二版中，MobileNets应用了新的单元：Inverted residual with linear bottleneck，主要的改动是添加了线性Bottleneck和将skip-connection转移到低维bottleneck层。</p>
 <h3 id="Intuition"><a href="#Intuition" class="headerlink" title="Intuition"></a>Intuition</h3><p>本篇比较丰富的地方是对网络中bottleneck结构的探讨。</p>
@@ -242,13 +238,11 @@
       <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
-    
-      <category term="AI" scheme="https://blog.ddlee.cn/tags/AI/"/>
-    
       <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
       <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
+    
+      <category term="CNN" scheme="https://blog.ddlee.cn/tags/CNN/"/>
     
   </entry>
   
@@ -257,7 +251,7 @@
     <link href="https://blog.ddlee.cn/2018/01/16/Chrome%E6%89%A9%E5%B1%95%E6%8E%A8%E8%8D%90/"/>
     <id>https://blog.ddlee.cn/2018/01/16/Chrome扩展推荐/</id>
     <published>2018-01-16T12:59:51.000Z</published>
-    <updated>2018-01-16T12:59:51.235Z</updated>
+    <updated>2018-03-11T16:11:34.485Z</updated>
     
     <content type="html"><![CDATA[<p>本篇是一个Chrome扩展的推荐列表。所有扩展插件在<a href="https://chrome.google.com/webstore/" target="_blank" rel="external">Chrome Web Store</a>都可搜索得到。</p>
 <ul>
@@ -310,6 +304,8 @@
       <category term="Software" scheme="https://blog.ddlee.cn/tags/Software/"/>
     
       <category term="Chrome" scheme="https://blog.ddlee.cn/tags/Chrome/"/>
+    
+      <category term="Digital Life" scheme="https://blog.ddlee.cn/tags/Digital-Life/"/>
     
   </entry>
   
@@ -414,7 +410,7 @@
     <link href="https://blog.ddlee.cn/2018/01/10/FlintOS%E8%BD%BB%E4%BD%93%E9%AA%8C/"/>
     <id>https://blog.ddlee.cn/2018/01/10/FlintOS轻体验/</id>
     <published>2018-01-09T17:36:06.000Z</published>
-    <updated>2018-01-14T18:06:43.322Z</updated>
+    <updated>2018-03-11T16:11:10.802Z</updated>
     
     <content type="html"><![CDATA[<p>呃，我在<a href="https://ddlee.cn/index_ver2016.html" target="_blank" rel="external">2016版的个人主页</a>里曾表达自己特别想拥有一台Chromebook，可终于还是屈服在了网络环境面前。</p>
 <p>离了我的路由器，我的Chromebook几乎就是个废物了。</p>
@@ -454,9 +450,9 @@
     
       <category term="Software" scheme="https://blog.ddlee.cn/tags/Software/"/>
     
-      <category term="Chrome" scheme="https://blog.ddlee.cn/tags/Chrome/"/>
+      <category term="Linux" scheme="https://blog.ddlee.cn/tags/Linux/"/>
     
-      <category term="Geek" scheme="https://blog.ddlee.cn/tags/Geek/"/>
+      <category term="Chrome OS" scheme="https://blog.ddlee.cn/tags/Chrome-OS/"/>
     
   </entry>
   
@@ -465,7 +461,7 @@
     <link href="https://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Densely-Connected-Convolutional-Networks/"/>
     <id>https://blog.ddlee.cn/2018/01/06/论文笔记-Densely-Connected-Convolutional-Networks/</id>
     <published>2018-01-06T13:23:16.000Z</published>
-    <updated>2018-01-23T13:13:59.898Z</updated>
+    <updated>2018-03-11T16:16:15.272Z</updated>
     
     <content type="html"><![CDATA[<p>DenseNet将shortcut-connection的思路发挥到极致。在一个DenseBlock内部，每一层的输出均跟后面的层建立shortcut，特别需要注意的是，不同于ResNet中的相加，DenseNet连接shortcut的方式是Concat，这样越深的层则输入channel数越大。</p>
 <h3 id="DenseNet"><a href="#DenseNet" class="headerlink" title="DenseNet"></a>DenseNet</h3><p><img src="https://static.ddlee.cn/static/img/论文笔记-Densely-Connected-Convolutional-Networks/arch.png" alt="arch"></p>
@@ -486,11 +482,11 @@
       <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
+      <category term="AI" scheme="https://blog.ddlee.cn/tags/AI/"/>
     
       <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
-      <category term="Neural Network" scheme="https://blog.ddlee.cn/tags/Neural-Network/"/>
+      <category term="CNN" scheme="https://blog.ddlee.cn/tags/CNN/"/>
     
   </entry>
   
@@ -499,7 +495,7 @@
     <link href="https://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/"/>
     <id>https://blog.ddlee.cn/2018/01/06/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/</id>
     <published>2018-01-06T13:19:34.000Z</published>
-    <updated>2018-01-23T13:13:31.520Z</updated>
+    <updated>2018-03-11T16:18:57.563Z</updated>
     
     <content type="html"><![CDATA[<p>本文提出了深度网络的新维度，除了深度、宽度（Channel数）外，作者将在某一层并行transform的路径数提取为第三维度，称为”cardinality”。跟Inception单元不同的是，这些并行路径均共享同一拓扑结构，而非精心设计的卷积核并联。除了并行相同的路径外，也添加了层与层间的shortcut connection。但由于其多路径的设计特征，我将其归为Inception系网络。</p>
 <h3 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h3><p>深度网络结构上的设计已经有三种经典的范式：</p>
@@ -531,11 +527,11 @@
       <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
-    
-      <category term="AI" scheme="https://blog.ddlee.cn/tags/AI/"/>
-    
       <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
+    
+      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
+    
+      <category term="CNN" scheme="https://blog.ddlee.cn/tags/CNN/"/>
     
   </entry>
   
@@ -544,7 +540,7 @@
     <link href="https://blog.ddlee.cn/2018/01/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/"/>
     <id>https://blog.ddlee.cn/2018/01/04/论文笔记-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/</id>
     <published>2018-01-04T13:10:09.000Z</published>
-    <updated>2018-01-09T16:56:34.009Z</updated>
+    <updated>2018-03-11T16:18:13.464Z</updated>
     
     <content type="html"><![CDATA[<p>MobileNets系列可以看做是继Xception之后对Depthwise Separable Convolution的又一推动。利用深度可分离的特征，MobileNets系列引入两个模型精度和大小的超参，在保持相当精度的同时享有非常小的计算消耗，适用于移动端情形，因而被命名为”MobileNets”。</p>
 <h3 id="Depthwise-Separable-Convolution"><a href="#Depthwise-Separable-Convolution" class="headerlink" title="Depthwise Separable Convolution"></a>Depthwise Separable Convolution</h3><p>深度可分离卷积是近期深度网络设计的重要趋势。最早见于L. Sifre的PhD论文Rigid-motion scattering for image classification，其1×1卷积在Inception, ResNet, SqueezeNet等网络中作为降维bottleneck使用。Xception指出，Inception单元本质上假设了跨通道和跨空间相关性的解耦关系，并将这一解耦关系推向极端，用Depthwise Separable Convolution改造了Inception结构。</p>
@@ -572,11 +568,11 @@
       <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
-    
       <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
-      <category term="Neural Network" scheme="https://blog.ddlee.cn/tags/Neural-Network/"/>
+      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
+    
+      <category term="CNN" scheme="https://blog.ddlee.cn/tags/CNN/"/>
     
   </entry>
   
@@ -585,7 +581,7 @@
     <link href="https://blog.ddlee.cn/2018/01/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/"/>
     <id>https://blog.ddlee.cn/2018/01/02/论文笔记-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/</id>
     <published>2018-01-02T13:04:30.000Z</published>
-    <updated>2018-01-23T13:15:00.097Z</updated>
+    <updated>2018-03-11T16:20:38.605Z</updated>
     
     <content type="html"><![CDATA[<p>本篇是keras库作者的文章，对Inception结构进行了改进：用Depth-wise seperable convolution替换了Inception单元中的1×1卷积和3×3卷积。</p>
 <p>文章对Inception结构的评论非常有见地。</p>
@@ -617,11 +613,11 @@
       <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
-    
-      <category term="AI" scheme="https://blog.ddlee.cn/tags/AI/"/>
-    
       <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
+    
+      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
+    
+      <category term="CNN" scheme="https://blog.ddlee.cn/tags/CNN/"/>
     
   </entry>
   
@@ -630,7 +626,7 @@
     <link href="https://blog.ddlee.cn/2017/12/26/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/"/>
     <id>https://blog.ddlee.cn/2017/12/26/论文笔记-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/</id>
     <published>2017-12-26T12:59:02.000Z</published>
-    <updated>2018-01-23T13:14:21.300Z</updated>
+    <updated>2018-03-11T16:17:12.430Z</updated>
     
     <content type="html"><![CDATA[<p>在15年，ResNet成为那年最耀眼的卷积网络结构，skip-connection的结构也成为避不开的考虑选项。Inception系列也参考ResNet更新了自己的结构。同时推出了第四代和跟ResNet的结合版：Inception-v4和Inception-ResNet。</p>
 <p>然而，这是一篇几乎都是图的论文。</p>
@@ -653,11 +649,11 @@
       <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
-    
       <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
-      <category term="Neural Network" scheme="https://blog.ddlee.cn/tags/Neural-Network/"/>
+      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
+    
+      <category term="CNN" scheme="https://blog.ddlee.cn/tags/CNN/"/>
     
   </entry>
   
@@ -666,7 +662,7 @@
     <link href="https://blog.ddlee.cn/2017/12/24/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/"/>
     <id>https://blog.ddlee.cn/2017/12/24/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/</id>
     <published>2017-12-24T13:55:22.000Z</published>
-    <updated>2018-01-09T16:56:34.010Z</updated>
+    <updated>2018-03-11T16:19:55.636Z</updated>
     
     <content type="html"><![CDATA[<p>这篇文章偏综述和实验报告的性质，前几个部分对检测模型有不错的概括，重头在实验结果部分，实验细节也描述的比较清楚，可以用来参考。</p>
 <p>文章将检测模型分为三种元结构：Faster-RCNN、R-FCN和SSD，将特征提取网络网络独立出来作为元结构的一个部件，并松动了Proposal个数、输入图片尺寸，生成Feature map的大小等作为超参，并行实验，探索精度和速度方面的trade-off。</p>
@@ -726,7 +722,7 @@
       <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
       <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
     
@@ -739,7 +735,7 @@
     <link href="https://blog.ddlee.cn/2017/12/22/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/"/>
     <id>https://blog.ddlee.cn/2017/12/22/论文笔记-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/</id>
     <published>2017-12-22T13:55:36.000Z</published>
-    <updated>2018-01-09T16:56:34.011Z</updated>
+    <updated>2018-03-11T16:17:51.661Z</updated>
     
     <content type="html"><![CDATA[<p>文章指出两阶段检测器通常在生成Proposal后进行分类的“头”(head)部分进行密集的计算，如ResNet为基础网络的Faster-RCNN将整个stage5（或两个FC）放在RCNN部分， RFCN要生成一个具有随类别数线性增长的channel数的Score map，这些密集计算正是两阶段方法在精度上领先而在推断速度上难以满足实时要求的原因。</p>
 <p>针对这两种元结构(Faster-RCNN和RFCN)，文章提出了“头”轻量化方法，试图在保持精度的同时又能减少冗余的计算量，从而实现精度和速度的Trade-off。</p>
@@ -769,7 +765,7 @@
       <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
       <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
     
@@ -782,7 +778,7 @@
     <link href="https://blog.ddlee.cn/2017/12/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-You-Only-Look-Once-Unified-Real-Time-Object-Detection/"/>
     <id>https://blog.ddlee.cn/2017/12/20/论文笔记-You-Only-Look-Once-Unified-Real-Time-Object-Detection/</id>
     <published>2017-12-20T13:38:31.000Z</published>
-    <updated>2018-01-09T16:56:34.010Z</updated>
+    <updated>2018-03-11T16:20:52.820Z</updated>
     
     <content type="html"><![CDATA[<p>YOLO是单阶段方法的开山之作。它将检测任务表述成一个统一的、端到端的回归问题，并且以只处理一次图片同时得到位置和分类而得名。</p>
 <p>YOLO的主要优点：</p>
@@ -816,7 +812,7 @@
       <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
       <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
     
@@ -829,7 +825,7 @@
     <link href="https://blog.ddlee.cn/2017/12/16/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Rethinking-the-Inception-Architecture-for-Computer-Vision/"/>
     <id>https://blog.ddlee.cn/2017/12/16/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/</id>
     <published>2017-12-16T12:53:29.000Z</published>
-    <updated>2018-01-23T13:14:43.796Z</updated>
+    <updated>2018-03-11T16:19:32.691Z</updated>
     
     <content type="html"><![CDATA[<p>本文是作者推进inception结构的第2.5步。在更早的文章里，同一作者提出Batch Normalization并且用来改进了Inception结构，称为Inception-BN。而在这篇文章里，作者提出了Inception-v2和Inception-v3，两者共享同一网络结构，v3版本相比v2版本加入了RMSProp，Label Smoothing等技巧。</p>
 <p>文章表述了Inception系列的几个设计原则，并根据这些原则改进了GoogLeNet的结构。</p>
@@ -877,11 +873,11 @@
       <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
-    
       <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
-      <category term="Neural Network" scheme="https://blog.ddlee.cn/tags/Neural-Network/"/>
+      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
+    
+      <category term="CNN" scheme="https://blog.ddlee.cn/tags/CNN/"/>
     
   </entry>
   
@@ -890,7 +886,7 @@
     <link href="https://blog.ddlee.cn/2017/12/12/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-SSD-Single-Shot-MultiBox-Detector/"/>
     <id>https://blog.ddlee.cn/2017/12/12/论文笔记-SSD-Single-Shot-MultiBox-Detector/</id>
     <published>2017-12-12T13:37:56.000Z</published>
-    <updated>2018-01-09T16:56:34.010Z</updated>
+    <updated>2018-03-11T16:20:03.010Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>SSD是对YOLO的改进，其达到跟两阶段方法相当的精度，又保持较快的运行速度。</p>
 <h2 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h2><p><img src="https://static.ddlee.cn/static/img/论文笔记-SSD-Single-Shot-MultiBox-Detector/arch.jpg" alt="arch"></p>
@@ -913,7 +909,7 @@
       <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
       <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
     
@@ -926,7 +922,7 @@
     <link href="https://blog.ddlee.cn/2017/12/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Feature-Pyramid-Networks-for-Object-Detection/"/>
     <id>https://blog.ddlee.cn/2017/12/07/论文笔记-Feature-Pyramid-Networks-for-Object-Detection/</id>
     <published>2017-12-07T13:55:59.000Z</published>
-    <updated>2018-01-09T16:56:34.011Z</updated>
+    <updated>2018-03-11T16:16:43.443Z</updated>
     
     <content type="html"><![CDATA[<p>对图片信息的理解常常关系到对位置和规模上不变性的建模。在较为成功的图片分类模型中，Max-Pooling这一操作建模了位置上的不变性：从局部中挑选最大的响应，这一响应在局部的位置信息就被忽略掉了。而在规模不变性的方向上，添加不同大小感受野的卷积核（VGG），用小卷积核堆叠感受较大的范围（GoogLeNet），自动选择感受野的大小（Inception）等结构也展现了其合理的一面。</p>
 <p>回到检测任务，与分类任务不同的是，检测所面临的物体规模问题是跨类别的、处于同一语义场景中的。</p>
@@ -952,7 +948,7 @@
       <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
       <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
     
@@ -965,7 +961,7 @@
     <link href="https://blog.ddlee.cn/2017/12/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-R-FCN-Object-Detection-via-Region-based-Fully-Convolutinal-Networks/"/>
     <id>https://blog.ddlee.cn/2017/12/07/论文笔记-R-FCN-Object-Detection-via-Region-based-Fully-Convolutinal-Networks/</id>
     <published>2017-12-07T13:55:48.000Z</published>
-    <updated>2018-01-09T16:56:34.011Z</updated>
+    <updated>2018-03-11T16:19:21.644Z</updated>
     
     <content type="html"><![CDATA[<p>文章指出了检测任务之前的框架存在不自然的设计，即全卷积的特征提取部分+全连接的分类器，而表现最好的图像分类器都是全卷积的结构（ResNet等），这一点是由分类任务的平移不变性和检测任务的平移敏感性之间的矛盾导致的。换句话说，检测模型采用了分类模型的特征提取器，丢失了位置信息。这篇文章提出采用“位置敏感分数图”的方法解决这一问题。</p>
 <h3 id="Position-sensitive-score-maps-amp-Position-sensitive-RoI-Pooling"><a href="#Position-sensitive-score-maps-amp-Position-sensitive-RoI-Pooling" class="headerlink" title="Position-sensitive score maps &amp; Position-sensitive RoI Pooling"></a>Position-sensitive score maps &amp; Position-sensitive RoI Pooling</h3><p>位置敏感分数图的生成有两个重要操作，一是生成更“厚”的feature map，二是在RoI Pooling时选择性地输入feature map。</p>
@@ -991,7 +987,7 @@
       <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
     
     
-      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
+      <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
       <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
     
