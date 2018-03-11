@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.ddlee.cn/"/>
-  <updated>2018-03-11T16:08:40.081Z</updated>
+  <updated>2018-03-11T16:35:11.511Z</updated>
   <id>https://blog.ddlee.cn/</id>
   
   <author>
@@ -16,11 +16,54 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>目标检测任务表述与模型基本结构</title>
+    <link href="https://blog.ddlee.cn/2018/03/05/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%BB%BB%E5%8A%A1%E8%A1%A8%E8%BF%B0%E4%B8%8E%E6%A8%A1%E5%9E%8B%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/"/>
+    <id>https://blog.ddlee.cn/2018/03/05/目标检测任务表述与模型基本结构/</id>
+    <published>2018-03-04T16:34:31.000Z</published>
+    <updated>2018-03-11T16:35:11.511Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文节选自博主通过格灵深瞳机构号发表在知乎上的文章：<a href="https://zhuanlan.zhihu.com/p/34142321" target="_blank" rel="external">干货 | 目标检测入门，看这篇就够了</a>。</p>
+<h2 id="目标检测的任务表述"><a href="#目标检测的任务表述" class="headerlink" title="目标检测的任务表述"></a>目标检测的任务表述</h2><p>如何从图像中解析出可供计算机理解的信息，是机器视觉的中心问题。深度学习模型由于其强大的表示能力，加之数据量的积累和计算力的进步，成为机器视觉的热点研究方向。</p>
+<p>那么，如何理解一张图片？根据后续任务的需要，有三个主要的层次。</p>
+<p><img src="https://static.ddlee.cn/static/img/目标检测任务表述与模型基本结构/cv.jpg" alt="cv"> <em>图像理解的三个层次</em></p>
+<p>一是分类（Classification），即是将图像结构化为某一类别的信息，用事先确定好的类别(string)或实例ID来描述图片。这一任务是最简单、最基础的图像理解任务，也是深度学习模型最先取得突破和实现大规模应用的任务。其中，ImageNet是最权威的评测集，每年的ILSVRC催生了大量的优秀深度网络结构，为其他任务提供了基础。在应用领域，人脸、场景的识别等都可以归为分类任务。</p>
+<p>二是检测（Detection）。分类任务关心整体，给出的是整张图片的内容描述，而检测则关注特定的物体目标，要求同时获得这一目标的类别信息和位置信息。相比分类，检测给出的是对图片前景和背景的理解，我们需要从背景中分离出感兴趣的目标，并确定这一目标的描述（类别和位置），因而，检测模型的输出是一个列表，列表的每一项使用一个数据组给出检出目标的类别和位置（常用矩形检测框的坐标表示）。</p>
+<p>三是分割（Segmentation）。分割包括语义分割（semantic segmentation）和实例分割（instance segmentation），前者是对前背景分离的拓展，要求分离开具有不同语义的图像部分，而后者是检测任务的拓展，要求描述出目标的轮廓（相比检测框更为精细）。分割是对图像的像素级描述，它赋予每个像素类别（实例）意义，适用于理解要求较高的场景，如无人驾驶中对道路和非道路的分割。</p>
+<h2 id="检测模型基本特点"><a href="#检测模型基本特点" class="headerlink" title="检测模型基本特点"></a>检测模型基本特点</h2><p>深度学习方法主导下的检测模型，可以分为两阶段（two-stage）和单阶段（one-stage）。</p>
+<p><img src="https://static.ddlee.cn/static/img/目标检测任务表述与模型基本结构/faster-rcnn-arch.png" alt="faster-rcnn-arch"> <em>两阶段检测模型Pipeline，<a href="https://tryolabs.com/blog/2018/01/18/faster-r-cnn-down-the-rabbit-hole-of-modern-object-detection/" target="_blank" rel="external">来源</a></em></p>
+<p>检测模型整体上由基础网络（Backbone Network）和检测头部（Detection Head）构成。前者作为特征提取器，给出图像不同大小、不同抽象层次的表示；后者则依据这些表示和监督信息学习类别和位置关联。检测头部负责的类别预测和位置回归两个任务常常是并行进行的，构成多任务的损失进行联合训练。</p>
+<p><img src="https://static.ddlee.cn/static/img/目标检测任务表述与模型基本结构/faster-rcnn-head.png" alt="faster-rcnn-head"> <em>检测模型头部并行的分支，<a href="https://tryolabs.com/blog/2018/01/18/faster-r-cnn-down-the-rabbit-hole-of-modern-object-detection/" target="_blank" rel="external">来源</a></em></p>
+<p>相比单阶段，两阶段检测模型通常含有一个串行的头部结构，即完成前背景分类和回归后，把中间结果作为RCNN头部的输入再进行一次多分类和位置回归。这种设计带来了一些优点：</p>
+<ul>
+<li>对检测任务的解构，先进行前背景的分类，再进行物体的分类，这种解构使得监督信息在不同阶段对网络参数的学习进行指导</li>
+<li>RPN网络为RCNN网络提供良好的先验，并有机会整理样本的比例，减轻RCNN网络的学习负担</li>
+</ul>
+<p>这种设计的缺点也很明显：中间结果常常带来空间开销，而串行的方式也使得推断速度无法跟单阶段相比；级联的位置回归则会导致RCNN部分的重复计算（如两个RoI有重叠）。</p>
+<p>另一方面，单阶段模型只有一次类别预测和位置回归，卷积运算的共享程度更高，拥有更快的速度和更小的内存占用。读者将会在接下来的文章中看到，两种类型的模型也在互相吸收彼此的优点，这也使得两者的界限更为模糊。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文节选自博主通过格灵深瞳机构号发表在知乎上的文章：&lt;a href=&quot;https://zhuanlan.zhihu.com/p/34142321&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;干货 | 目标检测入门，看这篇就够了&lt;/a&gt;。&lt;/p&gt;
+&lt;h2 
+    
+    </summary>
+    
+      <category term="AI" scheme="https://blog.ddlee.cn/categories/AI/"/>
+    
+    
+      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
+    
+  </entry>
+  
+  <entry>
     <title>目标检测常用评测集：Pascal VOC, MS COCO, Cityscapes</title>
-    <link href="https://blog.ddlee.cn/2018/03/03/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%B8%B8%E7%94%A8%E8%AF%84%E6%B5%8B%E9%9B%86%EF%BC%9APascal-VOC-MS-COCO-Cityscapes/"/>
-    <id>https://blog.ddlee.cn/2018/03/03/目标检测常用评测集：Pascal-VOC-MS-COCO-Cityscapes/</id>
-    <published>2018-03-02T16:08:16.000Z</published>
-    <updated>2018-03-11T16:08:40.081Z</updated>
+    <link href="https://blog.ddlee.cn/2018/03/05/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%B8%B8%E7%94%A8%E8%AF%84%E6%B5%8B%E9%9B%86%EF%BC%9APascal-VOC-MS-COCO-Cityscapes/"/>
+    <id>https://blog.ddlee.cn/2018/03/05/目标检测常用评测集：Pascal-VOC-MS-COCO-Cityscapes/</id>
+    <published>2018-03-04T16:08:16.000Z</published>
+    <updated>2018-03-11T16:35:21.651Z</updated>
     
     <content type="html"><![CDATA[<p>本文节选自博主通过格灵深瞳公众号发表于知乎的文章：<a href="https://zhuanlan.zhihu.com/p/34179420" target="_blank" rel="external">目标检测入门（二）：模型的评测与训练技巧
 </a>。</p>
@@ -303,9 +346,9 @@
     
       <category term="Software" scheme="https://blog.ddlee.cn/tags/Software/"/>
     
-      <category term="Chrome" scheme="https://blog.ddlee.cn/tags/Chrome/"/>
-    
       <category term="Digital Life" scheme="https://blog.ddlee.cn/tags/Digital-Life/"/>
+    
+      <category term="Chrome" scheme="https://blog.ddlee.cn/tags/Chrome/"/>
     
   </entry>
   
@@ -397,11 +440,11 @@
       <category term="Linux" scheme="https://blog.ddlee.cn/categories/Linux/"/>
     
     
+      <category term="Digital Life" scheme="https://blog.ddlee.cn/tags/Digital-Life/"/>
+    
       <category term="Linux" scheme="https://blog.ddlee.cn/tags/Linux/"/>
     
       <category term="OS" scheme="https://blog.ddlee.cn/tags/OS/"/>
-    
-      <category term="Digital Life" scheme="https://blog.ddlee.cn/tags/Digital-Life/"/>
     
   </entry>
   
@@ -450,9 +493,9 @@
     
       <category term="Software" scheme="https://blog.ddlee.cn/tags/Software/"/>
     
-      <category term="Linux" scheme="https://blog.ddlee.cn/tags/Linux/"/>
-    
       <category term="Chrome OS" scheme="https://blog.ddlee.cn/tags/Chrome-OS/"/>
+    
+      <category term="Linux" scheme="https://blog.ddlee.cn/tags/Linux/"/>
     
   </entry>
   
@@ -942,45 +985,6 @@
     <summary type="html">
     
       &lt;p&gt;对图片信息的理解常常关系到对位置和规模上不变性的建模。在较为成功的图片分类模型中，Max-Pooling这一操作建模了位置上的不变性：从局部中挑选最大的响应，这一响应在局部的位置信息就被忽略掉了。而在规模不变性的方向上，添加不同大小感受野的卷积核（VGG），用小卷积核堆叠感
-    
-    </summary>
-    
-      <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
-    
-    
-      <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
-    
-      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
-    
-      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>[论文笔记]R-FCN: Object Detection via Region-based Fully Convolutinal Networks</title>
-    <link href="https://blog.ddlee.cn/2017/12/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-R-FCN-Object-Detection-via-Region-based-Fully-Convolutinal-Networks/"/>
-    <id>https://blog.ddlee.cn/2017/12/07/论文笔记-R-FCN-Object-Detection-via-Region-based-Fully-Convolutinal-Networks/</id>
-    <published>2017-12-07T13:55:48.000Z</published>
-    <updated>2018-03-11T16:19:21.644Z</updated>
-    
-    <content type="html"><![CDATA[<p>文章指出了检测任务之前的框架存在不自然的设计，即全卷积的特征提取部分+全连接的分类器，而表现最好的图像分类器都是全卷积的结构（ResNet等），这一点是由分类任务的平移不变性和检测任务的平移敏感性之间的矛盾导致的。换句话说，检测模型采用了分类模型的特征提取器，丢失了位置信息。这篇文章提出采用“位置敏感分数图”的方法解决这一问题。</p>
-<h3 id="Position-sensitive-score-maps-amp-Position-sensitive-RoI-Pooling"><a href="#Position-sensitive-score-maps-amp-Position-sensitive-RoI-Pooling" class="headerlink" title="Position-sensitive score maps &amp; Position-sensitive RoI Pooling"></a>Position-sensitive score maps &amp; Position-sensitive RoI Pooling</h3><p>位置敏感分数图的生成有两个重要操作，一是生成更“厚”的feature map，二是在RoI Pooling时选择性地输入feature map。</p>
-<p><img src="https://static.ddlee.cn/static/img/论文笔记-R-FCN-Object-Detection-via-Region-based-Fully-Convolutinal-Networks/rfcn.png" alt="arch"></p>
-<p>Faster R-CNN中，经过RPN得到RoI，转化成分类任务，还加入了一定量的卷积操作（ResNet中的conv5部分），而这一部分卷积操作是不能共享的。R-FCN则着眼于全卷积结构，利用卷积操作在Channel这一维度上的自由性，赋予其位置敏感的意义。下面是具体的操作：</p>
-<ul>
-<li>在全卷积网络的最后一层，生成k^2(C+1)个Channel的Feature map，其中C为类别数，k^2代表k×k网格，用于分别检测目标物体的k×k个部分。即是用不同channel的feature map代表物体的不同局部（如左上部分，右下部分）。</li>
-<li>将RPN网络得到的Proposal映射到上一步得到的feature map（厚度为k×k×(C+1)，）后，相应的，将RoI等分为k×k个bin，对第(i,j)个bin，仅考虑对应(i,j)位置的(C+1)个feature map，进行如下计算：其中(x0,y0)是这个RoI的锚点，得到的即是(i,j)号bin对C类别的相应分数。</li>
-<li>经过上一步，每个RoI得到的结果是k^2(C+1)大小的分数张量，k×k编码着物体的局部分数信息，进行vote（平均）后得到(C+1)维的分数向量，再接入softmax得到每一类的概率。</li>
-</ul>
-<p>上面第二步操作中“仅选取第(i, j)号feature map”是位置信息产生意义的关键。</p>
-<p>这样设计的网络结构，所有可学习的参数都分布在可共享的卷积层，因而在训练和测试性能上均有提升。</p>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>R-FCN是对Faster R-CNN结构上的改进，部分地解决了位置不变性和位置敏感性的矛盾。通过最大化地共享卷积参数，使得在精度相当的情况下训练和测试效率都有了很大的提升。</p>
-<p>论文链接：<a href="https://arxiv.org/abs/1605.06409" target="_blank" rel="external">https://arxiv.org/abs/1605.06409</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;文章指出了检测任务之前的框架存在不自然的设计，即全卷积的特征提取部分+全连接的分类器，而表现最好的图像分类器都是全卷积的结构（ResNet等），这一点是由分类任务的平移不变性和检测任务的平移敏感性之间的矛盾导致的。换句话说，检测模型采用了分类模型的特征提取器，丢失了位置信息
     
     </summary>
     
