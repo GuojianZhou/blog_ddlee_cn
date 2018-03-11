@@ -4,6 +4,51 @@
   
     
     <entry>
+      <title><![CDATA[[论文笔记]YOLO9000: Better, Faster, Stronger]]></title>
+      <url>https://blog.ddlee.cn/2018/03/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-YOLO9000-Better-Faster-Stronger/</url>
+      <content type="html"><![CDATA[<p><a href="https://arxiv.org/1612.08242" target="_blank" rel="external">YOLO9000: Better, Faster, Stronger</a></p>
+<p>在这篇文章里，单阶段检测模型的先驱工作YOLO迎来了全面的更新：</p>
+<ol>
+<li>在卷积层添加BN，舍弃Dropout</li>
+<li>更高尺寸的输入</li>
+<li>使用Anchor Boxes，并在头部运用卷积替代全连接层</li>
+<li>使用聚类方法得到更好的先验，用于生成Anchor Boxes</li>
+<li>参考Fast R-CNN的方法对位置坐标进行log/exp变换使坐标回归的损失保持在合适的数量级</li>
+<li>passthrough层：类似ResNet的skip-connection，将不同尺寸的feature map拼接到一起</li>
+<li>多尺度训练</li>
+<li>更高效的网络Darknet-19，类似VGG的网络，在ImageNet上以较少的参数量达到跟当前最佳相当的精度</li>
+</ol>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-YOLO9000-Better-Faster-Stronger/yolov2.jpg" alt="yolov2"></p>
+<p>此次改进后，YOLOv2吸收了很多工作的优点，达到跟SSD相当的精度和更快的推断速度。</p>
+<p>作者还介绍了一种新的联合训练方式：同时训练分类任务和检测任务，使得检测模型能够泛化到检测训练集之外的目标类上。</p>
+<p>YOLO9000使用了ImageNet和COCO数据集联合训练，在合并两者的标签时，根据WordNet的继承关系构建了了树状的类别预测图：</p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-YOLO9000-Better-Faster-Stronger/yolo9000_tree.jpg" alt="wordtree"></p>
+<p>类似条件概率的方式计算每个子标签的概率值，超出一定的阈值时则选定该类作为输出，训练时也仅对其路径上的类别进行损失的计算和BP。</p>
+<p>YOLO9000为我们提供了一种泛化检测模型的训练方式，文章的结果显示YOLO9000在没有COCO标注的类别上有约20的mAP表现，能够检测的物体类别超过9000种。当然，其泛化性能也受检测标注类别的制约，在有类别继承关系的类上表现不错，而在完全没有语义联系的类上表现很差。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Papers </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> Papers </tag>
+            
+            <tag> Computer Vision </tag>
+            
+            <tag> Object Detection </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[PyCharm+PipEnv本地Python开发环境配置]]></title>
       <url>https://blog.ddlee.cn/2018/02/12/PyCharm-PipEnv%E6%9C%AC%E5%9C%B0Python%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
       <content type="html"><![CDATA[<p>本文记录基于PyCharm的Python工作环境配置，最终实现的效果是本地修改，远程调试，运行环境可迁移。</p>
@@ -37,9 +82,9 @@
         
         <tags>
             
-            <tag> Python </tag>
-            
             <tag> Software </tag>
+            
+            <tag> Python </tag>
             
         </tags>
         
@@ -158,9 +203,9 @@
         
         <tags>
             
-            <tag> Software </tag>
-            
             <tag> Chrome </tag>
+            
+            <tag> Software </tag>
             
         </tags>
         
@@ -211,9 +256,9 @@
 </ul>
 <h2 id="开发环境配置-Environment-Configuration"><a href="#开发环境配置-Environment-Configuration" class="headerlink" title="开发环境配置 Environment Configuration"></a>开发环境配置 Environment Configuration</h2><p>这一部分完成自己开发环境的配置。</p>
 <h4 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h4><p>SSH key: ssh-keygen and ssh-add, git config name&amp;email</p>
-<h4 id="Python-Annaconda"><a href="#Python-Annaconda" class="headerlink" title="Python(Annaconda)"></a>Python(Annaconda)</h4><p>(pypi: 修改 ~/.config/pip/pip.conf (Linux), %APPDATA%\pip\pip.ini (Windows 10) 或 $HOME/Library/Application Support/pip/pip.conf (macOS) (没有就创建一个)， 修改 index-url至tuna，例如<br>[global]<br>index-url = <a href="https://pypi.tuna.tsinghua.edu.cn/simple" target="_blank" rel="external">https://pypi.tuna.tsinghua.edu.cn/simple</a> )<br>(conda TUNA 还提供了 Anaconda 仓库的镜像，运行以下命令:<br>conda config —add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</a></p>
-<p>conda config —add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</a></p>
-<p>conda config —set show_channel_urls yes<br>即可添加 Anaconda Python 免费仓库。)</p>
+<h4 id="Python-Annaconda"><a href="#Python-Annaconda" class="headerlink" title="Python(Annaconda)"></a>Python(Annaconda)</h4><p>(pypi: 修改 ~/.config/pip/pip.conf (Linux), %APPDATA%\pip\pip.ini (Windows 10) 或 $HOME/Library/Application Support/pip/pip.conf (macOS) (没有就创建一个)， 修改 index-url至tuna，例如<br>[global]<br>index-url = <a href="https://pypi.tuna.tsinghua.edu.cn/simple" target="_blank" rel="external">https://pypi.tuna.tsinghua.edu.cn/simple</a> )<br>(conda TUNA 还提供了 Anaconda 仓库的镜像，运行以下命令:<br>conda config –add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</a></p>
+<p>conda config –add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</a></p>
+<p>conda config –set show_channel_urls yes<br>即可添加 Anaconda Python 免费仓库。)</p>
 <h4 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h4><p>install: <a href="https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/</a></p>
 <p>To verify: sudo docker run hello-world</p>
 <p>mirror: <a href="https://www.docker-cn.com/registry-mirror" target="_blank" rel="external">https://www.docker-cn.com/registry-mirror</a><br>chmod 755 /etc/docker<br>为了永久性保留更改，您可以修改 /etc/docker/daemon.json 文件并添加上 registry-mirrors 键值。<br>{ “registry-mirrors”: [“<a href="https://registry.docker-cn.com" target="_blank" rel="external">https://registry.docker-cn.com</a>“] }<br>修改保存后重启 Docker 以使配置生效</p>
@@ -233,7 +278,7 @@
 <li>Disable intel turbo boost technology: terminal:<br>sudo -i<br>echo “1” | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo<br>exit</li>
 </ul>
 <p>4.tracke-miner-fs bug<br><a href="https://askubuntu.com/questions/346211/tracker-store-and-tracker-miner-fs-eating-up-my-cpu-on-every-startup" target="_blank" rel="external">https://askubuntu.com/questions/346211/tracker-store-and-tracker-miner-fs-eating-up-my-cpu-on-every-startup</a></p>
-<p>echo -e “\nHidden=true\n” | sudo tee —append /etc/xdg/autostart/tracker-extract.desktop /etc/xdg/autostart/tracker-miner-apps.desktop /etc/xdg/autostart/tracker-miner-fs.desktop /etc/xdg/autostart/tracker-miner-user-guides.desktop /etc/xdg/autostart/tracker-store.desktop &gt; /dev/null<br>gsettings set org.freedesktop.Tracker.Miner.Files crawling-interval -2<br>gsettings set org.freedesktop.Tracker.Miner.Files enable-monitors false<br>tracker reset —hard</p>
+<p>echo -e “\nHidden=true\n” | sudo tee –append /etc/xdg/autostart/tracker-extract.desktop /etc/xdg/autostart/tracker-miner-apps.desktop /etc/xdg/autostart/tracker-miner-fs.desktop /etc/xdg/autostart/tracker-miner-user-guides.desktop /etc/xdg/autostart/tracker-store.desktop &gt; /dev/null<br>gsettings set org.freedesktop.Tracker.Miner.Files crawling-interval -2<br>gsettings set org.freedesktop.Tracker.Miner.Files enable-monitors false<br>tracker reset –hard</p>
 ]]></content>
       
         <categories>
@@ -294,9 +339,9 @@
         
         <tags>
             
-            <tag> Software </tag>
-            
             <tag> Chrome </tag>
+            
+            <tag> Software </tag>
             
             <tag> Geek </tag>
             
@@ -1204,9 +1249,9 @@
         
         <tags>
             
-            <tag> Android </tag>
-            
             <tag> Software </tag>
+            
+            <tag> Android </tag>
             
         </tags>
         
@@ -2860,9 +2905,9 @@ df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
             
             <tag> Python </tag>
             
-            <tag> Data Science </tag>
-            
             <tag> Programming </tag>
+            
+            <tag> Data Science </tag>
             
         </tags>
         
@@ -3911,9 +3956,9 @@ server {
         
         <tags>
             
-            <tag> Data Science </tag>
-            
             <tag> Programming </tag>
+            
+            <tag> Data Science </tag>
             
             <tag> R </tag>
             
