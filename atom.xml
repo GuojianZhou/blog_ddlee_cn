@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.ddlee.cn/"/>
-  <updated>2018-03-11T15:56:21.041Z</updated>
+  <updated>2018-03-11T16:08:40.081Z</updated>
   <id>https://blog.ddlee.cn/</id>
   
   <author>
@@ -14,6 +14,52 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>目标检测常用评测集：Pascal VOC, MS COCO, Cityscapes</title>
+    <link href="https://blog.ddlee.cn/2018/03/03/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%B8%B8%E7%94%A8%E8%AF%84%E6%B5%8B%E9%9B%86%EF%BC%9APascal-VOC-MS-COCO-Cityscapes/"/>
+    <id>https://blog.ddlee.cn/2018/03/03/目标检测常用评测集：Pascal-VOC-MS-COCO-Cityscapes/</id>
+    <published>2018-03-02T16:08:16.000Z</published>
+    <updated>2018-03-11T16:08:40.081Z</updated>
+    
+    <content type="html"><![CDATA[<p>本文节选自博主通过格灵深瞳公众号发表于知乎的文章：<a href="https://zhuanlan.zhihu.com/p/34179420" target="_blank" rel="external">目标检测入门（二）：模型的评测与训练技巧
+</a>。</p>
+<h2 id="检测模型的评测指标"><a href="#检测模型的评测指标" class="headerlink" title="检测模型的评测指标"></a>检测模型的评测指标</h2><p>目标检测模型本源上可以用统计推断的框架描述，我们关注其犯第一类错误和第二类错误的概率，通常用准确率和召回率来描述。准确率描述了模型有多准，即在预测为正例的结果中，有多少是真正例；召回率则描述了模型有多全，即在为真的样本中，有多少被我们的模型预测为正例。不同的任务，对两类错误有不同的偏好，常常在某一类错误不多于一定阈值的情况下，努力减少另一类错误。在检测中，mAP（mean Average Precision）作为一个统一的指标将这两种错误兼顾考虑。</p>
+<p>具体地，对于每张图片，检测模型输出多个预测框（常常远超真实框的个数），我们使用IoU（Intersection Over Union，交并比）来标记预测框是否为预测正确。标记完成后，随着预测框的增多，召回率总会提升，在不同的召回率水平下对准确率做平均，即得到AP，最后再对所有类别按其所占比例做平均，即得到mAP。</p>
+<p>在较早的Pascal VOC数据集上，常采用固定的一个IoU阈值（如0.5, 0.75）来计算mAP，现阶段较为权威的MS COCO数据集上，对不同的IoU阈值（0.5-0.95，0.05为步长）分别计算AP，再综合平均，并且给出了不同大小物体分别的AP表现，对定位准确的模型给予奖励并全面地展现不同大小物体上检测算法的性能，更为科学合理。</p>
+<p>在实践中，我们不仅关注检测模型的精度，还关注其运行的速度，常常用FPS（Frame Per Second，每秒帧率）来表示检测模型能够在指定硬件上每秒处理图片的张数。通常来讲，在单块GPU上，两阶段方法的FPS一般在个位数，而单阶段方法可以达到数十。现在检测模型运行的平台并不统一，实践中也不能部署较为昂贵的GPU进行推断。事实上，很多文章并没有严谨讨论其提出模型的速度表现（加了较多的trick以使精度达到SOTA），另外，考虑到目前移动端专用芯片的发展速度和研究进展，速度方面的指标可能较难形成统一的参考标准，需要谨慎看待文章中汇报的测试结果。</p>
+<h2 id="标准评测数据集"><a href="#标准评测数据集" class="headerlink" title="标准评测数据集"></a>标准评测数据集</h2><h3 id="Pascal-VOC（Pascal-Visual-Object-Classes）"><a href="#Pascal-VOC（Pascal-Visual-Object-Classes）" class="headerlink" title="Pascal VOC（Pascal Visual Object Classes）"></a>Pascal VOC（<a href="http://host.robots.ox.ac.uk/pascal/VOC/" target="_blank" rel="external">Pascal Visual Object Classes</a>）</h3><p>自2005年起每年举办一次比赛，最开始只有4类，到2007年扩充为20个类，共有两个常用的版本：2007和2012。学术界常用5k的trainval2007和16k的trainval2012作为训练集（07+12），test2007作为测试集，用10k的trainval2007+test2007和和16k的trainval2012作为训练集（07++12），test2012作为测试集，分别汇报结果。</p>
+<p>Pascal VOC对早期检测工作起到了重要的推动作用，目前提升的空间相对有限，权威评测集的交接棒也逐渐传给了下面要介绍的COCO。</p>
+<h3 id="MS-COCO（Common-Objects-in-COntext）"><a href="#MS-COCO（Common-Objects-in-COntext）" class="headerlink" title="MS COCO（Common Objects in COntext）"></a>MS COCO（<a href="http://cocodataset.org" target="_blank" rel="external">Common Objects in COntext</a>）</h3><p><img src="https://static.ddlee.cn/static/img/目标检测常用评测集：Pascal-VOC-MS-COCO-Cityscapes/coco.png" alt="MS COCO Roadmap，https://places-coco2017.github.io/"> <em>检测任务在COCO数据集上的进展</em></p>
+<p>COCO数据集收集了大量包含常见物体的日常场景图片，并提供像素级的实例标注以更精确地评估检测和分割算法的效果，致力于推动场景理解的研究进展。依托这一数据集，每年举办一次比赛，现已涵盖检测、分割、关键点识别、注释等机器视觉的中心任务，是继ImageNet Chanllenge以来最有影响力的学术竞赛之一。</p>
+<p><img src="https://static.ddlee.cn/static/img/目标检测常用评测集：Pascal-VOC-MS-COCO-Cityscapes/iconic-non-iconic.png" alt="iconic"> <em>iconic与non-iconic图片对比</em></p>
+<p>相比ImageNet，COCO更加偏好目标与其场景共同出现的图片，即non-iconic images。这样的图片能够反映视觉上的语义，更符合图像理解的任务要求。而相对的iconic images则更适合浅语义的图像分类等任务。</p>
+<p>COCO的检测任务共含有80个类，在2014年发布的数据规模分train/val/test分别为80k/40k/40k，学术界较为通用的划分是使用train和35k的val子集作为训练集（trainval35k），使用剩余的val作为测试集（minival），同时向官方的evaluation server提交结果（test-dev）。除此之外，COCO官方也保留一部分test数据作为比赛的评测集。</p>
+<p><img src="https://static.ddlee.cn/static/img/目标检测常用评测集：Pascal-VOC-MS-COCO-Cityscapes/coco-stat.png" alt="dist"> <em>COCO数据集分布</em></p>
+<p>在分布方面，COCO的每个类含有更多实例，分布也较为均衡（上图a），每张图片包含更多类和更多的实例（上图b和c，均为直方图，每张图片平均分别含3.3个类和7.7个实例），相比Pascal VOC，COCO还含有更多的小物体（下图，横轴是物体占图片的比例）。</p>
+<p><img src="https://static.ddlee.cn/static/img/目标检测常用评测集：Pascal-VOC-MS-COCO-Cityscapes/coco-size.png" alt="dist-2"> <em>COCO数据集物体大小分布</em></p>
+<p>如本文第一节所述，COCO提供的评测标准更为精细化，提供的<a href="https://github.com/cocodataset/cocoapi" target="_blank" rel="external">API</a>不仅包含了可视化、评测数据的功能，还有对模型的错误来源分析脚本，能够更清晰地展现算法的不足之处。COCO所建立的这些标准也逐渐被学术界认可，成为通用的评测标准。您可以在<a href="http://cocodataset.org/#detections-leaderboard" target="_blank" rel="external">这里</a>找到目前检测任务的LeaderBoard。</p>
+<p><img src="https://static.ddlee.cn/static/img/目标检测常用评测集：Pascal-VOC-MS-COCO-Cityscapes/coco-error-analysis.jpg" alt="coco-error-breakdown"> <em>错误来源分解，详见<a href="http://cocodataset.org/#detections-eval" target="_blank" rel="external">http://cocodataset.org/#detections-eval</a></em></p>
+<h3 id="Cityscapes"><a href="#Cityscapes" class="headerlink" title="Cityscapes"></a><a href="https://www.cityscapes-dataset.com/" target="_blank" rel="external">Cityscapes</a></h3><p><img src="https://static.ddlee.cn/static/img/目标检测常用评测集：Pascal-VOC-MS-COCO-Cityscapes/cityscapes-example.png" alt="cityscapes"> <em>Cityscapes数据示例</em></p>
+<p>Cityscapes数据集专注于现代城市道路场景的理解，提供了30个类的像素级标注，是自动驾驶方向较为权威的评测集。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本文节选自博主通过格灵深瞳公众号发表于知乎的文章：&lt;a href=&quot;https://zhuanlan.zhihu.com/p/34179420&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;目标检测入门（二）：模型的评测与训练技巧
+&lt;/a&gt;。&lt;/p&gt;
+&lt;h
+    
+    </summary>
+    
+      <category term="AI" scheme="https://blog.ddlee.cn/categories/AI/"/>
+    
+    
+      <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
+    
+  </entry>
   
   <entry>
     <title>[论文笔记]YOLO9000: Better, Faster, Stronger</title>
@@ -57,9 +103,9 @@
     
       <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
-      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
       <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
@@ -90,9 +136,9 @@
     
       <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
     
-      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
       <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
@@ -261,9 +307,9 @@
       <category term="Individual Development" scheme="https://blog.ddlee.cn/categories/Individual-Development/"/>
     
     
-      <category term="Chrome" scheme="https://blog.ddlee.cn/tags/Chrome/"/>
-    
       <category term="Software" scheme="https://blog.ddlee.cn/tags/Software/"/>
+    
+      <category term="Chrome" scheme="https://blog.ddlee.cn/tags/Chrome/"/>
     
   </entry>
   
@@ -406,9 +452,9 @@
       <category term="Linux" scheme="https://blog.ddlee.cn/categories/Linux/"/>
     
     
-      <category term="Chrome" scheme="https://blog.ddlee.cn/tags/Chrome/"/>
-    
       <category term="Software" scheme="https://blog.ddlee.cn/tags/Software/"/>
+    
+      <category term="Chrome" scheme="https://blog.ddlee.cn/tags/Chrome/"/>
     
       <category term="Geek" scheme="https://blog.ddlee.cn/tags/Geek/"/>
     
@@ -682,9 +728,9 @@
     
       <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
       <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
@@ -725,9 +771,9 @@
     
       <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
       <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
@@ -772,9 +818,9 @@
     
       <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
       <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
@@ -869,9 +915,9 @@
     
       <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
       <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
@@ -908,9 +954,9 @@
     
       <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
       <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
+    
+      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
@@ -947,56 +993,9 @@
     
       <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
     
-      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
-    
       <category term="Object Detection" scheme="https://blog.ddlee.cn/tags/Object-Detection/"/>
     
-  </entry>
-  
-  <entry>
-    <title>[论文笔记]Going deeper with convolutions</title>
-    <link href="https://blog.ddlee.cn/2017/11/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Going-deeper-with-convolutions/"/>
-    <id>https://blog.ddlee.cn/2017/11/30/论文笔记-Going-deeper-with-convolutions/</id>
-    <published>2017-11-30T12:39:58.000Z</published>
-    <updated>2018-01-23T13:14:10.606Z</updated>
-    
-    <content type="html"><![CDATA[<p>本作是Inception系列网络的第一篇，提出了Inception单元结构，基于这一结构的GoogLeNet拿下了ILSVRC14分类任务的头名。文章也探讨了网络在不断加深的情况下如何更好地利用计算资源，这一理念也是Inception系列网络的核心。</p>
-<h3 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h3><p>Inception单元的启发主要来自Network in Network结构和Arora等人在神经科学方面的工作。</p>
-<p>提高深度模型的一个简单想法是增加深度，但这样带来过拟合的风险和巨大的计算资源消耗，对数据量和计算力的要求可能会超过网络加深带来的收益。</p>
-<p>解决这些问题的基本思路是使用稀疏连接的网络，而这也跟Arora等人工作中的Hebbian principle吻合：共同激活的神经元常常集聚在一起。换句话说，某一层激活的神经元只向下一层中特定的几个神经元传递激活信号，而向其他神经元几乎不传递信息，即仅有少部分连接是真正有效的，这也是稀疏的含义。</p>
-<p>然而另一方面，现代计算架构对稀疏的计算非常低效，更适合的是密集的计算，这样便产生了矛盾。而Inception单元的提出就是为了用密集的结构来近似稀疏结构，在建模稀疏连接的同时又能利用密集计算的优势。</p>
-<p>很多文章认为inception结构的意义在于将不同大小核的卷积并行连接，然后让网络自行决定采用哪种卷积来提取特征，有些无监督的意味，然后将1×1的卷积解释为降维操作。这种想法有待验证，是否在5×5卷积有较强激活的时候，3×3卷积大部分没有激活，还是两者能够同时有较强的激活？不同的处理阶段这两种卷积核的选择有没有规律？</p>
-<p>在此提出一个个人的理解，欢迎讨论。</p>
-<p>首先是channel的意义。我们知道，卷积之所以有效，是因为它建模了张量数据在空间上的局部相关性，加之Pooling操作，将这些相关性赋予平移不变性（即泛化能力）。而channel则是第三维，它实际上是卷积结构中的隐藏单元，是中间神经元的个数。卷积层在事实上是全连接的：每个Input channel都会和output channel互动，互动的信息只不过从全连接层的weight和bias变成了卷积核的weight。</p>
-<p>这种全连接是冗余的，本质上应是一个稀疏的结构。Inception单元便在channel这个维度上做文章，采用的是类似矩阵分块的思想。</p>
-<p>根据Hebbian principle，跨channel的这些神经元，应是高度相关的，于是有信息压缩的空间，因而使用跨channel的1×1的卷积将它们嵌入到低维的空间里（比如，Inception4a单元的输入channel是512，不同分支的1×1卷积输出channel则是192,96,16和64，见下面GoogLeNet结构表），在这个低维空间里，用密集的全连接建模（即3×5和5×5卷积），它们的输出channel相加也再恢复到原来的输入channel维度（Inception4a分别是192+208+48+64），最后的连接由Concat操作完成（分块矩阵的合并），这样就完成了分块密集矩阵对稀疏矩阵的近似。</p>
-<p>这样来看，3×3和5×5大小的选择并不是本质的，本质的是分块低维嵌入和concat的分治思路。而在ResNeXt的工作中，这里的分块被认为是新的维度（称为cardinality），采用相同的拓扑结构。</p>
-<h3 id="Stacked-Inception-Module"><a href="#Stacked-Inception-Module" class="headerlink" title="Stacked Inception Module"></a>Stacked Inception Module</h3><p>在GoogLeNet中，借鉴了AlexNet和VGG的stack(repeat)策略，将Inception单元重复串联起来，构成基本的特征提取结构。</p>
-<p><img src="https://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/arch.png" alt="arch"></p>
-<h4 id="Dimension-Reduction"><a href="#Dimension-Reduction" class="headerlink" title="Dimension Reduction"></a>Dimension Reduction</h4><p>朴素版本的Inception单元会带来Channel维数的不断增长，加入的1×1卷积则起到低维嵌入的作用，使Inception单元前后channel数保持稳定。</p>
-<p><img src="https://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/inception.png" alt="arch"></p>
-<h3 id="Auxililary-Classifier"><a href="#Auxililary-Classifier" class="headerlink" title="Auxililary Classifier"></a>Auxililary Classifier</h3><p>这里是本文的另一个贡献，将监督信息传入中间的feature map，构成一个整合loss，作者认为这样有助于浅层特征的学习。</p>
-<p><img src="https://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/auxililary.png" alt="arch"></p>
-<h3 id="Architecture-of-GoogLeNet"><a href="#Architecture-of-GoogLeNet" class="headerlink" title="Architecture of GoogLeNet"></a>Architecture of GoogLeNet</h3><p>下面的表显示了GoogLeNet的整体架构，可以留意到Inception单元的堆叠和Channel数在子路径中的变化。NetScope可视化可参见<a href="http://ethereon.github.io/netscope/#/gist/db8754ee4b239920b3df5ab93220a84b" target="_blank" rel="external">GoogLeNet Vis</a>。源文件位于<a href="https://github.com/ddlee96/awesome_cnn" target="_blank" rel="external">awesome_cnn</a>。</p>
-<p><img src="https://static.ddlee.cn/static/img/论文笔记-Going-deeper-with-convolutions/table.png" alt="arch"></p>
-<h3 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h3><p>文章是对NiN思想的继承和推进，不同于AlexNet和VGG，网络的模块化更加凸显，多路径的结构也成为新的网络设计范本，启发了众多后续网络结构的设计。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;本作是Inception系列网络的第一篇，提出了Inception单元结构，基于这一结构的GoogLeNet拿下了ILSVRC14分类任务的头名。文章也探讨了网络在不断加深的情况下如何更好地利用计算资源，这一理念也是Inception系列网络的核心。&lt;/p&gt;
-&lt;h3 id=
-    
-    </summary>
-    
-      <category term="Papers" scheme="https://blog.ddlee.cn/categories/Papers/"/>
-    
-    
-      <category term="Deep Learning" scheme="https://blog.ddlee.cn/tags/Deep-Learning/"/>
-    
-      <category term="Papers" scheme="https://blog.ddlee.cn/tags/Papers/"/>
-    
-      <category term="Neural Network" scheme="https://blog.ddlee.cn/tags/Neural-Network/"/>
+      <category term="Computer Vision" scheme="https://blog.ddlee.cn/tags/Computer-Vision/"/>
     
   </entry>
   
