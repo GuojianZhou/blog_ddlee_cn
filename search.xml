@@ -49,6 +49,37 @@
     </entry>
     
     <entry>
+      <title><![CDATA[[论文笔记]Training Region-based Object Detectors with Online Hard Example Mining]]></title>
+      <url>https://blog.ddlee.cn/2018/02/22/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Training-Region-based-Object-Detectors-with-Online-Hard-Example-Mining/</url>
+      <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1604.03540" target="_blank" rel="external">Training Region-based Object Detectors with Online Hard Example Mining</a></p>
+<h3 id="OHEM-Online-Hard-negative-Example-Mining，在线难例挖掘"><a href="#OHEM-Online-Hard-negative-Example-Mining，在线难例挖掘" class="headerlink" title="OHEM(Online Hard negative Example Mining，在线难例挖掘)"></a>OHEM(Online Hard negative Example Mining，在线难例挖掘)</h3><p>本文是Bootstrapping（自助采样）在深度网络中的应用。两阶段网络由于其多步的特性，在RCNN子网络的计算前会有对RoI的整理过程，早期工作中，Fast R-CNN利用随机上采样和下采样的方法来维持正负样本比例，而本文提出的方法则使得网络具有挑选“好的”正负样本的能力。</p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Training-Region-based-Object-Detectors-with-Online-Hard-Example-Mining/ohem.png" alt="ohem"></p>
+<p>作者提出用R-CNN子网络对RoI Proposal预测的分数来决定每个batch选用的样本，这样，输入R-CNN子网络的RoI Proposal总为其表现不好的样本，提高了监督学习的效率。实际操作中，维护两个完全相同的R-CNN子网络，其中一个只进行前向传播来为RoI Proposal的选择提供指导，另一个则为正常的R-CNN，参与损失的计算并更新权重，并且将权重复制到前者以使两个分支权重同步。</p>
+<p>OHEM以额外的R-CNN子网络的开销来改善RoI Proposal的质量，更有效地利用数据的监督信息，成为两阶段模型提升性能的常用部件之一。</p>
+]]></content>
+      
+        <categories>
+            
+            <category> Papers </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> Deep Learning </tag>
+            
+            <tag> Papers </tag>
+            
+            <tag> Computer Vision </tag>
+            
+            <tag> Object Detection </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[PyCharm+PipEnv本地Python开发环境配置]]></title>
       <url>https://blog.ddlee.cn/2018/02/12/PyCharm-PipEnv%E6%9C%AC%E5%9C%B0Python%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</url>
       <content type="html"><![CDATA[<p>本文记录基于PyCharm的Python工作环境配置，最终实现的效果是本地修改，远程调试，运行环境可迁移。</p>
@@ -82,9 +113,9 @@
         
         <tags>
             
-            <tag> Software </tag>
-            
             <tag> Python </tag>
+            
+            <tag> Software </tag>
             
         </tags>
         
@@ -2905,9 +2936,9 @@ df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
             
             <tag> Python </tag>
             
-            <tag> Programming </tag>
-            
             <tag> Data Science </tag>
+            
+            <tag> Programming </tag>
             
         </tags>
         
@@ -3956,9 +3987,9 @@ server {
         
         <tags>
             
-            <tag> Programming </tag>
-            
             <tag> Data Science </tag>
+            
+            <tag> Programming </tag>
             
             <tag> R </tag>
             
