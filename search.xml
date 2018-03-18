@@ -81,6 +81,10 @@
             
             <tag> Computer Vision </tag>
             
+            <tag> R-CNN </tag>
+            
+            <tag> YOLO </tag>
+            
         </tags>
         
     </entry>
@@ -124,12 +128,14 @@
             
             <tag> Computer Vision </tag>
             
+            <tag> YOLO </tag>
+            
         </tags>
         
     </entry>
     
     <entry>
-      <title><![CDATA[[论文笔记]Training Region-based Object Detectors with Online Hard Example Mining]]></title>
+      <title><![CDATA[[论文笔记](OHEM)Training Region-based Object Detectors with Online Hard Example Mining]]></title>
       <url>https://blog.ddlee.cn/2018/02/22/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Training-Region-based-Object-Detectors-with-Online-Hard-Example-Mining/</url>
       <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1604.03540" target="_blank" rel="external">Training Region-based Object Detectors with Online Hard Example Mining</a></p>
 <h3 id="OHEM-Online-Hard-negative-Example-Mining，在线难例挖掘"><a href="#OHEM-Online-Hard-negative-Example-Mining，在线难例挖掘" class="headerlink" title="OHEM(Online Hard negative Example Mining，在线难例挖掘)"></a>OHEM(Online Hard negative Example Mining，在线难例挖掘)</h3><p>本文是Bootstrapping（自助采样）在深度网络中的应用。两阶段网络由于其多步的特性，在RCNN子网络的计算前会有对RoI的整理过程，早期工作中，Fast R-CNN利用随机上采样和下采样的方法来维持正负样本比例，而本文提出的方法则使得网络具有挑选“好的”正负样本的能力。</p>
@@ -200,7 +206,7 @@
     </entry>
     
     <entry>
-      <title><![CDATA[[论文笔记]Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation]]></title>
+      <title><![CDATA[[论文笔记](MobileNet V2)Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation]]></title>
       <url>https://blog.ddlee.cn/2018/01/18/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/</url>
       <content type="html"><![CDATA[<p>本文是MobileNets的第二版。<a href="https://blog.ddlee.cn/2018/01/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/">第一版</a>中，MobileNets全面应用了Depth-wise Seperable Convolution并提出两个超参来控制网络容量，在保持移动端可接受的模型复杂性的基础上达到了相当的精度。而第二版中，MobileNets应用了新的单元：Inverted residual with linear bottleneck，主要的改动是添加了线性Bottleneck和将skip-connection转移到低维bottleneck层。</p>
 <h3 id="Intuition"><a href="#Intuition" class="headerlink" title="Intuition"></a>Intuition</h3><p>本篇比较丰富的地方是对网络中bottleneck结构的探讨。</p>
@@ -255,6 +261,8 @@
             <tag> Computer Vision </tag>
             
             <tag> CNN </tag>
+            
+            <tag> Mobile </tag>
             
         </tags>
         
@@ -315,6 +323,8 @@
             <tag> Software </tag>
             
             <tag> Digital Life </tag>
+            
+            <tag> Recommendation </tag>
             
         </tags>
         
@@ -459,7 +469,7 @@
     </entry>
     
     <entry>
-      <title><![CDATA[[论文笔记]Densely Connected Convolutional Networks]]></title>
+      <title><![CDATA[[论文笔记](DenseNet)Densely Connected Convolutional Networks]]></title>
       <url>https://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Densely-Connected-Convolutional-Networks/</url>
       <content type="html"><![CDATA[<p>DenseNet将shortcut-connection的思路发挥到极致。在一个DenseBlock内部，每一层的输出均跟后面的层建立shortcut，特别需要注意的是，不同于ResNet中的相加，DenseNet连接shortcut的方式是Concat，这样越深的层则输入channel数越大。</p>
 <h3 id="DenseNet"><a href="#DenseNet" class="headerlink" title="DenseNet"></a>DenseNet</h3><p><img src="https://static.ddlee.cn/static/img/论文笔记-Densely-Connected-Convolutional-Networks/arch.png" alt="arch"></p>
@@ -491,7 +501,7 @@
     </entry>
     
     <entry>
-      <title><![CDATA[[论文笔记]Aggregated Residual Transformations for Deep Neural Networks]]></title>
+      <title><![CDATA[[论文笔记](ResNeXt)Aggregated Residual Transformations for Deep Neural Networks]]></title>
       <url>https://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/</url>
       <content type="html"><![CDATA[<p>本文提出了深度网络的新维度，除了深度、宽度（Channel数）外，作者将在某一层并行transform的路径数提取为第三维度，称为”cardinality”。跟Inception单元不同的是，这些并行路径均共享同一拓扑结构，而非精心设计的卷积核并联。除了并行相同的路径外，也添加了层与层间的shortcut connection。但由于其多路径的设计特征，我将其归为Inception系网络。</p>
 <h3 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h3><p>深度网络结构上的设计已经有三种经典的范式：</p>
@@ -568,6 +578,8 @@
             
             <tag> CNN </tag>
             
+            <tag> Mobile </tag>
+            
         </tags>
         
     </entry>
@@ -608,6 +620,8 @@
             <tag> Computer Vision </tag>
             
             <tag> CNN </tag>
+            
+            <tag> Inception </tag>
             
         </tags>
         
@@ -795,12 +809,14 @@
             
             <tag> Computer Vision </tag>
             
+            <tag> YOLO </tag>
+            
         </tags>
         
     </entry>
     
     <entry>
-      <title><![CDATA[[论文笔记]Rethinking the Inception Architecture for Computer Vision]]></title>
+      <title><![CDATA[[论文笔记](Inception V3)Rethinking the Inception Architecture for Computer Vision]]></title>
       <url>https://blog.ddlee.cn/2017/12/16/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Rethinking-the-Inception-Architecture-for-Computer-Vision/</url>
       <content type="html"><![CDATA[<p>本文是作者推进inception结构的第2.5步。在更早的文章里，同一作者提出Batch Normalization并且用来改进了Inception结构，称为Inception-BN。而在这篇文章里，作者提出了Inception-v2和Inception-v3，两者共享同一网络结构，v3版本相比v2版本加入了RMSProp，Label Smoothing等技巧。</p>
 <p>文章表述了Inception系列的几个设计原则，并根据这些原则改进了GoogLeNet的结构。</p>
@@ -854,6 +870,8 @@
             
             <tag> CNN </tag>
             
+            <tag> Inception </tag>
+            
         </tags>
         
     </entry>
@@ -893,7 +911,7 @@
     </entry>
     
     <entry>
-      <title><![CDATA[[论文笔记]Feature Pyramid Networks for Object Detection]]></title>
+      <title><![CDATA[[论文笔记](FPN)Feature Pyramid Networks for Object Detection]]></title>
       <url>https://blog.ddlee.cn/2017/12/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Feature-Pyramid-Networks-for-Object-Detection/</url>
       <content type="html"><![CDATA[<p>对图片信息的理解常常关系到对位置和规模上不变性的建模。在较为成功的图片分类模型中，Max-Pooling这一操作建模了位置上的不变性：从局部中挑选最大的响应，这一响应在局部的位置信息就被忽略掉了。而在规模不变性的方向上，添加不同大小感受野的卷积核（VGG），用小卷积核堆叠感受较大的范围（GoogLeNet），自动选择感受野的大小（Inception）等结构也展现了其合理的一面。</p>
 <p>回到检测任务，与分类任务不同的是，检测所面临的物体规模问题是跨类别的、处于同一语义场景中的。</p>
@@ -967,7 +985,7 @@
     </entry>
     
     <entry>
-      <title><![CDATA[[论文笔记]Going deeper with convolutions]]></title>
+      <title><![CDATA[[论文笔记](GoogLeNet)Going deeper with convolutions]]></title>
       <url>https://blog.ddlee.cn/2017/11/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Going-deeper-with-convolutions/</url>
       <content type="html"><![CDATA[<p>本作是Inception系列网络的第一篇，提出了Inception单元结构，基于这一结构的GoogLeNet拿下了ILSVRC14分类任务的头名。文章也探讨了网络在不断加深的情况下如何更好地利用计算资源，这一理念也是Inception系列网络的核心。</p>
 <h3 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h3><p>Inception单元的启发主要来自Network in Network结构和Arora等人在神经科学方面的工作。</p>
@@ -1005,6 +1023,8 @@
             <tag> Computer Vision </tag>
             
             <tag> CNN </tag>
+            
+            <tag> Inception </tag>
             
         </tags>
         
@@ -1092,6 +1112,8 @@
             
             <tag> Computer Vision </tag>
             
+            <tag> R-CNN </tag>
+            
         </tags>
         
     </entry>
@@ -1141,12 +1163,14 @@
             
             <tag> Computer Vision </tag>
             
+            <tag> R-CNN </tag>
+            
         </tags>
         
     </entry>
     
     <entry>
-      <title><![CDATA[[论文笔记]Rich feature hierarchies for accurate object detection and semantic segmentation]]></title>
+      <title><![CDATA[[论文笔记](R-CNN)Rich feature hierarchies for accurate object detection and semantic segmentation]]></title>
       <url>https://blog.ddlee.cn/2017/10/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Rich-feature-hierarchies-for-accurate-object-detection-and-semantic-segmentation/</url>
       <content type="html"><![CDATA[<p>R-CNN系列的开山之作，2-stage的想法至今仍是精确度优先方法的主流。而且，本文中的众多做法也成为检测任务pipeline的标准配置。</p>
 <p>摘要中提到的两大贡献：1）CNN可用于基于区域的定位和分割物体；2）监督训练样本数紧缺时，在额外的数据上预训练的模型经过fine-tuning可以取得很好的效果。</p>
@@ -1178,6 +1202,8 @@
             <tag> Object Detection </tag>
             
             <tag> Computer Vision </tag>
+            
+            <tag> R-CNN </tag>
             
         </tags>
         
@@ -1236,6 +1262,8 @@
             <tag> Digital Life </tag>
             
             <tag> Linux </tag>
+            
+            <tag> Recommendation </tag>
             
         </tags>
         
@@ -1296,6 +1324,8 @@
             <tag> Digital Life </tag>
             
             <tag> IOS </tag>
+            
+            <tag> Recommendation </tag>
             
         </tags>
         
@@ -1367,6 +1397,8 @@
             <tag> Digital Life </tag>
             
             <tag> Android </tag>
+            
+            <tag> Recommendation </tag>
             
         </tags>
         
@@ -3315,7 +3347,7 @@ def dropout_backward(dout, cache):
     </entry>
     
     <entry>
-      <title><![CDATA[[论文笔记]Deep Residual Learning for Image Recognition]]></title>
+      <title><![CDATA[[论文笔记](ResNet)Deep Residual Learning for Image Recognition]]></title>
       <url>https://blog.ddlee.cn/2017/04/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Deep-Residual-Learning-for-Image-Recognition/</url>
       <content type="html"><![CDATA[<p>网络在堆叠到越来越深之后，由于BP算法所依赖的链式法则的连乘形式，会出现梯度消失和梯度下降的问题。初始标准化和中间标准化参数在一定程度上缓解了这一问题，但仍然存在更深的网络比浅层网络具有更大的训练误差的问题。</p>
 <p><img src="https://static.ddlee.cn/static/img/论文笔记-Deep-Residual-Learning-for-Image-Recognition/error.png" alt="error"></p>

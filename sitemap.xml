@@ -2,16 +2,149 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://blog.ddlee.cn/2018/03/05/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%B8%B8%E7%94%A8%E8%AF%84%E6%B5%8B%E9%9B%86%EF%BC%9APascal-VOC-MS-COCO-Cityscapes/</loc>
+    <loc>https://blog.ddlee.cn/2017/08/31/Android-Reborn-%E4%B8%AA%E4%BA%BAAPP%E5%AD%98%E6%A1%A3/</loc>
     
-    <lastmod>2018-03-11T16:39:38.443Z</lastmod>
+    <lastmod>2018-03-18T13:13:28.944Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.ddlee.cn/2017/09/02/IOS-Reborn-%E4%B8%AA%E4%BA%BAAPP%E5%AD%98%E6%A1%A3/</loc>
+    
+    <lastmod>2018-03-18T13:13:18.857Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.ddlee.cn/2018/01/16/Chrome%E6%89%A9%E5%B1%95%E6%8E%A8%E8%8D%90/</loc>
+    
+    <lastmod>2018-03-18T13:13:10.861Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.ddlee.cn/2017/09/19/Linux%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/</loc>
+    
+    <lastmod>2018-03-18T13:12:55.958Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://blog.ddlee.cn/2018/03/05/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%BB%BB%E5%8A%A1%E8%A1%A8%E8%BF%B0%E4%B8%8E%E6%A8%A1%E5%9E%8B%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/</loc>
     
-    <lastmod>2018-03-11T16:38:40.119Z</lastmod>
+    <lastmod>2018-03-18T13:12:17.505Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.ddlee.cn/2017/12/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-You-Only-Look-Once-Unified-Real-Time-Object-Detection/</loc>
+    
+    <lastmod>2018-03-18T13:11:51.407Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.ddlee.cn/2018/03/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-YOLO9000-Better-Faster-Stronger/</loc>
+    
+    <lastmod>2018-03-18T13:11:46.524Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.ddlee.cn/2018/01/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/</loc>
+    
+    <lastmod>2018-03-18T13:11:36.405Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.ddlee.cn/2018/02/22/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Training-Region-based-Object-Detectors-with-Online-Hard-Example-Mining/</loc>
+    
+    <lastmod>2018-03-18T13:11:27.617Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.ddlee.cn/2017/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/</loc>
+    
+    <lastmod>2018-03-18T13:11:15.486Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.ddlee.cn/2017/10/15/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Fast-R-CNN/</loc>
+    
+    <lastmod>2018-03-18T13:11:10.655Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.ddlee.cn/2017/10/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Rich-feature-hierarchies-for-accurate-object-detection-and-semantic-segmentation/</loc>
+    
+    <lastmod>2018-03-18T13:11:04.515Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.ddlee.cn/2017/11/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Going-deeper-with-convolutions/</loc>
+    
+    <lastmod>2018-03-18T13:10:49.261Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.ddlee.cn/2017/12/16/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Rethinking-the-Inception-Architecture-for-Computer-Vision/</loc>
+    
+    <lastmod>2018-03-18T13:10:39.058Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.ddlee.cn/2018/01/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/</loc>
+    
+    <lastmod>2018-03-18T13:10:17.520Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.ddlee.cn/2018/01/18/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/</loc>
+    
+    <lastmod>2018-03-18T13:10:05.021Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.ddlee.cn/2017/12/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Feature-Pyramid-Networks-for-Object-Detection/</loc>
+    
+    <lastmod>2018-03-18T13:09:21.789Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Densely-Connected-Convolutional-Networks/</loc>
+    
+    <lastmod>2018-03-18T13:09:12.822Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.ddlee.cn/2017/04/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Deep-Residual-Learning-for-Image-Recognition/</loc>
+    
+    <lastmod>2018-03-18T13:09:03.443Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/</loc>
+    
+    <lastmod>2018-03-18T13:08:52.352Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://blog.ddlee.cn/2018/03/05/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%B8%B8%E7%94%A8%E8%AF%84%E6%B5%8B%E9%9B%86%EF%BC%9APascal-VOC-MS-COCO-Cityscapes/</loc>
+    
+    <lastmod>2018-03-11T16:39:38.443Z</lastmod>
     
   </url>
   
@@ -37,37 +170,9 @@
   </url>
   
   <url>
-    <loc>https://blog.ddlee.cn/2017/12/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-You-Only-Look-Once-Unified-Real-Time-Object-Detection/</loc>
-    
-    <lastmod>2018-03-11T16:20:52.820Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.ddlee.cn/2018/03/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-YOLO9000-Better-Faster-Stronger/</loc>
-    
-    <lastmod>2018-03-11T16:20:44.766Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.ddlee.cn/2018/01/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/</loc>
-    
-    <lastmod>2018-03-11T16:20:38.605Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.ddlee.cn/2017/05/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Visualizing-and-Understanding-Recurrent-Networks/</loc>
     
     <lastmod>2018-03-11T16:20:24.090Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.ddlee.cn/2018/02/22/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Training-Region-based-Object-Detectors-with-Online-Hard-Example-Mining/</loc>
-    
-    <lastmod>2018-03-11T16:20:10.704Z</lastmod>
     
   </url>
   
@@ -86,20 +191,6 @@
   </url>
   
   <url>
-    <loc>https://blog.ddlee.cn/2017/10/13/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Rich-feature-hierarchies-for-accurate-object-detection-and-semantic-segmentation/</loc>
-    
-    <lastmod>2018-03-11T16:19:48.319Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.ddlee.cn/2017/12/16/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Rethinking-the-Inception-Architecture-for-Computer-Vision/</loc>
-    
-    <lastmod>2018-03-11T16:19:32.691Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.ddlee.cn/2017/12/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-R-FCN-Object-Detection-via-Region-based-Fully-Convolutinal-Networks/</loc>
     
     <lastmod>2018-03-11T16:19:21.644Z</lastmod>
@@ -110,13 +201,6 @@
     <loc>https://blog.ddlee.cn/2017/06/05/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Large-Scale-Evolution-of-Image-Classifiers/</loc>
     
     <lastmod>2018-03-11T16:19:09.814Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/</loc>
-    
-    <lastmod>2018-03-11T16:18:57.563Z</lastmod>
     
   </url>
   
@@ -135,13 +219,6 @@
   </url>
   
   <url>
-    <loc>https://blog.ddlee.cn/2018/01/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/</loc>
-    
-    <lastmod>2018-03-11T16:18:13.464Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.ddlee.cn/2017/11/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MegDet-A-Large-Mini-Batch-Object-Detector/</loc>
     
     <lastmod>2018-03-11T16:17:59.692Z</lastmod>
@@ -156,58 +233,9 @@
   </url>
   
   <url>
-    <loc>https://blog.ddlee.cn/2018/01/18/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/</loc>
-    
-    <lastmod>2018-03-11T16:17:27.737Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://blog.ddlee.cn/2017/12/26/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/</loc>
     
     <lastmod>2018-03-11T16:17:12.430Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.ddlee.cn/2017/11/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Going-deeper-with-convolutions/</loc>
-    
-    <lastmod>2018-03-11T16:16:59.742Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.ddlee.cn/2017/12/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Feature-Pyramid-Networks-for-Object-Detection/</loc>
-    
-    <lastmod>2018-03-11T16:16:43.443Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.ddlee.cn/2017/10/21/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Faster-R-CNN-Towards-Real-Iime-Object-Detection-with-Region-Proposal-Networks/</loc>
-    
-    <lastmod>2018-03-11T16:16:36.407Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.ddlee.cn/2017/10/15/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Fast-R-CNN/</loc>
-    
-    <lastmod>2018-03-11T16:16:29.255Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Densely-Connected-Convolutional-Networks/</loc>
-    
-    <lastmod>2018-03-11T16:16:15.272Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.ddlee.cn/2017/04/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Deep-Residual-Learning-for-Image-Recognition/</loc>
-    
-    <lastmod>2018-03-11T16:16:01.804Z</lastmod>
     
   </url>
   
@@ -327,34 +355,6 @@
     <loc>https://blog.ddlee.cn/2017/05/29/LSTM-Pytorch%E5%AE%9E%E7%8E%B0/</loc>
     
     <lastmod>2018-03-11T16:12:16.140Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.ddlee.cn/2017/09/19/Linux%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/</loc>
-    
-    <lastmod>2018-03-11T16:12:07.664Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.ddlee.cn/2017/09/02/IOS-Reborn-%E4%B8%AA%E4%BA%BAAPP%E5%AD%98%E6%A1%A3/</loc>
-    
-    <lastmod>2018-03-11T16:11:51.205Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.ddlee.cn/2017/08/31/Android-Reborn-%E4%B8%AA%E4%BA%BAAPP%E5%AD%98%E6%A1%A3/</loc>
-    
-    <lastmod>2018-03-11T16:11:38.597Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://blog.ddlee.cn/2018/01/16/Chrome%E6%89%A9%E5%B1%95%E6%8E%A8%E8%8D%90/</loc>
-    
-    <lastmod>2018-03-11T16:11:34.485Z</lastmod>
     
   </url>
   
