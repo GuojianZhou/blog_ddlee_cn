@@ -284,7 +284,7 @@
 
     
         <meta property="article:published_time" content="Mon Mar 05 2018 00:18:16 GMT+0800">
-        <meta property="article:modified_time" content="Mon Mar 12 2018 00:39:38 GMT+0800">
+        <meta property="article:modified_time" content="Sun Mar 18 2018 21:36:01 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -307,7 +307,7 @@
     "mainEntityOfPage": "https://blog.ddlee.cn/posts/7845fb62/index.html",
     "headline": "目标检测常用评测集：Pascal VOC, MS COCO, Cityscapes",
     "datePublished": "Mon Mar 05 2018 00:18:16 GMT+0800",
-    "dateModified": "Mon Mar 12 2018 00:39:38 GMT+0800",
+    "dateModified": "Sun Mar 18 2018 21:36:01 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -556,7 +556,7 @@
                 <!-- Post Content -->
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
-        <p>本文节选自博主通过格灵深瞳公众号发表于知乎的文章：<a href="https://zhuanlan.zhihu.com/p/34179420" target="_blank" rel="external">目标检测入门（二）：模型的评测与训练技巧
+        <p>本文节选自博主通过格灵深瞳机构号发表于知乎的文章：<a href="https://zhuanlan.zhihu.com/p/34179420" target="_blank" rel="external">目标检测入门（二）：模型的评测与训练技巧
 </a>。</p>
 <h2 id="检测模型的评测指标"><a href="#检测模型的评测指标" class="headerlink" title="检测模型的评测指标"></a>检测模型的评测指标</h2><p>目标检测模型本源上可以用统计推断的框架描述，我们关注其犯第一类错误和第二类错误的概率，通常用准确率和召回率来描述。准确率描述了模型有多准，即在预测为正例的结果中，有多少是真正例；召回率则描述了模型有多全，即在为真的样本中，有多少被我们的模型预测为正例。不同的任务，对两类错误有不同的偏好，常常在某一类错误不多于一定阈值的情况下，努力减少另一类错误。在检测中，mAP（mean Average Precision）作为一个统一的指标将这两种错误兼顾考虑。</p>
 <p>具体地，对于每张图片，检测模型输出多个预测框（常常远超真实框的个数），我们使用IoU（Intersection Over Union，交并比）来标记预测框是否为预测正确。标记完成后，随着预测框的增多，召回率总会提升，在不同的召回率水平下对准确率做平均，即得到AP，最后再对所有类别按其所占比例做平均，即得到mAP。</p>

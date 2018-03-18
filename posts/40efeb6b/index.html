@@ -284,7 +284,7 @@
 
     
         <meta property="article:published_time" content="Sun May 28 2017 20:06:14 GMT+0800">
-        <meta property="article:modified_time" content="Mon Mar 12 2018 00:12:28 GMT+0800">
+        <meta property="article:modified_time" content="Sun Mar 18 2018 21:28:59 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -307,7 +307,7 @@
     "mainEntityOfPage": "https://blog.ddlee.cn/posts/40efeb6b/index.html",
     "headline": "Pandas速度优化",
     "datePublished": "Sun May 28 2017 20:06:14 GMT+0800",
-    "dateModified": "Mon Mar 12 2018 00:12:28 GMT+0800",
+    "dateModified": "Sun Mar 18 2018 21:28:59 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -557,8 +557,7 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <p>本文主要内容取自Sofia Heisler在PyCon 2017上的演讲<a href="https://www.youtube.com/watch?v=HN5d490_KKk" target="_blank" rel="external">No More Sad Pandas Optimizing Pandas Code for Speed and Efficiency</a>，讲稿代码和幻灯片见<a href="https://github.com/sversh/pycon2017-optimizing-pandas" target="_blank" rel="external">GitHub</a>。</p>
-<h2 id="Set-Up"><a href="#Set-Up" class="headerlink" title="Set Up"></a>Set Up</h2><h4 id="示例数据"><a href="#示例数据" class="headerlink" title="示例数据"></a>示例数据</h4><div class="table-container">
-<table>
+<h2 id="Set-Up"><a href="#Set-Up" class="headerlink" title="Set Up"></a>Set Up</h2><h4 id="示例数据"><a href="#示例数据" class="headerlink" title="示例数据"></a>示例数据</h4><table>
 <thead>
 <tr>
 <th></th>
@@ -620,8 +619,7 @@
 </tr>
 </tbody>
 </table>
-</div>
-<h4 id="示例函数：Haversine-Distance"><a href="#示例函数：Haversine-Distance" class="headerlink" title="示例函数：Haversine Distance"></a>示例函数：Haversine Distance</h4><pre><code class="lang-Python">def haversine(lat1, lon1, lat2, lon2):
+<h4 id="示例函数：Haversine-Distance"><a href="#示例函数：Haversine-Distance" class="headerlink" title="示例函数：Haversine Distance"></a>示例函数：Haversine Distance</h4><pre><code class="Python">def haversine(lat1, lon1, lat2, lon2):
     miles_constant = 3959
     lat1, lon1, lat2, lon2 = map(np.deg2rad, [lat1, lon1, lat2, lon2])
     dlat = lat2 - lat1
@@ -634,7 +632,7 @@
 <h2 id="优化它之前，先测量它"><a href="#优化它之前，先测量它" class="headerlink" title="优化它之前，先测量它"></a>优化它之前，先测量它</h2><h4 id="IPython-Notebook的Magic-Command-timeit"><a href="#IPython-Notebook的Magic-Command-timeit" class="headerlink" title="IPython Notebook的Magic Command: %timeit"></a>IPython Notebook的Magic Command: <code>%timeit</code></h4><p>既可以测量某一行代码的执行时间，又可以测量整个单元格里代码快的执行时间。</p>
 <h4 id="Package-line-profiler"><a href="#Package-line-profiler" class="headerlink" title="Package: line_profiler"></a>Package: line_profiler</h4><p>记录每行代码的执行次数和执行时间。</p>
 <p>在IPython Notebook中使用时，先运行<code>%load_ext line_profiler</code>， 之后可以用<code>%lprun -f [function name]</code>命令记录指定函数的执行情况。</p>
-<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><h4 id="对行做循环-Baseline"><a href="#对行做循环-Baseline" class="headerlink" title="对行做循环(Baseline)"></a>对行做循环(Baseline)</h4><pre><code class="lang-python">%%timeit
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><h4 id="对行做循环-Baseline"><a href="#对行做循环-Baseline" class="headerlink" title="对行做循环(Baseline)"></a>对行做循环(Baseline)</h4><pre><code class="python">%%timeit
 haversine_series = []
 for index, row in df.iterrows():
     haversine_series.append(haversine(40.671, -73.985,\
@@ -643,7 +641,7 @@ df[&#39;distance&#39;] = haversine_series
 </code></pre>
 <p>Output:</p>
 <pre><code>197 ms ± 6.65 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
-</code></pre><h4 id="pd-DataFrame-apply-方法"><a href="#pd-DataFrame-apply-方法" class="headerlink" title="pd.DataFrame.apply()方法"></a>pd.DataFrame.apply()方法</h4><pre><code class="lang-python">%lprun -f haversine \
+</code></pre><h4 id="pd-DataFrame-apply-方法"><a href="#pd-DataFrame-apply-方法" class="headerlink" title="pd.DataFrame.apply()方法"></a>pd.DataFrame.apply()方法</h4><pre><code class="python">%lprun -f haversine \
 df.apply(lambda row: haversine(40.671, -73.985,\
                                row[&#39;latitude&#39;], row[&#39;longitude&#39;]), axis=1)
 </code></pre>
@@ -689,7 +687,7 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
      8         1          496    496.0      5.8      mi = miles_constant * c
      9         1            2      2.0      0.0      return mi
 </code></pre><p>向量化之后，函数内的每行操作只被访问一次，达到了行结构上的并行。</p>
-<h3 id="向量化：将np-array传入函数"><a href="#向量化：将np-array传入函数" class="headerlink" title="向量化：将np.array传入函数"></a>向量化：将np.array传入函数</h3><pre><code class="lang-python">%lprun -f haversine df[&#39;distance&#39;] = haversine(40.671, -73.985,\
+<h3 id="向量化：将np-array传入函数"><a href="#向量化：将np-array传入函数" class="headerlink" title="向量化：将np.array传入函数"></a>向量化：将np.array传入函数</h3><pre><code class="python">%lprun -f haversine df[&#39;distance&#39;] = haversine(40.671, -73.985,\
                         df[&#39;latitude&#39;].values, df[&#39;longitude&#39;].values)
 </code></pre>
 <p>Output：</p>
@@ -712,8 +710,7 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
      8         1           18     18.0      1.3      mi = miles_constant * c
      9         1            2      2.0      0.1      return mi
 </code></pre><p>相比<code>pd.Series</code>，<code>np.array</code>不含索引等额外信息，因而更加高效。</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><div class="table-container">
-<table>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><table>
 <thead>
 <tr>
 <th>Methodology</th>
@@ -745,10 +742,9 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
 </tr>
 </tbody>
 </table>
-</div>
 <p>通过上面的对比，我们比最初的baseline快了近500倍。最大的提升来自于向量化。因而，实现的函数能够很方便地向量化是高效处理的关键。</p>
 <h2 id="用Cython优化"><a href="#用Cython优化" class="headerlink" title="用Cython优化"></a>用<code>Cython</code>优化</h2><p><code>Cython</code>可以将<code>python</code>代码转化为<code>C</code>代码来执行，可以进行如下优化（静态化变量类型，调用C函数库）</p>
-<pre><code class="lang-python">%load_ext cython
+<pre><code class="python">%load_ext cython
 
 %%cython -a
 # Haversine cythonized
@@ -776,7 +772,7 @@ cpdef haversine_cy_dtyped(float lat1, float lon1, float lat2, float lon2):
     return mi
 </code></pre>
 <p>嵌套于循坏中：</p>
-<pre><code class="lang-python">%timeit df[&#39;distance&#39;] =\
+<pre><code class="python">%timeit df[&#39;distance&#39;] =\
 df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
                               row[&#39;latitude&#39;], row[&#39;longitude&#39;]), axis=1)
 </code></pre>

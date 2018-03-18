@@ -284,7 +284,7 @@
 
     
         <meta property="article:published_time" content="Sat Jul 15 2017 20:04:54 GMT+0800">
-        <meta property="article:modified_time" content="Mon Mar 12 2018 00:13:50 GMT+0800">
+        <meta property="article:modified_time" content="Sun Mar 18 2018 21:28:59 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -307,7 +307,7 @@
     "mainEntityOfPage": "https://blog.ddlee.cn/posts/4943e1b8/index.html",
     "headline": "[源码笔记]keras源码分析之Layer、Tensor和Node",
     "datePublished": "Sat Jul 15 2017 20:04:54 GMT+0800",
-    "dateModified": "Mon Mar 12 2018 00:13:50 GMT+0800",
+    "dateModified": "Sun Mar 18 2018 21:28:59 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -569,7 +569,7 @@
 </ul>
 <p>当使用Keras建立深度网络时，传入的数据首先要经过<code>Input()</code>函数。在<code>Input()</code>函数中，实例化一个<code>InputLayer()</code>对象，并将此<code>Layer()</code>对象作为第一个应用于传入张量的Layer，置于<code>_keras_history</code>属性中。此外，<code>InputLayer()</code>和<code>Input()</code>还会对传入的数据进行规模检查和变换等，使之符合后续操作的要求。</p>
 <p>代码上实现如下：</p>
-<pre><code class="lang-python">def Input():
+<pre><code class="python">def Input():
   input_layer = InputLayer()
   outputs = InputLayer.inbound_nodes[0].output_tensor
   return outputs
@@ -581,7 +581,7 @@ class InputLayer():
 </code></pre>
 <p>在下面我们将看到，加入的<code>_keras_history</code>属性在计算图的构建上所起的作用是关键的。仅通过输入和输出的Tensor，我们可以构建出整张计算图。但这样的代价是Tensor对象太重了，包含了Layer的信息。</p>
 <h3 id="Node对象：层与层之间链接的抽象"><a href="#Node对象：层与层之间链接的抽象" class="headerlink" title="Node对象：层与层之间链接的抽象"></a><code>Node</code>对象：层与层之间链接的抽象</h3><p>若考虑<code>Layer</code>对象抽象的是完成计算的神经元胞体，则<code>Node</code>对象是对神经元树突结构的抽象。其内聚的主要信息是：</p>
-<pre><code class="lang-python">class Node():
+<pre><code class="python">class Node():
   def __init__(self, outbound_layer,
               inbound_layers, node_indices, tensor_indices,
               input_tensors, output_tensors, ...)
@@ -589,7 +589,7 @@ class InputLayer():
 <p>其中<code>outbound_layer</code>是施加计算（使<code>input_tensors</code>变为<code>output_tensors</code>）的层，<code>inbound_layers</code>对应了<code>input_tensors</code>来源的层，而<code>node_indices</code>和<code>tensor_indices</code>则记录了<code>Node</code>和<code>Layer</code>之间的标定信息。</p>
 <p><code>Node</code>对象总在<code>outbound_layer</code>被执行时创建，并加入<code>outbound_layer</code>的<code>inbound_nodes</code>属性中。在<code>Node</code>对象的表述下，A和B两个层产生连接关系时，<code>Node</code>对象被建立，并被加入<code>A.outbound_nodes</code>和<code>B.inbound_nodes</code>。</p>
 <h3 id="Layer对象：计算层的抽象"><a href="#Layer对象：计算层的抽象" class="headerlink" title="Layer对象：计算层的抽象"></a><code>Layer</code>对象：计算层的抽象</h3><p><code>Layer</code>对象是对网络中神经元计算层的抽象，实例化需要如下参数：</p>
-<pre><code class="lang-python">allowed_kwargs = {&#39;input_shape&#39;,
+<pre><code class="python">allowed_kwargs = {&#39;input_shape&#39;,
                   &#39;batch_input_shape&#39;,
                   &#39;batch_size&#39;,
                   &#39;dtype&#39;,
@@ -610,7 +610,7 @@ class InputLayer():
 </li>
 </ol>
 <p>方法<code>_add_inbound_nodes()</code>对Tensor的更新是构建<code>Layer</code>之间关系的关键操作，其主要代码如下：</p>
-<pre><code class="lang-python">for x in input_tensors:
+<pre><code class="python">for x in input_tensors:
     if hasattr(x, &#39;_keras_history&#39;):
         inbound_layer, node_index, tensor_index = x._keras_history
         inbound_layers.append(inbound_layer)
@@ -629,7 +629,7 @@ for i in range(len(output_tensors)):
 </code></pre>
 <p>上段代码取出<code>input_tensor</code>的<code>_keras_history</code>属性，建立新的<code>Node</code>，并将当前<code>Layer</code>的信息更新到计算得到的<code>output_tensor</code>中。</p>
 <h3 id="实例：Node-Tensor和Layer间连接关系的表征"><a href="#实例：Node-Tensor和Layer间连接关系的表征" class="headerlink" title="实例：Node,Tensor和Layer间连接关系的表征"></a>实例：<code>Node</code>,<code>Tensor</code>和<code>Layer</code>间连接关系的表征</h3><p>下面通过代码来说明三者之间的关系，来自于测试代码：</p>
-<pre><code class="lang-python"># 建立新的keras Tensor
+<pre><code class="python"># 建立新的keras Tensor
 a = Input(shape=(32,), name=&#39;input_a&#39;)
 b = Input(shape=(32,), name=&#39;input_b&#39;)
 

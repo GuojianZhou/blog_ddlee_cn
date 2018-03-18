@@ -284,7 +284,7 @@
 
     
         <meta property="article:published_time" content="Tue Jul 11 2017 20:53:27 GMT+0800">
-        <meta property="article:modified_time" content="Mon Mar 12 2018 00:12:55 GMT+0800">
+        <meta property="article:modified_time" content="Sun Mar 18 2018 21:28:59 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -307,7 +307,7 @@
     "mainEntityOfPage": "https://blog.ddlee.cn/posts/55919299/index.html",
     "headline": "Tensorflow最佳实践：试验管理",
     "datePublished": "Tue Jul 11 2017 20:53:27 GMT+0800",
-    "dateModified": "Mon Mar 12 2018 00:12:55 GMT+0800",
+    "dateModified": "Sun Mar 18 2018 21:28:59 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -558,7 +558,7 @@
     
         <p>本文主要记录使用TensorFlow训练模型中与试验管理相关的最佳实践，主要包括模型训练的大致代码框架、模型的保存与恢复、训练过程的监测、随机性的控制等。主要材料来自<a href="https://web.stanford.edu/class/cs20si/index.html" target="_blank" rel="external">CS 20SI: Tensorflow for Deep Learning Research</a>。</p>
 <h3 id="TensorFlow代码框架"><a href="#TensorFlow代码框架" class="headerlink" title="TensorFlow代码框架"></a>TensorFlow代码框架</h3><p>使用TensorFlow构建深度网络模型大致包括数据预处理、图的构建、模型训练、模型推断与评估等部分，大致的代码框架如下：</p>
-<pre><code class="lang-python">import tensorflow as tf
+<pre><code class="python">import tensorflow as tf
 import numpy as np
 
 # Data
@@ -587,7 +587,7 @@ y_test = tf.nn.relu(tf.matmul(x_test, W) + b))
 <h4 id="tf-train-Saver类"><a href="#tf-train-Saver类" class="headerlink" title="tf.train.Saver类"></a>tf.train.Saver类</h4><p>使用<code>tf.train.Saver</code>类需传入以下参数：<code>tf.train.Saver.save(sess, save_path, global_step=step)</code>。</p>
 <p>首先定义步数变量：<code>self​.​global_step ​=​ tf​.​Variable​(​0​,​ dtype​=​tf​.​int32​,​ trainable​=​False​,name​=​&#39;global_step&#39;)</code></p>
 <p>在模型训练的过程中插入还原点的保存：</p>
-<pre><code class="lang-python">self​.​optimizer ​=​ tf​.​train​.​GradientDescentOptimizer​(​self​.​lr​).​minimize​(​self​.​loss​,global_step​=​self​.​global_step)
+<pre><code class="python">self​.​optimizer ​=​ tf​.​train​.​GradientDescentOptimizer​(​self​.​lr​).​minimize​(​self​.​loss​,global_step​=​self​.​global_step)
 saver ​=​ tf​.​train​.​Saver​()​​
 ​with​ tf​.​Session​()​​as​ sess:
  sess​.​run​(​tf​.​global_variables_initializer​())
@@ -604,7 +604,7 @@ saver ​=​ tf​.​train​.​Saver​()​​
 <h4 id="Keras封装：keras-callbacks-ModelCheckpoint"><a href="#Keras封装：keras-callbacks-ModelCheckpoint" class="headerlink" title="Keras封装：keras.callbacks.ModelCheckpoint()"></a>Keras封装：<code>keras.callbacks.ModelCheckpoint()</code></h4><p>Keras对TensorFlow进行了高层的封装，使用一系列回调函数<code>keras.callbacks.Callback()</code>来进行试验管理。</p>
 <p>模型保存<code>ModelCheckpoint()</code>需要传入的参数：<br><code>keras.callbacks.ModelCheckpoint(filepath, monitor=&#39;val_loss&#39;, verbose=0, save_best_only=False, save_weights_only=False, mode=&#39;auto&#39;, period=1)</code></p>
 <p>实际的使用中，将上述回调函数类传入<code>model.fit()</code>过程即可：</p>
-<pre><code class="lang-python">from keras.callbacks import ModelCheckpoint
+<pre><code class="python">from keras.callbacks import ModelCheckpoint
 
 model = Sequential()
 model.add(Dense(10, input_dim=784, kernel_initializer=&#39;uniform&#39;))
@@ -615,7 +615,7 @@ model.fit(x_train, y_train, batch_size=128, epochs=20, verbose=0, validation_dat
 </code></pre>
 <h3 id="模型训练过程的监测"><a href="#模型训练过程的监测" class="headerlink" title="模型训练过程的监测"></a>模型训练过程的监测</h3><p>训练过程中，我们常常需要提取阶段性的信息来评估模型是否符合预期效果。</p>
 <h4 id="tf-summary"><a href="#tf-summary" class="headerlink" title="tf.summary"></a><code>tf.summary</code></h4><p>首先创建想要观察指标的<code>tf.summary</code>对象：</p>
-<pre><code class="lang-python">with tf.name_scope(&quot;summaries&quot;):
+<pre><code class="python">with tf.name_scope(&quot;summaries&quot;):
   tf.summary.scalar(&quot;loss&quot;, self.loss)
   tf.summary.scalar(&quot;accuracy&quot;, self.accuracy)
   tf.summary.histogram(&quot;histogram loss&quot;, self.loss)
@@ -624,7 +624,7 @@ model.fit(x_train, y_train, batch_size=128, epochs=20, verbose=0, validation_dat
 </code></pre>
 <p><code>tf.summary</code>是一种operation，因而可以随训练过程一同运行：<br><code>loss_batch, _, summary = sess.run([model.loss, model.optimizer, model.summary_op], feed_dict=feed_dict)</code></p>
 <p>最后，将summary加入writer以写入文件：</p>
-<pre><code class="lang-python">with tf.Session() as sess:
+<pre><code class="python">with tf.Session() as sess:
   writer ​=​ tf​.​summary​.​FileWriter​(​&#39;./summary&#39;​,​ sess​.​graph)
   for​ index ​in​ range​(​num_train_steps​):
     writer.add_summary(summary, global_step=step)
@@ -632,14 +632,14 @@ model.fit(x_train, y_train, batch_size=128, epochs=20, verbose=0, validation_dat
 </code></pre>
 <p>这样，就可以用TensorBoard监测我们关心的指标在训练过程中的变化情况。</p>
 <h4 id="Keras封装：keras-callbacks-TensorBoard"><a href="#Keras封装：keras-callbacks-TensorBoard" class="headerlink" title="Keras封装：keras.callbacks.TensorBoard()"></a>Keras封装：<code>keras.callbacks.TensorBoard()</code></h4><p>Keras同样将TensorBoard封装成回调函数的形式，在模型训练时进行调用即可：</p>
-<pre><code class="lang-python">from keras.callbacks import TensorBoard
+<pre><code class="python">from keras.callbacks import TensorBoard
 
 tensorboard = TensorBoard(log_dir=&quot;./logs&quot;)
 model.fit(x_train, y_train, batch_size=128, epochs=20, verbose=0, validation_data=(X_test, Y_test), callbacks=[tensorboard]
 </code></pre>
 <h3 id="随机性的控制"><a href="#随机性的控制" class="headerlink" title="随机性的控制"></a>随机性的控制</h3><p>TensorFlow中随机性的控制分为operation和graph两个层面。</p>
 <h4 id="Operation层面"><a href="#Operation层面" class="headerlink" title="Operation层面"></a>Operation层面</h4><p>在Operation层面中，建立随机seed之后，新建立的Session每一次调用<code>sess.run()</code>都会遵循同一随机状态：</p>
-<pre><code class="lang-python">c ​=​ tf​.​random_uniform​([],​​-​10​,​​10​,​ seed​=​2)
+<pre><code class="python">c ​=​ tf​.​random_uniform​([],​​-​10​,​​10​,​ seed​=​2)
 
 with​ tf​.​Session​()​​as​ sess:
   print​ sess​.​run​(​c) # &gt;&gt; 3.57493
@@ -648,14 +648,14 @@ with​ tf​.​Session​()​​as​ sess:
   print​ sess​.​run​(​c) # &gt;&gt; 3.57493
 </code></pre>
 <p>而且，不同的operation可以保存自己的seed:</p>
-<pre><code class="lang-python">c ​=​ tf​.​random_uniform​([],​​-​10​,​​10​,​ seed​=​1)
+<pre><code class="python">c ​=​ tf​.​random_uniform​([],​​-​10​,​​10​,​ seed​=​1)
 d ​=​ tf​.​random_uniform​([],​​-​10​,​​10​,​ seed​=​2)
 with​ tf​.​Session​() ​​as​ sess:
   sess​.​run​(​c)
   sess​.​run​(​d)
 </code></pre>
 <h4 id="Graph层面"><a href="#Graph层面" class="headerlink" title="Graph层面"></a>Graph层面</h4><p>在Graph层面，整张图公用一个随机状态，多次运行同一图模型的计算，其随机状态保持一致。</p>
-<pre><code class="lang-python">import​ tensorflow ​as​ tf
+<pre><code class="python">import​ tensorflow ​as​ tf
 
 tf​.​set_random_seed​(​2)
 

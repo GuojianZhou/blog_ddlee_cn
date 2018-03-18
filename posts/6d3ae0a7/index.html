@@ -284,7 +284,7 @@
 
     
         <meta property="article:published_time" content="Sat Jun 10 2017 22:01:21 GMT+0800">
-        <meta property="article:modified_time" content="Mon Mar 12 2018 00:18:24 GMT+0800">
+        <meta property="article:modified_time" content="Sun Mar 18 2018 21:28:59 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -307,7 +307,7 @@
     "mainEntityOfPage": "https://blog.ddlee.cn/posts/6d3ae0a7/index.html",
     "headline": "[论文笔记]On the Effects and Weight Normalization in GAN",
     "datePublished": "Sat Jun 10 2017 22:01:21 GMT+0800",
-    "dateModified": "Mon Mar 12 2018 00:18:24 GMT+0800",
+    "dateModified": "Sun Mar 18 2018 21:28:59 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -565,8 +565,8 @@ $$y=\frac{{w}^{T}x}{\|w\|}$$
 $$y=\frac{{w}^{T}x}{\|w\|} \gamma + \beta$$
 
 <p>用于恢复网络的表达能力。</p>
-<p>将上述变换带入ReLU，简化后可以得到如下T-ReLu:</p>
-<script type="math/tex; mode=display">TReLU_\alpha (x) = ReLU(x-\alpha) + \alpha</script><p>文章的一个重要结论是，在网络的最后一层加入affine transformation层之后，堆叠的“线性层+ReLU”与“strict weight-normalized layer + T-ReLU”表达能力相同（在附录中给出证明）。</p>
+<p>将上述变换带入ReLU，简化后可以得到如下T-ReLu:<br>$$TReLU_\alpha (x) = ReLU(x-\alpha) + \alpha$$</p>
+<p>文章的一个重要结论是，在网络的最后一层加入affine transformation层之后，堆叠的“线性层+ReLU”与“strict weight-normalized layer + T-ReLU”表达能力相同（在附录中给出证明）。</p>
 <p>下面L表示线性层，R表示ReLU，TR表示TReLU，A表示affine transformation，S表示上述的strict weight-normalized layer。</p>
 <p>证明的大致思路是，在ReLU与线性层之间加入affine transformation层，由于线性层的存在，affine transformation带来的效果会被吸收（相当于多个线性层叠在一起还是线性层），网络表达能力不变。而”L+R+A”的结构可以等价于”S+TR+A”。如此递归下去，即可得到结论。个人认为相当于把线性层中的bias转嫁成了TReLU中的threshold（即$\alpha$）。</p>
 <h3 id="2-提出对生成图形的评估指标"><a href="#2-提出对生成图形的评估指标" class="headerlink" title="2. 提出对生成图形的评估指标"></a>2. 提出对生成图形的评估指标</h3><p>生成式模型的生成效果常常难以评价。DcGAN给出的结果也是生成图片的对比。本文中提出一个评价生成效果的指标，且与人的主观评价一致。</p>
@@ -577,7 +577,7 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
 <p>其中的$min$指使用梯度下降方法等使生成图片的效果最好。但事实上这样做开销很高。</p>
 <h3 id="PyTorch实现"><a href="#PyTorch实现" class="headerlink" title="PyTorch实现"></a>PyTorch实现</h3><p>作者将他们的实现代码公布在了<a href="https://github.com/stormraiser/GAN-weight-norm" target="_blank" rel="external">GitHub</a>上。</p>
 <p>下面是利用PyTorch对T-ReLU的实现：</p>
-<pre><code class="lang-python">class TPReLU(Module):
+<pre><code class="python">class TPReLU(Module):
 
     def __init__(self, num_parameters=1, init=0.25):
         self.num_parameters = num_parameters
@@ -590,7 +590,7 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
         return F.prelu(input - bias_resize, self.weight.clamp(0, 1)) + bias_resize
 </code></pre>
 <p>对 Weigh-normalized layer 的实现：</p>
-<pre><code class="lang-python">class WeightNormalizedLinear(Module):
+<pre><code class="python">class WeightNormalizedLinear(Module):
 
     def __init__(self, in_features, out_features, scale=True, bias=True, init_factor=1, init_scale=1):
         super(WeightNormalizedLinear, self).__init__()

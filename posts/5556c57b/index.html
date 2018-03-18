@@ -284,7 +284,7 @@
 
     
         <meta property="article:published_time" content="Wed May 17 2017 19:30:44 GMT+0800">
-        <meta property="article:modified_time" content="Mon Mar 12 2018 00:10:17 GMT+0800">
+        <meta property="article:modified_time" content="Sun Mar 18 2018 21:28:59 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -307,7 +307,7 @@
     "mainEntityOfPage": "https://blog.ddlee.cn/posts/5556c57b/index.html",
     "headline": "Dropout-Pytorch实现",
     "datePublished": "Wed May 17 2017 19:30:44 GMT+0800",
-    "dateModified": "Mon Mar 12 2018 00:10:17 GMT+0800",
+    "dateModified": "Sun Mar 18 2018 21:28:59 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -563,7 +563,7 @@
 <p>Hinton曾用生物学的观点解释这一点。神经网络的训练过程可以看做是生物种群逐渐适应环境的过程，在迭代中传递的模型参数可以看做种群的基因，Dropout以随机信号的方式给环境随机的干扰，使得传递的基因不得不适应更多的情况才能存活。</p>
 <p>另一个需要指出的地方是，Dropout给隐藏单元加入的噪声是乘性的，不像Bias那样加在隐藏单元上，这样在进行反向传播时，Dropout引入的噪声仍能够起作用。</p>
 <h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p>下面看在实践中，Dropout层是如何实现的。简单来说，就是生成一系列随机数作为mask，然后再用mask点乘原有的输入，达到引入噪声的效果。</p>
-<h4 id="From-Scratch"><a href="#From-Scratch" class="headerlink" title="From Scratch"></a>From Scratch</h4><pre><code class="lang-python"># forward pass
+<h4 id="From-Scratch"><a href="#From-Scratch" class="headerlink" title="From Scratch"></a>From Scratch</h4><pre><code class="python"># forward pass
 def dropout_forward(x, dropout_param):
   p, mode = dropout_param[&#39;p&#39;], dropout_param[&#39;mode&#39;]
   # p: dropout rate; mode: train or test
@@ -596,7 +596,7 @@ def dropout_backward(dout, cache):
   return dx
 </code></pre>
 <h3 id="Pytorch实现"><a href="#Pytorch实现" class="headerlink" title="Pytorch实现"></a>Pytorch实现</h3><p>file: <a href="https://github.com/pytorch/pytorch/blob/master/torch/nn/_functions/dropout.py" target="_blank" rel="external">/torch/nn/_functions/dropout.py</a></p>
-<pre><code class="lang-python">class Dropout(InplaceFunction):
+<pre><code class="python">class Dropout(InplaceFunction):
 
     def __init__(self, p=0.5, train=False, inplace=False):
         super(Dropout, self).__init__()

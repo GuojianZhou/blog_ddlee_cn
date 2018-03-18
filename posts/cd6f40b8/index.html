@@ -284,7 +284,7 @@
 
     
         <meta property="article:published_time" content="Sat Jul 22 2017 23:51:13 GMT+0800">
-        <meta property="article:modified_time" content="Wed Jan 10 2018 00:56:34 GMT+0800">
+        <meta property="article:modified_time" content="Sun Mar 18 2018 21:39:08 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -307,7 +307,7 @@
     "mainEntityOfPage": "https://blog.ddlee.cn/posts/cd6f40b8/index.html",
     "headline": "深度学习中的权重衰减",
     "datePublished": "Sat Jul 22 2017 23:51:13 GMT+0800",
-    "dateModified": "Wed Jan 10 2018 00:56:34 GMT+0800",
+    "dateModified": "Sun Mar 18 2018 21:39:08 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -557,7 +557,7 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <p>权重衰减（weight dacay），即L^2范数惩罚，是最常见的正则化技术之一。本文将介绍它是如何起作用的。主要材料来自<a href="https://deeplearningbook.org" target="_blank" rel="external">The Deep Learning Book</a>。</p>
-<h3 id="为什么要引入权重衰减"><a href="#为什么要引入权重衰减" class="headerlink" title="为什么要引入权重衰减"></a>为什么要引入权重衰减</h3><p>机器学习的逻辑与我们最初解决问题的思维方式恰恰相反：要解决问题，一种经典的思路是把它拆成小问题，考虑之间的依赖，然后分而治之。而机器学习的哲学是“<em>trail-error-correct</em>”：先假设一堆可能的方案，根据结果去选择/调整这些方案，直到满意。换句话说，机器学习在假设空间中搜索最符合数据的模型：以果推因，即为最大似然的想法。随着数据量的增大，我们越来越需要表达能力更强的模型，而深度学习的优势正符合这一需要：通过分布式表示带来的指数增益，深度学习模型的扩展能力几乎是无限的（详见<a href="https://blog.ddlee.cn/2017/06/01/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E8%A1%A8%E7%A4%BA/">深度学习和分布式表示</a>）。</p>
+<h3 id="为什么要引入权重衰减"><a href="#为什么要引入权重衰减" class="headerlink" title="为什么要引入权重衰减"></a>为什么要引入权重衰减</h3><p>机器学习的逻辑与我们最初解决问题的思维方式恰恰相反：要解决问题，一种经典的思路是把它拆成小问题，考虑之间的依赖，然后分而治之。而机器学习的哲学是“<em>trail-error-correct</em>”：先假设一堆可能的方案，根据结果去选择/调整这些方案，直到满意。换句话说，机器学习在假设空间中搜索最符合数据的模型：以果推因，即为最大似然的想法。随着数据量的增大，我们越来越需要表达能力更强的模型，而深度学习的优势正符合这一需要：通过分布式表示带来的指数增益，深度学习模型的扩展能力几乎是无限的（详见<a href="https://blog.ddlee.cn/posts/9f894922/">深度学习和分布式表示</a>）。</p>
 <p>有了模型（备选模型集），有了数据，就不得不面对机器学习领域的核心问题：如何保证模型能够描述数据（拟合）和生成数据（泛化）。</p>
 <p>粗略来看，有以下三种情况：</p>
 <ul>
@@ -575,16 +575,25 @@
 <h3 id="权重衰减如何起作用"><a href="#权重衰减如何起作用" class="headerlink" title="权重衰减如何起作用"></a>权重衰减如何起作用</h3><p>下面我们通过观察加入权重衰减后目标函数的梯度变化来讨论权重衰减是如何起作用的。可以跳过公式部分直接看最后一段。</p>
 <p>————————————推导部分—————————</p>
 <p>简单起见，令偏置为0，模型的目标函数：</p>
-<script type="math/tex; mode=display">J_{1}(w; X,y)=\frac{\alpha}{2} w^T w+J(w; X,y)</script><p>对应的梯度为：</p>
-<script type="math/tex; mode=display">{\nabla}_{w} J_{1}(w; X,y) = \alpha w + {\nabla}_{w} J(w; X,y)</script><p>进行梯度下降，参数的更新规则为：</p>
-<script type="math/tex; mode=display">w = w - \epsilon (\alpha w + {\nabla}_{w} J(w; X,y))</script><p>也就是：</p>
-<script type="math/tex; mode=display">w = (1 - \epsilon \alpha )w - \epsilon {\nabla}_{w} J(w; X,y)</script><p>从上式可以发现，加入权重衰减后，先对参数进行伸缩，再沿梯度下降。下面令 $x^{(1)}$ 为使目标函数达到最优的参数值，在其附近考虑目标函数的二次近似：</p>
-<script type="math/tex; mode=display">J(w) \approx J(w^{(1)}) + \frac{1}{2} (w - w^{(1)})^T H (w - w^{(1)})</script><p>其中 $H$ 为近似目标函数在的Hessian矩阵。当近似目标函数最小时，其梯度为 $0$ ，即：</p>
-<script type="math/tex; mode=display">{\nabla}_{w} J(w) \approx H(w - w^{(1)})</script><p>该式也向我们说明了基于梯度的优化算法主要的信息来自Hessian矩阵。添加入权重衰减项之后，上式变为（记此时的最优点为 $w^{(2)}$ ）：</p>
-<script type="math/tex; mode=display">{\nabla}_{w} J_{1}(w) \approx \alpha w^{(2)} + H(w^{(2)} - w^{(1)}) = 0</script><p>所以</p>
-<script type="math/tex; mode=display">w^{(2)} = (H + \alpha I)^{-1} H w^{(1)}</script><p>该式表明了了加入正则化对参数最优质点的影响，由Hessian矩阵和正则化系数 $\alpha$ 共同决定。</p>
+<p>$$J_{1}(w; X,y)=\frac{\alpha}{2} w^T w+J(w; X,y)$$</p>
+<p>对应的梯度为：</p>
+<p>$${\nabla}<em>{w} J</em>{1}(w; X,y) = \alpha w + {\nabla}_{w} J(w; X,y)$$</p>
+<p>进行梯度下降，参数的更新规则为：</p>
+<p>$$w = w - \epsilon (\alpha w + {\nabla}_{w} J(w; X,y)) $$</p>
+<p>也就是：</p>
+<p>$$w = (1 - \epsilon \alpha )w - \epsilon {\nabla}_{w} J(w; X,y)$$</p>
+<p>从上式可以发现，加入权重衰减后，先对参数进行伸缩，再沿梯度下降。下面令 $x^{(1)}$ 为使目标函数达到最优的参数值，在其附近考虑目标函数的二次近似：</p>
+<p>$$J(w) \approx J(w^{(1)}) + \frac{1}{2} (w - w^{(1)})^T H (w - w^{(1)})$$</p>
+<p>其中 $H$ 为近似目标函数在的Hessian矩阵。当近似目标函数最小时，其梯度为 $0$ ，即：</p>
+<p>$${\nabla}_{w} J(w) \approx H(w - w^{(1)})$$</p>
+<p>该式也向我们说明了基于梯度的优化算法主要的信息来自Hessian矩阵。添加入权重衰减项之后，上式变为（记此时的最优点为 $w^{(2)}$ ）：</p>
+<p>$${\nabla}<em>{w} J</em>{1}(w) \approx \alpha w^{(2)} + H(w^{(2)} - w^{(1)}) = 0$$</p>
+<p>所以</p>
+<p>$$w^{(2)} = (H + \alpha I)^{-1} H w^{(1)} $$</p>
+<p>该式表明了了加入正则化对参数最优质点的影响，由Hessian矩阵和正则化系数 $\alpha$ 共同决定。</p>
 <p>进一步将Hessian矩阵分解，可以得到：</p>
-<script type="math/tex; mode=display">w^{(2)} = Q(\Lambda + \alpha I)^{-1} \Lambda Q^T w^{(1)}</script><p>其中， $Q$ 为正交矩阵，$\Lambda$ 为对角矩阵。这样可以看到，权重衰减的效果是沿着由 $H$ 的特征向量所定义的轴缩放 $w$， 具体的伸缩因子为 ${\frac{ {\lambda}<em>{i} }{ {\lambda}_i + \alpha }}$ ，其中 ${\lambda}</em>{i}$ 表示第 $i$ 个特征向量对应的特征值。</p>
+<p>$$w^{(2)} = Q(\Lambda + \alpha I)^{-1} \Lambda Q^T w^{(1)}$$</p>
+<p>其中， $Q$ 为正交矩阵，$\Lambda$ 为对角矩阵。这样可以看到，权重衰减的效果是沿着由 $H$ 的特征向量所定义的轴缩放 $w$， 具体的伸缩因子为 ${\frac{ {\lambda}_{i} }{ {\lambda}<em>i + \alpha }}$ ，其中 ${\lambda}</em>{i}$ 表示第 $i$ 个特征向量对应的特征值。</p>
 <p>当特征值 $\lambda$很大（相比 $\alpha$）时，缩放因子对权重影响较小，因而更新过程中产生的变化也不大；而当特征值较小时， $\alpha$的缩放作用就显现出来，将这个方向的权重衰减到0。</p>
 <p>这种效果也可以由下图表示：</p>
 <p><img src="https://static.ddlee.cn/static/img/深度学习中的权重衰减/transform.png" alt="transform"></p>
@@ -592,21 +601,30 @@
 <p><em>总结来说，目标函数的Hessian矩阵（显式、隐式或者近似的）是现有优化算法进行寻优的主要依据。通过控制权重衰减的 $\alpha$ 参数，我们实际上控制的是在Hessian矩阵的特征方向上以多大的幅度缩放权重，相对重要（能够显著减小目标函数）的方向上权重保留比较完好，而无助于目标函数减小的方向上权重在训练过程中逐渐地衰减掉了。而这也就是权重衰减的意义。</em></p>
 <p>从宏观上来看，对目标函数来说，特征值较大的方向包含更多有关数据的信息，较小的方向则有随机性的噪声，权重衰减正是通过忽略较少信息方向的变化来对抗过拟合的。</p>
 <h3 id="L-1-范数正则化"><a href="#L-1-范数正则化" class="headerlink" title="$L^1$ 范数正则化"></a>$L^1$ 范数正则化</h3><p>通过类似的推导，可以得到加入了 $L^1$ 范数惩罚项对参数最优解的影响如下：</p>
-<script type="math/tex; mode=display">w^{(2)}_{i} = sign(w^{(1)}_{i}) max \big\{|w^{(1)}_{i}| - \frac{\alpha}{H_{i,i}}, 0 \big\}</script><p>相比 $L^2$ 范数的影响，这是一个离散的结果，因而 $L^1$ 范数惩罚会将参数推向更加稀疏的解。这种稀疏性质常被用作特征选择。</p>
+<p>$$w^{(2)}<em>{i} = sign(w^{(1)}</em>{i}) max \big{|w^{(1)}<em>{i}| - \frac{\alpha}{H</em>{i,i}}, 0 \big}$$</p>
+<p>相比 $L^2$ 范数的影响，这是一个离散的结果，因而 $L^1$ 范数惩罚会将参数推向更加稀疏的解。这种稀疏性质常被用作特征选择。</p>
 <h3 id="权重衰减的贝叶斯解释"><a href="#权重衰减的贝叶斯解释" class="headerlink" title="权重衰减的贝叶斯解释"></a>权重衰减的贝叶斯解释</h3><p>在贝叶斯统计的框架下，常用的推断策略是最大后验点估计(Maximum A Posteriori, MAP)。有如下的推断公式（由贝叶斯定律导出）：</p>
-<script type="math/tex; mode=display">{\theta}_{MAP} = argmax p(\theta | x) = argmax (log p( x | \theta) + log p(\theta))</script><p>上式右边第一项是标准的对数似然项，而第二项对应着先验分布。</p>
+<p>$${\theta}_{MAP} = argmax p(\theta | x) = argmax (log p( x | \theta) + log p(\theta))$$</p>
+<p>上式右边第一项是标准的对数似然项，而第二项对应着先验分布。</p>
 <p>在这样的视角下，我们只进行最大似然估计是不够的，还要考虑先验 $p(\theta)$ 的分布。而当假定参数为正态分布 $N(w; 0, \frac{1}{\lambda}I^2)$ 时，带入上式（ $\theta$ 为参数），即可发现第二项的结果正比于权重衰减惩罚项 $\lambda w^T w$ ，加上一个不依赖于 $w$ 也不影响学习过程的项。于是，具有高斯先验权重的MAP贝叶斯推断对应着权重衰减。</p>
 <h3 id="权重衰减与提前终止"><a href="#权重衰减与提前终止" class="headerlink" title="权重衰减与提前终止"></a>权重衰减与提前终止</h3><p>提前终止也是一种正则化技术，其想法简单粗暴：每个epoch之后在验证集上评估结果，当验证集误差不再下降的时候，我们认为模型已经尽它所能了，于是终止训练过程。</p>
 <p>提前终止以牺牲一部分训练数据来作为验证数据来的代价来对抗过拟合，其逻辑是实证主义的。</p>
 <p>然而，在二次近似和简单梯度下降的情形下，可以观察到提前终止可以有相当于权重衰减的效果。</p>
 <p>我们仍考虑目标函数的二次近似：</p>
-<script type="math/tex; mode=display">J(w) \approx J(w^{(1)}) + \frac{1}{2} (w - w^{(1)})^T H (w - w^{(1)})</script><p>记最优参数点为 $w^{(1)}$ ，其梯度为：</p>
-<script type="math/tex; mode=display">{\nabla}_{w} J(w) \approx H(w - w^{(1)})</script><p>不加入正则化项，其梯度下降的更新策略（从第 $\tau-1$ 步到 $\tau$ 步）为：</p>
-<script type="math/tex; mode=display">w^{(\tau)} = w^{\tau - 1)} - \epsilon H (w^{(\tau - 1)} - w^{(1)})</script><p>累加得到</p>
-<script type="math/tex; mode=display">w^{(\tau)} - w^{(1)} = (I - \epsilon H) (w^{(\tau - 1)} - w^{(1)})</script><p>将Hessian矩阵分解，得到如下形式</p>
-<script type="math/tex; mode=display">w^{(\tau)} = Q[I - (I - \epsilon \Lambda) ^ {\tau}] Q^T w^{(1)}</script><p>将加入正则化项的权重影响改写为</p>
-<script type="math/tex; mode=display">w^{(2)} = Q[I - (\Lambda + \alpha I) ^ {-1} \alpha] Q^T w^{(1)}</script><p>对比可以得到，如果超参数 $\epsilon, \alpha, \tau$ 满足</p>
-<script type="math/tex; mode=display">(I - \epsilon \Lambda) ^ {\tau} = (\Lambda + \alpha I) ^ {-1} \alpha</script><p>则提前终止将与权重衰减有相当的效果。具体的，即第 $\tau$ 步结束的训练过程将到达超参数为 $\alpha$ 的 $L^2$ 正则化得到的最优点。</p>
+<p>$$J(w) \approx J(w^{(1)}) + \frac{1}{2} (w - w^{(1)})^T H (w - w^{(1)})$$</p>
+<p>记最优参数点为 $w^{(1)}$ ，其梯度为：</p>
+<p>$${\nabla}_{w} J(w) \approx H(w - w^{(1)})$$</p>
+<p>不加入正则化项，其梯度下降的更新策略（从第 $\tau-1$ 步到 $\tau$ 步）为：</p>
+<p>$$ w^{(\tau)} = w^{\tau - 1)} - \epsilon H (w^{(\tau - 1)} - w^{(1)})$$</p>
+<p>累加得到</p>
+<p>$$ w^{(\tau)} - w^{(1)} = (I - \epsilon H) (w^{(\tau - 1)} - w^{(1)})$$</p>
+<p>将Hessian矩阵分解，得到如下形式</p>
+<p>$$ w^{(\tau)} = Q[I - (I - \epsilon \Lambda) ^ {\tau}] Q^T w^{(1)} $$</p>
+<p>将加入正则化项的权重影响改写为</p>
+<p>$$ w^{(2)} = Q[I - (\Lambda + \alpha I) ^ {-1} \alpha] Q^T w^{(1)} $$</p>
+<p>对比可以得到，如果超参数 $\epsilon, \alpha, \tau$ 满足</p>
+<p>$$ (I - \epsilon \Lambda) ^ {\tau} = (\Lambda + \alpha I) ^ {-1} \alpha $$</p>
+<p>则提前终止将与权重衰减有相当的效果。具体的，即第 $\tau$ 步结束的训练过程将到达超参数为 $\alpha$ 的 $L^2$ 正则化得到的最优点。</p>
 <p>但提前终止带来的好处是，我们不再需要去找合适的超参数 $\alpha$ ，而只需要制定合理的终止策略（如3个epoch均不带来验证集误差的减小即终止训练），在训练成本的节约上，还是很值得的。</p>
 <p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 

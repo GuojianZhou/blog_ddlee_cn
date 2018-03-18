@@ -284,7 +284,7 @@
 
     
         <meta property="article:published_time" content="Sun Mar 12 2017 15:00:25 GMT+0800">
-        <meta property="article:modified_time" content="Mon Mar 12 2018 00:13:14 GMT+0800">
+        <meta property="article:modified_time" content="Sun Mar 18 2018 21:28:59 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -307,7 +307,7 @@
     "mainEntityOfPage": "https://blog.ddlee.cn/posts/c99180ec/index.html",
     "headline": "再次折腾我的WNDR4300：OpenWrt文件共享",
     "datePublished": "Sun Mar 12 2017 15:00:25 GMT+0800",
-    "dateModified": "Mon Mar 12 2018 00:13:14 GMT+0800",
+    "dateModified": "Sun Mar 18 2018 21:28:59 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -584,7 +584,7 @@
 <h3 id="U盘挂载，文件共享"><a href="#U盘挂载，文件共享" class="headerlink" title="U盘挂载，文件共享"></a>U盘挂载，文件共享</h3><p>安装好OpenWrt后，就可以从网页端访问路由器，设置PPPoE拨号，设置WIFI等等。</p>
 <h4 id="U盘挂载"><a href="#U盘挂载" class="headerlink" title="U盘挂载"></a>U盘挂载</h4><p>U盘挂载部分主要参考了<a href="https://my.oschina.net/umu618/blog/282984" target="_blank" rel="external">跟 UMU 一起玩 OpenWRT（入门篇6）：挂接 U 盘</a>。</p>
 <p>首先是安装相应的包：</p>
-<pre><code class="lang-bash">opkg update
+<pre><code class="bash">opkg update
 
 # 核心包
 opkg install kmod-usb-storage
@@ -610,7 +610,7 @@ chmod 444 /mnt/usb/USB_DISK_NOT_PRESENT
 mount /dev/sda1 /mnt/usb
 </code></pre><p>这时可以测试一下，如果U盘里面存储了文件，可以通过<code>/mnt/usb</code>访问的到。</p>
 <p>下面是开机自动挂载U盘的命令。</p>
-<pre><code class="lang-bash"># block-mount blkid用于查看U盘的UUID
+<pre><code class="bash"># block-mount blkid用于查看U盘的UUID
 opkg install block-mount blkid
 
 # 实际上要操作的是fstab的配置文件/etc/config/fstab，要将enabled值改成1
@@ -622,7 +622,7 @@ uci commit fstab
 <p>更详细的信息可以参见<a href="http://wiki.openwrt.org/doc/uci/fstab" target="_blank" rel="external">这里</a></p>
 <h4 id="文件共享"><a href="#文件共享" class="headerlink" title="文件共享"></a>文件共享</h4><p>文件共享可以通过FTP和SAMBA，推荐的方式是SAMBA。</p>
 <h5 id="SAMBA"><a href="#SAMBA" class="headerlink" title="SAMBA"></a>SAMBA</h5><p>安转SAMBA：</p>
-<pre><code class="lang-bash">opkg update
+<pre><code class="bash">opkg update
 opkg install samba36-server
 
 # luci程序，可选
@@ -639,7 +639,7 @@ create mask = 0750
 directory mask = 0750
 </code></pre><p>第二个参数是访问账户，可以通过命令<code>sambpasswd -a</code>将你的当前用户加入到SAMBA的组中，需要设置一个密码。另外，可能需要将配置文件<code>/etc/samba/smb.conf</code>的[global]中的<code>invalid users = root</code>注释掉。</p>
 <p>最后，设置SAMBA服务启动和开机自启</p>
-<pre><code class="lang-bash">/etc/init.d/samba start
+<pre><code class="bash">/etc/init.d/samba start
 /etc/init.d/samba enable
 </code></pre>
 <h5 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h5><p>FTP可以用<code>vsftpd</code>包来设置，大致过程与SAMBA类似：设置路径、添加用户、设置自启。</p>

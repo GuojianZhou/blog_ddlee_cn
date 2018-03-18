@@ -284,7 +284,7 @@
 
     
         <meta property="article:published_time" content="Mon Apr 03 2017 22:57:54 GMT+0800">
-        <meta property="article:modified_time" content="Mon Mar 12 2018 00:09:39 GMT+0800">
+        <meta property="article:modified_time" content="Sun Mar 18 2018 21:28:59 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -307,7 +307,7 @@
     "mainEntityOfPage": "https://blog.ddlee.cn/posts/8a684efc/index.html",
     "headline": "Coroutine,Generator,Async与Await",
     "datePublished": "Mon Apr 03 2017 22:57:54 GMT+0800",
-    "dateModified": "Mon Mar 12 2018 00:09:39 GMT+0800",
+    "dateModified": "Sun Mar 18 2018 21:28:59 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -559,7 +559,7 @@
         <h4 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h4><p>Generator能保存自己的状态，进入一种“Paused”状态，再次调用时会继续执行。</p>
 <p>Generator的好处之一是节省了存储空间开销，带一些”流处理”的思想。</p>
 <p>其实，我们也可以对Generator进行传入数据的操作：</p>
-<pre><code class="lang-python">def coro():
+<pre><code class="python">def coro():
     hello = yield &quot;Hello&quot;
     yield hello
 
@@ -582,7 +582,7 @@ print(c.send(&quot;World&quot;))
 <li>支持计划任务（暂停、恢复执行）</li>
 <li>与其他Task通信</li>
 </ul>
-<pre><code class="lang-python">@coroutine
+<pre><code class="python">@coroutine
 def grep(pattern):  #正则匹配
     print &quot;Looking for %s&quot; % pattern
     while True:
@@ -593,7 +593,7 @@ def grep(pattern):  #正则匹配
 <p>conroutine有自己的控制流（while/if），有局部变量（pattern, line），能暂停和恢复（yield()/send()），能相互通信（send()）</p>
 <p>====》coroutine就是一种Task！</p>
 <p>Python Docs中提供了一个例子：</p>
-<pre><code class="lang-python">import asyncio
+<pre><code class="python">import asyncio
 
 async def compute(x, y):
     print(&quot;Compute %s + %s ...&quot; % (x, y))
@@ -612,7 +612,7 @@ loop.close()
 <p><img src="https://static.ddlee.cn/static/img/coroutine/tulip_coro.png" alt="Chaining coroutines"></p>
 <p>利用coroutine，可以在一个线程(Task)上实现异步。</p>
 <h4 id="Impletation"><a href="#Impletation" class="headerlink" title="Impletation"></a>Impletation</h4><p>coroutine有两种实现方式，基于generator和原生async, awati关键字。</p>
-<h5 id="generator-based-coroutine"><a href="#generator-based-coroutine" class="headerlink" title="generator based coroutine"></a>generator based coroutine</h5><pre><code class="lang-python">import asyncio
+<h5 id="generator-based-coroutine"><a href="#generator-based-coroutine" class="headerlink" title="generator based coroutine"></a>generator based coroutine</h5><pre><code class="python">import asyncio
 import datetime
 import random
 
@@ -634,7 +634,7 @@ loop.run_forever()
 </code></pre>
 <p>上面的程序实现了在同一个线程里交互执行两个函数（sleep），而又能保持各自的状态</p>
 <h5 id="Native-support-python-3-5"><a href="#Native-support-python-3-5" class="headerlink" title="Native support(python 3.5+)"></a>Native support(python 3.5+)</h5><p>只需要修改函数定义头和<code>yield from</code>为关键字<code>await</code>即可。</p>
-<pre><code class="lang-python">async def display_date(num, loop, ):
+<pre><code class="python">async def display_date(num, loop, ):
     end_time = loop.time() + 50.0
     while True:
         print(&quot;Loop: {} Time: {}&quot;.format(num, datetime.datetime.now()))

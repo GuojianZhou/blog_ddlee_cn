@@ -284,7 +284,7 @@
 
     
         <meta property="article:published_time" content="Tue Jul 25 2017 22:08:44 GMT+0800">
-        <meta property="article:modified_time" content="Mon Mar 12 2018 00:13:44 GMT+0800">
+        <meta property="article:modified_time" content="Sun Mar 18 2018 21:35:09 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -307,7 +307,7 @@
     "mainEntityOfPage": "https://blog.ddlee.cn/posts/ba61101c/index.html",
     "headline": "[源码笔记]keras源码分析之Container",
     "datePublished": "Tue Jul 25 2017 22:08:44 GMT+0800",
-    "dateModified": "Mon Mar 12 2018 00:13:44 GMT+0800",
+    "dateModified": "Sun Mar 18 2018 21:35:09 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -557,11 +557,11 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <p>本篇继续讨论keras的源码结构。</p>
-<p><a href="https://blog.ddlee.cn/2017/07/15/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BLayer%E3%80%81Tensor%E5%92%8CNode/">第一篇源码笔记</a>中我们观察了<code>Layer</code>, <code>Tensor</code>和<code>Node</code>是如何耦合在一起的，而本篇的重点是观察多层网络构成的有向无环图（DAG）。主要涉及的文件为<a href="https://github.com/fchollet/keras/blob/master/keras/engine/topology.py" target="_blank" rel="external">keras/engine/topology.py</a>， 要观察的类是<code>Container</code>。</p>
+<p><a href="https://blog.ddlee.cn/posts/4943e1b8/">第一篇源码笔记</a>中我们观察了<code>Layer</code>, <code>Tensor</code>和<code>Node</code>是如何耦合在一起的，而本篇的重点是观察多层网络构成的有向无环图（DAG）。主要涉及的文件为<a href="https://github.com/fchollet/keras/blob/master/keras/engine/topology.py" target="_blank" rel="external">keras/engine/topology.py</a>， 要观察的类是<code>Container</code>。</p>
 <h3 id="Container对象：DAG的拓扑原型"><a href="#Container对象：DAG的拓扑原型" class="headerlink" title="Container对象：DAG的拓扑原型"></a><code>Container</code>对象：DAG的拓扑原型</h3><p>在第一篇中我们提到，Keras Tensor中增强的<code>\_keras_history</code>属性使得我们仅通过输入和输出的Tensor，就可以构建出整张计算图。而<code>Container</code>对象正是实现了这样的过程。</p>
 <h4 id="计算图的构建"><a href="#计算图的构建" class="headerlink" title="计算图的构建"></a>计算图的构建</h4><p>DAG计算图的构建在<code>Container</code>对象实例化时完成，主要包括如下几个操作：</p>
 <p>1） 记录<code>Container</code>的首尾连接信息</p>
-<pre><code class="lang-python">def __init__(self, inputs, outputs, name=None):
+<pre><code class="python">def __init__(self, inputs, outputs, name=None):
   for x in self.outputs:
       layer, node_index, tensor_index = x._keras_history
       self.output_layers.append(layer)
@@ -575,7 +575,7 @@
       self.input_layers_tensor_indices.append(tensor_index)
 </code></pre>
 <p>2） 从<code>output_tensors</code>开始反向递归构建计算图，采用广度优先的准则，本步的关键是构建<code>nodes_in_decreasing_depth</code>这一队列，这些<code>Node</code>包含的连接信息和深度信息将是后续正向传播和反向训练计算执行顺序的依据。</p>
-<pre><code class="lang-python">  def build_map_of_graph(tensor, finished_nodes, nodes_in_progress):
+<pre><code class="python">  def build_map_of_graph(tensor, finished_nodes, nodes_in_progress):
       layer, node_index, tensor_index = tensor._keras_history
       node = layer.inbound_nodes[node_index]
       nodes_in_progress.add(node)
@@ -600,7 +600,7 @@
       build_map_of_graph(x, finished_nodes, nodes_in_progress)
 </code></pre>
 <p>3） 计算各节点的深度并按深度标定节点在DAG中的位置</p>
-<pre><code class="lang-python">  # 根据队列标定各节点的深度
+<pre><code class="python">  # 根据队列标定各节点的深度
   for node in reversed(nodes_in_decreasing_depth):
       depth = nodes_depths.setdefault(node, 0)
       previous_depth = layers_depths.get(node.outbound_layer, 0)
@@ -633,7 +633,7 @@
   self.nodes_by_depth = nodes_by_depth
 </code></pre>
 <p>4）将整个<code>Container</code>并入<code>Node</code>以保持兼容性</p>
-<pre><code class="lang-python">  self.outbound_nodes = []
+<pre><code class="python">  self.outbound_nodes = []
   self.inbound_nodes = []
   Node(outbound_layer=self,
        inbound_layers=[],
@@ -644,7 +644,7 @@
        ...)
 </code></pre>
 <h3 id="计算图中的计算"><a href="#计算图中的计算" class="headerlink" title="计算图中的计算"></a>计算图中的计算</h3><p>计算在<code>Container</code>对象的<code>call()</code>方法完成，其实现又依靠内部方法<code>run_internal_graph()</code>。</p>
-<pre><code class="lang-python">def run_internal_graph(self, inputs, masks=None):
+<pre><code class="python">def run_internal_graph(self, inputs, masks=None):
        depth_keys = list(self.nodes_by_depth.keys())
        depth_keys.sort(reverse=True)
        # 依据深度

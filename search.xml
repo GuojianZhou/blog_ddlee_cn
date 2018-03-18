@@ -6,7 +6,7 @@
     <entry>
       <title><![CDATA[目标检测常用评测集：Pascal VOC, MS COCO, Cityscapes]]></title>
       <url>https://blog.ddlee.cn/posts/7845fb62/</url>
-      <content type="html"><![CDATA[<p>本文节选自博主通过格灵深瞳公众号发表于知乎的文章：<a href="https://zhuanlan.zhihu.com/p/34179420" target="_blank" rel="external">目标检测入门（二）：模型的评测与训练技巧
+      <content type="html"><![CDATA[<p>本文节选自博主通过格灵深瞳机构号发表于知乎的文章：<a href="https://zhuanlan.zhihu.com/p/34179420" target="_blank" rel="external">目标检测入门（二）：模型的评测与训练技巧
 </a>。</p>
 <h2 id="检测模型的评测指标"><a href="#检测模型的评测指标" class="headerlink" title="检测模型的评测指标"></a>检测模型的评测指标</h2><p>目标检测模型本源上可以用统计推断的框架描述，我们关注其犯第一类错误和第二类错误的概率，通常用准确率和召回率来描述。准确率描述了模型有多准，即在预测为正例的结果中，有多少是真正例；召回率则描述了模型有多全，即在为真的样本中，有多少被我们的模型预测为正例。不同的任务，对两类错误有不同的偏好，常常在某一类错误不多于一定阈值的情况下，努力减少另一类错误。在检测中，mAP（mean Average Precision）作为一个统一的指标将这两种错误兼顾考虑。</p>
 <p>具体地，对于每张图片，检测模型输出多个预测框（常常远超真实框的个数），我们使用IoU（Intersection Over Union，交并比）来标记预测框是否为预测正确。标记完成后，随着预测框的增多，召回率总会提升，在不同的召回率水平下对准确率做平均，即得到AP，最后再对所有类别按其所占比例做平均，即得到mAP。</p>
@@ -93,7 +93,7 @@
       <title><![CDATA[[论文笔记]YOLO9000: Better, Faster, Stronger]]></title>
       <url>https://blog.ddlee.cn/posts/16826395/</url>
       <content type="html"><![CDATA[<p><a href="https://arxiv.org/1612.08242" target="_blank" rel="external">YOLO9000: Better, Faster, Stronger</a></p>
-<p>在这篇文章里，单阶段检测模型的先驱工作YOLO迎来了全面的更新：</p>
+<p>在这篇文章里，单阶段检测模型的先驱工作<a href="https://blog.ddlee.cn/posts/41036331/">YOLO</a>迎来了全面的更新：</p>
 <ol>
 <li>在卷积层添加BN，舍弃Dropout</li>
 <li>更高尺寸的输入</li>
@@ -375,9 +375,9 @@
 </ul>
 <h2 id="开发环境配置-Environment-Configuration"><a href="#开发环境配置-Environment-Configuration" class="headerlink" title="开发环境配置 Environment Configuration"></a>开发环境配置 Environment Configuration</h2><p>这一部分完成自己开发环境的配置。</p>
 <h4 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h4><p>SSH key: ssh-keygen and ssh-add, git config name&amp;email</p>
-<h4 id="Python-Annaconda"><a href="#Python-Annaconda" class="headerlink" title="Python(Annaconda)"></a>Python(Annaconda)</h4><p>(pypi: 修改 ~/.config/pip/pip.conf (Linux), %APPDATA%\pip\pip.ini (Windows 10) 或 $HOME/Library/Application Support/pip/pip.conf (macOS) (没有就创建一个)， 修改 index-url至tuna，例如<br>[global]<br>index-url = <a href="https://pypi.tuna.tsinghua.edu.cn/simple" target="_blank" rel="external">https://pypi.tuna.tsinghua.edu.cn/simple</a> )<br>(conda TUNA 还提供了 Anaconda 仓库的镜像，运行以下命令:<br>conda config —add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</a></p>
-<p>conda config —add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</a></p>
-<p>conda config —set show_channel_urls yes<br>即可添加 Anaconda Python 免费仓库。)</p>
+<h4 id="Python-Annaconda"><a href="#Python-Annaconda" class="headerlink" title="Python(Annaconda)"></a>Python(Annaconda)</h4><p>(pypi: 修改 ~/.config/pip/pip.conf (Linux), %APPDATA%\pip\pip.ini (Windows 10) 或 $HOME/Library/Application Support/pip/pip.conf (macOS) (没有就创建一个)， 修改 index-url至tuna，例如<br>[global]<br>index-url = <a href="https://pypi.tuna.tsinghua.edu.cn/simple" target="_blank" rel="external">https://pypi.tuna.tsinghua.edu.cn/simple</a> )<br>(conda TUNA 还提供了 Anaconda 仓库的镜像，运行以下命令:<br>conda config –add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</a></p>
+<p>conda config –add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</a></p>
+<p>conda config –set show_channel_urls yes<br>即可添加 Anaconda Python 免费仓库。)</p>
 <h4 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h4><p>install: <a href="https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/</a></p>
 <p>To verify: sudo docker run hello-world</p>
 <p>mirror: <a href="https://www.docker-cn.com/registry-mirror" target="_blank" rel="external">https://www.docker-cn.com/registry-mirror</a><br>chmod 755 /etc/docker<br>为了永久性保留更改，您可以修改 /etc/docker/daemon.json 文件并添加上 registry-mirrors 键值。<br>{ “registry-mirrors”: [“<a href="https://registry.docker-cn.com" target="_blank" rel="external">https://registry.docker-cn.com</a>“] }<br>修改保存后重启 Docker 以使配置生效</p>
@@ -397,7 +397,7 @@
 <li>Disable intel turbo boost technology: terminal:<br>sudo -i<br>echo “1” | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo<br>exit</li>
 </ul>
 <p>4.tracke-miner-fs bug<br><a href="https://askubuntu.com/questions/346211/tracker-store-and-tracker-miner-fs-eating-up-my-cpu-on-every-startup" target="_blank" rel="external">https://askubuntu.com/questions/346211/tracker-store-and-tracker-miner-fs-eating-up-my-cpu-on-every-startup</a></p>
-<p>echo -e “\nHidden=true\n” | sudo tee —append /etc/xdg/autostart/tracker-extract.desktop /etc/xdg/autostart/tracker-miner-apps.desktop /etc/xdg/autostart/tracker-miner-fs.desktop /etc/xdg/autostart/tracker-miner-user-guides.desktop /etc/xdg/autostart/tracker-store.desktop &gt; /dev/null<br>gsettings set org.freedesktop.Tracker.Miner.Files crawling-interval -2<br>gsettings set org.freedesktop.Tracker.Miner.Files enable-monitors false<br>tracker reset —hard</p>
+<p>echo -e “\nHidden=true\n” | sudo tee –append /etc/xdg/autostart/tracker-extract.desktop /etc/xdg/autostart/tracker-miner-apps.desktop /etc/xdg/autostart/tracker-miner-fs.desktop /etc/xdg/autostart/tracker-miner-user-guides.desktop /etc/xdg/autostart/tracker-store.desktop &gt; /dev/null<br>gsettings set org.freedesktop.Tracker.Miner.Files crawling-interval -2<br>gsettings set org.freedesktop.Tracker.Miner.Files enable-monitors false<br>tracker reset –hard</p>
 ]]></content>
       
         <categories>
@@ -1048,7 +1048,7 @@
 <li>Cross GPU Batch Normalization(CGBN)</li>
 </ul>
 <h2 id="Approach"><a href="#Approach" class="headerlink" title="Approach"></a>Approach</h2><h3 id="Variance-Equivalence-explanation-for-Linear-Scaling-Rule"><a href="#Variance-Equivalence-explanation-for-Linear-Scaling-Rule" class="headerlink" title="Variance Equivalence explanation for Linear Scaling Rule"></a>Variance Equivalence explanation for Linear Scaling Rule</h3><p>linear scaling rule 来自更改batch size 时，同时放缩learning rate，使得更改后的weight update相比之前小batch size， 多步的weight update类似。而本文用保持loss gradient的方差不变重新解释了linear scaling rule，并指出这一假定仅要求loss gradient是i.i.d，相比保持weight update所假设的不同batch size间loss gradient相似更弱。</p>
-<p>参见<a href="https://blog.ddlee.cn/2017/06/14/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Accurate-Large-Minibatch-SGD-Training-ImageNet-in-One-Hour/#Motivation">Accurate Large Minibatch SGD: Training ImageNet in One Hour</a>，近似时假设了求和项变化不大，这一条件在Object Detection中可能不成立，不同图片的标注框（大小、个数）差别很大。</p>
+<p>参见<a href="https://blog.ddlee.cn/posts/9940b42/#Motivation">Accurate Large Minibatch SGD: Training ImageNet in One Hour</a>，近似时假设了求和项变化不大，这一条件在Object Detection中可能不成立，不同图片的标注框（大小、个数）差别很大。</p>
 <h3 id="WarmUp-Strategy"><a href="#WarmUp-Strategy" class="headerlink" title="WarmUp Strategy"></a>WarmUp Strategy</h3><p>在训练初期，weight抖动明显，引入warmup机制来使用较小的学习率，再逐渐增大到Linear scaling rule要求的学习率。</p>
 <h3 id="Cross-GPU-Batch-Normalization"><a href="#Cross-GPU-Batch-Normalization" class="headerlink" title="Cross-GPU Batch Normalization"></a>Cross-GPU Batch Normalization</h3><p>BN是使深度网络得以训练和收敛的关键技术之一，但在检测任务中，fine-tuning阶段常常固定了SOTA分类网络的BN部分参数，不进行更新。</p>
 <p>检测中常常需要较大分辨率的图片，而GPU内存限制了单卡上的图片个数，提高batch size意味着BN要在多卡（Cross-GPU）上进行。</p>
@@ -1121,7 +1121,7 @@
     <entry>
       <title><![CDATA[[论文笔记]Fast R-CNN]]></title>
       <url>https://blog.ddlee.cn/posts/2b70b32b/</url>
-      <content type="html"><![CDATA[<p>Fast R-CNN 是对R-CNN的改进，作者栏只有RBG一人。文章先指出了R-CNN存在的问题，再介绍了自己的改进思路。文章结构堪称典范，从现存问题，到解决方案、实验细节，再到结果分析、拓展讨论，条分缕析，值得借鉴。而且，RBG开源的代码也影响了后来大部分这一领域的工作。</p>
+      <content type="html"><![CDATA[<p>Fast R-CNN 是对<a href="https://blog.ddlee.cn/posts/415f4992/">R-CNN</a>的改进，作者栏只有RBG一人。文章先指出了R-CNN存在的问题，再介绍了自己的改进思路。文章结构堪称典范，从现存问题，到解决方案、实验细节，再到结果分析、拓展讨论，条分缕析，值得借鉴。而且，RBG开源的代码也影响了后来大部分这一领域的工作。</p>
 <h2 id="R-CNN的问题"><a href="#R-CNN的问题" class="headerlink" title="R-CNN的问题"></a>R-CNN的问题</h2><ul>
 <li>训练是一个多阶段的过程（Proposal, Classification, Regression）</li>
 <li>训练耗时耗力</li>
@@ -1471,9 +1471,9 @@
       <title><![CDATA[[源码笔记]keras源码分析之Model]]></title>
       <url>https://blog.ddlee.cn/posts/ddc5b1bd/</url>
       <content type="html"><![CDATA[<p>本篇是keras源码笔记系列的第三篇。在前两篇中，我们分析了keras对Tensor和Layer等概念的处理，并说明了它们是如何作用别弄个构成有向无环图的。本篇着眼于多层网络模型层面的抽象，即与用户距离最近的接口，源代码文件是<a href="https://github.com/fchollet/keras/blob/master/keras/engine/training.py" target="_blank" rel="external">/keras/engine/training.py</a>和<a href="https://github.com/fchollet/keras/blob/master/keras/models.py" target="_blank" rel="external">/keras/model.py</a>，要观察的类是<code>Model</code>和<code>Sequential</code>。</p>
-<p>本系列第一篇：<a href="https://blog.ddlee.cn/2017/07/15/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BLayer%E3%80%81Tensor%E5%92%8CNode/">【源码笔记】keras源码分析之Tensor, Node和Layer</a><br>第二篇：<a href="https://blog.ddlee.cn/2017/07/25/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BContainer/">【源码笔记】keras源码分析之Container</a></p>
+<p>本系列第一篇：<a href="https://blog.ddlee.cn/posts/4943e1b8/">【源码笔记】keras源码分析之Tensor, Node和Layer</a><br>第二篇：<a href="https://blog.ddlee.cn/posts/ba61101c/">【源码笔记】keras源码分析之Container</a></p>
 <h3 id="Model：添加了训练信息的Container"><a href="#Model：添加了训练信息的Container" class="headerlink" title="Model：添加了训练信息的Container"></a><code>Model</code>：添加了训练信息的<code>Container</code></h3><p><code>Model.compile()</code>主要完成了配置<code>optimizer</code>, <code>loss</code>, <code>metrics</code>等操作，而要执行的<code>fit</code>, <code>evaluate</code>等则不在<code>compile</code>过程中配置。</p>
-<pre><code class="lang-python">def compile(self, optimizer, loss, metrics=None, loss_weights=None,
+<pre><code class="python">def compile(self, optimizer, loss, metrics=None, loss_weights=None,
             sample_weight_mode=None, **kwargs):
     loss = loss or {}
     self.optimizer = optimizers.get(optimizer)
@@ -1521,13 +1521,13 @@
     self.sample_weights = sample_weights
 </code></pre>
 <p><code>Model</code>对象的<code>fit()</code>方法封装了<code>_fit_loop()</code>内部方法，而<code>_fit_loop()</code>方法的关键步骤由<code>_make_train_function()</code>方法完成，返回<code>history</code>对象，用于回调函数的处理。</p>
-<pre><code class="lang-python">def fit(self, x=None, y=None, ...)：
+<pre><code class="python">def fit(self, x=None, y=None, ...)：
       self._make_train_function()
       f = self.train_function
       return self._fit_loop(f, ins, ...)
 </code></pre>
 <p>在<code>_fit_loop()</code>方法中，回调函数完成了对训练过程的监控记录等任务，<code>train_function</code>也被应用于传入的数据：</p>
-<pre><code class="lang-python">def _fit_loop(self, f, ins, out_labels=None, batch_size=32,
+<pre><code class="python">def _fit_loop(self, f, ins, out_labels=None, batch_size=32,
               epochs=100, verbose=1, callbacks=None,
               val_f=None, val_ins=None, shuffle=True,
               callback_metrics=None, initial_epoch=0):
@@ -1565,7 +1565,7 @@
     return self.history
 </code></pre>
 <p><code>_make_train_function()</code>方法从<code>optimizer</code>获取要更新的参数信息，并传入来自<code>backend</code>的<code>function</code>对象：</p>
-<pre><code class="lang-python">def _make_train_function(self):
+<pre><code class="python">def _make_train_function(self):
     if self.train_function is None:
         inputs = self._feed_inputs + self._feed_targets + self._feed_sample_weights
         training_updates = self.optimizer.get_updates(
@@ -1583,7 +1583,7 @@
 <p><code>Model</code>的其他方法<code>evaluate()</code>等，与<code>fit()</code>的结构类似。</p>
 <h3 id="Sequential-构建模型的外层接口"><a href="#Sequential-构建模型的外层接口" class="headerlink" title="Sequential:构建模型的外层接口"></a><code>Sequential</code>:构建模型的外层接口</h3><p><code>Sequential</code>对象是<code>Model</code>对象的进一步封装，也是用户直接面对的接口，其<code>compile()</code>, <code>fit()</code>, <code>predict()</code>等方法与<code>Model</code>几乎一致，所不同的是添加了<code>add()</code>方法，也是我们用于构建网络的最基本操作。</p>
 <p><code>Sequential.add()</code>方法的源码如下：</p>
-<pre><code class="lang-python">def add(self, layer):
+<pre><code class="python">def add(self, layer):
     # 第一层必须是InputLayer对象
     if not self.outputs:
         if not layer.inbound_nodes:
@@ -1629,11 +1629,11 @@
       <title><![CDATA[[源码笔记]keras源码分析之Container]]></title>
       <url>https://blog.ddlee.cn/posts/ba61101c/</url>
       <content type="html"><![CDATA[<p>本篇继续讨论keras的源码结构。</p>
-<p><a href="https://blog.ddlee.cn/2017/07/15/%E6%BA%90%E7%A0%81%E7%AC%94%E8%AE%B0-keras%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90%E4%B9%8BLayer%E3%80%81Tensor%E5%92%8CNode/">第一篇源码笔记</a>中我们观察了<code>Layer</code>, <code>Tensor</code>和<code>Node</code>是如何耦合在一起的，而本篇的重点是观察多层网络构成的有向无环图（DAG）。主要涉及的文件为<a href="https://github.com/fchollet/keras/blob/master/keras/engine/topology.py" target="_blank" rel="external">keras/engine/topology.py</a>， 要观察的类是<code>Container</code>。</p>
+<p><a href="https://blog.ddlee.cn/posts/4943e1b8/">第一篇源码笔记</a>中我们观察了<code>Layer</code>, <code>Tensor</code>和<code>Node</code>是如何耦合在一起的，而本篇的重点是观察多层网络构成的有向无环图（DAG）。主要涉及的文件为<a href="https://github.com/fchollet/keras/blob/master/keras/engine/topology.py" target="_blank" rel="external">keras/engine/topology.py</a>， 要观察的类是<code>Container</code>。</p>
 <h3 id="Container对象：DAG的拓扑原型"><a href="#Container对象：DAG的拓扑原型" class="headerlink" title="Container对象：DAG的拓扑原型"></a><code>Container</code>对象：DAG的拓扑原型</h3><p>在第一篇中我们提到，Keras Tensor中增强的<code>\_keras_history</code>属性使得我们仅通过输入和输出的Tensor，就可以构建出整张计算图。而<code>Container</code>对象正是实现了这样的过程。</p>
 <h4 id="计算图的构建"><a href="#计算图的构建" class="headerlink" title="计算图的构建"></a>计算图的构建</h4><p>DAG计算图的构建在<code>Container</code>对象实例化时完成，主要包括如下几个操作：</p>
 <p>1） 记录<code>Container</code>的首尾连接信息</p>
-<pre><code class="lang-python">def __init__(self, inputs, outputs, name=None):
+<pre><code class="python">def __init__(self, inputs, outputs, name=None):
   for x in self.outputs:
       layer, node_index, tensor_index = x._keras_history
       self.output_layers.append(layer)
@@ -1647,7 +1647,7 @@
       self.input_layers_tensor_indices.append(tensor_index)
 </code></pre>
 <p>2） 从<code>output_tensors</code>开始反向递归构建计算图，采用广度优先的准则，本步的关键是构建<code>nodes_in_decreasing_depth</code>这一队列，这些<code>Node</code>包含的连接信息和深度信息将是后续正向传播和反向训练计算执行顺序的依据。</p>
-<pre><code class="lang-python">  def build_map_of_graph(tensor, finished_nodes, nodes_in_progress):
+<pre><code class="python">  def build_map_of_graph(tensor, finished_nodes, nodes_in_progress):
       layer, node_index, tensor_index = tensor._keras_history
       node = layer.inbound_nodes[node_index]
       nodes_in_progress.add(node)
@@ -1672,7 +1672,7 @@
       build_map_of_graph(x, finished_nodes, nodes_in_progress)
 </code></pre>
 <p>3） 计算各节点的深度并按深度标定节点在DAG中的位置</p>
-<pre><code class="lang-python">  # 根据队列标定各节点的深度
+<pre><code class="python">  # 根据队列标定各节点的深度
   for node in reversed(nodes_in_decreasing_depth):
       depth = nodes_depths.setdefault(node, 0)
       previous_depth = layers_depths.get(node.outbound_layer, 0)
@@ -1705,7 +1705,7 @@
   self.nodes_by_depth = nodes_by_depth
 </code></pre>
 <p>4）将整个<code>Container</code>并入<code>Node</code>以保持兼容性</p>
-<pre><code class="lang-python">  self.outbound_nodes = []
+<pre><code class="python">  self.outbound_nodes = []
   self.inbound_nodes = []
   Node(outbound_layer=self,
        inbound_layers=[],
@@ -1716,7 +1716,7 @@
        ...)
 </code></pre>
 <h3 id="计算图中的计算"><a href="#计算图中的计算" class="headerlink" title="计算图中的计算"></a>计算图中的计算</h3><p>计算在<code>Container</code>对象的<code>call()</code>方法完成，其实现又依靠内部方法<code>run_internal_graph()</code>。</p>
-<pre><code class="lang-python">def run_internal_graph(self, inputs, masks=None):
+<pre><code class="python">def run_internal_graph(self, inputs, masks=None):
        depth_keys = list(self.nodes_by_depth.keys())
        depth_keys.sort(reverse=True)
        # 依据深度
@@ -1774,7 +1774,7 @@
       <title><![CDATA[深度学习中的权重衰减]]></title>
       <url>https://blog.ddlee.cn/posts/cd6f40b8/</url>
       <content type="html"><![CDATA[<p>权重衰减（weight dacay），即L^2范数惩罚，是最常见的正则化技术之一。本文将介绍它是如何起作用的。主要材料来自<a href="https://deeplearningbook.org" target="_blank" rel="external">The Deep Learning Book</a>。</p>
-<h3 id="为什么要引入权重衰减"><a href="#为什么要引入权重衰减" class="headerlink" title="为什么要引入权重衰减"></a>为什么要引入权重衰减</h3><p>机器学习的逻辑与我们最初解决问题的思维方式恰恰相反：要解决问题，一种经典的思路是把它拆成小问题，考虑之间的依赖，然后分而治之。而机器学习的哲学是“<em>trail-error-correct</em>”：先假设一堆可能的方案，根据结果去选择/调整这些方案，直到满意。换句话说，机器学习在假设空间中搜索最符合数据的模型：以果推因，即为最大似然的想法。随着数据量的增大，我们越来越需要表达能力更强的模型，而深度学习的优势正符合这一需要：通过分布式表示带来的指数增益，深度学习模型的扩展能力几乎是无限的（详见<a href="https://blog.ddlee.cn/2017/06/01/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E8%A1%A8%E7%A4%BA/">深度学习和分布式表示</a>）。</p>
+<h3 id="为什么要引入权重衰减"><a href="#为什么要引入权重衰减" class="headerlink" title="为什么要引入权重衰减"></a>为什么要引入权重衰减</h3><p>机器学习的逻辑与我们最初解决问题的思维方式恰恰相反：要解决问题，一种经典的思路是把它拆成小问题，考虑之间的依赖，然后分而治之。而机器学习的哲学是“<em>trail-error-correct</em>”：先假设一堆可能的方案，根据结果去选择/调整这些方案，直到满意。换句话说，机器学习在假设空间中搜索最符合数据的模型：以果推因，即为最大似然的想法。随着数据量的增大，我们越来越需要表达能力更强的模型，而深度学习的优势正符合这一需要：通过分布式表示带来的指数增益，深度学习模型的扩展能力几乎是无限的（详见<a href="https://blog.ddlee.cn/posts/9f894922/">深度学习和分布式表示</a>）。</p>
 <p>有了模型（备选模型集），有了数据，就不得不面对机器学习领域的核心问题：如何保证模型能够描述数据（拟合）和生成数据（泛化）。</p>
 <p>粗略来看，有以下三种情况：</p>
 <ul>
@@ -1792,16 +1792,25 @@
 <h3 id="权重衰减如何起作用"><a href="#权重衰减如何起作用" class="headerlink" title="权重衰减如何起作用"></a>权重衰减如何起作用</h3><p>下面我们通过观察加入权重衰减后目标函数的梯度变化来讨论权重衰减是如何起作用的。可以跳过公式部分直接看最后一段。</p>
 <p>————————————推导部分—————————</p>
 <p>简单起见，令偏置为0，模型的目标函数：</p>
-<script type="math/tex; mode=display">J_{1}(w; X,y)=\frac{\alpha}{2} w^T w+J(w; X,y)</script><p>对应的梯度为：</p>
-<script type="math/tex; mode=display">{\nabla}_{w} J_{1}(w; X,y) = \alpha w + {\nabla}_{w} J(w; X,y)</script><p>进行梯度下降，参数的更新规则为：</p>
-<script type="math/tex; mode=display">w = w - \epsilon (\alpha w + {\nabla}_{w} J(w; X,y))</script><p>也就是：</p>
-<script type="math/tex; mode=display">w = (1 - \epsilon \alpha )w - \epsilon {\nabla}_{w} J(w; X,y)</script><p>从上式可以发现，加入权重衰减后，先对参数进行伸缩，再沿梯度下降。下面令 $x^{(1)}$ 为使目标函数达到最优的参数值，在其附近考虑目标函数的二次近似：</p>
-<script type="math/tex; mode=display">J(w) \approx J(w^{(1)}) + \frac{1}{2} (w - w^{(1)})^T H (w - w^{(1)})</script><p>其中 $H$ 为近似目标函数在的Hessian矩阵。当近似目标函数最小时，其梯度为 $0$ ，即：</p>
-<script type="math/tex; mode=display">{\nabla}_{w} J(w) \approx H(w - w^{(1)})</script><p>该式也向我们说明了基于梯度的优化算法主要的信息来自Hessian矩阵。添加入权重衰减项之后，上式变为（记此时的最优点为 $w^{(2)}$ ）：</p>
-<script type="math/tex; mode=display">{\nabla}_{w} J_{1}(w) \approx \alpha w^{(2)} + H(w^{(2)} - w^{(1)}) = 0</script><p>所以</p>
-<script type="math/tex; mode=display">w^{(2)} = (H + \alpha I)^{-1} H w^{(1)}</script><p>该式表明了了加入正则化对参数最优质点的影响，由Hessian矩阵和正则化系数 $\alpha$ 共同决定。</p>
+<p>$$J_{1}(w; X,y)=\frac{\alpha}{2} w^T w+J(w; X,y)$$</p>
+<p>对应的梯度为：</p>
+<p>$${\nabla}<em>{w} J</em>{1}(w; X,y) = \alpha w + {\nabla}_{w} J(w; X,y)$$</p>
+<p>进行梯度下降，参数的更新规则为：</p>
+<p>$$w = w - \epsilon (\alpha w + {\nabla}_{w} J(w; X,y)) $$</p>
+<p>也就是：</p>
+<p>$$w = (1 - \epsilon \alpha )w - \epsilon {\nabla}_{w} J(w; X,y)$$</p>
+<p>从上式可以发现，加入权重衰减后，先对参数进行伸缩，再沿梯度下降。下面令 $x^{(1)}$ 为使目标函数达到最优的参数值，在其附近考虑目标函数的二次近似：</p>
+<p>$$J(w) \approx J(w^{(1)}) + \frac{1}{2} (w - w^{(1)})^T H (w - w^{(1)})$$</p>
+<p>其中 $H$ 为近似目标函数在的Hessian矩阵。当近似目标函数最小时，其梯度为 $0$ ，即：</p>
+<p>$${\nabla}_{w} J(w) \approx H(w - w^{(1)})$$</p>
+<p>该式也向我们说明了基于梯度的优化算法主要的信息来自Hessian矩阵。添加入权重衰减项之后，上式变为（记此时的最优点为 $w^{(2)}$ ）：</p>
+<p>$${\nabla}<em>{w} J</em>{1}(w) \approx \alpha w^{(2)} + H(w^{(2)} - w^{(1)}) = 0$$</p>
+<p>所以</p>
+<p>$$w^{(2)} = (H + \alpha I)^{-1} H w^{(1)} $$</p>
+<p>该式表明了了加入正则化对参数最优质点的影响，由Hessian矩阵和正则化系数 $\alpha$ 共同决定。</p>
 <p>进一步将Hessian矩阵分解，可以得到：</p>
-<script type="math/tex; mode=display">w^{(2)} = Q(\Lambda + \alpha I)^{-1} \Lambda Q^T w^{(1)}</script><p>其中， $Q$ 为正交矩阵，$\Lambda$ 为对角矩阵。这样可以看到，权重衰减的效果是沿着由 $H$ 的特征向量所定义的轴缩放 $w$， 具体的伸缩因子为 ${\frac{ {\lambda}<em>{i} }{ {\lambda}_i + \alpha }}$ ，其中 ${\lambda}</em>{i}$ 表示第 $i$ 个特征向量对应的特征值。</p>
+<p>$$w^{(2)} = Q(\Lambda + \alpha I)^{-1} \Lambda Q^T w^{(1)}$$</p>
+<p>其中， $Q$ 为正交矩阵，$\Lambda$ 为对角矩阵。这样可以看到，权重衰减的效果是沿着由 $H$ 的特征向量所定义的轴缩放 $w$， 具体的伸缩因子为 ${\frac{ {\lambda}_{i} }{ {\lambda}<em>i + \alpha }}$ ，其中 ${\lambda}</em>{i}$ 表示第 $i$ 个特征向量对应的特征值。</p>
 <p>当特征值 $\lambda$很大（相比 $\alpha$）时，缩放因子对权重影响较小，因而更新过程中产生的变化也不大；而当特征值较小时， $\alpha$的缩放作用就显现出来，将这个方向的权重衰减到0。</p>
 <p>这种效果也可以由下图表示：</p>
 <p><img src="https://static.ddlee.cn/static/img/深度学习中的权重衰减/transform.png" alt="transform"></p>
@@ -1809,21 +1818,30 @@
 <p><em>总结来说，目标函数的Hessian矩阵（显式、隐式或者近似的）是现有优化算法进行寻优的主要依据。通过控制权重衰减的 $\alpha$ 参数，我们实际上控制的是在Hessian矩阵的特征方向上以多大的幅度缩放权重，相对重要（能够显著减小目标函数）的方向上权重保留比较完好，而无助于目标函数减小的方向上权重在训练过程中逐渐地衰减掉了。而这也就是权重衰减的意义。</em></p>
 <p>从宏观上来看，对目标函数来说，特征值较大的方向包含更多有关数据的信息，较小的方向则有随机性的噪声，权重衰减正是通过忽略较少信息方向的变化来对抗过拟合的。</p>
 <h3 id="L-1-范数正则化"><a href="#L-1-范数正则化" class="headerlink" title="$L^1$ 范数正则化"></a>$L^1$ 范数正则化</h3><p>通过类似的推导，可以得到加入了 $L^1$ 范数惩罚项对参数最优解的影响如下：</p>
-<script type="math/tex; mode=display">w^{(2)}_{i} = sign(w^{(1)}_{i}) max \big\{|w^{(1)}_{i}| - \frac{\alpha}{H_{i,i}}, 0 \big\}</script><p>相比 $L^2$ 范数的影响，这是一个离散的结果，因而 $L^1$ 范数惩罚会将参数推向更加稀疏的解。这种稀疏性质常被用作特征选择。</p>
+<p>$$w^{(2)}<em>{i} = sign(w^{(1)}</em>{i}) max \big{|w^{(1)}<em>{i}| - \frac{\alpha}{H</em>{i,i}}, 0 \big}$$</p>
+<p>相比 $L^2$ 范数的影响，这是一个离散的结果，因而 $L^1$ 范数惩罚会将参数推向更加稀疏的解。这种稀疏性质常被用作特征选择。</p>
 <h3 id="权重衰减的贝叶斯解释"><a href="#权重衰减的贝叶斯解释" class="headerlink" title="权重衰减的贝叶斯解释"></a>权重衰减的贝叶斯解释</h3><p>在贝叶斯统计的框架下，常用的推断策略是最大后验点估计(Maximum A Posteriori, MAP)。有如下的推断公式（由贝叶斯定律导出）：</p>
-<script type="math/tex; mode=display">{\theta}_{MAP} = argmax p(\theta | x) = argmax (log p( x | \theta) + log p(\theta))</script><p>上式右边第一项是标准的对数似然项，而第二项对应着先验分布。</p>
+<p>$${\theta}_{MAP} = argmax p(\theta | x) = argmax (log p( x | \theta) + log p(\theta))$$</p>
+<p>上式右边第一项是标准的对数似然项，而第二项对应着先验分布。</p>
 <p>在这样的视角下，我们只进行最大似然估计是不够的，还要考虑先验 $p(\theta)$ 的分布。而当假定参数为正态分布 $N(w; 0, \frac{1}{\lambda}I^2)$ 时，带入上式（ $\theta$ 为参数），即可发现第二项的结果正比于权重衰减惩罚项 $\lambda w^T w$ ，加上一个不依赖于 $w$ 也不影响学习过程的项。于是，具有高斯先验权重的MAP贝叶斯推断对应着权重衰减。</p>
 <h3 id="权重衰减与提前终止"><a href="#权重衰减与提前终止" class="headerlink" title="权重衰减与提前终止"></a>权重衰减与提前终止</h3><p>提前终止也是一种正则化技术，其想法简单粗暴：每个epoch之后在验证集上评估结果，当验证集误差不再下降的时候，我们认为模型已经尽它所能了，于是终止训练过程。</p>
 <p>提前终止以牺牲一部分训练数据来作为验证数据来的代价来对抗过拟合，其逻辑是实证主义的。</p>
 <p>然而，在二次近似和简单梯度下降的情形下，可以观察到提前终止可以有相当于权重衰减的效果。</p>
 <p>我们仍考虑目标函数的二次近似：</p>
-<script type="math/tex; mode=display">J(w) \approx J(w^{(1)}) + \frac{1}{2} (w - w^{(1)})^T H (w - w^{(1)})</script><p>记最优参数点为 $w^{(1)}$ ，其梯度为：</p>
-<script type="math/tex; mode=display">{\nabla}_{w} J(w) \approx H(w - w^{(1)})</script><p>不加入正则化项，其梯度下降的更新策略（从第 $\tau-1$ 步到 $\tau$ 步）为：</p>
-<script type="math/tex; mode=display">w^{(\tau)} = w^{\tau - 1)} - \epsilon H (w^{(\tau - 1)} - w^{(1)})</script><p>累加得到</p>
-<script type="math/tex; mode=display">w^{(\tau)} - w^{(1)} = (I - \epsilon H) (w^{(\tau - 1)} - w^{(1)})</script><p>将Hessian矩阵分解，得到如下形式</p>
-<script type="math/tex; mode=display">w^{(\tau)} = Q[I - (I - \epsilon \Lambda) ^ {\tau}] Q^T w^{(1)}</script><p>将加入正则化项的权重影响改写为</p>
-<script type="math/tex; mode=display">w^{(2)} = Q[I - (\Lambda + \alpha I) ^ {-1} \alpha] Q^T w^{(1)}</script><p>对比可以得到，如果超参数 $\epsilon, \alpha, \tau$ 满足</p>
-<script type="math/tex; mode=display">(I - \epsilon \Lambda) ^ {\tau} = (\Lambda + \alpha I) ^ {-1} \alpha</script><p>则提前终止将与权重衰减有相当的效果。具体的，即第 $\tau$ 步结束的训练过程将到达超参数为 $\alpha$ 的 $L^2$ 正则化得到的最优点。</p>
+<p>$$J(w) \approx J(w^{(1)}) + \frac{1}{2} (w - w^{(1)})^T H (w - w^{(1)})$$</p>
+<p>记最优参数点为 $w^{(1)}$ ，其梯度为：</p>
+<p>$${\nabla}_{w} J(w) \approx H(w - w^{(1)})$$</p>
+<p>不加入正则化项，其梯度下降的更新策略（从第 $\tau-1$ 步到 $\tau$ 步）为：</p>
+<p>$$ w^{(\tau)} = w^{\tau - 1)} - \epsilon H (w^{(\tau - 1)} - w^{(1)})$$</p>
+<p>累加得到</p>
+<p>$$ w^{(\tau)} - w^{(1)} = (I - \epsilon H) (w^{(\tau - 1)} - w^{(1)})$$</p>
+<p>将Hessian矩阵分解，得到如下形式</p>
+<p>$$ w^{(\tau)} = Q[I - (I - \epsilon \Lambda) ^ {\tau}] Q^T w^{(1)} $$</p>
+<p>将加入正则化项的权重影响改写为</p>
+<p>$$ w^{(2)} = Q[I - (\Lambda + \alpha I) ^ {-1} \alpha] Q^T w^{(1)} $$</p>
+<p>对比可以得到，如果超参数 $\epsilon, \alpha, \tau$ 满足</p>
+<p>$$ (I - \epsilon \Lambda) ^ {\tau} = (\Lambda + \alpha I) ^ {-1} \alpha $$</p>
+<p>则提前终止将与权重衰减有相当的效果。具体的，即第 $\tau$ 步结束的训练过程将到达超参数为 $\alpha$ 的 $L^2$ 正则化得到的最优点。</p>
 <p>但提前终止带来的好处是，我们不再需要去找合适的超参数 $\alpha$ ，而只需要制定合理的终止策略（如3个epoch均不带来验证集误差的减小即终止训练），在训练成本的节约上，还是很值得的。</p>
 <p>@<a href="https://ddlee.cn" target="_blank" rel="external">ddlee</a></p>
 ]]></content>
@@ -1863,7 +1881,7 @@
 </ul>
 <p>当使用Keras建立深度网络时，传入的数据首先要经过<code>Input()</code>函数。在<code>Input()</code>函数中，实例化一个<code>InputLayer()</code>对象，并将此<code>Layer()</code>对象作为第一个应用于传入张量的Layer，置于<code>_keras_history</code>属性中。此外，<code>InputLayer()</code>和<code>Input()</code>还会对传入的数据进行规模检查和变换等，使之符合后续操作的要求。</p>
 <p>代码上实现如下：</p>
-<pre><code class="lang-python">def Input():
+<pre><code class="python">def Input():
   input_layer = InputLayer()
   outputs = InputLayer.inbound_nodes[0].output_tensor
   return outputs
@@ -1875,7 +1893,7 @@ class InputLayer():
 </code></pre>
 <p>在下面我们将看到，加入的<code>_keras_history</code>属性在计算图的构建上所起的作用是关键的。仅通过输入和输出的Tensor，我们可以构建出整张计算图。但这样的代价是Tensor对象太重了，包含了Layer的信息。</p>
 <h3 id="Node对象：层与层之间链接的抽象"><a href="#Node对象：层与层之间链接的抽象" class="headerlink" title="Node对象：层与层之间链接的抽象"></a><code>Node</code>对象：层与层之间链接的抽象</h3><p>若考虑<code>Layer</code>对象抽象的是完成计算的神经元胞体，则<code>Node</code>对象是对神经元树突结构的抽象。其内聚的主要信息是：</p>
-<pre><code class="lang-python">class Node():
+<pre><code class="python">class Node():
   def __init__(self, outbound_layer,
               inbound_layers, node_indices, tensor_indices,
               input_tensors, output_tensors, ...)
@@ -1883,7 +1901,7 @@ class InputLayer():
 <p>其中<code>outbound_layer</code>是施加计算（使<code>input_tensors</code>变为<code>output_tensors</code>）的层，<code>inbound_layers</code>对应了<code>input_tensors</code>来源的层，而<code>node_indices</code>和<code>tensor_indices</code>则记录了<code>Node</code>和<code>Layer</code>之间的标定信息。</p>
 <p><code>Node</code>对象总在<code>outbound_layer</code>被执行时创建，并加入<code>outbound_layer</code>的<code>inbound_nodes</code>属性中。在<code>Node</code>对象的表述下，A和B两个层产生连接关系时，<code>Node</code>对象被建立，并被加入<code>A.outbound_nodes</code>和<code>B.inbound_nodes</code>。</p>
 <h3 id="Layer对象：计算层的抽象"><a href="#Layer对象：计算层的抽象" class="headerlink" title="Layer对象：计算层的抽象"></a><code>Layer</code>对象：计算层的抽象</h3><p><code>Layer</code>对象是对网络中神经元计算层的抽象，实例化需要如下参数：</p>
-<pre><code class="lang-python">allowed_kwargs = {&#39;input_shape&#39;,
+<pre><code class="python">allowed_kwargs = {&#39;input_shape&#39;,
                   &#39;batch_input_shape&#39;,
                   &#39;batch_size&#39;,
                   &#39;dtype&#39;,
@@ -1904,7 +1922,7 @@ class InputLayer():
 </li>
 </ol>
 <p>方法<code>_add_inbound_nodes()</code>对Tensor的更新是构建<code>Layer</code>之间关系的关键操作，其主要代码如下：</p>
-<pre><code class="lang-python">for x in input_tensors:
+<pre><code class="python">for x in input_tensors:
     if hasattr(x, &#39;_keras_history&#39;):
         inbound_layer, node_index, tensor_index = x._keras_history
         inbound_layers.append(inbound_layer)
@@ -1923,7 +1941,7 @@ for i in range(len(output_tensors)):
 </code></pre>
 <p>上段代码取出<code>input_tensor</code>的<code>_keras_history</code>属性，建立新的<code>Node</code>，并将当前<code>Layer</code>的信息更新到计算得到的<code>output_tensor</code>中。</p>
 <h3 id="实例：Node-Tensor和Layer间连接关系的表征"><a href="#实例：Node-Tensor和Layer间连接关系的表征" class="headerlink" title="实例：Node,Tensor和Layer间连接关系的表征"></a>实例：<code>Node</code>,<code>Tensor</code>和<code>Layer</code>间连接关系的表征</h3><p>下面通过代码来说明三者之间的关系，来自于测试代码：</p>
-<pre><code class="lang-python"># 建立新的keras Tensor
+<pre><code class="python"># 建立新的keras Tensor
 a = Input(shape=(32,), name=&#39;input_a&#39;)
 b = Input(shape=(32,), name=&#39;input_b&#39;)
 
@@ -1981,7 +1999,7 @@ assert dense.inbound_nodes[1].input_tensors == [b]
       <url>https://blog.ddlee.cn/posts/55919299/</url>
       <content type="html"><![CDATA[<p>本文主要记录使用TensorFlow训练模型中与试验管理相关的最佳实践，主要包括模型训练的大致代码框架、模型的保存与恢复、训练过程的监测、随机性的控制等。主要材料来自<a href="https://web.stanford.edu/class/cs20si/index.html" target="_blank" rel="external">CS 20SI: Tensorflow for Deep Learning Research</a>。</p>
 <h3 id="TensorFlow代码框架"><a href="#TensorFlow代码框架" class="headerlink" title="TensorFlow代码框架"></a>TensorFlow代码框架</h3><p>使用TensorFlow构建深度网络模型大致包括数据预处理、图的构建、模型训练、模型推断与评估等部分，大致的代码框架如下：</p>
-<pre><code class="lang-python">import tensorflow as tf
+<pre><code class="python">import tensorflow as tf
 import numpy as np
 
 # Data
@@ -2010,7 +2028,7 @@ y_test = tf.nn.relu(tf.matmul(x_test, W) + b))
 <h4 id="tf-train-Saver类"><a href="#tf-train-Saver类" class="headerlink" title="tf.train.Saver类"></a>tf.train.Saver类</h4><p>使用<code>tf.train.Saver</code>类需传入以下参数：<code>tf.train.Saver.save(sess, save_path, global_step=step)</code>。</p>
 <p>首先定义步数变量：<code>self​.​global_step ​=​ tf​.​Variable​(​0​,​ dtype​=​tf​.​int32​,​ trainable​=​False​,name​=​&#39;global_step&#39;)</code></p>
 <p>在模型训练的过程中插入还原点的保存：</p>
-<pre><code class="lang-python">self​.​optimizer ​=​ tf​.​train​.​GradientDescentOptimizer​(​self​.​lr​).​minimize​(​self​.​loss​,global_step​=​self​.​global_step)
+<pre><code class="python">self​.​optimizer ​=​ tf​.​train​.​GradientDescentOptimizer​(​self​.​lr​).​minimize​(​self​.​loss​,global_step​=​self​.​global_step)
 saver ​=​ tf​.​train​.​Saver​()​​
 ​with​ tf​.​Session​()​​as​ sess:
  sess​.​run​(​tf​.​global_variables_initializer​())
@@ -2027,7 +2045,7 @@ saver ​=​ tf​.​train​.​Saver​()​​
 <h4 id="Keras封装：keras-callbacks-ModelCheckpoint"><a href="#Keras封装：keras-callbacks-ModelCheckpoint" class="headerlink" title="Keras封装：keras.callbacks.ModelCheckpoint()"></a>Keras封装：<code>keras.callbacks.ModelCheckpoint()</code></h4><p>Keras对TensorFlow进行了高层的封装，使用一系列回调函数<code>keras.callbacks.Callback()</code>来进行试验管理。</p>
 <p>模型保存<code>ModelCheckpoint()</code>需要传入的参数：<br><code>keras.callbacks.ModelCheckpoint(filepath, monitor=&#39;val_loss&#39;, verbose=0, save_best_only=False, save_weights_only=False, mode=&#39;auto&#39;, period=1)</code></p>
 <p>实际的使用中，将上述回调函数类传入<code>model.fit()</code>过程即可：</p>
-<pre><code class="lang-python">from keras.callbacks import ModelCheckpoint
+<pre><code class="python">from keras.callbacks import ModelCheckpoint
 
 model = Sequential()
 model.add(Dense(10, input_dim=784, kernel_initializer=&#39;uniform&#39;))
@@ -2038,7 +2056,7 @@ model.fit(x_train, y_train, batch_size=128, epochs=20, verbose=0, validation_dat
 </code></pre>
 <h3 id="模型训练过程的监测"><a href="#模型训练过程的监测" class="headerlink" title="模型训练过程的监测"></a>模型训练过程的监测</h3><p>训练过程中，我们常常需要提取阶段性的信息来评估模型是否符合预期效果。</p>
 <h4 id="tf-summary"><a href="#tf-summary" class="headerlink" title="tf.summary"></a><code>tf.summary</code></h4><p>首先创建想要观察指标的<code>tf.summary</code>对象：</p>
-<pre><code class="lang-python">with tf.name_scope(&quot;summaries&quot;):
+<pre><code class="python">with tf.name_scope(&quot;summaries&quot;):
   tf.summary.scalar(&quot;loss&quot;, self.loss)
   tf.summary.scalar(&quot;accuracy&quot;, self.accuracy)
   tf.summary.histogram(&quot;histogram loss&quot;, self.loss)
@@ -2047,7 +2065,7 @@ model.fit(x_train, y_train, batch_size=128, epochs=20, verbose=0, validation_dat
 </code></pre>
 <p><code>tf.summary</code>是一种operation，因而可以随训练过程一同运行：<br><code>loss_batch, _, summary = sess.run([model.loss, model.optimizer, model.summary_op], feed_dict=feed_dict)</code></p>
 <p>最后，将summary加入writer以写入文件：</p>
-<pre><code class="lang-python">with tf.Session() as sess:
+<pre><code class="python">with tf.Session() as sess:
   writer ​=​ tf​.​summary​.​FileWriter​(​&#39;./summary&#39;​,​ sess​.​graph)
   for​ index ​in​ range​(​num_train_steps​):
     writer.add_summary(summary, global_step=step)
@@ -2055,14 +2073,14 @@ model.fit(x_train, y_train, batch_size=128, epochs=20, verbose=0, validation_dat
 </code></pre>
 <p>这样，就可以用TensorBoard监测我们关心的指标在训练过程中的变化情况。</p>
 <h4 id="Keras封装：keras-callbacks-TensorBoard"><a href="#Keras封装：keras-callbacks-TensorBoard" class="headerlink" title="Keras封装：keras.callbacks.TensorBoard()"></a>Keras封装：<code>keras.callbacks.TensorBoard()</code></h4><p>Keras同样将TensorBoard封装成回调函数的形式，在模型训练时进行调用即可：</p>
-<pre><code class="lang-python">from keras.callbacks import TensorBoard
+<pre><code class="python">from keras.callbacks import TensorBoard
 
 tensorboard = TensorBoard(log_dir=&quot;./logs&quot;)
 model.fit(x_train, y_train, batch_size=128, epochs=20, verbose=0, validation_data=(X_test, Y_test), callbacks=[tensorboard]
 </code></pre>
 <h3 id="随机性的控制"><a href="#随机性的控制" class="headerlink" title="随机性的控制"></a>随机性的控制</h3><p>TensorFlow中随机性的控制分为operation和graph两个层面。</p>
 <h4 id="Operation层面"><a href="#Operation层面" class="headerlink" title="Operation层面"></a>Operation层面</h4><p>在Operation层面中，建立随机seed之后，新建立的Session每一次调用<code>sess.run()</code>都会遵循同一随机状态：</p>
-<pre><code class="lang-python">c ​=​ tf​.​random_uniform​([],​​-​10​,​​10​,​ seed​=​2)
+<pre><code class="python">c ​=​ tf​.​random_uniform​([],​​-​10​,​​10​,​ seed​=​2)
 
 with​ tf​.​Session​()​​as​ sess:
   print​ sess​.​run​(​c) # &gt;&gt; 3.57493
@@ -2071,14 +2089,14 @@ with​ tf​.​Session​()​​as​ sess:
   print​ sess​.​run​(​c) # &gt;&gt; 3.57493
 </code></pre>
 <p>而且，不同的operation可以保存自己的seed:</p>
-<pre><code class="lang-python">c ​=​ tf​.​random_uniform​([],​​-​10​,​​10​,​ seed​=​1)
+<pre><code class="python">c ​=​ tf​.​random_uniform​([],​​-​10​,​​10​,​ seed​=​1)
 d ​=​ tf​.​random_uniform​([],​​-​10​,​​10​,​ seed​=​2)
 with​ tf​.​Session​() ​​as​ sess:
   sess​.​run​(​c)
   sess​.​run​(​d)
 </code></pre>
 <h4 id="Graph层面"><a href="#Graph层面" class="headerlink" title="Graph层面"></a>Graph层面</h4><p>在Graph层面，整张图公用一个随机状态，多次运行同一图模型的计算，其随机状态保持一致。</p>
-<pre><code class="lang-python">import​ tensorflow ​as​ tf
+<pre><code class="python">import​ tensorflow ​as​ tf
 
 tf​.​set_random_seed​(​2)
 
@@ -2114,16 +2132,16 @@ with​ tf​.​Session​()​​ as​ sess:
       <title><![CDATA[Python最佳实践：遍历列表]]></title>
       <url>https://blog.ddlee.cn/posts/da65b87d/</url>
       <content type="html"><![CDATA[<h3 id="enumerate-遍历索引和值"><a href="#enumerate-遍历索引和值" class="headerlink" title="enumerate(): 遍历索引和值"></a>enumerate(): 遍历索引和值</h3><p>对列表进行遍历操作时，常也要用到当前遍历项的索引值：</p>
-<pre><code class="lang-python">for i in range(len(flavor_list)):
+<pre><code class="python">for i in range(len(flavor_list)):
   flavor = flaver[i]
   print(&#39;%d: %s&#39; % (i + 1, flavor))
 </code></pre>
 <p>这种写法既要取出列表长度，又要根据索引取列表值。但要改用<code>enumerate()</code>函数，则可同时取出索引值和遍历项值：</p>
-<pre><code class="lang-python">for i, flavor in enumerate(flavor_list):
+<pre><code class="python">for i, flavor in enumerate(flavor_list):
   print(&#39;%d: %s&#39; % (i+1, flavor))
 </code></pre>
 <h3 id="zip-并行遍历多个列表"><a href="#zip-并行遍历多个列表" class="headerlink" title="zip(): 并行遍历多个列表"></a>zip(): 并行遍历多个列表</h3><p>我们有多个长度相同的列表，需要在同一索引下对遍历项值进行操作：</p>
-<pre><code class="lang-python">names = [&#39;Cecilia&#39;, &#39;Lise&#39;, &#39;Marie&#39;]
+<pre><code class="python">names = [&#39;Cecilia&#39;, &#39;Lise&#39;, &#39;Marie&#39;]
 letters = [len(n) for n in names]
 
 longest_name = None
@@ -2136,7 +2154,7 @@ for i, name in enumerate(names):
     max_letters = count
 </code></pre>
 <p>由上可见，name和letter通过索引值关联起来，而使用<code>zip()</code>函数，可免去根据索引取值的过程：</p>
-<pre><code class="lang-python">for name, count in zip(names, letters):
+<pre><code class="python">for name, count in zip(names, letters):
   if count &gt; max_letters:
     longest_name = name
     max_letters = count
@@ -2255,8 +2273,8 @@ $$y=\frac{{w}^{T}x}{\|w\|}$$
 $$y=\frac{{w}^{T}x}{\|w\|} \gamma + \beta$$
 
 <p>用于恢复网络的表达能力。</p>
-<p>将上述变换带入ReLU，简化后可以得到如下T-ReLu:</p>
-<script type="math/tex; mode=display">TReLU_\alpha (x) = ReLU(x-\alpha) + \alpha</script><p>文章的一个重要结论是，在网络的最后一层加入affine transformation层之后，堆叠的“线性层+ReLU”与“strict weight-normalized layer + T-ReLU”表达能力相同（在附录中给出证明）。</p>
+<p>将上述变换带入ReLU，简化后可以得到如下T-ReLu:<br>$$TReLU_\alpha (x) = ReLU(x-\alpha) + \alpha$$</p>
+<p>文章的一个重要结论是，在网络的最后一层加入affine transformation层之后，堆叠的“线性层+ReLU”与“strict weight-normalized layer + T-ReLU”表达能力相同（在附录中给出证明）。</p>
 <p>下面L表示线性层，R表示ReLU，TR表示TReLU，A表示affine transformation，S表示上述的strict weight-normalized layer。</p>
 <p>证明的大致思路是，在ReLU与线性层之间加入affine transformation层，由于线性层的存在，affine transformation带来的效果会被吸收（相当于多个线性层叠在一起还是线性层），网络表达能力不变。而”L+R+A”的结构可以等价于”S+TR+A”。如此递归下去，即可得到结论。个人认为相当于把线性层中的bias转嫁成了TReLU中的threshold（即$\alpha$）。</p>
 <h3 id="2-提出对生成图形的评估指标"><a href="#2-提出对生成图形的评估指标" class="headerlink" title="2. 提出对生成图形的评估指标"></a>2. 提出对生成图形的评估指标</h3><p>生成式模型的生成效果常常难以评价。DcGAN给出的结果也是生成图片的对比。本文中提出一个评价生成效果的指标，且与人的主观评价一致。</p>
@@ -2267,7 +2285,7 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
 <p>其中的$min$指使用梯度下降方法等使生成图片的效果最好。但事实上这样做开销很高。</p>
 <h3 id="PyTorch实现"><a href="#PyTorch实现" class="headerlink" title="PyTorch实现"></a>PyTorch实现</h3><p>作者将他们的实现代码公布在了<a href="https://github.com/stormraiser/GAN-weight-norm" target="_blank" rel="external">GitHub</a>上。</p>
 <p>下面是利用PyTorch对T-ReLU的实现：</p>
-<pre><code class="lang-python">class TPReLU(Module):
+<pre><code class="python">class TPReLU(Module):
 
     def __init__(self, num_parameters=1, init=0.25):
         self.num_parameters = num_parameters
@@ -2280,7 +2298,7 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
         return F.prelu(input - bias_resize, self.weight.clamp(0, 1)) + bias_resize
 </code></pre>
 <p>对 Weigh-normalized layer 的实现：</p>
-<pre><code class="lang-python">class WeightNormalizedLinear(Module):
+<pre><code class="python">class WeightNormalizedLinear(Module):
 
     def __init__(self, in_features, out_features, scale=True, bias=True, init_factor=1, init_scale=1):
         super(WeightNormalizedLinear, self).__init__()
@@ -2583,13 +2601,12 @@ $$\frac{1}{m} \sum_{i=1}^{m} min_z {\|G(z)-x^{(i)}\|}^2$$
       <url>https://blog.ddlee.cn/posts/7b4533bb/</url>
       <content type="html"><![CDATA[<p>本文讨论LSTM网络的Pytorch实现，兼论Pytorch库的代码组织方式和架构设计。</p>
 <h2 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a>LSTM</h2><p>LSTM是一种循环神经网络，适用于对序列化的输入建模。Chris Olah的这篇<a href="http://colah.github.io/posts/2015-08-Understanding-LSTMs/" target="_blank" rel="external">文章</a>细致地解释了一个LSTM单元的运作方式，建议阅读。</p>
-<h3 id="两个想法"><a href="#两个想法" class="headerlink" title="两个想法"></a>两个想法</h3><h4 id="Gate：信息流动的闸门"><a href="#Gate：信息流动的闸门" class="headerlink" title="Gate：信息流动的闸门"></a>Gate：信息流动的闸门</h4><script type="math/tex; mode=display">i_t = sigmoid(W_{xi} x_t  +  W_{hi}h_{t-1} + b_i)</script><script type="math/tex; mode=display">f_t = sigmoid(W_{xf} x_t  +  W_{hf}h_{t-1} + b_f)</script><script type="math/tex; mode=display">o_t = sigmoid(W_{xo} x_t  +  W_{ho}h_{t-1} + b_o)</script><p>$x$ 表示输入，$h$表示隐藏状态，用$sigmoid$函数将输入二者的传递结果映射到$（0,1)$上，分别赋予输入门、遗忘门、输出门的含义，来控制不同神经单元（同一神经元不同时间点的状态）之间信息流动。</p>
-<h4 id="Cell：记忆池"><a href="#Cell：记忆池" class="headerlink" title="Cell：记忆池"></a>Cell：记忆池</h4><script type="math/tex; mode=display">c_t = f_t \odot c_{t - 1} + i_t \odot tanh(W_{xc} x_t  +  W_{hc}h_{t-1} + b_c)\\
-h_t = o_t \odot tanh(c_t)</script><p>$h$表示隐藏状态，$C$表示记忆池，通过Gate，上一单元（状态）的信息有控制地遗忘，当前的输入有控制地流入，记忆池中的信息有控制地流入隐藏状态。</p>
+<h3 id="两个想法"><a href="#两个想法" class="headerlink" title="两个想法"></a>两个想法</h3><h4 id="Gate：信息流动的闸门"><a href="#Gate：信息流动的闸门" class="headerlink" title="Gate：信息流动的闸门"></a>Gate：信息流动的闸门</h4><p>$$i<em>t = sigmoid(W</em>{xi} x<em>t  +  W</em>{hi}h_{t-1} + b_i)$$<br>$$f<em>t = sigmoid(W</em>{xf} x<em>t  +  W</em>{hf}h_{t-1} + b_f)$$<br>$$o<em>t = sigmoid(W</em>{xo} x<em>t  +  W</em>{ho}h_{t-1} + b_o)$$<br>$x$ 表示输入，$h$表示隐藏状态，用$sigmoid$函数将输入二者的传递结果映射到$（0,1)$上，分别赋予输入门、遗忘门、输出门的含义，来控制不同神经单元（同一神经元不同时间点的状态）之间信息流动。</p>
+<h4 id="Cell：记忆池"><a href="#Cell：记忆池" class="headerlink" title="Cell：记忆池"></a>Cell：记忆池</h4><p>$$c_t = f<em>t \odot c</em>{t - 1} + i<em>t \odot tanh(W</em>{xc} x<em>t  +  W</em>{hc}h_{t-1} + b_c)\<br>h_t = o_t \odot tanh(c_t)$$<br>$h$表示隐藏状态，$C$表示记忆池，通过Gate，上一单元（状态）的信息有控制地遗忘，当前的输入有控制地流入，记忆池中的信息有控制地流入隐藏状态。</p>
 <h3 id="与普通RNN的对比"><a href="#与普通RNN的对比" class="headerlink" title="与普通RNN的对比"></a>与普通RNN的对比</h3><p><img src="https://static.ddlee.cn/static/img/./LSTM-Pytorch实现/LSTM3-SimpleRNN.png" alt="RNN"><br>普通RNN只有一个自更新的隐藏状态单元。</p>
 <p><img src="https://static.ddlee.cn/static/img/./LSTM-Pytorch实现/LSTM.jpg" alt="LSTM"><br>LSTM增加了记忆池Cell，并通过几个Gate将信息有控制地更新在记忆池中，并通过记忆池中的信息来决定隐藏状态。</p>
 <h2 id="From-Scratch"><a href="#From-Scratch" class="headerlink" title="From Scratch"></a>From Scratch</h2><p>下面是手动实现LSTM的代码，继承了基类<code>nn.Module</code>。</p>
-<pre><code class="lang-python">import torch.nn as nn
+<pre><code class="python">import torch.nn as nn
 import torch
 from torch.autograd import Variable
 
@@ -2638,7 +2655,7 @@ class LSTM(nn.Module):
 </ol>
 <p>下面开始按图索骥，源码见<a href="https://github.com/pytorch/pytorch/tree/master/torch" target="_blank" rel="external">GitHub</a>。</p>
 <h4 id="LSTM类"><a href="#LSTM类" class="headerlink" title="LSTM类"></a>LSTM类</h4><p>文件：<a href="https://github.com/pytorch/pytorch/blob/master/torch/nn/modules/rnn.py" target="_blank" rel="external">nn/modules/rnn.py</a></p>
-<pre><code class="lang-Python"># nn/modules/rnn.py
+<pre><code class="Python"># nn/modules/rnn.py
 class RNNBase(Module):
   def __init__(self, mode, input_size, output_size):
       pass
@@ -2660,13 +2677,13 @@ class LSTM(RNNBase):
 <li>在基类<code>nn.Module</code>中，把<code>__call__()</code>定义为调用<code>forward()</code>方法，因而真正的功能实现在<code>_backend.RNN()</code>中</li>
 </ol>
 <h4 id="AutogradRNN函数"><a href="#AutogradRNN函数" class="headerlink" title="AutogradRNN函数"></a>AutogradRNN函数</h4><p>下面寻找<code>_backend.RNN</code>。<br>文件：<a href="https://github.com/pytorch/pytorch/blob/master/torch/nn/backends/thnn.py" target="_blank" rel="external">nn/backends/thnn.py</a></p>
-<pre><code class="lang-python"># nn/backends/thnn.py
+<pre><code class="python"># nn/backends/thnn.py
 def _initialize_backend():
     from .._functions.rnn import RNN, LSTMCell
 </code></pre>
 <p>原来，<code>_backend</code>也是索引。</p>
 <p>终于找到<code>RNN()</code>函数。<br>文件：<a href="https://github.com/pytorch/pytorch/blob/master/torch/nn/_functions/rnn.py" target="_blank" rel="external">nn/_functions/rnn.py</a></p>
-<pre><code class="lang-python"># nn/_functions/rnn.py
+<pre><code class="python"># nn/_functions/rnn.py
 def RNN(*args, **kwargs):
     def forward(input, *fargs, **fkwargs):
         func = AutogradRNN(*args, **kwargs)
@@ -2689,7 +2706,7 @@ def AutogradRNN(mode, input_size, hidden_size):
 <li><code>RNN()</code>和<code>AutogradRNN()</code>返回的都是其<code>forward()</code>函数句柄</li>
 </ol>
 <p>下面是<code>Recurrent()</code>函数：</p>
-<pre><code class="lang-python">def Recurrent(inner):
+<pre><code class="python">def Recurrent(inner):
     def forward(input, hidden, weight):
         output = []
         steps = range(input.size(0) - 1, -1, -1)
@@ -2703,7 +2720,7 @@ def AutogradRNN(mode, input_size, hidden_size):
 <li><code>Recurrent()</code>函数实现了“递归”的结构，根据输入的大小组合<code>Cell</code>，完成了隐藏状态和参数的迭代。</li>
 <li><code>Recurrent()</code>函数将<code>Cell(inner)</code>组合为<code>Layer</code>。</li>
 </ol>
-<h4 id="StackedRNN-函数"><a href="#StackedRNN-函数" class="headerlink" title="StackedRNN()函数"></a>StackedRNN()函数</h4><pre><code class="lang-python">def StackedRNN(inners, num_layers):
+<h4 id="StackedRNN-函数"><a href="#StackedRNN-函数" class="headerlink" title="StackedRNN()函数"></a>StackedRNN()函数</h4><pre><code class="python">def StackedRNN(inners, num_layers):
     num_directions = len(inners)
     total_layers = num_layers * num_directions
     def forward(input, hidden, weight):
@@ -2726,7 +2743,7 @@ def AutogradRNN(mode, input_size, hidden_size):
 <li><code>StackedRNN()</code>函数将<code>Layer(inner)</code>组合为栈</li>
 </ol>
 <p>最后的最后，一个基本的LSTM单元内的计算由<code>LSTMCell()</code>函数实现。</p>
-<h4 id="LSTMCell-函数"><a href="#LSTMCell-函数" class="headerlink" title="LSTMCell()函数"></a>LSTMCell()函数</h4><pre><code class="lang-python">def LSTMCell(input, hidden, w_ih, w_hh, b_ih=None, b_hh=None):
+<h4 id="LSTMCell-函数"><a href="#LSTMCell-函数" class="headerlink" title="LSTMCell()函数"></a>LSTMCell()函数</h4><pre><code class="python">def LSTMCell(input, hidden, w_ih, w_hh, b_ih=None, b_hh=None):
     if input.is_cuda:
         igates = F.linear(input, w_ih)
         hgates = F.linear(hidden[0], w_hh)
@@ -2784,8 +2801,7 @@ def AutogradRNN(mode, input_size, hidden_size):
       <title><![CDATA[Pandas速度优化]]></title>
       <url>https://blog.ddlee.cn/posts/40efeb6b/</url>
       <content type="html"><![CDATA[<p>本文主要内容取自Sofia Heisler在PyCon 2017上的演讲<a href="https://www.youtube.com/watch?v=HN5d490_KKk" target="_blank" rel="external">No More Sad Pandas Optimizing Pandas Code for Speed and Efficiency</a>，讲稿代码和幻灯片见<a href="https://github.com/sversh/pycon2017-optimizing-pandas" target="_blank" rel="external">GitHub</a>。</p>
-<h2 id="Set-Up"><a href="#Set-Up" class="headerlink" title="Set Up"></a>Set Up</h2><h4 id="示例数据"><a href="#示例数据" class="headerlink" title="示例数据"></a>示例数据</h4><div class="table-container">
-<table>
+<h2 id="Set-Up"><a href="#Set-Up" class="headerlink" title="Set Up"></a>Set Up</h2><h4 id="示例数据"><a href="#示例数据" class="headerlink" title="示例数据"></a>示例数据</h4><table>
 <thead>
 <tr>
 <th></th>
@@ -2847,8 +2863,7 @@ def AutogradRNN(mode, input_size, hidden_size):
 </tr>
 </tbody>
 </table>
-</div>
-<h4 id="示例函数：Haversine-Distance"><a href="#示例函数：Haversine-Distance" class="headerlink" title="示例函数：Haversine Distance"></a>示例函数：Haversine Distance</h4><pre><code class="lang-Python">def haversine(lat1, lon1, lat2, lon2):
+<h4 id="示例函数：Haversine-Distance"><a href="#示例函数：Haversine-Distance" class="headerlink" title="示例函数：Haversine Distance"></a>示例函数：Haversine Distance</h4><pre><code class="Python">def haversine(lat1, lon1, lat2, lon2):
     miles_constant = 3959
     lat1, lon1, lat2, lon2 = map(np.deg2rad, [lat1, lon1, lat2, lon2])
     dlat = lat2 - lat1
@@ -2861,7 +2876,7 @@ def AutogradRNN(mode, input_size, hidden_size):
 <h2 id="优化它之前，先测量它"><a href="#优化它之前，先测量它" class="headerlink" title="优化它之前，先测量它"></a>优化它之前，先测量它</h2><h4 id="IPython-Notebook的Magic-Command-timeit"><a href="#IPython-Notebook的Magic-Command-timeit" class="headerlink" title="IPython Notebook的Magic Command: %timeit"></a>IPython Notebook的Magic Command: <code>%timeit</code></h4><p>既可以测量某一行代码的执行时间，又可以测量整个单元格里代码快的执行时间。</p>
 <h4 id="Package-line-profiler"><a href="#Package-line-profiler" class="headerlink" title="Package: line_profiler"></a>Package: line_profiler</h4><p>记录每行代码的执行次数和执行时间。</p>
 <p>在IPython Notebook中使用时，先运行<code>%load_ext line_profiler</code>， 之后可以用<code>%lprun -f [function name]</code>命令记录指定函数的执行情况。</p>
-<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><h4 id="对行做循环-Baseline"><a href="#对行做循环-Baseline" class="headerlink" title="对行做循环(Baseline)"></a>对行做循环(Baseline)</h4><pre><code class="lang-python">%%timeit
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><h4 id="对行做循环-Baseline"><a href="#对行做循环-Baseline" class="headerlink" title="对行做循环(Baseline)"></a>对行做循环(Baseline)</h4><pre><code class="python">%%timeit
 haversine_series = []
 for index, row in df.iterrows():
     haversine_series.append(haversine(40.671, -73.985,\
@@ -2870,7 +2885,7 @@ df[&#39;distance&#39;] = haversine_series
 </code></pre>
 <p>Output:</p>
 <pre><code>197 ms ± 6.65 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
-</code></pre><h4 id="pd-DataFrame-apply-方法"><a href="#pd-DataFrame-apply-方法" class="headerlink" title="pd.DataFrame.apply()方法"></a>pd.DataFrame.apply()方法</h4><pre><code class="lang-python">%lprun -f haversine \
+</code></pre><h4 id="pd-DataFrame-apply-方法"><a href="#pd-DataFrame-apply-方法" class="headerlink" title="pd.DataFrame.apply()方法"></a>pd.DataFrame.apply()方法</h4><pre><code class="python">%lprun -f haversine \
 df.apply(lambda row: haversine(40.671, -73.985,\
                                row[&#39;latitude&#39;], row[&#39;longitude&#39;]), axis=1)
 </code></pre>
@@ -2916,7 +2931,7 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
      8         1          496    496.0      5.8      mi = miles_constant * c
      9         1            2      2.0      0.0      return mi
 </code></pre><p>向量化之后，函数内的每行操作只被访问一次，达到了行结构上的并行。</p>
-<h3 id="向量化：将np-array传入函数"><a href="#向量化：将np-array传入函数" class="headerlink" title="向量化：将np.array传入函数"></a>向量化：将np.array传入函数</h3><pre><code class="lang-python">%lprun -f haversine df[&#39;distance&#39;] = haversine(40.671, -73.985,\
+<h3 id="向量化：将np-array传入函数"><a href="#向量化：将np-array传入函数" class="headerlink" title="向量化：将np.array传入函数"></a>向量化：将np.array传入函数</h3><pre><code class="python">%lprun -f haversine df[&#39;distance&#39;] = haversine(40.671, -73.985,\
                         df[&#39;latitude&#39;].values, df[&#39;longitude&#39;].values)
 </code></pre>
 <p>Output：</p>
@@ -2939,8 +2954,7 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
      8         1           18     18.0      1.3      mi = miles_constant * c
      9         1            2      2.0      0.1      return mi
 </code></pre><p>相比<code>pd.Series</code>，<code>np.array</code>不含索引等额外信息，因而更加高效。</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><div class="table-container">
-<table>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><table>
 <thead>
 <tr>
 <th>Methodology</th>
@@ -2972,10 +2986,9 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
 </tr>
 </tbody>
 </table>
-</div>
 <p>通过上面的对比，我们比最初的baseline快了近500倍。最大的提升来自于向量化。因而，实现的函数能够很方便地向量化是高效处理的关键。</p>
 <h2 id="用Cython优化"><a href="#用Cython优化" class="headerlink" title="用Cython优化"></a>用<code>Cython</code>优化</h2><p><code>Cython</code>可以将<code>python</code>代码转化为<code>C</code>代码来执行，可以进行如下优化（静态化变量类型，调用C函数库）</p>
-<pre><code class="lang-python">%load_ext cython
+<pre><code class="python">%load_ext cython
 
 %%cython -a
 # Haversine cythonized
@@ -3003,7 +3016,7 @@ cpdef haversine_cy_dtyped(float lat1, float lon1, float lat2, float lon2):
     return mi
 </code></pre>
 <p>嵌套于循坏中：</p>
-<pre><code class="lang-python">%timeit df[&#39;distance&#39;] =\
+<pre><code class="python">%timeit df[&#39;distance&#39;] =\
 df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
                               row[&#39;latitude&#39;], row[&#39;longitude&#39;]), axis=1)
 </code></pre>
@@ -3063,19 +3076,19 @@ df.apply(lambda row: haversine_cy_dtyped(40.671, -73.985,\
 <p>下面是几个比较受欢迎的包：</p>
 <h3 id="pandas"><a href="#pandas" class="headerlink" title="pandas"></a>pandas</h3><p>pandas的DataFrame对象是有plot()方法的，如：<br><code>iris.plot.scatter(&#39;petalLength&#39;, &#39;petalWidth&#39;)</code>生成二维散点图，只需指明两个轴取自哪一列数据即可。</p>
 <h3 id="seaborn"><a href="#seaborn" class="headerlink" title="seaborn"></a>seaborn</h3><p>seaborn(<a href="http://seaborn.pydata.org/examples/" target="_blank" rel="external">gallery</a>)专注于统计数据可视化，默认配色也还可以。语法示例：</p>
-<pre><code class="lang-Python">import seaborn as sns
+<pre><code class="Python">import seaborn as sns
 sns.lmplot(&#39;petalLength&#39;, &#39;sepalWidth&#39;, iris, hue=&#39;species&#39;, fit_reg=False)
 </code></pre>
 <h3 id="类ggplot"><a href="#类ggplot" class="headerlink" title="类ggplot"></a>类ggplot</h3><p>对于R用户，最熟悉的可视化包可能是ggplot2，在python中可以考虑<a href="https://github.com/yhat/ggpy" target="_blank" rel="external">ggpy</a>和近期上了Github Trends的<a href="https://github.com/has2k1/plotnine" target="_blank" rel="external">plotnie</a>。</p>
 <h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p>基于JS的包常常具有非常好的交互性，其共同点是将图形格式化为json文件，再由JS完成渲染。</p>
 <p><img src="https://static.ddlee.cn/static/img/./Python可视化工具指引/js.png" alt="js"></p>
 <h3 id="Bokeh"><a href="#Bokeh" class="headerlink" title="Bokeh"></a>Bokeh</h3><p>Bokeh(<a href="http://bokeh.pydata.org/en/latest/docs/gallery.html" target="_blank" rel="external">Gallery</a>)定位于绘制用于浏览器展示的交互式图形。其优点是交互性、能够处理大量数据和流数据。语法示例：</p>
-<pre><code class="lang-python">p = figure()
+<pre><code class="python">p = figure()
 p.circle(iris.petalLength, iris.sepalWidth)
 show(p)
 </code></pre>
 <h3 id="Plotly"><a href="#Plotly" class="headerlink" title="Plotly"></a>Plotly</h3><p>Plotly(<a href="https://plot.ly/python/" target="_blank" rel="external">Gallery</a>)跟Bokeh类似。但其提供了多种语言接口(JS, R, Python, MATLAB)，并且支持3D和动画效果，缺点是有些功能需要付费。<br>语法示例：</p>
-<pre><code class="lang-python">from plotly.graph_objs import Scatter
+<pre><code class="python">from plotly.graph_objs import Scatter
 from plotly.offline import iplot
 p = Scatter(x=iris.petalLength,
             y=iris.sepalWidth,
@@ -3085,7 +3098,7 @@ iplot(p)
 <h2 id="处理大型数据集"><a href="#处理大型数据集" class="headerlink" title="处理大型数据集"></a>处理大型数据集</h2><p>对于大型数据集，可以考虑的包包括datashader, Vaex, 基于OpenGL的Vispy和Glumpy，GlueViz等。这里介绍datashader。</p>
 <h3 id="datashader"><a href="#datashader" class="headerlink" title="datashader"></a>datashader</h3><p><a href="https://github.com/bokeh/datashader" target="_blank" rel="external">datashader</a>是Bokeh的子项目，为处理大型数据集而生。</p>
 <p>示例语法：</p>
-<pre><code class="lang-Python">from colorcet import fire
+<pre><code class="Python">from colorcet import fire
 export(tf.shade(agg, cmap=cm(fire, 0.2), how=&#39;eq_hist&#39;), &#39;census_ds_fier_eq_hist&#39;)
 </code></pre>
 <p><img src="https://static.ddlee.cn/static/img/./Python可视化工具指引/fire.jpg" alt="fire"></p>
@@ -3186,7 +3199,7 @@ export(tf.shade(agg, cmap=cm(fire, 0.2), how=&#39;eq_hist&#39;), &#39;census_ds_
 <p>Hinton曾用生物学的观点解释这一点。神经网络的训练过程可以看做是生物种群逐渐适应环境的过程，在迭代中传递的模型参数可以看做种群的基因，Dropout以随机信号的方式给环境随机的干扰，使得传递的基因不得不适应更多的情况才能存活。</p>
 <p>另一个需要指出的地方是，Dropout给隐藏单元加入的噪声是乘性的，不像Bias那样加在隐藏单元上，这样在进行反向传播时，Dropout引入的噪声仍能够起作用。</p>
 <h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p>下面看在实践中，Dropout层是如何实现的。简单来说，就是生成一系列随机数作为mask，然后再用mask点乘原有的输入，达到引入噪声的效果。</p>
-<h4 id="From-Scratch"><a href="#From-Scratch" class="headerlink" title="From Scratch"></a>From Scratch</h4><pre><code class="lang-python"># forward pass
+<h4 id="From-Scratch"><a href="#From-Scratch" class="headerlink" title="From Scratch"></a>From Scratch</h4><pre><code class="python"># forward pass
 def dropout_forward(x, dropout_param):
   p, mode = dropout_param[&#39;p&#39;], dropout_param[&#39;mode&#39;]
   # p: dropout rate; mode: train or test
@@ -3219,7 +3232,7 @@ def dropout_backward(dout, cache):
   return dx
 </code></pre>
 <h3 id="Pytorch实现"><a href="#Pytorch实现" class="headerlink" title="Pytorch实现"></a>Pytorch实现</h3><p>file: <a href="https://github.com/pytorch/pytorch/blob/master/torch/nn/_functions/dropout.py" target="_blank" rel="external">/torch/nn/_functions/dropout.py</a></p>
-<pre><code class="lang-python">class Dropout(InplaceFunction):
+<pre><code class="python">class Dropout(InplaceFunction):
 
     def __init__(self, p=0.5, train=False, inplace=False):
         super(Dropout, self).__init__()
@@ -3456,7 +3469,7 @@ def dropout_backward(dout, cache):
 <li><em>Remove assignment to parameters</em>: 对参数默认值的设定，在函数内新建变量，初始化这个新变量</li>
 </ul>
 <p>Remove assignment to parameters的例子：</p>
-<pre><code class="lang-java">//Before
+<pre><code class="java">//Before
 int discount (int inputVal, int quantity, int yearToDate) {
   if (inputVal &gt; 50) inputVal -= 2;
 
@@ -3484,7 +3497,7 @@ int discount (int inputVal, int quantity, int yearToDate) {
 <li><em>Replace type code with subclass*</em>: 针对有判断分支的类，替换为子类</li>
 </ul>
 <p>Consolidate conditional expression的例子：</p>
-<pre><code class="lang-java">//Before
+<pre><code class="java">//Before
 double disabilityAmount() {
   if (_seniority &lt; 2) return 0;
   if (_monthsDisabled &gt; 12) return 0;
@@ -3514,7 +3527,7 @@ double disabilityAmount() {
 <li><em>Separate queries form modifiers</em>: 将找到数据和更该数据两个操作拆成两个方法</li>
 </ul>
 <p>Replace parameter with explicit Method的例子：</p>
-<pre><code class="lang-java">//Before
+<pre><code class="java">//Before
 void setValue (String name, int value) {
   if (name.equals(&quot;height&quot;)) {
     _height = value;
@@ -3568,7 +3581,7 @@ void setWidth (int arg) {
       <content type="html"><![CDATA[<h4 id="Generator"><a href="#Generator" class="headerlink" title="Generator"></a>Generator</h4><p>Generator能保存自己的状态，进入一种“Paused”状态，再次调用时会继续执行。</p>
 <p>Generator的好处之一是节省了存储空间开销，带一些”流处理”的思想。</p>
 <p>其实，我们也可以对Generator进行传入数据的操作：</p>
-<pre><code class="lang-python">def coro():
+<pre><code class="python">def coro():
     hello = yield &quot;Hello&quot;
     yield hello
 
@@ -3591,7 +3604,7 @@ print(c.send(&quot;World&quot;))
 <li>支持计划任务（暂停、恢复执行）</li>
 <li>与其他Task通信</li>
 </ul>
-<pre><code class="lang-python">@coroutine
+<pre><code class="python">@coroutine
 def grep(pattern):  #正则匹配
     print &quot;Looking for %s&quot; % pattern
     while True:
@@ -3602,7 +3615,7 @@ def grep(pattern):  #正则匹配
 <p>conroutine有自己的控制流（while/if），有局部变量（pattern, line），能暂停和恢复（yield()/send()），能相互通信（send()）</p>
 <p>====》coroutine就是一种Task！</p>
 <p>Python Docs中提供了一个例子：</p>
-<pre><code class="lang-python">import asyncio
+<pre><code class="python">import asyncio
 
 async def compute(x, y):
     print(&quot;Compute %s + %s ...&quot; % (x, y))
@@ -3621,7 +3634,7 @@ loop.close()
 <p><img src="https://static.ddlee.cn/static/img/coroutine/tulip_coro.png" alt="Chaining coroutines"></p>
 <p>利用coroutine，可以在一个线程(Task)上实现异步。</p>
 <h4 id="Impletation"><a href="#Impletation" class="headerlink" title="Impletation"></a>Impletation</h4><p>coroutine有两种实现方式，基于generator和原生async, awati关键字。</p>
-<h5 id="generator-based-coroutine"><a href="#generator-based-coroutine" class="headerlink" title="generator based coroutine"></a>generator based coroutine</h5><pre><code class="lang-python">import asyncio
+<h5 id="generator-based-coroutine"><a href="#generator-based-coroutine" class="headerlink" title="generator based coroutine"></a>generator based coroutine</h5><pre><code class="python">import asyncio
 import datetime
 import random
 
@@ -3643,7 +3656,7 @@ loop.run_forever()
 </code></pre>
 <p>上面的程序实现了在同一个线程里交互执行两个函数（sleep），而又能保持各自的状态</p>
 <h5 id="Native-support-python-3-5"><a href="#Native-support-python-3-5" class="headerlink" title="Native support(python 3.5+)"></a>Native support(python 3.5+)</h5><p>只需要修改函数定义头和<code>yield from</code>为关键字<code>await</code>即可。</p>
-<pre><code class="lang-python">async def display_date(num, loop, ):
+<pre><code class="python">async def display_date(num, loop, ):
     end_time = loop.time() + 50.0
     while True:
         print(&quot;Loop: {} Time: {}&quot;.format(num, datetime.datetime.now()))
@@ -3691,7 +3704,7 @@ loop.run_forever()
 <h3 id="Crawler类"><a href="#Crawler类" class="headerlink" title="Crawler类"></a>Crawler类</h3><p>Crawler类实现了解析网址，抓取内容等基本功能，利用<code>asyncio</code>库构建<code>coroutine</code>（parse_lings(), fetch(), work()）。</p>
 <p><img src="https://static.ddlee.cn/static/img/500lines_crawler/500lines_crawler_class.png" alt="Class Crawler"></p>
 <p>核心之处是组织管理异步的抓取任务，代码块结构如下：</p>
-<pre><code class="lang-python">class Crawler:
+<pre><code class="python">class Crawler:
   def __init__(self, roots, ....., loop):
     self.q = Queue(loop=self.loop) # 建立队列
 
@@ -3939,7 +3952,7 @@ loop.run_forever()
 <p>在Cerbot主页可以选择自己的操作系统，会有详细的步骤，在此不表。</p>
 <p>下面谈两个问题，一是强制重定向至HTTPS，二是取消管理端口的HTTPS。</p>
 <h6 id="强制HTTPS"><a href="#强制HTTPS" class="headerlink" title="强制HTTPS"></a>强制HTTPS</h6><p>Vestacp的架构是用nginx做proxy，Apache2做HTTP Server，首先下载nginx template（proxy template）：</p>
-<pre><code class="lang-bash">cd /usr/local/vesta/data/templates/web
+<pre><code class="bash">cd /usr/local/vesta/data/templates/web
 wget http://c.vestacp.com/0.9.8/rhel/force-https/nginx.tar.gz
 tar -xzvf nginx.tar.gz
 rm -f nginx.tar.gz
@@ -4263,7 +4276,7 @@ server {
 <p><img src="https://static.ddlee.cn/static/img/Python+SQLserver/Python+SQL_Server.png" alt="Python+SQLserver"></p>
 <h3 id="Python-Drivers"><a href="#Python-Drivers" class="headerlink" title="Python Drivers"></a>Python Drivers</h3><h4 id="PyODBC"><a href="#PyODBC" class="headerlink" title="PyODBC"></a>PyODBC</h4><p>Annaconda下可以用<code>pip install pyodbc</code>安装，也可以到<a href="https://www.microsoft.com/en-us/download/details.aspx?id=50420" target="_blank" rel="external">这里</a>下载。</p>
 <p>首先建立<code>connection</code>对象：</p>
-<pre><code class="lang-python">import pyodbc
+<pre><code class="python">import pyodbc
 conn = pyodbc.connect(
     r&#39;DRIVER={ODBC Driver 11 for SQL Server};&#39;  #or {ODBC Driver 13 for SQL Server}
     r&#39;SERVER=ServerHostName;&#39;
@@ -4273,7 +4286,7 @@ conn = pyodbc.connect(
     )
 </code></pre>
 <p>添加游标（Cursor）对象并执行SQL查询语句：</p>
-<pre><code class="lang-python">cursor = conn.cursor()
+<pre><code class="python">cursor = conn.cursor()
 cursor.execute(&#39;SQL Query Goes Here&#39;)
 for row in cursor.fetchall():
   print(rows.[column name])
@@ -4282,7 +4295,7 @@ for row in cursor.fetchall():
 <h4 id="pymssql"><a href="#pymssql" class="headerlink" title="pymssql"></a>pymssql</h4><p>同样可以用<code>pip install pymssql</code>安装，也可以到<a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/#pymssql" target="_blank" rel="external">这里</a>，然后用<code>pip</code>安装<code>wheel</code>文件。</p>
 <p>pymssql目前还不支持Python3.6，这点要注意下。</p>
 <p>pymssql的用法跟pyODBC很像，下面是官网给出的例子：</p>
-<pre><code class="lang-python">from os import getenv
+<pre><code class="python">from os import getenv
 import pymssql
 
 server = getenv(&quot;PYMSSQL_TEST_SERVER&quot;)
@@ -4319,7 +4332,7 @@ conn.close()
 </code></pre>
 <p>详细用法参见<a href="http://www.pymssql.org/en/stable/index.html" target="_blank" rel="external">pymssql docs</a>和<a href="https://docs.microsoft.com/en-us/sql/connect/python/pymssql/python-sql-driver-pymssql" target="_blank" rel="external">MSDN DOCs</a></p>
 <h4 id="SQLAlchemy-Python-SQL-Toolkit"><a href="#SQLAlchemy-Python-SQL-Toolkit" class="headerlink" title="SQLAlchemy(Python SQL Toolkit)"></a><a href="https://www.sqlalchemy.org/" target="_blank" rel="external">SQLAlchemy</a>(Python SQL Toolkit)</h4><p>SQLAlchemy提供了一系列丰富、完整、（我看不懂）的API用于数据库操作。这里只谈其<code>create_engine</code>方法。</p>
-<pre><code class="lang-python">from sqlalchemy import create_engine
+<pre><code class="python">from sqlalchemy import create_engine
 # pyodbc
 engine = create_engine(&#39;mssql+pyodbc://user:password@DSNname&#39;) #需要配置DSN，参见最后一节
 
@@ -4330,11 +4343,11 @@ engine = create_engine(&#39;mssql+pymssql://user:password@Hostname:port/DBname&#
 <p>用SQLAlchemy与其他类型的数据库建立链接的方法参见<a href="http://docs.sqlalchemy.org/en/latest/core/engines.html" target="_blank" rel="external">这里</a>。</p>
 <h4 id="Pandas"><a href="#Pandas" class="headerlink" title="Pandas"></a>Pandas</h4><p>利用pyODBC和pymssql拉取的对象需要进一步处理才能进行常见的数据清洗等工作，而Pandas也提供了SQL相关的方法，在SQLAlchemy的辅助下，可以将<code>DataFrame</code>对象直接写入table。</p>
 <h5 id="读取：pd-read-sql"><a href="#读取：pd-read-sql" class="headerlink" title="读取：pd.read_sql()"></a>读取：pd.read_sql()</h5><p><a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_sql.html" target="_blank" rel="external">API</a>：</p>
-<pre><code class="lang-python">pandas.read_sql(sql, con, index_col=None, coerce_float=True, params=None, parse_dates=None, columns=None, chunksize=None)
+<pre><code class="python">pandas.read_sql(sql, con, index_col=None, coerce_float=True, params=None, parse_dates=None, columns=None, chunksize=None)
 </code></pre>
 <p>其中的<code>con</code>参数，可以传入SQLAlchemy建立的<code>engine</code>对象，也可以是pyODBC或者pymssql建立的<code>DBAPI2 connection</code>对象。</p>
 <h5 id="写入-pd-DataFrame-to-sql"><a href="#写入-pd-DataFrame-to-sql" class="headerlink" title="写入:pd.DataFrame.to_sql()"></a>写入:pd.DataFrame.to_sql()</h5><p><a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.to_sql.html" target="_blank" rel="external">API</a>:</p>
-<pre><code class="lang-python">DataFrame.to_sql(name, con, flavor=None, schema=None, if_exists=&#39;fail&#39;, index=True, index_label=None, chunksize=None, dtype=None)
+<pre><code class="python">DataFrame.to_sql(name, con, flavor=None, schema=None, if_exists=&#39;fail&#39;, index=True, index_label=None, chunksize=None, dtype=None)
 </code></pre>
 <p>这里的<code>con</code>参数，只支持sqlite3的<code>DBAPI2 connection</code>对象，支持所有的<code>SQLAlchemy engine</code>对象。<br><code>name</code>参数传入表名，用<code>if_exists</code>参数控制表存在时的动作：</p>
 <ul>
@@ -4343,16 +4356,16 @@ engine = create_engine(&#39;mssql+pymssql://user:password@Hostname:port/DBname&#
 <li><code>’append&#39;</code>: 在表中插入数据。表不存在时新建表。</li>
 </ul>
 <h3 id="命令行"><a href="#命令行" class="headerlink" title="命令行"></a>命令行</h3><p>利用<code>Sqlcmd</code>命令，也可以在命令行下执行SQL文件，用法如下：</p>
-<pre><code class="lang-bash">sqlcmd -U user -P password -S server -d DBName -i /path/to/myScript.sql
+<pre><code class="bash">sqlcmd -U user -P password -S server -d DBName -i /path/to/myScript.sql
 </code></pre>
 <p>这样可以有如下思路，将数据写入.SQL文件，再生成.bat文件（批量）写入上述命令，之后完成执行。</p>
 <h3 id="DSN"><a href="#DSN" class="headerlink" title="DSN"></a>DSN</h3><p>Windows下可以配置DSN(Data Source Names)预先存储数据库连接的信息，在<em>Control Panel</em> -&gt; <em>Administrative Tools</em> -&gt; <em>ODBC Data Source</em> 下添加即可。</p>
 <p>配置好DSN后，pyODBC的连接过程可以简化为：</p>
-<pre><code class="lang-python">conn = pyodbc.connect(r&#39;DSN=DSNname;UID=user;PWD=password&#39;) #UID和PWD也可以在DSN中配置
+<pre><code class="python">conn = pyodbc.connect(r&#39;DSN=DSNname;UID=user;PWD=password&#39;) #UID和PWD也可以在DSN中配置
 </code></pre>
 <h3 id="拾遗"><a href="#拾遗" class="headerlink" title="拾遗"></a>拾遗</h3><p>Python与文件的IO、SQL数据库的读写时有中文字符可能会有编码问题。一种方案是在中文字符串前添加N，如<code>N&#39;python大法好&#39;</code>；另一种方案是传入<code>encoding</code>参数，常用的中文编码有<code>GB2123</code>，<code>GB18030</code>，推荐的还是统一用<code>UTF-8</code>编码、解码。</p>
 <p>利用如下命令，可以在SQLAlchemy中指定编码：</p>
-<pre><code class="lang-python">engine = create_engine(&#39;mssql+pymssql://user:password@HostName\DBname&#39;, connect_args = {&#39;charset&#39;:&#39;utf-8&#39;})
+<pre><code class="python">engine = create_engine(&#39;mssql+pymssql://user:password@HostName\DBname&#39;, connect_args = {&#39;charset&#39;:&#39;utf-8&#39;})
 </code></pre>
 <p>其他自定义<code>DBAPI connect()</code>参数的方法参见<a href="http://docs.sqlalchemy.org/en/latest/core/engines.html#custom-dbapi-connect-arguments" target="_blank" rel="external">这里</a>。</p>
 ]]></content>
@@ -4407,7 +4420,7 @@ engine = create_engine(&#39;mssql+pymssql://user:password@Hostname:port/DBname&#
 <h3 id="U盘挂载，文件共享"><a href="#U盘挂载，文件共享" class="headerlink" title="U盘挂载，文件共享"></a>U盘挂载，文件共享</h3><p>安装好OpenWrt后，就可以从网页端访问路由器，设置PPPoE拨号，设置WIFI等等。</p>
 <h4 id="U盘挂载"><a href="#U盘挂载" class="headerlink" title="U盘挂载"></a>U盘挂载</h4><p>U盘挂载部分主要参考了<a href="https://my.oschina.net/umu618/blog/282984" target="_blank" rel="external">跟 UMU 一起玩 OpenWRT（入门篇6）：挂接 U 盘</a>。</p>
 <p>首先是安装相应的包：</p>
-<pre><code class="lang-bash">opkg update
+<pre><code class="bash">opkg update
 
 # 核心包
 opkg install kmod-usb-storage
@@ -4433,7 +4446,7 @@ chmod 444 /mnt/usb/USB_DISK_NOT_PRESENT
 mount /dev/sda1 /mnt/usb
 </code></pre><p>这时可以测试一下，如果U盘里面存储了文件，可以通过<code>/mnt/usb</code>访问的到。</p>
 <p>下面是开机自动挂载U盘的命令。</p>
-<pre><code class="lang-bash"># block-mount blkid用于查看U盘的UUID
+<pre><code class="bash"># block-mount blkid用于查看U盘的UUID
 opkg install block-mount blkid
 
 # 实际上要操作的是fstab的配置文件/etc/config/fstab，要将enabled值改成1
@@ -4445,7 +4458,7 @@ uci commit fstab
 <p>更详细的信息可以参见<a href="http://wiki.openwrt.org/doc/uci/fstab" target="_blank" rel="external">这里</a></p>
 <h4 id="文件共享"><a href="#文件共享" class="headerlink" title="文件共享"></a>文件共享</h4><p>文件共享可以通过FTP和SAMBA，推荐的方式是SAMBA。</p>
 <h5 id="SAMBA"><a href="#SAMBA" class="headerlink" title="SAMBA"></a>SAMBA</h5><p>安转SAMBA：</p>
-<pre><code class="lang-bash">opkg update
+<pre><code class="bash">opkg update
 opkg install samba36-server
 
 # luci程序，可选
@@ -4462,7 +4475,7 @@ create mask = 0750
 directory mask = 0750
 </code></pre><p>第二个参数是访问账户，可以通过命令<code>sambpasswd -a</code>将你的当前用户加入到SAMBA的组中，需要设置一个密码。另外，可能需要将配置文件<code>/etc/samba/smb.conf</code>的[global]中的<code>invalid users = root</code>注释掉。</p>
 <p>最后，设置SAMBA服务启动和开机自启</p>
-<pre><code class="lang-bash">/etc/init.d/samba start
+<pre><code class="bash">/etc/init.d/samba start
 /etc/init.d/samba enable
 </code></pre>
 <h5 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h5><p>FTP可以用<code>vsftpd</code>包来设置，大致过程与SAMBA类似：设置路径、添加用户、设置自启。</p>

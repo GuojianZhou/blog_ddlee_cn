@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.ddlee.cn/"/>
-  <updated>2018-03-11T16:39:38.443Z</updated>
+  <updated>2018-03-18T13:36:01.915Z</updated>
   <id>https://blog.ddlee.cn/</id>
   
   <author>
@@ -20,9 +20,9 @@
     <link href="https://blog.ddlee.cn/posts/7845fb62/"/>
     <id>https://blog.ddlee.cn/posts/7845fb62/</id>
     <published>2018-03-04T16:18:16.000Z</published>
-    <updated>2018-03-11T16:39:38.443Z</updated>
+    <updated>2018-03-18T13:36:01.915Z</updated>
     
-    <content type="html"><![CDATA[<p>本文节选自博主通过格灵深瞳公众号发表于知乎的文章：<a href="https://zhuanlan.zhihu.com/p/34179420" target="_blank" rel="external">目标检测入门（二）：模型的评测与训练技巧
+    <content type="html"><![CDATA[<p>本文节选自博主通过格灵深瞳机构号发表于知乎的文章：<a href="https://zhuanlan.zhihu.com/p/34179420" target="_blank" rel="external">目标检测入门（二）：模型的评测与训练技巧
 </a>。</p>
 <h2 id="检测模型的评测指标"><a href="#检测模型的评测指标" class="headerlink" title="检测模型的评测指标"></a>检测模型的评测指标</h2><p>目标检测模型本源上可以用统计推断的框架描述，我们关注其犯第一类错误和第二类错误的概率，通常用准确率和召回率来描述。准确率描述了模型有多准，即在预测为正例的结果中，有多少是真正例；召回率则描述了模型有多全，即在为真的样本中，有多少被我们的模型预测为正例。不同的任务，对两类错误有不同的偏好，常常在某一类错误不多于一定阈值的情况下，努力减少另一类错误。在检测中，mAP（mean Average Precision）作为一个统一的指标将这两种错误兼顾考虑。</p>
 <p>具体地，对于每张图片，检测模型输出多个预测框（常常远超真实框的个数），我们使用IoU（Intersection Over Union，交并比）来标记预测框是否为预测正确。标记完成后，随着预测框的增多，召回率总会提升，在不同的召回率水平下对准确率做平均，即得到AP，最后再对所有类别按其所占比例做平均，即得到mAP。</p>
@@ -46,7 +46,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;本文节选自博主通过格灵深瞳公众号发表于知乎的文章：&lt;a href=&quot;https://zhuanlan.zhihu.com/p/34179420&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;目标检测入门（二）：模型的评测与训练技巧
+      &lt;p&gt;本文节选自博主通过格灵深瞳机构号发表于知乎的文章：&lt;a href=&quot;https://zhuanlan.zhihu.com/p/34179420&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;目标检测入门（二）：模型的评测与训练技巧
 &lt;/a&gt;。&lt;/p&gt;
 &lt;h
     
@@ -66,7 +66,7 @@
     <link href="https://blog.ddlee.cn/posts/13efca78/"/>
     <id>https://blog.ddlee.cn/posts/13efca78/</id>
     <published>2018-03-04T16:14:31.000Z</published>
-    <updated>2018-03-18T13:12:17.505Z</updated>
+    <updated>2018-03-18T13:28:59.033Z</updated>
     
     <content type="html"><![CDATA[<p>本文节选自博主通过格灵深瞳机构号发表在知乎上的文章：<a href="https://zhuanlan.zhihu.com/p/34142321" target="_blank" rel="external">干货 | 目标检测入门，看这篇就够了</a>。</p>
 <h2 id="目标检测的任务表述"><a href="#目标检测的任务表述" class="headerlink" title="目标检测的任务表述"></a>目标检测的任务表述</h2><p>如何从图像中解析出可供计算机理解的信息，是机器视觉的中心问题。深度学习模型由于其强大的表示能力，加之数据量的积累和计算力的进步，成为机器视觉的热点研究方向。</p>
@@ -113,10 +113,10 @@
     <link href="https://blog.ddlee.cn/posts/16826395/"/>
     <id>https://blog.ddlee.cn/posts/16826395/</id>
     <published>2018-03-02T15:55:48.000Z</published>
-    <updated>2018-03-18T13:11:46.524Z</updated>
+    <updated>2018-03-18T13:37:25.290Z</updated>
     
     <content type="html"><![CDATA[<p><a href="https://arxiv.org/1612.08242" target="_blank" rel="external">YOLO9000: Better, Faster, Stronger</a></p>
-<p>在这篇文章里，单阶段检测模型的先驱工作YOLO迎来了全面的更新：</p>
+<p>在这篇文章里，单阶段检测模型的先驱工作<a href="https://blog.ddlee.cn/posts/41036331/">YOLO</a>迎来了全面的更新：</p>
 <ol>
 <li>在卷积层添加BN，舍弃Dropout</li>
 <li>更高尺寸的输入</li>
@@ -139,7 +139,7 @@
     <summary type="html">
     
       &lt;p&gt;&lt;a href=&quot;https://arxiv.org/1612.08242&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;YOLO9000: Better, Faster, Stronger&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;在这篇文章里，单阶段检测模型的先驱工作YO
+&lt;p&gt;在这篇文章里，单阶段检测模型的先驱工作&lt;a
     
     </summary>
     
@@ -161,7 +161,7 @@
     <link href="https://blog.ddlee.cn/posts/a1e87dc9/"/>
     <id>https://blog.ddlee.cn/posts/a1e87dc9/</id>
     <published>2018-02-21T16:00:41.000Z</published>
-    <updated>2018-03-18T13:11:27.617Z</updated>
+    <updated>2018-03-18T13:28:59.045Z</updated>
     
     <content type="html"><![CDATA[<p><a href="https://arxiv.org/abs/1604.03540" target="_blank" rel="external">Training Region-based Object Detectors with Online Hard Example Mining</a></p>
 <h3 id="OHEM-Online-Hard-negative-Example-Mining，在线难例挖掘"><a href="#OHEM-Online-Hard-negative-Example-Mining，在线难例挖掘" class="headerlink" title="OHEM(Online Hard negative Example Mining，在线难例挖掘)"></a>OHEM(Online Hard negative Example Mining，在线难例挖掘)</h3><p>本文是Bootstrapping（自助采样）在深度网络中的应用。两阶段网络由于其多步的特性，在RCNN子网络的计算前会有对RoI的整理过程，早期工作中，Fast R-CNN利用随机上采样和下采样的方法来维持正负样本比例，而本文提出的方法则使得网络具有挑选“好的”正负样本的能力。</p>
@@ -192,7 +192,7 @@
     <link href="https://blog.ddlee.cn/posts/2da92ac3/"/>
     <id>https://blog.ddlee.cn/posts/2da92ac3/</id>
     <published>2018-02-12T02:09:22.000Z</published>
-    <updated>2018-03-08T16:17:30.680Z</updated>
+    <updated>2018-03-18T13:28:59.021Z</updated>
     
     <content type="html"><![CDATA[<p>本文记录基于PyCharm的Python工作环境配置，最终实现的效果是本地修改，远程调试，运行环境可迁移。</p>
 <h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><p>该环境的配置需要如下准备：</p>
@@ -237,7 +237,7 @@
     <link href="https://blog.ddlee.cn/posts/c9816b0a/"/>
     <id>https://blog.ddlee.cn/posts/c9816b0a/</id>
     <published>2018-01-17T16:52:08.000Z</published>
-    <updated>2018-03-18T13:10:05.021Z</updated>
+    <updated>2018-03-18T13:28:59.041Z</updated>
     
     <content type="html"><![CDATA[<p>本文是MobileNets的第二版。<a href="https://blog.ddlee.cn/2018/01/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/">第一版</a>中，MobileNets全面应用了Depth-wise Seperable Convolution并提出两个超参来控制网络容量，在保持移动端可接受的模型复杂性的基础上达到了相当的精度。而第二版中，MobileNets应用了新的单元：Inverted residual with linear bottleneck，主要的改动是添加了线性Bottleneck和将skip-connection转移到低维bottleneck层。</p>
 <h3 id="Intuition"><a href="#Intuition" class="headerlink" title="Intuition"></a>Intuition</h3><p>本篇比较丰富的地方是对网络中bottleneck结构的探讨。</p>
@@ -302,7 +302,7 @@
     <link href="https://blog.ddlee.cn/posts/72ed0837/"/>
     <id>https://blog.ddlee.cn/posts/72ed0837/</id>
     <published>2018-01-16T12:59:51.000Z</published>
-    <updated>2018-03-18T13:13:10.861Z</updated>
+    <updated>2018-03-18T13:28:59.013Z</updated>
     
     <content type="html"><![CDATA[<p>本篇是一个Chrome扩展的推荐列表。所有扩展插件在<a href="https://chrome.google.com/webstore/" target="_blank" rel="external">Chrome Web Store</a>都可搜索得到。</p>
 <ul>
@@ -367,7 +367,7 @@
     <link href="https://blog.ddlee.cn/posts/99ba96d1/"/>
     <id>https://blog.ddlee.cn/posts/99ba96d1/</id>
     <published>2018-01-14T18:06:16.000Z</published>
-    <updated>2018-03-08T16:17:21.800Z</updated>
+    <updated>2018-03-18T13:28:59.021Z</updated>
     
     <content type="html"><![CDATA[<p>本篇是个人向的系统重装记录，以便自己日后参考。</p>
 <p>我使用的系统是Win10+Ubuntu16.04。</p>
@@ -411,9 +411,9 @@
 </ul>
 <h2 id="开发环境配置-Environment-Configuration"><a href="#开发环境配置-Environment-Configuration" class="headerlink" title="开发环境配置 Environment Configuration"></a>开发环境配置 Environment Configuration</h2><p>这一部分完成自己开发环境的配置。</p>
 <h4 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h4><p>SSH key: ssh-keygen and ssh-add, git config name&amp;email</p>
-<h4 id="Python-Annaconda"><a href="#Python-Annaconda" class="headerlink" title="Python(Annaconda)"></a>Python(Annaconda)</h4><p>(pypi: 修改 ~/.config/pip/pip.conf (Linux), %APPDATA%\pip\pip.ini (Windows 10) 或 $HOME/Library/Application Support/pip/pip.conf (macOS) (没有就创建一个)， 修改 index-url至tuna，例如<br>[global]<br>index-url = <a href="https://pypi.tuna.tsinghua.edu.cn/simple" target="_blank" rel="external">https://pypi.tuna.tsinghua.edu.cn/simple</a> )<br>(conda TUNA 还提供了 Anaconda 仓库的镜像，运行以下命令:<br>conda config —add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</a></p>
-<p>conda config —add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</a></p>
-<p>conda config —set show_channel_urls yes<br>即可添加 Anaconda Python 免费仓库。)</p>
+<h4 id="Python-Annaconda"><a href="#Python-Annaconda" class="headerlink" title="Python(Annaconda)"></a>Python(Annaconda)</h4><p>(pypi: 修改 ~/.config/pip/pip.conf (Linux), %APPDATA%\pip\pip.ini (Windows 10) 或 $HOME/Library/Application Support/pip/pip.conf (macOS) (没有就创建一个)， 修改 index-url至tuna，例如<br>[global]<br>index-url = <a href="https://pypi.tuna.tsinghua.edu.cn/simple" target="_blank" rel="external">https://pypi.tuna.tsinghua.edu.cn/simple</a> )<br>(conda TUNA 还提供了 Anaconda 仓库的镜像，运行以下命令:<br>conda config –add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</a></p>
+<p>conda config –add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</a></p>
+<p>conda config –set show_channel_urls yes<br>即可添加 Anaconda Python 免费仓库。)</p>
 <h4 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h4><p>install: <a href="https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/</a></p>
 <p>To verify: sudo docker run hello-world</p>
 <p>mirror: <a href="https://www.docker-cn.com/registry-mirror" target="_blank" rel="external">https://www.docker-cn.com/registry-mirror</a><br>chmod 755 /etc/docker<br>为了永久性保留更改，您可以修改 /etc/docker/daemon.json 文件并添加上 registry-mirrors 键值。<br>{ “registry-mirrors”: [“<a href="https://registry.docker-cn.com" target="_blank" rel="external">https://registry.docker-cn.com</a>“] }<br>修改保存后重启 Docker 以使配置生效</p>
@@ -433,7 +433,7 @@
 <li>Disable intel turbo boost technology: terminal:<br>sudo -i<br>echo “1” | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo<br>exit</li>
 </ul>
 <p>4.tracke-miner-fs bug<br><a href="https://askubuntu.com/questions/346211/tracker-store-and-tracker-miner-fs-eating-up-my-cpu-on-every-startup" target="_blank" rel="external">https://askubuntu.com/questions/346211/tracker-store-and-tracker-miner-fs-eating-up-my-cpu-on-every-startup</a></p>
-<p>echo -e “\nHidden=true\n” | sudo tee —append /etc/xdg/autostart/tracker-extract.desktop /etc/xdg/autostart/tracker-miner-apps.desktop /etc/xdg/autostart/tracker-miner-fs.desktop /etc/xdg/autostart/tracker-miner-user-guides.desktop /etc/xdg/autostart/tracker-store.desktop &gt; /dev/null<br>gsettings set org.freedesktop.Tracker.Miner.Files crawling-interval -2<br>gsettings set org.freedesktop.Tracker.Miner.Files enable-monitors false<br>tracker reset —hard</p>
+<p>echo -e “\nHidden=true\n” | sudo tee –append /etc/xdg/autostart/tracker-extract.desktop /etc/xdg/autostart/tracker-miner-apps.desktop /etc/xdg/autostart/tracker-miner-fs.desktop /etc/xdg/autostart/tracker-miner-user-guides.desktop /etc/xdg/autostart/tracker-store.desktop &gt; /dev/null<br>gsettings set org.freedesktop.Tracker.Miner.Files crawling-interval -2<br>gsettings set org.freedesktop.Tracker.Miner.Files enable-monitors false<br>tracker reset –hard</p>
 ]]></content>
     
     <summary type="html">
@@ -463,7 +463,7 @@
     <link href="https://blog.ddlee.cn/posts/4213a4c1/"/>
     <id>https://blog.ddlee.cn/posts/4213a4c1/</id>
     <published>2018-01-09T17:36:06.000Z</published>
-    <updated>2018-03-11T16:11:10.802Z</updated>
+    <updated>2018-03-18T13:28:59.017Z</updated>
     
     <content type="html"><![CDATA[<p>呃，我在<a href="https://ddlee.cn/index_ver2016.html" target="_blank" rel="external">2016版的个人主页</a>里曾表达自己特别想拥有一台Chromebook，可终于还是屈服在了网络环境面前。</p>
 <p>离了我的路由器，我的Chromebook几乎就是个废物了。</p>
@@ -514,7 +514,7 @@
     <link href="https://blog.ddlee.cn/posts/f8991abd/"/>
     <id>https://blog.ddlee.cn/posts/f8991abd/</id>
     <published>2018-01-06T13:23:16.000Z</published>
-    <updated>2018-03-18T13:09:12.822Z</updated>
+    <updated>2018-03-18T13:28:59.037Z</updated>
     
     <content type="html"><![CDATA[<p>DenseNet将shortcut-connection的思路发挥到极致。在一个DenseBlock内部，每一层的输出均跟后面的层建立shortcut，特别需要注意的是，不同于ResNet中的相加，DenseNet连接shortcut的方式是Concat，这样越深的层则输入channel数越大。</p>
 <h3 id="DenseNet"><a href="#DenseNet" class="headerlink" title="DenseNet"></a>DenseNet</h3><p><img src="https://static.ddlee.cn/static/img/论文笔记-Densely-Connected-Convolutional-Networks/arch.png" alt="arch"></p>
@@ -548,7 +548,7 @@
     <link href="https://blog.ddlee.cn/posts/423c678a/"/>
     <id>https://blog.ddlee.cn/posts/423c678a/</id>
     <published>2018-01-06T13:19:34.000Z</published>
-    <updated>2018-03-18T13:08:52.352Z</updated>
+    <updated>2018-03-18T13:28:59.037Z</updated>
     
     <content type="html"><![CDATA[<p>本文提出了深度网络的新维度，除了深度、宽度（Channel数）外，作者将在某一层并行transform的路径数提取为第三维度，称为”cardinality”。跟Inception单元不同的是，这些并行路径均共享同一拓扑结构，而非精心设计的卷积核并联。除了并行相同的路径外，也添加了层与层间的shortcut connection。但由于其多路径的设计特征，我将其归为Inception系网络。</p>
 <h3 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h3><p>深度网络结构上的设计已经有三种经典的范式：</p>
@@ -593,7 +593,7 @@
     <link href="https://blog.ddlee.cn/posts/ae26dc1c/"/>
     <id>https://blog.ddlee.cn/posts/ae26dc1c/</id>
     <published>2018-01-04T13:10:09.000Z</published>
-    <updated>2018-03-18T13:10:17.520Z</updated>
+    <updated>2018-03-18T13:28:59.041Z</updated>
     
     <content type="html"><![CDATA[<p>MobileNets系列可以看做是继Xception之后对Depthwise Separable Convolution的又一推动。利用深度可分离的特征，MobileNets系列引入两个模型精度和大小的超参，在保持相当精度的同时享有非常小的计算消耗，适用于移动端情形，因而被命名为”MobileNets”。</p>
 <h3 id="Depthwise-Separable-Convolution"><a href="#Depthwise-Separable-Convolution" class="headerlink" title="Depthwise Separable Convolution"></a>Depthwise Separable Convolution</h3><p>深度可分离卷积是近期深度网络设计的重要趋势。最早见于L. Sifre的PhD论文Rigid-motion scattering for image classification，其1×1卷积在Inception, ResNet, SqueezeNet等网络中作为降维bottleneck使用。Xception指出，Inception单元本质上假设了跨通道和跨空间相关性的解耦关系，并将这一解耦关系推向极端，用Depthwise Separable Convolution改造了Inception结构。</p>
@@ -636,7 +636,7 @@
     <link href="https://blog.ddlee.cn/posts/3b214d12/"/>
     <id>https://blog.ddlee.cn/posts/3b214d12/</id>
     <published>2018-01-02T13:04:30.000Z</published>
-    <updated>2018-03-18T13:11:36.405Z</updated>
+    <updated>2018-03-18T13:28:59.045Z</updated>
     
     <content type="html"><![CDATA[<p>本篇是keras库作者的文章，对Inception结构进行了改进：用Depth-wise seperable convolution替换了Inception单元中的1×1卷积和3×3卷积。</p>
 <p>文章对Inception结构的评论非常有见地。</p>
@@ -683,7 +683,7 @@
     <link href="https://blog.ddlee.cn/posts/ea323d66/"/>
     <id>https://blog.ddlee.cn/posts/ea323d66/</id>
     <published>2017-12-26T12:59:02.000Z</published>
-    <updated>2018-03-11T16:17:12.430Z</updated>
+    <updated>2018-03-18T13:28:59.041Z</updated>
     
     <content type="html"><![CDATA[<p>在15年，ResNet成为那年最耀眼的卷积网络结构，skip-connection的结构也成为避不开的考虑选项。Inception系列也参考ResNet更新了自己的结构。同时推出了第四代和跟ResNet的结合版：Inception-v4和Inception-ResNet。</p>
 <p>然而，这是一篇几乎都是图的论文。</p>
@@ -719,7 +719,7 @@
     <link href="https://blog.ddlee.cn/posts/b58d5aab/"/>
     <id>https://blog.ddlee.cn/posts/b58d5aab/</id>
     <published>2017-12-24T13:55:22.000Z</published>
-    <updated>2018-03-11T16:19:55.636Z</updated>
+    <updated>2018-03-18T13:28:59.045Z</updated>
     
     <content type="html"><![CDATA[<p>这篇文章偏综述和实验报告的性质，前几个部分对检测模型有不错的概括，重头在实验结果部分，实验细节也描述的比较清楚，可以用来参考。</p>
 <p>文章将检测模型分为三种元结构：Faster-RCNN、R-FCN和SSD，将特征提取网络网络独立出来作为元结构的一个部件，并松动了Proposal个数、输入图片尺寸，生成Feature map的大小等作为超参，并行实验，探索精度和速度方面的trade-off。</p>
@@ -792,7 +792,7 @@
     <link href="https://blog.ddlee.cn/posts/50848bae/"/>
     <id>https://blog.ddlee.cn/posts/50848bae/</id>
     <published>2017-12-22T13:55:36.000Z</published>
-    <updated>2018-03-11T16:17:51.661Z</updated>
+    <updated>2018-03-18T13:28:59.041Z</updated>
     
     <content type="html"><![CDATA[<p>文章指出两阶段检测器通常在生成Proposal后进行分类的“头”(head)部分进行密集的计算，如ResNet为基础网络的Faster-RCNN将整个stage5（或两个FC）放在RCNN部分， RFCN要生成一个具有随类别数线性增长的channel数的Score map，这些密集计算正是两阶段方法在精度上领先而在推断速度上难以满足实时要求的原因。</p>
 <p>针对这两种元结构(Faster-RCNN和RFCN)，文章提出了“头”轻量化方法，试图在保持精度的同时又能减少冗余的计算量，从而实现精度和速度的Trade-off。</p>
@@ -835,7 +835,7 @@
     <link href="https://blog.ddlee.cn/posts/41036331/"/>
     <id>https://blog.ddlee.cn/posts/41036331/</id>
     <published>2017-12-20T13:38:31.000Z</published>
-    <updated>2018-03-18T13:11:51.407Z</updated>
+    <updated>2018-03-18T13:28:59.049Z</updated>
     
     <content type="html"><![CDATA[<p>YOLO是单阶段方法的开山之作。它将检测任务表述成一个统一的、端到端的回归问题，并且以只处理一次图片同时得到位置和分类而得名。</p>
 <p>YOLO的主要优点：</p>
@@ -884,7 +884,7 @@
     <link href="https://blog.ddlee.cn/posts/5e3f4a2c/"/>
     <id>https://blog.ddlee.cn/posts/5e3f4a2c/</id>
     <published>2017-12-16T12:53:29.000Z</published>
-    <updated>2018-03-18T13:10:39.058Z</updated>
+    <updated>2018-03-18T13:28:59.045Z</updated>
     
     <content type="html"><![CDATA[<p>本文是作者推进inception结构的第2.5步。在更早的文章里，同一作者提出Batch Normalization并且用来改进了Inception结构，称为Inception-BN。而在这篇文章里，作者提出了Inception-v2和Inception-v3，两者共享同一网络结构，v3版本相比v2版本加入了RMSProp，Label Smoothing等技巧。</p>
 <p>文章表述了Inception系列的几个设计原则，并根据这些原则改进了GoogLeNet的结构。</p>
@@ -947,7 +947,7 @@
     <link href="https://blog.ddlee.cn/posts/ac9fbfcc/"/>
     <id>https://blog.ddlee.cn/posts/ac9fbfcc/</id>
     <published>2017-12-12T13:37:56.000Z</published>
-    <updated>2018-03-11T16:20:03.010Z</updated>
+    <updated>2018-03-18T13:28:59.045Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>SSD是对YOLO的改进，其达到跟两阶段方法相当的精度，又保持较快的运行速度。</p>
 <h2 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h2><p><img src="https://static.ddlee.cn/static/img/论文笔记-SSD-Single-Shot-MultiBox-Detector/arch.jpg" alt="arch"></p>
@@ -983,7 +983,7 @@
     <link href="https://blog.ddlee.cn/posts/6a10f2e/"/>
     <id>https://blog.ddlee.cn/posts/6a10f2e/</id>
     <published>2017-12-07T13:55:59.000Z</published>
-    <updated>2018-03-18T13:09:21.789Z</updated>
+    <updated>2018-03-18T13:28:59.037Z</updated>
     
     <content type="html"><![CDATA[<p>对图片信息的理解常常关系到对位置和规模上不变性的建模。在较为成功的图片分类模型中，Max-Pooling这一操作建模了位置上的不变性：从局部中挑选最大的响应，这一响应在局部的位置信息就被忽略掉了。而在规模不变性的方向上，添加不同大小感受野的卷积核（VGG），用小卷积核堆叠感受较大的范围（GoogLeNet），自动选择感受野的大小（Inception）等结构也展现了其合理的一面。</p>
 <p>回到检测任务，与分类任务不同的是，检测所面临的物体规模问题是跨类别的、处于同一语义场景中的。</p>

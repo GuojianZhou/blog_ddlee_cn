@@ -284,7 +284,7 @@
 
     
         <meta property="article:published_time" content="Thu Jun 29 2017 22:12:50 GMT+0800">
-        <meta property="article:modified_time" content="Wed Jan 10 2018 00:56:34 GMT+0800">
+        <meta property="article:modified_time" content="Sun Mar 18 2018 21:28:59 GMT+0800">
     
 
     <!-- The Twitter Card protocol -->
@@ -307,7 +307,7 @@
     "mainEntityOfPage": "https://blog.ddlee.cn/posts/da65b87d/index.html",
     "headline": "Python最佳实践：遍历列表",
     "datePublished": "Thu Jun 29 2017 22:12:50 GMT+0800",
-    "dateModified": "Wed Jan 10 2018 00:56:34 GMT+0800",
+    "dateModified": "Sun Mar 18 2018 21:28:59 GMT+0800",
     "author": {
         "@type": "Person",
         "name": "ddlee",
@@ -557,16 +557,16 @@
                 <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
         <h3 id="enumerate-遍历索引和值"><a href="#enumerate-遍历索引和值" class="headerlink" title="enumerate(): 遍历索引和值"></a>enumerate(): 遍历索引和值</h3><p>对列表进行遍历操作时，常也要用到当前遍历项的索引值：</p>
-<pre><code class="lang-python">for i in range(len(flavor_list)):
+<pre><code class="python">for i in range(len(flavor_list)):
   flavor = flaver[i]
   print(&#39;%d: %s&#39; % (i + 1, flavor))
 </code></pre>
 <p>这种写法既要取出列表长度，又要根据索引取列表值。但要改用<code>enumerate()</code>函数，则可同时取出索引值和遍历项值：</p>
-<pre><code class="lang-python">for i, flavor in enumerate(flavor_list):
+<pre><code class="python">for i, flavor in enumerate(flavor_list):
   print(&#39;%d: %s&#39; % (i+1, flavor))
 </code></pre>
 <h3 id="zip-并行遍历多个列表"><a href="#zip-并行遍历多个列表" class="headerlink" title="zip(): 并行遍历多个列表"></a>zip(): 并行遍历多个列表</h3><p>我们有多个长度相同的列表，需要在同一索引下对遍历项值进行操作：</p>
-<pre><code class="lang-python">names = [&#39;Cecilia&#39;, &#39;Lise&#39;, &#39;Marie&#39;]
+<pre><code class="python">names = [&#39;Cecilia&#39;, &#39;Lise&#39;, &#39;Marie&#39;]
 letters = [len(n) for n in names]
 
 longest_name = None
@@ -579,7 +579,7 @@ for i, name in enumerate(names):
     max_letters = count
 </code></pre>
 <p>由上可见，name和letter通过索引值关联起来，而使用<code>zip()</code>函数，可免去根据索引取值的过程：</p>
-<pre><code class="lang-python">for name, count in zip(names, letters):
+<pre><code class="python">for name, count in zip(names, letters):
   if count &gt; max_letters:
     longest_name = name
     max_letters = count
