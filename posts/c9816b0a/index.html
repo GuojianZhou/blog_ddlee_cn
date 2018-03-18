@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.5.2 -->
+    <script>
+        window.materialVersion = "1.5.2"
+        // Delete localstorage with these tags
+        window.oldVersion = [
+            'codestartv1',
+            '1.3.4',
+            '1.4.0',
+            '1.4.0b1',
+            '1.5.0'
+        ]
+    </script>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material/source"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!-- google search console Verification -->
+    <meta name="google-site-verification" content="DQOqtdHW2XoolIYM-KrYhBlwhgqSr4B0rqFAP_bGnHA" />
+    <!-- Title -->
+    
+    <title>
+        
+            [论文笔记](MobileNet V2)Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation | 
+        
+        萧爽楼
+    </title>
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="https://static.ddlee.cn/static/img/material-theme-img/favicon.png">
+    <link rel="icon" href="https://static.ddlee.cn/static/img/material-theme-img/favicon.png">
+
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="description" itemprop="description" content="我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
+    <meta name="keywords" content="萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee,Papers,Computer Vision,CNN,Mobile">
+    <meta name="theme-color" content="#0097A7">
+
+    <!-- Disable Fucking Bloody Baidu Tranformation -->
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(a){try{localStorage.removeItem(a)}catch(b){}};lsloader.setLS=function(a,c){try{localStorage.setItem(a,c)}catch(b){}};lsloader.getLS=function(a){var c="";try{c=localStorage.getItem(a)}catch(b){c=""}return c};versionString="/*"+(window.materialVersion||"unknownVersion")+"*/";lsloader.clean=function(){try{var b=[];for(var a=0;a<localStorage.length;a++){b.push(localStorage.key(a))}b.forEach(function(e){var f=lsloader.getLS(e);if(window.oldVersion){var d=window.oldVersion.reduce(function(g,h){return g||f.indexOf("/*"+h+"*/")!==-1},false);if(d){lsloader.removeLS(e)}}})}catch(c){}};lsloader.clean();lsloader.load=function(f,a,b,d){if(typeof b==="boolean"){d=b;b=undefined}d=d||false;b=b||function(){};var e;e=this.getLS(f);if(e&&e.indexOf(versionString)===-1){this.removeLS(f);this.requestResource(f,a,b,d);return}if(e){var c=e.split(versionString)[0];if(c!=a){console.log("reload:"+a);this.removeLS(f);this.requestResource(f,a,b,d);return}e=e.split(versionString)[1];if(d){this.jsRunSequence.push({name:f,code:e});this.runjs(a,f,e)}else{document.getElementById(f).appendChild(document.createTextNode(e));b()}}else{this.requestResource(f,a,b,d)}};lsloader.requestResource=function(b,e,a,c){var d=this;if(c){this.iojs(e,b,function(h,f,g){d.setLS(f,h+versionString+g);d.runjs(h,f,g)})}else{this.iocss(e,b,function(f){document.getElementById(b).appendChild(document.createTextNode(f));d.setLS(b,e+versionString+f)},a)}};lsloader.iojs=function(d,b,g){var a=this;a.jsRunSequence.push({name:b,code:""});try{var f=new XMLHttpRequest();f.open("get",d,true);f.onreadystatechange=function(){if(f.readyState==4){if((f.status>=200&&f.status<300)||f.status==304){if(f.response!=""){g(d,b,f.response);return}}a.jsfallback(d,b)}};f.send(null)}catch(c){a.jsfallback(d,b)}};lsloader.iocss=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.iofonts=function(f,c,h,a){var b=this;try{var g=new XMLHttpRequest();g.open("get",f,true);g.onreadystatechange=function(){if(g.readyState==4){if((g.status>=200&&g.status<300)||g.status==304){if(g.response!=""){h(g.response);a();return}}b.cssfallback(f,c,a)}};g.send(null)}catch(d){b.cssfallback(f,c,a)}};lsloader.runjs=function(f,c,e){if(!!c&&!!e){for(var b in this.jsRunSequence){if(this.jsRunSequence[b].name==c){this.jsRunSequence[b].code=e}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var a=document.createElement("script");a.appendChild(document.createTextNode(this.jsRunSequence[0].code));a.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(a);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else{if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var d=this;var a=document.createElement("script");a.src=this.jsRunSequence[0].path;a.type="text/javascript";this.jsRunSequence[0].status="loading";a.onload=function(){d.jsRunSequence.shift();if(d.jsRunSequence.length>0){d.runjs()}};document.body.appendChild(a)}}};lsloader.tagLoad=function(b,a){this.jsRunSequence.push({name:a,code:"",path:b,status:"failed"});this.runjs()};lsloader.jsfallback=function(c,b){if(!!this.jsnamemap[b]){return}else{this.jsnamemap[b]=b}for(var a in this.jsRunSequence){if(this.jsRunSequence[a].name==b){this.jsRunSequence[a].code="";this.jsRunSequence[a].status="failed";this.jsRunSequence[a].path=c}}this.runjs()};lsloader.cssfallback=function(e,c,b){if(!!this.cssnamemap[c]){return}else{this.cssnamemap[c]=1}var d=document.createElement("link");d.type="text/css";d.href=e;d.rel="stylesheet";d.onload=d.onerror=b;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(d,a)};lsloader.runInlineScript=function(c,b){var a=document.getElementById(b).innerText;this.jsRunSequence.push({name:c,code:a});this.runjs()}})();</script>
+
+    <!-- Import queue -->
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Import CSS -->
+    
+        <style id="material_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_css","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material/source/css/material.min.css",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+        <style id="style_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("style_css","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material/source/css/style.min.css",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+        
+            
+                <style id="prettify_css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_css","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material/source/css/prettify.min.css",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+                <style id="prettify_theme"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("prettify_theme","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material/source/css/prettify/atelier-dune-light.min.css",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+            
+        
+
+    
+
+    
+
+    <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    overflow-x: hidden !important;
+  }
+  
+  code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  a {
+    color: #00cfbd;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #00cfbd !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #00cfbd !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #00cfbd !important;
+  }
+
+  .toTop {
+    background: #404040 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #404040;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #404040;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #404040;
+  }
+
+  .post-toc a:hover {
+    color: #00cfbd;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #cdecd9;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+<!-- Import Roboto -->
+
+    <style>
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 300;
+            src: local('Roboto Light'), local('Roboto-Light'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-Light.woff2') format('woff2'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-Light.woff') format('woff');
+        }
+        @font-face {
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 300;
+            src: local('Roboto LightItalic'), local('Roboto-LightItalic'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-LightItalic.woff2') format('woff2'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-LightItalic.woff') format('woff');
+          }
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Roboto Regular'), local('Roboto-Regular'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-Regular.woff2') format('woff2'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-Regular.woff') format('woff');
+        }
+        @font-face {
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 400;
+            src: local('Roboto RegularItalic'), local('Roboto-RegularItalic'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-RegularItalic.woff2') format('woff2'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-RegularItalic.woff') format('woff');
+          }
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 500;
+            src: local('Roboto Medium'), local('Roboto-Medium'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-Medium.woff2') format('woff2'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-Medium.woff') format('woff');
+        }
+        @font-face {
+            font-family: 'Roboto';
+            font-style: italic;
+            font-weight: 500;
+            src: local('Roboto MediumItalic'), local('Roboto-MediumItalic'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-MediumItalic.woff2') format('woff2'), url('https://cdnjs.cat.net/ajax/libs/mdui/0.2.1/fonts/roboto/Roboto-MediumItalic.woff') format('woff');
+        }
+    </style>
+
+
+<!-- Import Material Icons -->
+
+
+    <style id="material_icons"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("material_icons","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material/source/css/material-icons.css",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";}, false)</script>
+
+
+
+
+    <!-- Import jQuery -->
+    
+        <script>lsloader.load("jq_js","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material/source/js/jquery.min.js", true)</script>
+    
+
+    <!-- WebAPP Icons -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="萧爽楼">
+    <meta name="msapplication-starturl" content="https://blog.ddlee.cn/posts/c9816b0a/">
+    <meta name="msapplication-navbutton-color" content="#0097A7">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="萧爽楼">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon" href="https://static.ddlee.cn/static/img/material-theme-img/favicon.png">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- RSS -->
+    
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="https://blog.ddlee.cn/posts/c9816b0a/">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="[论文笔记](MobileNet V2)Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation | 萧爽楼">
+    <meta property="og:image" content="https://static.ddlee.cn/static/img/material-theme-img/favicon.png">
+    <meta property="og:description" content="我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。">
+    <meta property="og:article:tag" content="Papers"> <meta property="og:article:tag" content="Computer Vision"> <meta property="og:article:tag" content="CNN"> <meta property="og:article:tag" content="Mobile"> 
+
+    
+        <meta property="article:published_time" content="Thu Jan 18 2018 00:52:08 GMT+0800">
+        <meta property="article:modified_time" content="Sun Mar 18 2018 21:10:05 GMT+0800">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="https://blog.ddlee.cn/posts/c9816b0a/index.html" />
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": "https://blog.ddlee.cn/posts/c9816b0a/index.html",
+    "headline": "[论文笔记](MobileNet V2)Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation",
+    "datePublished": "Thu Jan 18 2018 00:52:08 GMT+0800",
+    "dateModified": "Sun Mar 18 2018 21:10:05 GMT+0800",
+    "author": {
+        "@type": "Person",
+        "name": "ddlee",
+        "image": {
+            "@type": "ImageObject",
+            "url": "https://static.ddlee.cn/static/img/material-theme-img/avatar.png"
+        },
+        "description": "呦呦鹿鸣，食野之苹。,我有嘉宾，鼓瑟吹笙。"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "萧爽楼",
+        "logo": {
+            "@type":"ImageObject",
+            "url": "https://static.ddlee.cn/static/img/material-theme-img/favicon.png"
+        }
+    },
+    "keywords": ",Papers,Computer Vision,CNN,Mobile萧爽楼博客, ddlee96, David D Lee,李家丞,ddlee,dongdonglee,Dongdonglee",
+    "description": "我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。",
+}
+</script>
+
+
+    
+
+    <!-- Analytics -->
+    
+        <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','/js/google-analytics.js','ga');
+    ga('create', 'UA-93514996-1', 'auto');ga('send', 'pageview');
+</script>
+
+    
+    
+    
+
+    <!-- Custom Head --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+
+    <!-- Left aligned menu below button -->
+    
+    
+    <button id="post-toc-trigger-btn"
+        class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Intuition"><span class="post-toc-number">1.</span> <span class="post-toc-text">Intuition</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Experiments"><span class="post-toc-number">2.</span> <span class="post-toc-text">Experiments</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#ImageNet-Classification"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">ImageNet Classification</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Object-Detection"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">Object Detection</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#Segmentation"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">Segmentation</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Ablation-Study"><span class="post-toc-number">3.</span> <span class="post-toc-text">Ablation Study</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#附录"><span class="post-toc-number">4.</span> <span class="post-toc-text">附录</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#小结"><span class="post-toc-number">5.</span> <span class="post-toc-text">小结</span></a></li></ol>
+    </ul>
+    
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        
+            <!-- Random Thumbnail -->
+            <div class="post_thumbnail-random mdl-card__media mdl-color-text--grey-50">
+            <script type="text/ls-javascript" id="post-thumbnail-script">
+    var randomNum = Math.floor(Math.random() * 102 + 1);
+
+    $('.post_thumbnail-random').attr('data-original', 'https://static.ddlee.cn/static/img/material-theme-img/random/material-' + randomNum + '.png');
+    $('.post_thumbnail-random').addClass('lazy');
+</script>
+
+        
+    
+            <p class="article-headline-p">
+                [论文笔记](MobileNet V2)Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="https://static.ddlee.cn/static/img/material-theme-img/avatar.png" width="44px" height="44px" alt="Author Avatar"/>
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>ddlee</strong>
+        <span>1月 18, 2018</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+        <button id="article-functions-qrcode-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">devices other</i>
+    <span class="visuallyhidden">devices other</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-qrcode-button">
+    <li class="mdl-menu__item">在其它设备中阅读本文章</li>
+    
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACY0lEQVR42u3aQW7DMAwEwPz/0+0Diji7oqUawfhUBEqs6UEilnz9fPXzwsPDw8PDw8PDexjvFT9vf+7Pmnfrr1f+/dba3vDw8PDO8D4ctcF2rzeXABJwsjc8PDy8k7x323235nrTyUWS/07xLTw8PLxH8q4P97WVeHh4eN/Ne7emiAyef+/h4eHh3RRG5Md68guPy1rw8PDwYl5+rJ//+2h/Dw8PDy/g1SNNceiQDwS0F1UxdIWHh4e3gZcfxGv4CXhxCAwPDw9vM2/Szr/exHXckAe79eACHh4e3mZe8rLkUJ40wNr22Ied4OHh4W3mtV/OQ9j22tgyOoCHh4d3cOiqHQ7Io4e1YYIEhoeHh3eGd73FdhxqLcjI10fXCR4eHt5mXt52yhtmbaCQF9kRHg8PD28zb1LsrpXm7bvyYhoPDw/vObx5sZsc8fOoFw8PD+88Ly9nk3K8DhHKMaw6a8HDw8O7lTcpo9cGp/KL54aSGg8PD+9W3tpYat4Sm5fd9Q7x8PDwNvPaMDd55dpVMW+J4eHh4Z3hta36tiyeRw/1vx4PDw/vCG/7K+OwYzKagIeHh3eetxbCthFDfmEkra/iYsDDw8PbwGuP77sK5buiDTw8PLwzvPaZDFpFjf+ypMbDw8M7z1s7lFvGvBzfMnSFh4eHN+CtjRHkDbPJ6GrdqMPDw8M7yJsf0O3YazJiVY8g4OHh4T2Yl8cH7SdtYwwPDw/v+bx2o/kFMImM8fDw8M7z8qZUUvK24W8b++Lh4eH9Ly+PACYx7l2B74fP8fDw8Dbzvu/Bw8PDw8PDw8N7wPMLVy01AFcX3m4AAAAASUVORK5CYII=">
+    
+</ul>
+
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/CNN/">CNN</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Computer-Vision/">Computer Vision</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Mobile/">Mobile</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/Papers/">Papers</a>
+    </ul>
+    
+
+    <!-- Share -->
+    
+        <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+
+    <!-- Share Weibo -->
+    
+        <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=[论文笔记](MobileNet V2)Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation&url=https://blog.ddlee.cn/posts/c9816b0a/index.html&pic=https://blog.ddlee.cnhttps://static.ddlee.cn/static/img/material-theme-img/favicon.png&searchPic=false&style=simple" target="_blank">
+            <li class="mdl-menu__item">
+                分享到微博
+            </li>
+        </a>
+    
+
+    <!-- Share Twitter -->
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+        <a class="post_share-link" href="https://www.linkedin.com/shareArticle?mini=true&url=https://blog.ddlee.cn/posts/c9816b0a/index.html&title=[论文笔记](MobileNet V2)Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 LinkedIn
+            </li>
+        </a>
+    
+
+    <!-- Share QQ -->
+    
+        <a class="post_share-link" href="http://connect.qq.com/widget/shareqq/index.html?site=萧爽楼&title=[论文笔记](MobileNet V2)Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation&summary=我叫李家丞，现在在同济大学念书，学的是数学。博客的内容主要包括个人的生活、读书感想，也包括数学、互联网、编程语言、人工智能等方面的学习侧记。&pics=https://blog.ddlee.cnhttps://static.ddlee.cn/static/img/material-theme-img/favicon.png&url=https://blog.ddlee.cn/posts/c9816b0a/index.html" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 QQ
+            </li>
+        </a>
+    
+
+    <!-- Share Telegram -->
+    
+        <a class="post_share-link" href="https://telegram.me/share/url?url=https://blog.ddlee.cn/posts/c9816b0a/index.html&text=[论文笔记](MobileNet V2)Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Telegram
+            </li>
+        </a>
+    
+</ul>
+
+    
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <p>本文是MobileNets的第二版。<a href="https://blog.ddlee.cn/2018/01/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/">第一版</a>中，MobileNets全面应用了Depth-wise Seperable Convolution并提出两个超参来控制网络容量，在保持移动端可接受的模型复杂性的基础上达到了相当的精度。而第二版中，MobileNets应用了新的单元：Inverted residual with linear bottleneck，主要的改动是添加了线性Bottleneck和将skip-connection转移到低维bottleneck层。</p>
+<h3 id="Intuition"><a href="#Intuition" class="headerlink" title="Intuition"></a>Intuition</h3><p>本篇比较丰富的地方是对网络中bottleneck结构的探讨。</p>
+<p>在最早的Network in Network工作中，1x1卷积被作为一个降维的操作而引入，后来逐渐发展为Depth-wise Seperable Convolution（可分离卷积）并被广泛应用，堪称跟skip-connection同样具有影响力的网络部件。在<a href="https://blog.ddlee.cn/2017/11/30/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Going-deeper-with-convolutions/">Inception单元</a>最初提出之时，具有较多channel的feature map被认为是可供压缩的，作者引入1x1卷积将它们映射到低维（较少channel数）空间上并添加多路径处理的范式。之后的<a href="https://blog.ddlee.cn/2018/01/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/">Xception</a>、MobileNets等工作则将可分离卷积应用到极致：前者指出可分离卷积背后的假设是跨channel相关性和跨spatial相关性的解耦，后者则利用可控的两个超参来获得在效率和精度上取得较好平衡的网络。</p>
+<p>文中，经过激活层后的张量被称为兴趣流形，具有维HxWxD，其中D即为通常意义的channel数，部分文章也将其称为网络的宽度（width）。</p>
+<p>根据之前的研究，兴趣流形可能仅分布在激活空间的一个低维子空间里，利用这一点很容易使用1x1卷积将张量降维（即MobileNet V1的工作），但由于ReLU的存在，这种降维实际上会损失较多的信息。下图是一个例子。</p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/collapse.png" alt="envolve"></p>
+<p>上图中，利用MxN的矩阵B将张量（2D，即N=2）变换到M维的空间中，通过ReLUctant后（y=ReLU(Bx)），再用此矩阵之逆恢复原来的张量。可以看到，当M较小时，恢复后的张量坍缩严重，M较大时则恢复较好。</p>
+<p>这意味着，在较低维度的张量表示（兴趣流形）上进行ReLU等线性变换会有很大的信息损耗。因而本文提出使用线性变换替代Bottleneck的激活层，而在需要激活的卷积层中，使用较大的M使张量在进行激活前先扩张，整个单元的输入输出是低维张量，而中间的层则用较高维的张量。文中所用单元的演化过程如下：</p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/envolve.png" alt="envolve"></p>
+<p>。图a中普通卷积将channel和spatial的信息同时进行映射，参数量较大；图b为可分离卷积，解耦了channel和spatial，化乘法为加法，有一定比例的参数节省；图c中进行可分离卷积后又添加了bottleneck，映射到低维空间中；图d则是从低维空间开始，进行可分离卷积时扩张到较高的维度（前后维度之比被称为expansion factor，扩张系数），之后再通过1x1卷积降到原始维度。</p>
+<p>实际上，图c和图d的结构在堆叠时是等价的，只是观察起点的不同。但基于兴趣流形应该分布在一个低维子空间上的假设，这引出了文章的第二个关键点：将skip-connection转移到低维表达间，即Inverted residual block。</p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/invert_residual.png" alt="inverted"></p>
+<p>综合以上两点，文章中网络所用的基本单元如下：</p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/module.png" alt="envolve"></p>
+<p>文章指出，这种设计将层输入、输出空间跟层变换分离，即网络容量（capacity）和表达力（expressIveness）的解耦。</p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/module2.png" alt="envolve"></p>
+<h3 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h3><p>MobileNet V2的整体结构如下表：</p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/arch.png" alt="envolve"></p>
+<p>上图中，t代表单元的扩张系数，c代表channel数，n为单元重复个数，s为stride数。可见，网络整体上遵循了重复相同单元和加深则变宽等设计范式。也不免有人工设计的成分（如28^2*64单元的stride，单元重复数等）。</p>
+<h4 id="ImageNet-Classification"><a href="#ImageNet-Classification" class="headerlink" title="ImageNet Classification"></a>ImageNet Classification</h4><p>MoblieNets V2仍然集成了V1版本的两个超参数，在ImageNet上的实验结果如下：</p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/imagenet.png" alt="envolve"></p>
+<p>可以看到相比V1版本优势明显，在精度方面跟NAS搜索出的结构有相当的表现。</p>
+<h4 id="Object-Detection"><a href="#Object-Detection" class="headerlink" title="Object Detection"></a>Object Detection</h4><p>文章还提出SSDLite来更好适应移动端需求，改动是将head部分的普通卷积都替换为了可分离卷积。</p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/coco.png" alt="envolve"></p>
+<p>上面是在COCO上的表现，可以看到精度方面跟YOLOv2和SSD300相当（尽管很低，相比SOTA差距还很大），但模型参数和运算复杂度都有一个数量级的减少。最后的CPU时间是在Pixel上测得，可以到5FPS，达不到真正移动实时的要求，但也是不小的推进了（并没有给出GPU上的推断时间，而Pixel+TF-Lite的benchmark又跟其他网络难以产生有效的比较）。</p>
+<h4 id="Segmentation"><a href="#Segmentation" class="headerlink" title="Segmentation"></a>Segmentation</h4><p>下图是在VOC上分割的结果：</p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/seg.png" alt="envolve"></p>
+<h3 id="Ablation-Study"><a href="#Ablation-Study" class="headerlink" title="Ablation Study"></a>Ablation Study</h3><p>文章还做了关于线性变换bottleneck替代ReLU和skip-connection位置的实验，进一步支撑之前的分析。</p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/ablation.png" alt="envolve"></p>
+<h3 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h3><p>本篇文章的附录部分提供了紧的n维流形在经过升维线性变化加ReLU后被映射到子集的期望大小的界，这个界说明在扩张到足够高的维度后，升维线性变换加ReLu能以较高的概率可逆（保持信息）并加入非线性。</p>
+<p>上面的结论是非常拗口的。自己的理解是，使用ReLU引入非线性的同时会导致信息损失（非线性指不会被卷积、全连接等线性映射吸收掉，信息损失则是指ReLU将&lt;0的输入置0，输入变得稀疏，而若所有输入的某一维度都被置0，则会使输入空间本身降维），我们要对抗这一可能的信息损失，需要将输入先扩张，即y=ReLU(Bx)，x为R^n空间上的输入，B为m×n矩阵，我们期望m足够大，以达到扩张的效果并在经过ReLU后保持y跟x的信息量同样多（文中的引理二，即是证此变换可逆性的一个条件，应该是借用了代数的概念，矩阵在经过可逆变换后不会降秩，秩成为衡量信息损失的指标）。</p>
+<p><img src="https://static.ddlee.cn/static/img/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/distribution.png" alt="envolve"></p>
+<p>在ReLU(Bx)算符可逆性的问题上，作者做了一些经验性实验，如上图。a和b分别为训练前后，每层正激活channel数（可逆性条件）和其占总channel数比例的分布。图a和图b的左图，随网络加深，channel数增多，即变宽；训练前后，方差增大，且有两层低于了可逆性条件阈值（图b左图中绿色线低于紫色阈值的部分）。右图是一个比例，由于随机初始化，均值在0.5附近，训练后同样方差增大，而可逆性条件阈值一直为1/6（即为MobileNet V2扩张系数的倒数）。</p>
+<p>附录的Theorem 1则证明了ReLU(Bx)算符将输入x压缩后的空间维度(n-volume)的界，此界在扩张系数较大时可以跟原空间相当，即信息损失很小。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>能够看到附录里给出文中假定或观察的数学证明的论文还是开心的。太多论文只是终于实验的SOTA而避而不谈Insights，况且给出证明。尽管本篇附录中的证明仍有经验主义的部分，且并没有完全定义清楚问题和结论，其对后续工作的启发价值还是有的。</p>
+<p>这也暴露了当前领域的通病，我们没有共通的一套语言来描述自己的网络，譬如，如何定义网络的容量、表达力，如何衡量信息的损失。没有通用的定义造成了论文表述常常有令经验少者难以理解的表达。去定义这样一套语言和标准来为网络设计提供参考，希望成为以后的研究热点，也是我自己的一个思考方向。</p>
+<p>总体来看，本篇文章提供的两点改进都是有启发性的，但并不完整，需要更多工作来补充。另外源码没有给出，会尝试复现。</p>
+
+        
+                <blockquote style="margin: 2em 0 0;padding: 0.5em 1em;border-left: 3px solid #F44336;background-color: #F5F5F5;list-style: none;">
+                    <p><strong>
+                        
+                            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://static.ddlee.cn/static/img/material-theme-img/cc-by-sa.png" /></a>@<a href="https://ddlee.cn">ddlee</a><br />本文章遵从<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>。<br />这意味着您可以署名转载本文章，并附上此协议。
+                        </strong>
+                        <br>
+                        <strong>本文链接：</strong><a href="https://blog.ddlee.cn/posts/c9816b0a/">https://blog.ddlee.cn/posts/c9816b0a/</a>
+
+                    </p>
+
+                </blockquote>
+        
+        <br>
+        <h3>相关文章</h3>
+
+        <ul class="popular-posts"><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/ae26dc1c/" title="[论文笔记]MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications" rel="bookmark">[论文笔记]MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/46620023/" title="[论文笔记]An Analysis of Deep Neural Network Models for Practical Applications" rel="bookmark">[论文笔记]An Analysis of Deep Neural Network Models for Practical Applications</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/df4c4adf/" title="[论文笔记](ResNet)Deep Residual Learning for Image Recognition" rel="bookmark">[论文笔记](ResNet)Deep Residual Learning for Image Recognition</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/ea323d66/" title="[论文笔记]Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning" rel="bookmark">[论文笔记]Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning</a></h3></div></li><li class="popular-posts-item"><div class="popular-posts-title"><h3><a href="/posts/6b8a6ed1/" title="[论文笔记](GoogLeNet)Going deeper with convolutions" rel="bookmark">[论文笔记](GoogLeNet)Going deeper with convolutions</a></h3></div></li></ul>
+
+    
+
+    
+</div>
+
+
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+    <!-- 使用 gitcoment -->
+<div id="gitment-comment">
+    <!-- Gitment 评论框 -->
+<div id="container"></div>
+</div>
+<style>
+    #gitment-comment{
+        background-color: #eee;
+        padding: 2pc;
+    }
+</style>
+<link rel="stylesheet" href="/css/gitment.css">
+<script src="/js/gitment.browser.js"></script>
+<!-- <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script> -->
+<script>
+    var gitment = new Gitment({
+        //id: '页面 ID', // 可选。默认为 location.href
+        owner: 'ddlee96',
+        repo: 'blog_ddlee_cn',
+        oauth: {
+            client_id: '89b83fa9ec93002b0f29',
+            client_secret: 'c255eaf1963364de6e81143d3d62681f7b9d37b8',
+        },
+    })
+    gitment.render('container')
+</script>
+
+
+                
+            </div>
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/posts/2da92ac3/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/posts/72ed0837/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(https://static.ddlee.cn/static/img/material-theme-img/sidebar_header.jpg);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="https://static.ddlee.cn/static/img/material-theme-img/avatar.png" alt="ddlee's avatar">
+    </div>
+
+
+
+        <div>
+            <strong style="font-size:1.3em; color:#FFFFFF; margin-left: 20px;">萧爽楼</strong>
+        </div>
+
+    <!-- Sidebar Email -->
+
+ <!--
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        cnlijiacheng96 at gmail.com
+        <b class="caret"></b>
+    </a>
+    -->
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto:cnlijiacheng96@gmail.com" target="_blank" title="Email Me">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        Email Me
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+    
+
+    <!-- Archives  -->
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/AI/">AI<span class="sidebar_archives-count">11</span></a></li><li><a class="sidebar_archives-link" href="/categories/Android/">Android<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Data-Science/">Data Science<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Individual-Development/">Individual Development<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Internet/">Internet<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/Linux/">Linux<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/Papers/">Papers<span class="sidebar_archives-count">29</span></a></li><li><a class="sidebar_archives-link" href="/categories/Programming/">Programming<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/Reading/">Reading<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/Writing/">Writing<span class="sidebar_archives-count">3</span></a>
+            </ul>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/timeline" title="时间轴">
+                
+                    <i class="material-icons sidebar-material-icons">timeline</i>
+                
+                时间轴
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/tags" title="标签云">
+                
+                    <i class="material-icons sidebar-material-icons">bookmark</i>
+                
+                标签云
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/About" title="关于我">
+                
+                    <i class="material-icons sidebar-material-icons">person</i>
+                
+                关于我
+            </a>
+        </li>
+        
+    
+
+    <!-- Article Number  -->
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!--
+I'm glad you use this theme, the development is no so easy, I hope you can keep the copyright, I will thank you so much.
+If you still want to delete the copyrights, could you still retain the first one? Which namely "Theme Material"
+It will not impact the appearance and can give developers a lot of support :)
+
+很高兴您使用并喜欢该主题，开发不易 十分谢谢与希望您可以保留一下版权声明。
+如果您仍然想删除的话 能否只保留第一项呢？即 "Theme Material"
+它不会影响美观并可以给开发者很大的支持和动力。 :)
+-->
+
+<!-- Sidebar Divider -->
+
+    <div class="sidebar-divider"></div>
+
+
+<!-- Theme Material -->
+<!--
+-->
+
+<!-- Help & Support -->
+<!--
+
+-->
+
+<!-- Feedback -->
+<!--
+
+-->
+
+<!-- About Theme -->
+<!--
+
+-->
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- rss -->
+    
+    <!-- Twitter -->
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/ddlee96" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+        <a href="https://www.linkedin.com/in/ddlee96" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-linkedin">
+                <span class="visuallyhidden">LinkedIn</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Zhihu -->
+    
+        <a href="https://www.zhihu.com/people/ddlee96" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-zhihu">
+                <span class="visuallyhidden">Zhihu</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+        <a href="https://t.me/ddlee96" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-telegram">
+                <span class="visuallyhidden">Telegram</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- V2EX -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;2016&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>萧爽楼
+            
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <!--
+        I am glad you use this theme, the development is no so easy, I hope you can keep the copyright.
+        It will not impact the appearance and can give developers a lot of support :)
+
+        很高兴您使用该主题，开发不易，希望您可以保留一下版权声明。
+        它不会影响美观并可以给开发者很大的支持。 :)
+        -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+                <div class="footer-develop-div">Theme - <a href="https://github.com/viosey/hexo-theme-material" target="_blank" class="footer-develop-a">Material</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import JS File -->
+
+    <script>lsloader.load("lazyload_js","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material/source/js/lazyload.min.js", true)</script>
+
+
+
+    <script>lsloader.load("js_js","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material/source/js/js.min.js", true)</script>
+
+
+
+    <script>lsloader.load("np_js","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material/source/js/nprogress.js", true)</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#00cfbd'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #00cfbd, 0 0 15px #00cfbd'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#00cfbd',
+        'border-left-color': '#00cfbd'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+    
+        <script>lsloader.load("sm_js","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material/source/js/smoothscroll.js", true)</script>
+    
+
+
+
+
+
+
+
+   <!-- Gitment -->
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Import prettify js  -->
+
+    
+        
+            <script>lsloader.load("prettify_js","https://cdn.jsdelivr.net/gh/viosey/hexo-theme-material/source/js/prettify.min.js", true)</script>
+        
+    
+
+
+
+<!-- Window Load -->
+<!-- add class for prettify -->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+
+    
+        
+            $(function() {
+                $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto;');
+                prettyPrint();
+                })
+        
+    
+    
+</script>
+
+<!-- MathJax Load-->
+
+
+<!-- Bing Background -->
+
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Custom Footer -->
+
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+console.log('\n %c © Material Theme | Version: 1.5.2 | https://github.com/viosey/hexo-theme-material %c \n', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-left-radius:5px;border-bottom-left-radius:5px;', 'color:#455a64;background:#e0e0e0;padding:5px 0;border-top-right-radius:5px;border-bottom-right-radius:5px;');
+</script>
+
+                </main>
+            </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+        </body>
+    
+</html>

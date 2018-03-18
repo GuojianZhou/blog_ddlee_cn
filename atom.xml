@@ -17,8 +17,8 @@
   
   <entry>
     <title>目标检测常用评测集：Pascal VOC, MS COCO, Cityscapes</title>
-    <link href="https://blog.ddlee.cn/2018/03/05/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%B8%B8%E7%94%A8%E8%AF%84%E6%B5%8B%E9%9B%86%EF%BC%9APascal-VOC-MS-COCO-Cityscapes/"/>
-    <id>https://blog.ddlee.cn/2018/03/05/目标检测常用评测集：Pascal-VOC-MS-COCO-Cityscapes/</id>
+    <link href="https://blog.ddlee.cn/posts/7845fb62/"/>
+    <id>https://blog.ddlee.cn/posts/7845fb62/</id>
     <published>2018-03-04T16:18:16.000Z</published>
     <updated>2018-03-11T16:39:38.443Z</updated>
     
@@ -63,8 +63,8 @@
   
   <entry>
     <title>目标检测任务表述与模型基本结构</title>
-    <link href="https://blog.ddlee.cn/2018/03/05/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E4%BB%BB%E5%8A%A1%E8%A1%A8%E8%BF%B0%E4%B8%8E%E6%A8%A1%E5%9E%8B%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/"/>
-    <id>https://blog.ddlee.cn/2018/03/05/目标检测任务表述与模型基本结构/</id>
+    <link href="https://blog.ddlee.cn/posts/13efca78/"/>
+    <id>https://blog.ddlee.cn/posts/13efca78/</id>
     <published>2018-03-04T16:14:31.000Z</published>
     <updated>2018-03-18T13:12:17.505Z</updated>
     
@@ -110,8 +110,8 @@
   
   <entry>
     <title>[论文笔记]YOLO9000: Better, Faster, Stronger</title>
-    <link href="https://blog.ddlee.cn/2018/03/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-YOLO9000-Better-Faster-Stronger/"/>
-    <id>https://blog.ddlee.cn/2018/03/02/论文笔记-YOLO9000-Better-Faster-Stronger/</id>
+    <link href="https://blog.ddlee.cn/posts/16826395/"/>
+    <id>https://blog.ddlee.cn/posts/16826395/</id>
     <published>2018-03-02T15:55:48.000Z</published>
     <updated>2018-03-18T13:11:46.524Z</updated>
     
@@ -158,8 +158,8 @@
   
   <entry>
     <title>[论文笔记](OHEM)Training Region-based Object Detectors with Online Hard Example Mining</title>
-    <link href="https://blog.ddlee.cn/2018/02/22/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Training-Region-based-Object-Detectors-with-Online-Hard-Example-Mining/"/>
-    <id>https://blog.ddlee.cn/2018/02/22/论文笔记-Training-Region-based-Object-Detectors-with-Online-Hard-Example-Mining/</id>
+    <link href="https://blog.ddlee.cn/posts/a1e87dc9/"/>
+    <id>https://blog.ddlee.cn/posts/a1e87dc9/</id>
     <published>2018-02-21T16:00:41.000Z</published>
     <updated>2018-03-18T13:11:27.617Z</updated>
     
@@ -189,8 +189,8 @@
   
   <entry>
     <title>PyCharm+PipEnv本地Python开发环境配置</title>
-    <link href="https://blog.ddlee.cn/2018/02/12/PyCharm-PipEnv%E6%9C%AC%E5%9C%B0Python%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
-    <id>https://blog.ddlee.cn/2018/02/12/PyCharm-PipEnv本地Python开发环境配置/</id>
+    <link href="https://blog.ddlee.cn/posts/2da92ac3/"/>
+    <id>https://blog.ddlee.cn/posts/2da92ac3/</id>
     <published>2018-02-12T02:09:22.000Z</published>
     <updated>2018-03-08T16:17:30.680Z</updated>
     
@@ -234,8 +234,8 @@
   
   <entry>
     <title>[论文笔记](MobileNet V2)Inverted Residuals and Linear Bottlenecks: Mobile Networks for Classification, Detection and Segmentation</title>
-    <link href="https://blog.ddlee.cn/2018/01/18/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/"/>
-    <id>https://blog.ddlee.cn/2018/01/18/论文笔记-Inverted-Residuals-and-Linear-Bottlenecks-Mobile-Networks-for-Classification-Detection-and-Segmentation/</id>
+    <link href="https://blog.ddlee.cn/posts/c9816b0a/"/>
+    <id>https://blog.ddlee.cn/posts/c9816b0a/</id>
     <published>2018-01-17T16:52:08.000Z</published>
     <updated>2018-03-18T13:10:05.021Z</updated>
     
@@ -299,8 +299,8 @@
   
   <entry>
     <title>Chrome扩展推荐</title>
-    <link href="https://blog.ddlee.cn/2018/01/16/Chrome%E6%89%A9%E5%B1%95%E6%8E%A8%E8%8D%90/"/>
-    <id>https://blog.ddlee.cn/2018/01/16/Chrome扩展推荐/</id>
+    <link href="https://blog.ddlee.cn/posts/72ed0837/"/>
+    <id>https://blog.ddlee.cn/posts/72ed0837/</id>
     <published>2018-01-16T12:59:51.000Z</published>
     <updated>2018-03-18T13:13:10.861Z</updated>
     
@@ -352,20 +352,20 @@
       <category term="Individual Development" scheme="https://blog.ddlee.cn/categories/Individual-Development/"/>
     
     
-      <category term="Chrome" scheme="https://blog.ddlee.cn/tags/Chrome/"/>
-    
       <category term="Software" scheme="https://blog.ddlee.cn/tags/Software/"/>
     
       <category term="Digital Life" scheme="https://blog.ddlee.cn/tags/Digital-Life/"/>
     
       <category term="Recommendation" scheme="https://blog.ddlee.cn/tags/Recommendation/"/>
     
+      <category term="Chrome" scheme="https://blog.ddlee.cn/tags/Chrome/"/>
+    
   </entry>
   
   <entry>
     <title>Laptop Reborn: 系统重装侧记</title>
-    <link href="https://blog.ddlee.cn/2018/01/15/Laptop-Reborn-%E7%B3%BB%E7%BB%9F%E9%87%8D%E8%A3%85%E4%BE%A7%E8%AE%B0/"/>
-    <id>https://blog.ddlee.cn/2018/01/15/Laptop-Reborn-系统重装侧记/</id>
+    <link href="https://blog.ddlee.cn/posts/99ba96d1/"/>
+    <id>https://blog.ddlee.cn/posts/99ba96d1/</id>
     <published>2018-01-14T18:06:16.000Z</published>
     <updated>2018-03-08T16:17:21.800Z</updated>
     
@@ -411,9 +411,9 @@
 </ul>
 <h2 id="开发环境配置-Environment-Configuration"><a href="#开发环境配置-Environment-Configuration" class="headerlink" title="开发环境配置 Environment Configuration"></a>开发环境配置 Environment Configuration</h2><p>这一部分完成自己开发环境的配置。</p>
 <h4 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h4><p>SSH key: ssh-keygen and ssh-add, git config name&amp;email</p>
-<h4 id="Python-Annaconda"><a href="#Python-Annaconda" class="headerlink" title="Python(Annaconda)"></a>Python(Annaconda)</h4><p>(pypi: 修改 ~/.config/pip/pip.conf (Linux), %APPDATA%\pip\pip.ini (Windows 10) 或 $HOME/Library/Application Support/pip/pip.conf (macOS) (没有就创建一个)， 修改 index-url至tuna，例如<br>[global]<br>index-url = <a href="https://pypi.tuna.tsinghua.edu.cn/simple" target="_blank" rel="external">https://pypi.tuna.tsinghua.edu.cn/simple</a> )<br>(conda TUNA 还提供了 Anaconda 仓库的镜像，运行以下命令:<br>conda config –add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</a></p>
-<p>conda config –add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</a></p>
-<p>conda config –set show_channel_urls yes<br>即可添加 Anaconda Python 免费仓库。)</p>
+<h4 id="Python-Annaconda"><a href="#Python-Annaconda" class="headerlink" title="Python(Annaconda)"></a>Python(Annaconda)</h4><p>(pypi: 修改 ~/.config/pip/pip.conf (Linux), %APPDATA%\pip\pip.ini (Windows 10) 或 $HOME/Library/Application Support/pip/pip.conf (macOS) (没有就创建一个)， 修改 index-url至tuna，例如<br>[global]<br>index-url = <a href="https://pypi.tuna.tsinghua.edu.cn/simple" target="_blank" rel="external">https://pypi.tuna.tsinghua.edu.cn/simple</a> )<br>(conda TUNA 还提供了 Anaconda 仓库的镜像，运行以下命令:<br>conda config —add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/</a></p>
+<p>conda config —add channels <a href="https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/</a></p>
+<p>conda config —set show_channel_urls yes<br>即可添加 Anaconda Python 免费仓库。)</p>
 <h4 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h4><p>install: <a href="https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/" target="_blank" rel="external">https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/</a></p>
 <p>To verify: sudo docker run hello-world</p>
 <p>mirror: <a href="https://www.docker-cn.com/registry-mirror" target="_blank" rel="external">https://www.docker-cn.com/registry-mirror</a><br>chmod 755 /etc/docker<br>为了永久性保留更改，您可以修改 /etc/docker/daemon.json 文件并添加上 registry-mirrors 键值。<br>{ “registry-mirrors”: [“<a href="https://registry.docker-cn.com" target="_blank" rel="external">https://registry.docker-cn.com</a>“] }<br>修改保存后重启 Docker 以使配置生效</p>
@@ -433,7 +433,7 @@
 <li>Disable intel turbo boost technology: terminal:<br>sudo -i<br>echo “1” | sudo tee /sys/devices/system/cpu/intel_pstate/no_turbo<br>exit</li>
 </ul>
 <p>4.tracke-miner-fs bug<br><a href="https://askubuntu.com/questions/346211/tracker-store-and-tracker-miner-fs-eating-up-my-cpu-on-every-startup" target="_blank" rel="external">https://askubuntu.com/questions/346211/tracker-store-and-tracker-miner-fs-eating-up-my-cpu-on-every-startup</a></p>
-<p>echo -e “\nHidden=true\n” | sudo tee –append /etc/xdg/autostart/tracker-extract.desktop /etc/xdg/autostart/tracker-miner-apps.desktop /etc/xdg/autostart/tracker-miner-fs.desktop /etc/xdg/autostart/tracker-miner-user-guides.desktop /etc/xdg/autostart/tracker-store.desktop &gt; /dev/null<br>gsettings set org.freedesktop.Tracker.Miner.Files crawling-interval -2<br>gsettings set org.freedesktop.Tracker.Miner.Files enable-monitors false<br>tracker reset –hard</p>
+<p>echo -e “\nHidden=true\n” | sudo tee —append /etc/xdg/autostart/tracker-extract.desktop /etc/xdg/autostart/tracker-miner-apps.desktop /etc/xdg/autostart/tracker-miner-fs.desktop /etc/xdg/autostart/tracker-miner-user-guides.desktop /etc/xdg/autostart/tracker-store.desktop &gt; /dev/null<br>gsettings set org.freedesktop.Tracker.Miner.Files crawling-interval -2<br>gsettings set org.freedesktop.Tracker.Miner.Files enable-monitors false<br>tracker reset —hard</p>
 ]]></content>
     
     <summary type="html">
@@ -460,8 +460,8 @@
   
   <entry>
     <title>FlintOS轻体验</title>
-    <link href="https://blog.ddlee.cn/2018/01/10/FlintOS%E8%BD%BB%E4%BD%93%E9%AA%8C/"/>
-    <id>https://blog.ddlee.cn/2018/01/10/FlintOS轻体验/</id>
+    <link href="https://blog.ddlee.cn/posts/4213a4c1/"/>
+    <id>https://blog.ddlee.cn/posts/4213a4c1/</id>
     <published>2018-01-09T17:36:06.000Z</published>
     <updated>2018-03-11T16:11:10.802Z</updated>
     
@@ -511,8 +511,8 @@
   
   <entry>
     <title>[论文笔记](DenseNet)Densely Connected Convolutional Networks</title>
-    <link href="https://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Densely-Connected-Convolutional-Networks/"/>
-    <id>https://blog.ddlee.cn/2018/01/06/论文笔记-Densely-Connected-Convolutional-Networks/</id>
+    <link href="https://blog.ddlee.cn/posts/f8991abd/"/>
+    <id>https://blog.ddlee.cn/posts/f8991abd/</id>
     <published>2018-01-06T13:23:16.000Z</published>
     <updated>2018-03-18T13:09:12.822Z</updated>
     
@@ -545,8 +545,8 @@
   
   <entry>
     <title>[论文笔记](ResNeXt)Aggregated Residual Transformations for Deep Neural Networks</title>
-    <link href="https://blog.ddlee.cn/2018/01/06/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/"/>
-    <id>https://blog.ddlee.cn/2018/01/06/论文笔记-Aggregated-Residual-Transformations-for-Deep-Neural-Networks/</id>
+    <link href="https://blog.ddlee.cn/posts/423c678a/"/>
+    <id>https://blog.ddlee.cn/posts/423c678a/</id>
     <published>2018-01-06T13:19:34.000Z</published>
     <updated>2018-03-18T13:08:52.352Z</updated>
     
@@ -590,8 +590,8 @@
   
   <entry>
     <title>[论文笔记]MobileNets: Efficient Convolutional Neural Networks for Mobile Vision Applications</title>
-    <link href="https://blog.ddlee.cn/2018/01/04/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/"/>
-    <id>https://blog.ddlee.cn/2018/01/04/论文笔记-MobileNets-Efficient-Convolutional-Neural-Networks-for-Mobile-Vision-Applications/</id>
+    <link href="https://blog.ddlee.cn/posts/ae26dc1c/"/>
+    <id>https://blog.ddlee.cn/posts/ae26dc1c/</id>
     <published>2018-01-04T13:10:09.000Z</published>
     <updated>2018-03-18T13:10:17.520Z</updated>
     
@@ -633,8 +633,8 @@
   
   <entry>
     <title>[论文笔记]Xception: Deep Learning with Depthwise Seperable Convolutions</title>
-    <link href="https://blog.ddlee.cn/2018/01/02/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/"/>
-    <id>https://blog.ddlee.cn/2018/01/02/论文笔记-Xception-Deep-Learning-with-Depthwise-Seperable-Convolutions/</id>
+    <link href="https://blog.ddlee.cn/posts/3b214d12/"/>
+    <id>https://blog.ddlee.cn/posts/3b214d12/</id>
     <published>2018-01-02T13:04:30.000Z</published>
     <updated>2018-03-18T13:11:36.405Z</updated>
     
@@ -680,8 +680,8 @@
   
   <entry>
     <title>[论文笔记]Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning</title>
-    <link href="https://blog.ddlee.cn/2017/12/26/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/"/>
-    <id>https://blog.ddlee.cn/2017/12/26/论文笔记-Inception-v4-Inception-ResNet-and-the-Impact-of-Residual-Connections-on-Learning/</id>
+    <link href="https://blog.ddlee.cn/posts/ea323d66/"/>
+    <id>https://blog.ddlee.cn/posts/ea323d66/</id>
     <published>2017-12-26T12:59:02.000Z</published>
     <updated>2018-03-11T16:17:12.430Z</updated>
     
@@ -716,8 +716,8 @@
   
   <entry>
     <title>[论文笔记]Speed/accuracy trade-offs for modern convolutional object detectors</title>
-    <link href="https://blog.ddlee.cn/2017/12/24/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/"/>
-    <id>https://blog.ddlee.cn/2017/12/24/论文笔记-Speed-accuracy-trade-offs-for-modern-convolutional-object-detectors/</id>
+    <link href="https://blog.ddlee.cn/posts/b58d5aab/"/>
+    <id>https://blog.ddlee.cn/posts/b58d5aab/</id>
     <published>2017-12-24T13:55:22.000Z</published>
     <updated>2018-03-11T16:19:55.636Z</updated>
     
@@ -789,8 +789,8 @@
   
   <entry>
     <title>[论文笔记]Light-Head R-CNN: In Defense of Two-Stage Object Detector</title>
-    <link href="https://blog.ddlee.cn/2017/12/22/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/"/>
-    <id>https://blog.ddlee.cn/2017/12/22/论文笔记-Light-Head-R-CNN-In-Defense-of-Two-Stage-Object-Detector/</id>
+    <link href="https://blog.ddlee.cn/posts/50848bae/"/>
+    <id>https://blog.ddlee.cn/posts/50848bae/</id>
     <published>2017-12-22T13:55:36.000Z</published>
     <updated>2018-03-11T16:17:51.661Z</updated>
     
@@ -832,8 +832,8 @@
   
   <entry>
     <title>[论文笔记]You Only Look Once: Unified, Real Time Object Detection</title>
-    <link href="https://blog.ddlee.cn/2017/12/20/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-You-Only-Look-Once-Unified-Real-Time-Object-Detection/"/>
-    <id>https://blog.ddlee.cn/2017/12/20/论文笔记-You-Only-Look-Once-Unified-Real-Time-Object-Detection/</id>
+    <link href="https://blog.ddlee.cn/posts/41036331/"/>
+    <id>https://blog.ddlee.cn/posts/41036331/</id>
     <published>2017-12-20T13:38:31.000Z</published>
     <updated>2018-03-18T13:11:51.407Z</updated>
     
@@ -881,8 +881,8 @@
   
   <entry>
     <title>[论文笔记](Inception V3)Rethinking the Inception Architecture for Computer Vision</title>
-    <link href="https://blog.ddlee.cn/2017/12/16/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Rethinking-the-Inception-Architecture-for-Computer-Vision/"/>
-    <id>https://blog.ddlee.cn/2017/12/16/论文笔记-Rethinking-the-Inception-Architecture-for-Computer-Vision/</id>
+    <link href="https://blog.ddlee.cn/posts/5e3f4a2c/"/>
+    <id>https://blog.ddlee.cn/posts/5e3f4a2c/</id>
     <published>2017-12-16T12:53:29.000Z</published>
     <updated>2018-03-18T13:10:39.058Z</updated>
     
@@ -944,8 +944,8 @@
   
   <entry>
     <title>[论文笔记]SSD: Single Shot MultiBox Detector</title>
-    <link href="https://blog.ddlee.cn/2017/12/12/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-SSD-Single-Shot-MultiBox-Detector/"/>
-    <id>https://blog.ddlee.cn/2017/12/12/论文笔记-SSD-Single-Shot-MultiBox-Detector/</id>
+    <link href="https://blog.ddlee.cn/posts/ac9fbfcc/"/>
+    <id>https://blog.ddlee.cn/posts/ac9fbfcc/</id>
     <published>2017-12-12T13:37:56.000Z</published>
     <updated>2018-03-11T16:20:03.010Z</updated>
     
@@ -980,8 +980,8 @@
   
   <entry>
     <title>[论文笔记](FPN)Feature Pyramid Networks for Object Detection</title>
-    <link href="https://blog.ddlee.cn/2017/12/07/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0-Feature-Pyramid-Networks-for-Object-Detection/"/>
-    <id>https://blog.ddlee.cn/2017/12/07/论文笔记-Feature-Pyramid-Networks-for-Object-Detection/</id>
+    <link href="https://blog.ddlee.cn/posts/6a10f2e/"/>
+    <id>https://blog.ddlee.cn/posts/6a10f2e/</id>
     <published>2017-12-07T13:55:59.000Z</published>
     <updated>2018-03-18T13:09:21.789Z</updated>
     
