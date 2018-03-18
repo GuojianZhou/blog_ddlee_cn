@@ -310,11 +310,11 @@
         
         <tags>
             
+            <tag> Chrome </tag>
+            
             <tag> Software </tag>
             
             <tag> Digital Life </tag>
-            
-            <tag> Chrome </tag>
             
         </tags>
         
@@ -1362,11 +1362,11 @@
         
         <tags>
             
-            <tag> Android </tag>
-            
             <tag> Software </tag>
             
             <tag> Digital Life </tag>
+            
+            <tag> Android </tag>
             
         </tags>
         
@@ -3385,11 +3385,11 @@ def dropout_backward(dout, cache):
         
         <tags>
             
+            <tag> Tensorflow </tag>
+            
             <tag> Machine Learning </tag>
             
             <tag> Papers </tag>
-            
-            <tag> Tensorflow </tag>
             
         </tags>
         
@@ -4803,9 +4803,9 @@ directory mask = 0750
         
         <tags>
             
-            <tag> Android </tag>
-            
             <tag> Digital Life </tag>
+            
+            <tag> Android </tag>
             
         </tags>
         
