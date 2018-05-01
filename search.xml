@@ -318,13 +318,13 @@
         
         <tags>
             
+            <tag> Chrome </tag>
+            
             <tag> Software </tag>
             
             <tag> Digital Life </tag>
             
             <tag> Recommendation </tag>
-            
-            <tag> Chrome </tag>
             
         </tags>
         
@@ -1392,13 +1392,13 @@
         
         <tags>
             
-            <tag> Android </tag>
-            
             <tag> Software </tag>
             
             <tag> Digital Life </tag>
             
             <tag> Recommendation </tag>
+            
+            <tag> Android </tag>
             
         </tags>
         
@@ -2120,9 +2120,9 @@ with​ tf​.​Session​()​​ as​ sess:
             
             <tag> AI </tag>
             
-            <tag> best practice </tag>
-            
             <tag> Tensorflow </tag>
+            
+            <tag> best practice </tag>
             
         </tags>
         
